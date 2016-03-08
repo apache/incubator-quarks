@@ -61,7 +61,7 @@ public interface IotDevice extends TopologyElement {
      * on the stream. The JSON object has these keys:
      * <UL>
      * <LI>{@code command} - Command identifier as a String</LI>
-     * <LI>{@code tsms} - IoTF Timestamp of the command in milliseconds since the 1970/1/1 epoch.</LI>
+     * <LI>{@code tsms} - Timestamp of the command in milliseconds since the 1970/1/1 epoch.</LI>
      * <LI>{@code format} - Format of the command as a String</LI>
      * <LI>{@code payload} - Payload of the command</LI>
      * <UL>
@@ -71,7 +71,7 @@ public interface IotDevice extends TopologyElement {
      * </UL>
      * 
      * 
-     * @param commands Commands to include. If no commands are provided then the
+     * @param commands Command identifiers to include. If no command identifiers are provided then the
      * stream will contain all device commands.
      * @return Stream containing device commands.
      */

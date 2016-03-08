@@ -1,0 +1,28 @@
+<project name="quarks.apps.iot" default="all" 
+    xmlns:jacoco="antlib:org.jacoco.ant"
+    >
+    <description>
+        Applications utilizing IotDevice
+    </description>
+
+  <import file="../../common-build.xml"/>
+
+  <path id="compile.classpath">
+    <pathelement location="${lib}/quarks.api.topology.jar" />
+    <pathelement location="${quarks.connectors}/pubsub/lib/quarks.connectors.pubsub.jar" />
+    <pathelement location="${quarks.connectors}/iot/lib/quarks.connectors.iot.jar" />
+  </path>
+
+  <path id="test.compile.classpath">
+    <pathelement location="${jar}" />
+    <pathelement location="../../api/topology/test.classes" />
+    <path refid="compile.classpath"/>
+  </path>
+
+  <path id="test.classpath">
+    <pathelement location="${test.classes}" />
+    <path refid="test.compile.classpath"/>
+    <path refid="test.common.classpath" />
+  </path>
+
+</project>
