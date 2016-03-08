@@ -52,7 +52,8 @@ public class ConsoleJobServlet extends HttpServlet {
         
 
         StringBuffer sbuf = new StringBuffer();
-        sbuf.append("*:interface=");
+        sbuf.append("*:alias=*");
+	sbuf.append(",interface=");
         sbuf.append(ObjectName.quote("quarks.execution.mbeans.JobMXBean"));
         sbuf.append(",type=");
         sbuf.append(ObjectName.quote("job"));
