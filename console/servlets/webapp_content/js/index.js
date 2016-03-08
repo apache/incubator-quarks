@@ -631,7 +631,6 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
 		var targetStreams = [];
 
 		d.sourceLinks.forEach(function(src){
-			targets.push(src.targetIdx.id.toString());
 			targets.push(src.targetIdx.id);
 	   	  		if (src.tags && src.tags.length > 0) {
 	   	  			targetStreams = src.tags;
