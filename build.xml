@@ -113,6 +113,7 @@
         <ant dir="connectors/wsclient-javax.websocket" target="@{target}" useNativeBasedir="true"/>
         <ant dir="console/server" target="@{target}" useNativeBasedir="true" />
         <ant dir="console/servlets" target="@{target}" useNativeBasedir="true" />
+        <ant dir="apps/iot" target="@{target}" useNativeBasedir="true" />
         <ant dir="providers/development" target="@{target}" useNativeBasedir="true"/>
         <ant dir="analytics/math3" target="@{target}" useNativeBasedir="true"/>
         <ant dir="analytics/sensors" target="@{target}" useNativeBasedir="true"/>

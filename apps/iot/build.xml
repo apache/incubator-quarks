@@ -5,10 +5,11 @@
         Applications utilizing IotDevice
     </description>
 
+  <property name="component.path" value="apps/iot"/>
   <import file="../../common-build.xml"/>
 
   <path id="compile.classpath">
-    <pathelement location="${lib}/quarks.api.topology.jar" />
+    <pathelement location="${quarks.lib}/quarks.api.topology.jar" />
     <pathelement location="${quarks.connectors}/pubsub/lib/quarks.connectors.pubsub.jar" />
     <pathelement location="${quarks.connectors}/iot/lib/quarks.connectors.iot.jar" />
   </path>
