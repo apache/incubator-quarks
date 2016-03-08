@@ -105,6 +105,7 @@
         <ant dir="connectors/jdbc" target="@{target}" useNativeBasedir="true"/>
         <ant dir="connectors/kafka" target="@{target}" useNativeBasedir="true"/>
         <ant dir="connectors/mqtt" target="@{target}" useNativeBasedir="true"/>
+        <ant dir="connectors/pubsub" target="@{target}" useNativeBasedir="true"/>
         <ant dir="connectors/quarks.javax.websocket" target="@{target}" useNativeBasedir="true"/>
         <ant dir="connectors/javax.websocket-client" target="@{target}" useNativeBasedir="true"/>
         <ant dir="connectors/javax.websocket-server" target="@{target}" useNativeBasedir="true"/>

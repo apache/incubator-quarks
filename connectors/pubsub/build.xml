@@ -16,7 +16,7 @@
 
   <path id="test.compile.classpath">
     <pathelement location="${jar}" />
-    <pathelement location="${lib}/quarks.providers.direct.jar"/>
+    <pathelement location="${quarks.lib}/quarks.providers.direct.jar"/>
     <pathelement location="../../api/topology/test.classes"/>
     <pathelement location="../../providers/direct/test.classes"/>
     <path refid="compile.classpath"/>
