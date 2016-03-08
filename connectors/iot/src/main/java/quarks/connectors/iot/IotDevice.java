@@ -17,6 +17,11 @@ import quarks.topology.TopologyElement;
  * Generic Internet of Things device connector.
  */
 public interface IotDevice extends TopologyElement {
+    
+    /**
+     * Device event and command identifiers starting with {@value} are reserved for use by Quarks.
+     */
+    String RESERVED_ID_PREFIX = "quarks";
 
     /**
      * Publish a stream's tuples as device events.
@@ -35,7 +40,7 @@ public interface IotDevice extends TopologyElement {
      *            function to supply the event's delivery Quality of Service.
      * @return TSink sink element representing termination of this stream.
      */
-    public TSink<JsonObject> events(TStream<JsonObject> stream, Function<JsonObject, String> eventId,
+    TSink<JsonObject> events(TStream<JsonObject> stream, Function<JsonObject, String> eventId,
             UnaryOperator<JsonObject> payload,
             Function<JsonObject, Integer> qos) ;
     
@@ -53,17 +58,50 @@ public interface IotDevice extends TopologyElement {
      *            Event's delivery Quality of Service.
      * @return TSink sink element representing termination of this stream.
      */
-    public TSink<JsonObject> events(TStream<JsonObject> stream, String eventId, int qos) ;
+    TSink<JsonObject> events(TStream<JsonObject> stream, String eventId, int qos) ;
+    
+    /**
+     * Command identifier key.
+     * Key is {@value}.
+     * 
+     * @see #commands(String...)
+     */
+    String CMD_ID = "command";
+    
+    /**
+     * Command timestamp (in milliseconds) key.
+     * Key is {@value}.
+     * 
+     * @see #commands(String...)
+     */
+    String CMD_TS = "tsms";
+    /**
+     * Command format key.
+     * Key is {@value}.
+     * 
+     * @see #commands(String...)
+     */
+    String CMD_FORMAT = "format";
+    /**
+     * Command payload key.
+     * If the command format is {@code json} then
+     * the key's value will be a {@code JsonObject},
+     * otherwise a {@code String}.
+     * Key is {@value}.
+     * 
+     * @see #commands(String...)
+     */
+    String CMD_PAYLOAD = "payload";
 
     /**
      * Create a stream of device commands as JSON objects.
      * Each command sent to the device matching {@code commands} will result in a tuple
      * on the stream. The JSON object has these keys:
      * <UL>
-     * <LI>{@code command} - Command identifier as a String</LI>
-     * <LI>{@code tsms} - Timestamp of the command in milliseconds since the 1970/1/1 epoch.</LI>
-     * <LI>{@code format} - Format of the command as a String</LI>
-     * <LI>{@code payload} - Payload of the command</LI>
+     * <LI>{@link #CMD_ID command} - Command identifier as a String</LI>
+     * <LI>{@link #CMD_TS tsms} - Timestamp of the command in milliseconds since the 1970/1/1 epoch.</LI>
+     * <LI>{@link #CMD_FORMAT format} - Format of the command as a String</LI>
+     * <LI>{@link #CMD_PAYLOAD payload} - Payload of the command</LI>
      * <UL>
      * <LI>If {@code format} is {@code json} then {@code payload} is JSON</LI>
      * <LI>Otherwise {@code payload} is String
@@ -75,5 +113,5 @@ public interface IotDevice extends TopologyElement {
      * stream will contain all device commands.
      * @return Stream containing device commands.
      */
-    public TStream<JsonObject> commands(String... commands);
+    TStream<JsonObject> commands(String... commands);
 }

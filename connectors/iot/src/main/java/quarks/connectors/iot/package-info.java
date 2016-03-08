@@ -23,6 +23,7 @@
  * The format for the payload is JSON, support for other payload formats may be added
  * in the future.
  * </LI>
+ * <P>
  * <LI>
  * <B>Device Commands</B> - A device {@link quarks.connectors.iot.IotDevice#commands(String...) subscribes} to <em>commands</em> from back-end systems
  * through the message hub. A device command consists of:
@@ -34,8 +35,13 @@
  * Device commands can be used to perform any action on the device including displaying information,
  * controlling the device (e.g. reduce maximum engine revolutions), controlling the Quarks application, etc.
  * </LI>
- * </UL>
  * The format for the payload is typically JSON, though other formats may be used.
+ * </UL>
+ * </P>
+ * <P>
+ * Device event and command identifiers starting with "{@link quarks.connectors.iot.IotDevice#RESERVED_ID_PREFIX quarks}"
+ * are reserved for use by Quarks.
+ * </P>
  */
 package quarks.connectors.iot;
 
