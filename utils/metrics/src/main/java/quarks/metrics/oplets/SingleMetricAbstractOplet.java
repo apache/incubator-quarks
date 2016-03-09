@@ -26,6 +26,10 @@ public abstract class SingleMetricAbstractOplet<T> extends Peek<T> {
     /**
      * Returns the name of the metric used by this oplet for registration.
      * The name uniquely identifies the metric in the {@link MetricRegistry}.
+     * <p>
+     * The name of the metric is {@code null} prior to oplet initialization,
+     * or if this oplet has not been initialized with a 
+     * {@code MetricRegistry}.
      * 
      * @return the name of the metric used by this oplet.
      */
@@ -39,9 +43,9 @@ public abstract class SingleMetricAbstractOplet<T> extends Peek<T> {
     public final void initialize(OpletContext<T, T> context) {
         super.initialize(context);
 
-        this.metricName = context.uniquify(shortMetricName);
         MetricRegistry registry = context.getService(MetricRegistry.class);
         if (registry != null) {
+            this.metricName = context.uniquify(shortMetricName);
             registry.register(getMetricName(), getMetric());
         }
     }
