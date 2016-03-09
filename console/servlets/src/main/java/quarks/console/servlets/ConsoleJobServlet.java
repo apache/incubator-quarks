@@ -52,8 +52,7 @@ public class ConsoleJobServlet extends HttpServlet {
         
 
         StringBuffer sbuf = new StringBuffer();
-        sbuf.append("*:alias=*");
-	sbuf.append(",interface=");
+        sbuf.append("*:interface=");
         sbuf.append(ObjectName.quote("quarks.execution.mbeans.JobMXBean"));
         sbuf.append(",type=");
         sbuf.append(ObjectName.quote("job"));
@@ -61,10 +60,9 @@ public class ConsoleJobServlet extends HttpServlet {
         if (!jobId.equals("")) {
         	sbuf.append(",id=");
         	sbuf.append(ObjectName.quote(jobId));
-        } else {
-        	sbuf.append(",*");
-        }
-
+        } 
+        sbuf.append(",*");
+        
         ObjectName jobObjName = null;
         try {
         	jobObjName = new ObjectName(sbuf.toString());

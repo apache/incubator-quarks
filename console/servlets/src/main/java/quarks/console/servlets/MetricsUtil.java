@@ -32,9 +32,8 @@ final class MetricsUtil {
 		ObjectName counterObjName = null;
 		StringBuffer sbuf = new StringBuffer();
 		sbuf.append("*:jobId=" + jobId);
-		sbuf.append(",opId=*");
-		sbuf.append(",name=*");
-		sbuf.append(",type=metric.counters");
+		sbuf.append(",type=metric.counters,*");
+
         // i.e, quarks.providers.development:jobId=JOB-0,opId=OP_4,name=TupleRateMeter.quarks.oplet.JOB_0.OP_4,type=metric.meters
 		try {
 			counterObjName = new ObjectName(sbuf.toString());
@@ -51,9 +50,7 @@ final class MetricsUtil {
 			
 			StringBuffer sbuf1 = new StringBuffer();
 			sbuf1.append("*:jobId=" + jobId);
-			sbuf1.append(",opId=*");
-			sbuf1.append(",name=*");
-			sbuf1.append(",type=metric.meters");
+			sbuf1.append(",type=metric.meters,*");
 
 			try {
 				meterObjName = new ObjectName(sbuf1.toString());
