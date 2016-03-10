@@ -45,7 +45,6 @@ d3.select("#layers")
 
 	d3.select("#graphLoading").style("display", "none");
 	var selectedJob = d3.select("#jobs").node().value;
-	//getCounterMetricsForJob(renderGraph, selectedJob, true);
 	getCounterMetricsForJob(renderGraph, selectedJob);
 	startGraph(refreshInt);
 });
@@ -178,7 +177,7 @@ var formatNumber = d3.format(",.0f"),
 	var	showTimeout = null,
      hideTimeout = null,
      showTime = 800,
-     hideTime = 600;
+     hideTime = 300;
     
     var clearHideTimeout = function(){
    		if (hideTimeout){
@@ -246,6 +245,8 @@ var showTooltip = function(content, d, i, event) {
 	if(showTimeout){
 		clearTimeout(showTimeout);
 	}
+	
+	var leftOffset = d.invocation.kind.toUpperCase().endsWith("COUNTEROP") ? 100 : 350;
     	
 	showTimeout = setTimeout(function(){
 		showTimeout = null;
@@ -254,7 +255,7 @@ var showTooltip = function(content, d, i, event) {
 
 				tooltip.style("padding-x", -22)
 				.style("padding-y", 0)
-				.style("left", (event.pageX - 350) + "px")
+				.style("left", (event.pageX - leftOffset) + "px")
 				.style("top", event.pageY +"px")
 				.style("display", "block");
 			}
@@ -361,7 +362,7 @@ var makeRows = function() {
 		 var sources = [];
 	   	 var sourceStreams = [];
 		 n.targetLinks.forEach(function(trg){
-			sources.push(trg.sourceIdx.id);
+			sources.push(trg.sourceIdx.idx);
  	  		if (trg.tags && trg.tags.length > 0) {
    	  			sourceStreams = trg.tags;
    	  		}
@@ -369,23 +370,13 @@ var makeRows = function() {
 		 var targets = [];
 		 var targetStreams = [];
 		 n.sourceLinks.forEach(function(src){
-			 targets.push(src.targetIdx.id);
+			 targets.push(src.targetIdx.idx);
 	   	  		if (src.tags && src.tags.length > 0) {
 	   	  			targetStreams = src.tags;
 	   	  		}
 		 });
    	  	var kind = parseOpletKind(n.invocation.kind);
-   	  	var sourceKinds = [];
-   	  	
-   	  	sources.forEach(function (source){
-   	  		sourceKinds.push(parseOpletKind(source));
 
-   	  	});
-   	  	var targetKinds = [];
-   	  	targets.forEach(function (target){
-   	  		targetKinds.push(parseOpletKind(target));
-
-   	  	});
    	  	var value = "";
    	  	if (n.derived === true) {
    	  		value = "Not applicable - counter not present";
@@ -395,8 +386,8 @@ var makeRows = function() {
    	  		value = formatNumber(n.value);
    	  	}
    	  	
-   	  	var rowObj = {"Name": n.id, "Oplet kind": kind, "Tuple count": formatNumber(n.value), 
-   	  			"Sources": sourceKinds.toString(), "Targets": targetKinds.toString(), 
+   	  	var rowObj = {"Name": n.idx, "Oplet kind": kind, "Tuple count": formatNumber(n.value), 
+   	  			"Sources": sources.toString(), "Targets": targets.toString(), 
    	  			"Source stream tags": sourceStreams.toString() === "" ? "None" : sourceStreams.toString(), 
    	  			"Target stream tags": targetStreams.toString() === "" ? "None" : targetStreams.toString()};
 		theRows.push(rowObj);
@@ -561,8 +552,8 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
     	  }
     	  var sKind = parseOpletKind(d.sourceIdx.invocation.kind);
     	  var tKind = parseOpletKind(d.targetIdx.invocation.kind);
-    	  var retString = "Oplet name: " + d.sourceIdx.id + "\nOplet kind: " + sKind + " --> \n"
-    	  + "Oplet name: " + d.targetIdx.id + "\nOplet kind: " + tKind;
+    	  var retString = "Oplet name: " + d.sourceIdx.idx + "\nOplet kind: " + sKind + " --> \n"
+    	  + "Oplet name: " + d.targetIdx.idx + "\nOplet kind: " + tKind;
     	  
     	  if (layerVal === "flow") {
     		  retString += "\n" + value; 
@@ -583,8 +574,16 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
       .origin(function(d) { return d; })
       .on("dragstart", function() { this.parentNode.appendChild(this); })
       .on("drag", dragmove));
-
-  	node.append("circle")
+      
+      node.append(function(d) {
+    	  if (d.invocation.kind.toUpperCase().endsWith("COUNTEROP")) {
+    			return document.createElementNS(d3.ns.prefix.svg, 'rect');
+    		} else {
+    			return document.createElementNS(d3.ns.prefix.svg, 'circle');
+    		}
+      });
+      
+  	node.selectAll("circle")
   	.attr("cx", sankey.nodeWidth()/2)
   	.attr("cy", function(d){
 	  return d.dy/2;
@@ -608,21 +607,44 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
   		return getLegendColor(layer, d);
 
   	});
+  	
+  	node.selectAll("rect")
+    .attr("x", sankey.nodeWidth()/2 )
+    .attr("y", function(d) {
+    	return d.dy/2 - 3;
+    })
+    .attr("width", 5)
+    .attr("height", 5)
+  	.style("fill", function(d) {
+  		if (!colorMap[d.id.toString()]) {
+  			colorMap[d.id.toString()] = color20(d.id.toString());
+  		}
+  		if (!opletColor[d.invocation.kind]) {
+  			opletColor[d.invocation.kind] = color20(d.invocation.kind);
+  		}
+  		return getVertexFillColor(layer, d);  		
+  	})
+  	.attr("data-legend", function(d) {
+  		return getLegendText(layer, d);
+  	 })
+  	.style("stroke", function(d) {
+  		return getLegendColor(layer, d);
+
+  	});
   
-  	// to do - add tags
-  	var rects = svg.selectAll("circle")
+  	svg.selectAll("circle")
 	.on("mouseover", function(d, i) {
   	  	var kind = parseOpletKind(d.invocation.kind);
 		var headStr =  "<div><table style='table-layout:fixed;word-wrap: break-word;'><tr><th class='smaller'>Name</th>" +
 			"<th class='smaller'>Oplet kind</th><th class='smaller'>Tuple count</th><th class='smaller'>Sources</th>" +
 			"<th class='smaller'>Targets</th><th class='smaller'>Source stream tags</th><th class='smaller'>Target stream tags</th></tr>";
-		var valueStr = "<tr><td class='smallCenter'>" + d.id.toString() + "</td><td class='smallLeft'>" + kind + "</td><td class='smallRight'>" 
+		var valueStr = "<tr><td class='smallCenter'>" + d.idx.toString() + "</td><td class='smallLeft'>" + kind + "</td><td class='smallRight'>" 
 			+ formatNumber(d.value) + "</td>";
 
 		var sources = [];
 		var sourceStreams = [];
 		d.targetLinks.forEach(function(trg){
-			sources.push(trg.sourceIdx.id.toString());
+			sources.push(trg.sourceIdx.idx.toString());
  	  		if (trg.tags && trg.tags.length > 0) {
    	  			sourceStreams = trg.tags;
    	  		}
@@ -631,7 +653,7 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
 		var targetStreams = [];
 
 		d.sourceLinks.forEach(function(src){
-			targets.push(src.targetIdx.id);
+			targets.push(src.targetIdx.idx);
 	   	  		if (src.tags && src.tags.length > 0) {
 	   	  			targetStreams = src.tags;
 	   	  		}
@@ -652,6 +674,19 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
 		hideTooltip(d, i);
 	});
   	
+  	svg.selectAll("rect")
+  	.on("mouseover", function(d, i){
+  		var kind = parseOpletKind(d.invocation.kind);
+  		var headStr = "<div><table style='table-layout:fixed;word-wrap: break-word;'><tr><th class='smaller'>Name</th>" +
+		"<th class='smaller'>Oplet kind</th></tr>";
+  		var valueStr = "<tr><td class='smallCenter'>" + d.idx.toString() + "</td><td class='smallLeft'>" + kind + "</td></tr><table></div>";
+  		var str = headStr + valueStr;
+		showTooltip(str, d, i, d3.event);
+  	})
+  	.on("mouseout", function(d, i){
+		hideTooltip(d, i);
+	})
+  	
   	node.append("text")
     .attr("x", function (d) {
         return - 6 + sankey.nodeWidth() / 2 - Math.sqrt(d.dy);
@@ -664,7 +699,7 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
     .attr("text-shadow", "0 1px 0 #fff")
     .attr("transform", null)
     .text(function (d) {
-        return d.id;
+        return d.idx;
     })
     .filter(function (d) {
         return d.x < width / 2;

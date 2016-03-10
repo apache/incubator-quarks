@@ -1,5 +1,4 @@
-.node rect {
- 	cursor: move;
+.node circle {
  	fill-opacity: 1.0;
  	shape-rendering: crispEdges;
 }

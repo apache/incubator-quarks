@@ -17,7 +17,7 @@ d3.legend = function(g, chartSvg, pItems, legendTitle) {
 
     lTitleItems.enter().append("g").classed("legend-title-items", true)
     lb.enter().append("rect").classed("legend-box",true)
-    li.enter().append("g").classed("legend-items",true)
+    liG = li.enter().append("g").classed("legend-items",true)
 
     if (pItems) {
     	pItems.forEach(function(p){
@@ -94,6 +94,45 @@ d3.legend = function(g, chartSvg, pItems, legendTitle) {
         	})
         .style("stroke", "none")
         .style("fill-opacity", legendOpacity);
+    } else if (legendTitle && legendTitle === "Oplet kind"){
+    	
+    	liG.selectAll("g")
+    		.data(items, function(d) { 
+    			return d.key;
+    		})
+    		.enter()
+    		.append(function(d) {
+    			if (d.key.toUpperCase().startsWith("COUNTEROP")) {
+    	  			return document.createElementNS(d3.ns.prefix.svg, 'rect');
+    	  		} else {
+    	  			return document.createElementNS(d3.ns.prefix.svg, 'circle');
+    	  		}
+    		});
+
+    	var count = 0;
+    	li.selectAll("rect")
+    	.attr("x", -3)
+        .attr("y", function(d,i) {
+        	count++;
+        	return i-0.75+ "em"}) 
+        .attr("width", 8)                          
+        .attr("height", 8)
+        .style("fill",function(d) {
+        	return d.value.color
+        	})
+        .style("stroke", "none")
+        .style("fill-opacity", legendOpacity);
+    	
+	    li.selectAll("circle")
+        .attr("cy",function(d,i) {
+        	return (i+count)-0.25+"em"})
+        .attr("cx",0)
+        .attr("r","0.4em")
+        .style("fill",function(d) {
+        	return d.value.color
+        	})
+         .style("fill-opacity", legendOpacity);
+    	
     } else {
 	    li.selectAll("circle")
 	        .data(items,function(d) { 

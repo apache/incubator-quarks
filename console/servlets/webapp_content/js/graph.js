@@ -1,10 +1,10 @@
-opletColor = {"quarks.metrics.oplets.CounterOp": "#1f77b4", "quarks.metrics.oplets.RateMeter": "#aec7e8", "quarks.oplet.core.FanIn": "#ff7f0e", 
+opletColor = {"quarks.metrics.oplets.CounterOp": "#c7c7c7", "quarks.metrics.oplets.RateMeter": "#aec7e8", "quarks.oplet.core.FanIn": "#ff7f0e", 
 		"quarks.oplet.core.FanOut": "#ffbb78", "quarks.oplet.core.Peek": "#2ca02c", "quarks.oplet.core.PeriodicSource": "#98df8a", 
 		"quarks.oplet.core.Pipe": "#d62728", "quarks.oplet.core.PipeWindow": "#ff9896", "quarks.oplet.core.ProcessSource": "#9467bd", 
-		"quarks.oplet.core.Sink": "#c5b0d5", "quarks.oplet.core.Source": "#8c564b", "quarks.oplet.core.Split": "#c49c94", 
+		"quarks.oplet.core.Sink": "#c5b0d5", "quarks.oplet.core.Source": "#8c564b", "quarks.oplet.core.Split": "#c49c94", "quarks.oplet.core.Union" : "#1f77b4",
 		"quarks.oplet.functional.ConsumerEventSource": "#e377c2", "quarks.oplet.functional.ConsumerPeek": "#f7b6d2", "quarks.oplet.functional.ConsumerSink": "#7f7f7f", 
-		"quarks.oplet.functional.Filter": "#c7c7c7","quarks.oplet.functional.FlatMapper": "#bcbd22", "quarks.oplet.functional.Isolate": "#dbdb8d", 
-		"quarks.oplet.functional.Mapper": "#17becf", "quarks.oplet.functional.SupplierPeriodicSource": "#9edae5", "quarks.oplet.functional.SupplierSource": "#b5cf6b", 
+		"quarks.oplet.functional.Filter": "#7F7F7F", "quarks.oplet.functional.FlatMapper": "#bcbd22", "quarks.oplet.functional.Isolate": "#dbdb8d", 
+		"quarks.oplet.functional.Map": "#17becf", "quarks.oplet.functional.SupplierPeriodicSource": "#9edae5", "quarks.oplet.functional.SupplierSource": "#b5cf6b", 
 		"quarks.oplet.plumbing.PressureReliever": "#e7cb94", "quarks.oplet.plumbing.TextFileReader": "#ad494a", "quarks.oplet.plumbing.UnorderedIsolate": "#de9ed6"};
 colorMap = {};
 
@@ -45,7 +45,12 @@ getVertexFillColor = function(layer, data) {
 	if (layer === "opletColor" || layer === "static") {
 		return opletColor[data.invocation.kind];
 	} else if (layer === "flow") {
-		return d3.rgb("rgb(31, 119, 180)");	
+		// return a muted color if it is a counter op
+		if (data.invocation.kind.toUpperCase().endsWith("COUNTEROP")) {
+			return "#c7c7c7";
+		} else {
+			return d3.rgb("rgb(31, 119, 180)");
+		}
 	} else {
 		return colorMap[data.id.toString()];
 	}

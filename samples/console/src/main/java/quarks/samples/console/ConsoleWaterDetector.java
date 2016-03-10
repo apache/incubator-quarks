@@ -168,7 +168,7 @@ public class ConsoleWaterDetector {
 		
 		List<TStream<JsonObject>> individualAlerts2 = splitAlert(filteredReadings2, 2);
 		
-	        TStream<JsonObject> alert0Well2 = individualAlerts2.get(0);
+	    TStream<JsonObject> alert0Well2 = individualAlerts2.get(0);
 		alert0Well2  = Metrics.counter(alert0Well2);
 		alert0Well2.tag("well2", "temp");
 		
