@@ -4,7 +4,7 @@ Quarks is an open source programming model and runtime for edge devices that ena
 
 We are transitioning to an incubator project (podling) at the Apache Software Foundation. Please joins us by subscribing to the
 developer mailing list [dev at quarks.incubator.apache.org](http://mail-archives.apache.org/mod_mbox/incubator-quarks-dev/).
-To subscribe send an email to `dev-subscribe at quarks.incubator.apache.org`.
+To subscribe, send an email to `dev-subscribe at quarks.incubator.apache.org`.
 
 We want to build a community around Quarks for analytics at the edge, so welcome contributions to any aspect of Quarks including:
 
