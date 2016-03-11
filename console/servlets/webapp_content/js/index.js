@@ -428,13 +428,11 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
 	   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
-		var j = 0;
 		graph.vertices.forEach(function(vertex){
-			vertex.idx = j;
+			vertex.idx = parseInt(vertex.id.substring("OP_".length, vertex.id.length));
 			if (!vertexMap[vertex.id]) {
 				vertexMap[vertex.id] = vertex;
 			}
-			j++;
 		});
 		
 		var i = 0;

@@ -248,7 +248,8 @@ metricFunction = function(selectedJobId, metricSelected) {
 			  var metrics = op.metrics;
 			  metrics.forEach(function(met) {
 				 obj.type = met.type;
-				 obj.name = obj.opId; 
+				 obj.name = obj.opId;
+				 obj.shortName = obj.opId.substring("OP_".length, obj.opId.length);
 				 obj.value = met.value;
 				 obj.metricName = met.name;
 				 obj.opKind = vertexMap[obj.opId].invocation.kind;
@@ -256,10 +257,23 @@ metricFunction = function(selectedJobId, metricSelected) {
 			  data.push(obj);
 		   });
 		   
+		   var sortData = function(objA, objB) {
+        		 if (parseInt(objA.shortName) < parseInt(objB.shortName))  {
+	         	    	return -1;
+	         	     } else if (parseInt(objA.shortName) > parseInt(objB.shortName)){
+	         	    	return 1;
+	         	     } else {
+	         	    	return 0;
+	         	    }
+		   };
+		   
+		   data.sort(sortData);
+		   
 	   x.domain(
 			   data.map(
 					   function(d) { 
-						   return d.name; }));
+						   // this is the value shown on the x axis tick marks
+						   return  d.shortName; }));
 	   
 	   
 	   var max = d3.max(data, function(d) {
@@ -306,7 +320,7 @@ metricFunction = function(selectedJobId, metricSelected) {
 	      .style("fill", function(d) {
 	    		return opletColor[d.opKind];
 	      })
-	      .attr("x", function(d) { return x(d.name); })
+	      .attr("x", function(d) { return x(d.shortName); })
 	      .attr("width", x.rangeBand())
 	      .attr("y", function(d) { 
 	   	   if (d.type === "double") {
@@ -329,7 +343,7 @@ metricFunction = function(selectedJobId, metricSelected) {
 	  
 	  rect.append("title")
       .text(function(d) {
-    	  return "Name: " + d.name +
+    	  return "Name: " + d.shortName +
     	  "\nValue: " + d.value;
     	  });
 	  
@@ -640,7 +654,20 @@ metricsAvailable = function(queryString, jobId, bIsNewJob) {
         	    			// get the value for the Rate Unit, append it for all "meter" types
         	    			rateUnitVal = obj.value;
         	    		} else {
-        	    		   var opsText = obj.ops.toString();
+        	    		   var opsText = "";
+        	    		   var sortOps = function(opA, opB) {
+        	          		 if (parseInt(opA.substring("OP_".length, opA.length)) < parseInt(opB.substring("OP_".length, opB.length)))  {
+        	         	    	return -1;
+        	         	     } else if (parseInt(opA.substring("OP_".length, opA.length)) > parseInt(opB.substring("OP_".length, opB.length))){
+        	         	    	return 1;
+        	         	     } else {
+        	         	    	return 0;
+        	         	    }
+        	    		   };
+        	    		   obj.ops.sort(sortOps);
+        	    		   obj.ops.forEach(function (op){
+        	    			   opsText += op.substring("OP_".length, op.length) + ",";
+        	    		   });
         	    		   if (opsText.length > 100) {
         	    			   var splitOps = opsText.split(",");
         	    			   var scale = 100/opsText.length;
