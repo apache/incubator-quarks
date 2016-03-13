@@ -6,10 +6,7 @@ package quarks.topology.spi.graph;
 
 import static quarks.function.Functions.synchronizedFunction;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import quarks.function.Consumer;
@@ -89,6 +86,26 @@ public class ConnectorStream<G extends Topology, T> extends AbstractTStream<G, T
 
         List<TStream<T>> outputs = new ArrayList<>(n);
         for (int i = 0; i < n; i++) {
+            outputs.add(derived(splitVertex.getConnectors().get(i)));
+        }
+
+        return outputs;
+    }
+
+    @Override
+    public <E extends Enum<E>> List<TStream<T>> split(Class<E> enumClass, ToIntFunction<T> splitter) {
+        final EnumSet<E> es = EnumSet.allOf(enumClass);
+        if (es.isEmpty()) {
+            throw new IllegalArgumentException("empty Data");
+        }
+
+        Split<T> splitOp = new Split<>(splitter);
+
+        Vertex<Split<T>, T, T> splitVertex = graph().insert(splitOp, 1, es.size());
+        connector.connect(splitVertex, 0);
+
+        List<TStream<T>> outputs = new ArrayList<>(es.size());
+        for (int i = 0; i < es.size(); i++) {
             outputs.add(derived(splitVertex.getConnectors().get(i)));
         }
 

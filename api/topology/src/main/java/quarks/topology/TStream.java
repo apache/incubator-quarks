@@ -197,6 +197,26 @@ public interface TStream<T> extends TopologyElement {
     List<TStream<T>> split(int n, ToIntFunction<T> splitter);
 
     /**
+     * Split a stream's tuples among {@code enumClass.size} streams as specified by
+     * {@code splitter}.
+     *
+     * <P>
+     * It is similar to split(int n, ToIntFunction<T> splitter).
+     * The Only difference is n replaced by {@code enumClass.size}
+     * </P>
+     *
+     * @param enumClass
+     *            enum data to split
+     * @param splitter
+     *            the splitter function
+     * @return List of {@code enumClass.size} streams
+     *
+     * @throws IllegalArgumentException
+     *             if {@code enumClass.isEmpty() == true}
+     */
+    <E extends Enum<E>> List<TStream<T>> split(Class<E> enumClass, ToIntFunction<T> splitter);
+
+    /**
      * Declare a stream that contains the same contents as this stream while
      * peeking at each element using {@code peeker}. <BR>
      * For each tuple {@code t} on this stream, {@code peeker.accept(t)} will be

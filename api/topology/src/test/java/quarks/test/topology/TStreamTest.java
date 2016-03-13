@@ -12,11 +12,7 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.Executors;
@@ -283,6 +279,52 @@ public abstract class TStreamTest extends TopologyAbstractTest {
     @Test(expected = IllegalArgumentException.class)
     public void testSplitWithNegativeOutputs() throws Exception {
         newTopology().strings("a1").split(-28, tuple -> 0);
+    }
+
+    /**
+     * Test enum data structure
+     */
+    private enum EnumData {
+        ZERO(0), ONE(0), TWO(2), THREE(3);
+
+        public int num;
+
+        EnumData(int input) {
+            this.num = input;
+        }
+        public int getValue() {
+            return num;
+        }
+    }
+
+    /**
+     * Test split(enum) with integer type enum.
+     */
+    @Test
+    public void testSplitWithEnum() throws Exception {
+
+        Topology t = newTopology();
+
+        TStream<String> s = t.strings("1", "2", "3", "4", "5", "6", "7");
+        TStream<Integer> i = s.map(Integer::valueOf);
+        List<TStream<Integer>> splits = i.split(EnumData.class, tuple -> tuple%3);
+
+        assertStream(t, i);
+
+        Condition<Long> tc0 = t.getTester().tupleCount(splits.get(0), 2);
+        Condition<Long> tc1 = t.getTester().tupleCount(splits.get(1), 3);
+        Condition<Long> tc2 = t.getTester().tupleCount(splits.get(2), 2);
+
+        Condition<List<Integer>> contents0 = t.getTester().streamContents(splits.get(0), 3, 6);
+        Condition<List<Integer>> contents1 = t.getTester().streamContents(splits.get(1), 1, 4, 7);
+        Condition<List<Integer>> contents2 = t.getTester().streamContents(splits.get(2), 2, 5);
+
+        complete(t, t.getTester().and(tc0, tc1, tc2));
+
+
+        assertTrue(contents0.toString(), contents0.valid());
+        assertTrue(contents1.toString(), contents1.valid());
+        assertTrue(contents2.toString(), contents2.valid());
     }
 
     @Test
