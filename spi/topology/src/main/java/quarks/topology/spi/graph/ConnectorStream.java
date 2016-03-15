@@ -4,19 +4,7 @@
 */
 package quarks.topology.spi.graph;
 
-import static quarks.function.Functions.synchronizedFunction;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
-import quarks.function.Consumer;
-import quarks.function.Function;
-import quarks.function.Functions;
-import quarks.function.Predicate;
-import quarks.function.ToIntFunction;
+import quarks.function.*;
 import quarks.graph.Connector;
 import quarks.graph.Graph;
 import quarks.graph.Vertex;
@@ -33,6 +21,11 @@ import quarks.topology.TStream;
 import quarks.topology.TWindow;
 import quarks.topology.Topology;
 import quarks.topology.spi.AbstractTStream;
+
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+
+import static quarks.function.Functions.synchronizedFunction;
 
 /**
  * A stream that directly adds oplets to the graph.
@@ -96,12 +89,40 @@ public class ConnectorStream<G extends Topology, T> extends AbstractTStream<G, T
     }
 
     @Override
+    public <E extends Enum<E>> EnumMap<E,TStream<T>> split(Class<E> enumClass, Function<T, E> splitter) {
+
+        E[] es = enumClass.getEnumConstants();
+
+/*        List<TStream<T>> outputs = split(es.length, e -> IntStream.range(0, es.length).filter(i-> es[i].equals(splitter.apply(e)))
+            .mapToObj(i -> es[i].ordinal()).findAny().orElse(-1));
+*/
+
+        List<TStream<T>> outputs = split(es.length, new ToIntFunction<T>() {
+            @Override
+            public int applyAsInt(T input) {
+                for(int i = 0; i < es.length; i++){
+                    if(es[i].equals(splitter.apply(input))){
+                        return es[i].ordinal();
+                    }
+                }
+                return -1;
+        }});
+
+        EnumMap<E,TStream<T>> returnMap = new EnumMap<>(enumClass);
+        for (int i = 0; i < es.length ; i++){
+            returnMap.put(es[i], outputs.get(es[i].ordinal()));
+        }
+
+        return returnMap;
+    }
+
+    @Override
     public TStream<T> peek(Consumer<T> peeker) {
         peeker = Functions.synchronizedConsumer(peeker);
         connector.peek(new Peek<T>(peeker));
         return this;
     }
-    
+
     @Override
     public TSink<T> sink(Sink<T> oplet) {
         Vertex<Sink<T>, T, Void> sinkVertex = graph().insert(oplet, 1, 0);
@@ -119,7 +140,7 @@ public class ConnectorStream<G extends Topology, T> extends AbstractTStream<G, T
         TWindowImpl<T, K> window = new TWindowImpl<T, K>(count, this, keyFunction);
         return window;
     }
-    
+
 
     @Override
     public <K> TWindow<T, K> last(long time, TimeUnit unit,
@@ -127,21 +148,21 @@ public class ConnectorStream<G extends Topology, T> extends AbstractTStream<G, T
         TWindowTimeImpl<T, K> window = new TWindowTimeImpl<T, K>(time, unit, this, keyFunction);
         return window;
     }
-    
+
     @Override
     public TStream<T> union(Set<TStream<T>> others) {
         if (others.isEmpty())
             return this;
         if (others.size() == 1 && others.contains(this))
             return this;
-        
+
         for (TStream<T> other : others)
             verify(other);
-        
+
         // Create a set we can modify and add this stream
         others = new HashSet<>(others);
         others.add(this);
-        
+
         Union<T> fanInOp = new Union<T>();
 
         Vertex<Union<T>, T, T> fanInVertex = graph().insert(fanInOp, others.size(), 1);
@@ -151,7 +172,7 @@ public class ConnectorStream<G extends Topology, T> extends AbstractTStream<G, T
             ConnectorStream<G,T> cs = (ConnectorStream<G, T>) other;
             cs.connector.connect(fanInVertex, inputPort++);
         }
-            
+
         return derived(fanInVertex.getConnectors().get(0));
     }
 

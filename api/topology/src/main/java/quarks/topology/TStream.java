@@ -4,17 +4,14 @@
 */
 package quarks.topology;
 
+import quarks.function.*;
+import quarks.oplet.core.Pipe;
+import quarks.oplet.core.Sink;
+
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-
-import quarks.function.Consumer;
-import quarks.function.Function;
-import quarks.function.Predicate;
-import quarks.function.ToIntFunction;
-import quarks.function.UnaryOperator;
-import quarks.oplet.core.Pipe;
-import quarks.oplet.core.Sink;
 
 /**
  * A {@code TStream} is a declaration of a continuous sequence of tuples. A
@@ -195,6 +192,18 @@ public interface TStream<T> extends TopologyElement {
      *             if {@code n <= 0}
      */
     List<TStream<T>> split(int n, ToIntFunction<T> splitter);
+
+    /**
+     * Split a stream's tuples among {@code enumClass.size} streams as specified by
+     * {@code splitter}.
+     *
+     * @param enumClass
+     *            enum data to split
+     * @param splitter
+     *            the splitter function
+     * @return EnumMap<E,TStream<T>>
+     */
+    <E extends Enum<E>> EnumMap<E,TStream<T>> split(Class<E> enumClass, Function<T, E> splitter);
 
     /**
      * Declare a stream that contains the same contents as this stream while
