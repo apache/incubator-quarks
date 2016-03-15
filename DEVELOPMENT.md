@@ -118,17 +118,20 @@ For a description of the github workflow see:
 In summary:
     * fork the incubator-quarks github repository
     * clone your fork, use lightweight per-task branches, and commit / push changes to your fork
-    * when ready, create a pull request.  Commiters will get notified.
-    * for early preview / feedback, creat a pull request with [WIP] in the title.  
-      Committers won’t consider it for merging until after you remove the [WIP].
+      * name your branch quarks-xxxx - typically xxxx is a Jira ticket number
+    * when ready, create a pull request.  Committers will get notified.
+      * include QUARKS-XXXX in the name of your pull request
+      * for early preview / feedback, create a pull request with [WIP] in the title.  
+        Committers won’t consider it for merging until after [WIP] is removed.
 
 Since the github incubator-quarks repository is a mirror of the ASF repository,
 the usual github based merge workflow for committers isn’t supported.
 
-Commiters can use one of several ways to ultimately merge the pull request
-into the repo at the ASF. One way is described here:
+Committers can use one of several ways to ultimately merge the pull request
+into the repo at the ASF. One way is described here 
+( need to check / update with use of "--squash" ):
 
-    http://mail-archives.apache.org/mod_mbox/incubator-quarks-dev/201603.mbox/%3C1633289677.553519.1457733763078.JavaMail.yahoo%40mail.yahoo.com%3E 
+    http://mail-archives.apache.org/mod_mbox/incubator-quarks-dev/201603.mbox/%3C1633289677.553519.1457733763078.JavaMail.yahoo%40mail.yahoo.com%3E
 
 ### Using Eclipse
 
