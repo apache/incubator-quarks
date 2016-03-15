@@ -129,7 +129,7 @@ the usual github based merge workflow for committers isn’t supported.
 
 Committers can use one of several ways to ultimately merge the pull request
 into the repo at the ASF. One way is described here 
-( need to check / update with use of "--squash" ):
+( need to check / update with use of "--squash" - i.e., git merge --squash pr-<n> ):
 
     http://mail-archives.apache.org/mod_mbox/incubator-quarks-dev/201603.mbox/%3C1633289677.553519.1457733763078.JavaMail.yahoo%40mail.yahoo.com%3E
 
