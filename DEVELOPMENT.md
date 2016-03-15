@@ -128,10 +128,14 @@ Since the github incubator-quarks repository is a mirror of the ASF repository,
 the usual github based merge workflow for committers isn’t supported.
 
 Committers can use one of several ways to ultimately merge the pull request
-into the repo at the ASF. One way is described here 
-( need to check / update with use of "--squash" - i.e., git merge --squash pr-<n> ):
+into the repo at the ASF. One way is described here:
 
     http://mail-archives.apache.org/mod_mbox/incubator-quarks-dev/201603.mbox/%3C1633289677.553519.1457733763078.JavaMail.yahoo%40mail.yahoo.com%3E
+
+Notes with the above PR merge directions:
+  * seems like it should be using  `git merge --squash pr-<N>`
+  * use an https url unless you have a ssh key setup at github:
+    `git remote add mirror https://github.com/apache/incubator-quarks.git`
 
 ### Using Eclipse
 
