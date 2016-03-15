@@ -18,62 +18,45 @@
 package quarks.samples.topology;
 
 import quarks.console.server.HttpServer;
-import quarks.function.ToIntFunction;
 import quarks.providers.development.DevelopmentProvider;
 import quarks.topology.TStream;
 import quarks.topology.Topology;
 
-import java.util.List;
+import java.util.EnumMap;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class SplitWithEnumSample {
 
-  private enum EvenNumberEnum {
+    public enum LogSeverityEnum {
 
-    ZERO(0), TWO(2), FOUR(4), SIX(6), EIGHT(8), TEN(10);
+        EMERG(0), ALERT(1), CRITICAL(2), ERROR(3), WARNING(4), NOTICE(5), INFO(6), DEBUG(7);
 
-    public int num;
+        private final int code;
 
-    EvenNumberEnum(int input) {
-      this.num = input;
-    }
-
-    public int getValue() {
-      return num;
-    }
-
-  }
-
-  public static void main(String[] args) throws Exception {
-    DevelopmentProvider dtp = new DevelopmentProvider();
-
-    Topology t = dtp.newTopology("SplitWithEnumSample");
-
-    Random r = new Random();
-
-    TStream<Integer> d = t
-        .poll(() -> r.nextInt(20), 500, TimeUnit.MILLISECONDS);
-
-    List<TStream<Integer>> categories = d.split(EvenNumberEnum.class, new ToIntFunction<Integer>() {
-      @Override
-      public int applyAsInt(Integer inputNum) {
-        for (EvenNumberEnum enumVal : EvenNumberEnum.values()) {
-          if (enumVal.getValue() == inputNum) {
-            return enumVal.ordinal();
-          }
+        LogSeverityEnum(final int code) {
+            this.code = code;
         }
-        return -1;
-      }
-    });
-
-    for (TStream<Integer> enumStream : categories.subList(0, categories.size())) {
-      enumStream.sink(tuple -> System.out.println("DataInEnum = " + tuple));
     }
 
-    dtp.submit(t);
+    public static void main(String[] args) throws Exception {
+        DevelopmentProvider dtp = new DevelopmentProvider();
 
-    System.out.println(
-        dtp.getServices().getService(HttpServer.class).getConsoleUrl());
-  }
+        Topology t = dtp.newTopology("SplitWithEnumSample");
+
+        Random r = new Random();
+
+        LogSeverityEnum[] values = LogSeverityEnum.values();
+        TStream<String> d = t.poll(() -> values[r.nextInt(values.length)].toString()+ "_Log", 500, TimeUnit.MILLISECONDS);
+
+        EnumMap<LogSeverityEnum, TStream<String>> categories = d
+            .split(LogSeverityEnum.class, e -> LogSeverityEnum.valueOf(e.split("_")[0]));
+        for (TStream<String> enumStream : categories.values()) {
+            enumStream.sink(tuple -> System.out.println("DataInEnum = " + tuple));
+        }
+
+        dtp.submit(t);
+
+        System.out.println(dtp.getServices().getService(HttpServer.class).getConsoleUrl());
+    }
 }
