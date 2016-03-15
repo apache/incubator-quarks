@@ -4,30 +4,19 @@
 */
 package quarks.test.topology;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-
-import java.io.Serializable;
-import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorCompletionService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-import java.util.concurrent.atomic.AtomicLong;
-
 import org.junit.Ignore;
 import org.junit.Test;
-
 import quarks.topology.TSink;
 import quarks.topology.TStream;
 import quarks.topology.Topology;
 import quarks.topology.tester.Condition;
+
+import java.io.Serializable;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicLong;
+
+import static org.junit.Assert.*;
 
 @Ignore
 public abstract class TStreamTest extends TopologyAbstractTest {
@@ -50,7 +39,7 @@ public abstract class TStreamTest extends TopologyAbstractTest {
 
     /**
      * Test Peek. This will only work with an embedded setup.
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -110,7 +99,7 @@ public abstract class TStreamTest extends TopologyAbstractTest {
 
         assertTrue(contents.getResult().toString(), contents.valid());
     }
-    
+
     @Test
     public void testModifyWithDrops() throws Exception {
 
@@ -143,7 +132,7 @@ public abstract class TStreamTest extends TopologyAbstractTest {
 
         assertTrue(contents.valid());
     }
-    
+
     @Test
     public void tesFlattMap() throws Exception {
 
@@ -161,7 +150,7 @@ public abstract class TStreamTest extends TopologyAbstractTest {
 
         assertTrue(contents.getResult().toString(), contents.valid());
     }
-    
+
     @Test
     public void tesFlattMapWithNullIterator() throws Exception {
 
@@ -179,7 +168,7 @@ public abstract class TStreamTest extends TopologyAbstractTest {
 
         assertTrue(contents.getResult().toString(), contents.valid());
     }
-    
+
     @Test
     public void tesFlattMapWithNullValues() throws Exception {
 
@@ -284,16 +273,13 @@ public abstract class TStreamTest extends TopologyAbstractTest {
     /**
      * Test enum data structure
      */
-    private enum EnumData {
-        ZERO(0), ONE(0), TWO(2), THREE(3);
+    private enum LogSeverityEnum {
+        EMERG(0), ALERT(1), CRITICAL(2), ERROR(3), WARNING(4), NOTICE(5), INFO(6), DEBUG(7);
 
-        public int num;
+        private final int code;
 
-        EnumData(int input) {
-            this.num = input;
-        }
-        public int getValue() {
-            return num;
+        LogSeverityEnum(final int code) {
+            this.code = code;
         }
     }
 
@@ -305,33 +291,41 @@ public abstract class TStreamTest extends TopologyAbstractTest {
 
         Topology t = newTopology();
 
-        TStream<String> s = t.strings("1", "2", "3", "4", "5", "6", "7");
-        TStream<Integer> i = s.map(Integer::valueOf);
-        List<TStream<Integer>> splits = i.split(EnumData.class, tuple -> tuple%3);
+        TStream<String> s = t.strings("Log1_ALERT", "Log2_INFO", "Log3_INFO", "Log4_INFO", "Log5_ERROR", "Log6_ERROR", "Log7_CRITICAL");
+        TStream<String> i = s.map(String::toString);
+        EnumMap<LogSeverityEnum,TStream<String>> splits = i.split(LogSeverityEnum.class, e -> LogSeverityEnum.valueOf(e.split("_")[1]));
 
         assertStream(t, i);
 
-        Condition<Long> tc0 = t.getTester().tupleCount(splits.get(0), 2);
-        Condition<Long> tc1 = t.getTester().tupleCount(splits.get(1), 3);
-        Condition<Long> tc2 = t.getTester().tupleCount(splits.get(2), 2);
+        Condition<Long> tc0 = t.getTester().tupleCount(splits.get(LogSeverityEnum.ALERT), 1);
+        Condition<Long> tc1 = t.getTester().tupleCount(splits.get(LogSeverityEnum.INFO), 3);
+        Condition<Long> tc2 = t.getTester().tupleCount(splits.get(LogSeverityEnum.ERROR), 2);
+        Condition<Long> tc3 = t.getTester().tupleCount(splits.get(LogSeverityEnum.CRITICAL), 1);
+        Condition<Long> tc4 = t.getTester().tupleCount(splits.get(LogSeverityEnum.WARNING), 0);
 
-        Condition<List<Integer>> contents0 = t.getTester().streamContents(splits.get(0), 3, 6);
-        Condition<List<Integer>> contents1 = t.getTester().streamContents(splits.get(1), 1, 4, 7);
-        Condition<List<Integer>> contents2 = t.getTester().streamContents(splits.get(2), 2, 5);
+        Condition<List<String>> contents0 = t.getTester().streamContents(splits.get(LogSeverityEnum.ALERT), "Log1_ALERT");
+        Condition<List<String>> contents1 = t.getTester().streamContents(splits.get(LogSeverityEnum.INFO), "Log2_INFO",
+            "Log3_INFO", "Log4_INFO");
+        Condition<List<String>> contents2 = t.getTester().streamContents(splits.get(LogSeverityEnum.ERROR), "Log5_ERROR",
+            "Log6_ERROR");
+        Condition<List<String>> contents3 = t.getTester().streamContents(splits.get(LogSeverityEnum.CRITICAL), "Log7_CRITICAL");
+        Condition<List<String>> contents4 = t.getTester().streamContents(splits.get(LogSeverityEnum.WARNING));
 
-        complete(t, t.getTester().and(tc0, tc1, tc2));
+        complete(t, t.getTester().and(tc0, tc1, tc2, tc3, tc4));
 
 
         assertTrue(contents0.toString(), contents0.valid());
         assertTrue(contents1.toString(), contents1.valid());
         assertTrue(contents2.toString(), contents2.valid());
+        assertTrue(contents3.toString(), contents3.valid());
+        assertTrue(contents4.toString(), contents4.valid());
     }
 
     @Test
     public void testFanout2() throws Exception {
 
         Topology t = newTopology();
-        
+
         TStream<String> s = t.strings("a", "b", "c");
         TStream<String> sf = s.filter(tuple -> "b".equals(tuple));
         TStream<String> sm = s.modify(tuple -> tuple.concat("fo2"));
@@ -456,10 +450,10 @@ public abstract class TStreamTest extends TopologyAbstractTest {
             this.peeked = true;
         }
     }
-    
+
     /**
      * Test Union with itself.
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -473,7 +467,7 @@ public abstract class TStreamTest extends TopologyAbstractTest {
         assertSame(s, s.union(Collections.emptySet()));
         assertSame(s, s.union(Collections.singleton(s)));
     }
-    
+
     @Test
     public void testUnion2() throws Exception {
 
@@ -494,7 +488,7 @@ public abstract class TStreamTest extends TopologyAbstractTest {
         assertTrue(tc.getResult().toString(), tc.valid());
         assertTrue(contents.getResult().toString(), contents.valid());
     }
-    
+
     @Test
     public void testUnion4() throws Exception {
 
@@ -519,7 +513,7 @@ public abstract class TStreamTest extends TopologyAbstractTest {
         assertTrue(tc.getResult().toString(), tc.valid());
         assertTrue(contents.getResult().toString(), contents.valid());
     }
-    
+
     @Test
     public void testUnion4WithSelf() throws Exception {
 
@@ -544,14 +538,14 @@ public abstract class TStreamTest extends TopologyAbstractTest {
         assertTrue(tc.getResult().toString(), tc.valid());
         assertTrue(contents.getResult().toString(), contents.valid());
     }
-    
+
     @Test
     public void testSink() throws Exception {
 
         Topology t = newTopology();
 
         TStream<String> s = t.strings("a", "b", "c");
-        
+
         List<String> sinked = new ArrayList<>();
         TSink<String> terminal = s.sink(tuple -> sinked.add(tuple));
         assertNotNull(terminal);
@@ -561,12 +555,12 @@ public abstract class TStreamTest extends TopologyAbstractTest {
 
         Condition<Long> tc = t.getTester().tupleCount(s1, 3);
         complete(t, tc);
-        
+
         assertEquals("a", sinked.get(0));
         assertEquals("b", sinked.get(1));
         assertEquals("c", sinked.get(2));
     }
-    
+
     /**
      * Submit multiple jobs concurrently using ProcessSource.
      */
@@ -612,7 +606,7 @@ public abstract class TStreamTest extends TopologyAbstractTest {
         }
         waitForCompletion(completer, executions);
     }
-    
+
     /**
      * Submit multiple jobs concurrently using PeriodicSource.
      */
