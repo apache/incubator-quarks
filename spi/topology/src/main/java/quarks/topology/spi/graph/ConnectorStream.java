@@ -24,7 +24,6 @@ import quarks.topology.spi.AbstractTStream;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.IntStream;
 
 import static quarks.function.Functions.synchronizedFunction;
 
@@ -94,8 +93,20 @@ public class ConnectorStream<G extends Topology, T> extends AbstractTStream<G, T
 
         E[] es = enumClass.getEnumConstants();
 
-        List<TStream<T>> outputs = split(es.length, e -> IntStream.range(0, es.length).filter(i-> es[i].equals(splitter.apply(e)))
+/*        List<TStream<T>> outputs = split(es.length, e -> IntStream.range(0, es.length).filter(i-> es[i].equals(splitter.apply(e)))
             .mapToObj(i -> es[i].ordinal()).findAny().orElse(-1));
+*/
+
+        List<TStream<T>> outputs = split(es.length, new ToIntFunction<T>() {
+            @Override
+            public int applyAsInt(T input) {
+                for(int i = 0; i < es.length; i++){
+                    if(es[i].equals(splitter.apply(input))){
+                        return es[i].ordinal();
+                    }
+                }
+                return -1;
+        }});
 
         EnumMap<E,TStream<T>> returnMap = new EnumMap<>(enumClass);
         for (int i = 0; i < es.length ; i++){

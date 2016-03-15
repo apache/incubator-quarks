@@ -30,7 +30,7 @@ public class SplitWithEnumSample {
 
     public enum LogSeverityEnum {
 
-        EMERG(0), ALERT(1), CRITICAL(2), ERROR(3), WARNING(4), NOTICE(5), INFO(6), DEBUG(7);
+        ALERT(1), CRITICAL(2), ERROR(3), WARNING(4), NOTICE(5), INFO(6), DEBUG(7);
 
         private final int code;
 
