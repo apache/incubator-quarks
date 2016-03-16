@@ -1,7 +1,7 @@
 package quarks.test.svt.utils.sensor.gps;
 
 public class GpsData {
-	private double latitude;
+	private double latitude;  
 	private double longitude;
 	private double speedMph;
 	private long time;

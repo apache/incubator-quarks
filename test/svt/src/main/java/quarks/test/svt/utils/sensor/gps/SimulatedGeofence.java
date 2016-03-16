@@ -1,6 +1,6 @@
 package quarks.test.svt.utils.sensor.gps;
 
-public class SimulatedGeofence {
+public class SimulatedGeofence { 
 	protected static double GEOFENCE_LATITUDE_MAX = 37.21;
 	protected static double GEOFENCE_LATITUDE_MIN = 37.0;
 	protected static double GEOFENCE_LONGITUDE_MAX = -121.75;

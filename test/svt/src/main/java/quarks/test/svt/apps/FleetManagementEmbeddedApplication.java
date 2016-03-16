@@ -15,7 +15,7 @@ import quarks.topology.TWindow;
 import quarks.topology.Topology;
 
 
-public class FleetManagementEmbeddedApplication {
+public class FleetManagementEmbeddedApplication {   
 
 	public static void main(String[] args) throws Exception {
 		
