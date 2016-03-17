@@ -45,7 +45,7 @@ import quarks.topology.Topology;
  * subscribing to the messages for all the vehicles. For example, a Quarks application can subscribe to these messages, which are converted into a 
  * tuple flow for further analysis.  On a server, with more resources, Quarkscan correlate speeds with actual speed 
  * limit signs at the GPS location, to assess the driver. Another example may be to visualize all the vehicles on a map. 
- * These ideas are outside the scope of these sample applications. 
+ * These server implementations are outside the scope of this Java class. 
  *  
  * 
  * TODO: Add OBD
