@@ -15,10 +15,10 @@ software distributed under the License is distributed on an
 KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
- */
+*/
 package quarks.test.svt.utils.sensor.gps;
 
-public class GpsSensor { 
+public class GpsSensor {
 
 	private double latitude;
 	private double longitude;

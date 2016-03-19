@@ -15,10 +15,10 @@ software distributed under the License is distributed on an
 KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
- */
+*/
 package quarks.test.svt.utils.sensor.gps;
 
-public class SimulatedGeofence { 
+public class SimulatedGeofence {
 	protected static double GEOFENCE_LATITUDE_MAX = 37.21;
 	protected static double GEOFENCE_LATITUDE_MIN = 37.0;
 	protected static double GEOFENCE_LONGITUDE_MAX = -121.75;
