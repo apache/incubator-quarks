@@ -137,7 +137,9 @@
 	  </target>
 	
 	  <target name="jar" depends="compile">
-
+		<mkdir dir="${classes}/META-INF"/>
+		<copy file="${quarks.dir}/LICENSE" tofile="${classes}/META-INF/LICENSE.txt"/>
+		<copy file="${quarks.dir}/NOTICE" tofile="${classes}/META-INF/NOTICE.txt"/>
 	    <manifestclasspath property="jar.classpath" jarfile="${jar}"
 	        maxParentLevels="5">
 	      <classpath refid="compile.classpath"/>
