@@ -20,7 +20,9 @@ package quarks.runtime.appservice;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import com.google.gson.JsonObject;
 
@@ -92,6 +94,13 @@ public class AppService implements ApplicationService {
         applications.put(applicationName, builder);
     }
     
+    @Override
+    public Set<String> getApplicationNames() {
+        synchronized (applications) {
+            return new HashSet<>(applications.keySet());
+        }
+    }   
+
     BiConsumer<Topology, JsonObject> getBuilder(String applicationName) {
         return applications.get(applicationName);
     }
@@ -100,8 +109,7 @@ public class AppService implements ApplicationService {
         return provider;
     }
     
-    
     DirectSubmitter<Topology, Job> getSubmitter() {
         return submitter;
-    }   
+    }
 }

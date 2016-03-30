@@ -18,6 +18,8 @@ under the License.
 */
 package quarks.topology.services;
 
+import java.util.Set;
+
 import com.google.gson.JsonObject;
 
 import quarks.execution.Submitter;
@@ -63,4 +65,11 @@ public interface ApplicationService {
      * @see ApplicationServiceMXBean
      */
     void registerTopology(String applicationName, BiConsumer<Topology, JsonObject> builder);
+    
+    /**
+     * Returns the names of applications registered with this service.
+     * 
+     * @return the names of applications registered with this service.
+     */
+    Set<String> getApplicationNames();
 }
