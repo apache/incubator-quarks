@@ -24,6 +24,7 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -222,4 +223,9 @@ public class JsonControlService implements ControlService {
         method.invoke(control, arguments);
     }
 
+    @Override
+    public <T> Set<T> queryInterfaces(Class<T> controlInterface) {
+        // TODO add implementation
+        throw new UnsupportedOperationException();
+    }
 }

@@ -18,6 +18,8 @@ under the License.
 */
 package quarks.execution.services;
 
+import java.util.Set;
+
 /**
  * Service that provides a control mechanism.
  * <BR>
@@ -91,4 +93,18 @@ public interface ControlService {
      * Unregister a control bean registered by {@link #registerControl(String, String, String, Class, Object)}
      */
     void unregister(String controlId);
+    
+    /**
+     * Return the controls registered with this service which implement 
+     * the specified interface.  The interface had previously been used to 
+     * {@linkplain ControlService#registerControl(String, String, String, Class, Object) register}
+     * the control.
+     * 
+     * @param controlInterface
+     *              Public interface identifying the controls to be retrieved. 
+     * @return a set containing the controls registered with the given 
+     *              interface. If no control satisfies the query, an empty 
+     *              set is returned.
+     */
+    <T> Set<T> queryInterfaces(Class<T> controlInterface);
 }

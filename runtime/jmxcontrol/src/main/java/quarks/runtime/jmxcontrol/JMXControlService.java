@@ -19,10 +19,13 @@ under the License.
 package quarks.runtime.jmxcontrol;
 
 import java.lang.management.ManagementFactory;
+import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Set;
 
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
+import javax.management.JMX;
 import javax.management.MBeanRegistrationException;
 import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
@@ -122,4 +125,33 @@ public class JMXControlService implements ControlService {
             throw new RuntimeException(e);
         }
 	}
+
+    @Override
+    public <T> Set<T> queryInterfaces(Class<T> controlInterface) {
+        try {
+            MBeanServer mBeanServer = getMbs();
+            Set<ObjectName> names = getObjectNamesForInterface(controlInterface.getName());
+            
+            Set<T> controls = new HashSet<T>();
+            for (ObjectName on : names) {
+                controls.add(JMX.newMXBeanProxy(mBeanServer, on, controlInterface));
+            }
+            return controls;
+        }
+        catch (MalformedObjectNameException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Set<ObjectName> getObjectNamesForInterface(String interfaceName) 
+            throws MalformedObjectNameException {
+        StringBuffer sbuf = new StringBuffer();
+        sbuf.append(getDomain()).
+                append(":interface=").append(ObjectName.quote(interfaceName)).
+                append(",*");
+        ObjectName objName = new ObjectName(sbuf.toString());
+
+        MBeanServer mBeanServer = getMbs();
+        return mBeanServer.queryNames(objName, null);
+    }
 }
