@@ -45,7 +45,24 @@ The top-level Ant file `quarks/build.xml` has these main targets:
 
 The build process has been tested on Linux and MacOSX.
 
-To build on Windows probably needs some changed, please get involved and contribute them!
+To build on Windows probably needs some changes, please get involved and contribute them!
+
+**Continuous Integration**
+
+When a pull request is opened on the GitHub mirror site, the Travis CI service runs a full build.
+
+If your test may randomly fail because for example it depends on publicly available test services, 
+or is timing dependent, and if timing variances on the Travis CI servers may make it more likely
+for your tests to fail, you may disable the test from being executed on Travis CI using the 
+following statement:
+```
+    @Test
+    public void testMyMethod() {
+        assumeTrue(!Boolean.getBoolean("quarks.build.ci"));
+        // your test code comes here
+        ...
+    }
+```
 
 ### Test reports
 
