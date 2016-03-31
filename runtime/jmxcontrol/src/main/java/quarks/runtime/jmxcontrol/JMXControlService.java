@@ -127,7 +127,7 @@ public class JMXControlService implements ControlService {
 	}
 
     @Override
-    public <T> Set<T> queryInterfaces(Class<T> controlInterface) {
+    public <T> Set<T> getControls(Class<T> controlInterface) {
         try {
             MBeanServer mBeanServer = getMbs();
             Set<ObjectName> names = getObjectNamesForInterface(controlInterface.getName());

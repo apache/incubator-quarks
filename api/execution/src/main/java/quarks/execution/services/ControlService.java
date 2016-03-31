@@ -106,5 +106,5 @@ public interface ControlService {
      *              interface. If no control satisfies the query, an empty 
      *              set is returned.
      */
-    <T> Set<T> queryInterfaces(Class<T> controlInterface);
+    <T> Set<T> getControls(Class<T> controlInterface);
 }

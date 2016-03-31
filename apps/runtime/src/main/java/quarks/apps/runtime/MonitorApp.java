@@ -112,7 +112,7 @@ public class MonitorApp {
     public static void submitApplication(String applicationName, ControlService controlService) {
         try {
             Set<ApplicationServiceMXBean> controls = 
-                    controlService.queryInterfaces(ApplicationServiceMXBean.class);
+                    controlService.getControls(ApplicationServiceMXBean.class);
             if (controls.isEmpty()) {
                 throw new IllegalStateException(
                         "Could not find a registered control with the following interface: " + 

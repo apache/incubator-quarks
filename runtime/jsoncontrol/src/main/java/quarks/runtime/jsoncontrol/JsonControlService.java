@@ -224,7 +224,7 @@ public class JsonControlService implements ControlService {
     }
 
     @Override
-    public <T> Set<T> queryInterfaces(Class<T> controlInterface) {
+    public <T> Set<T> getControls(Class<T> controlInterface) {
         // TODO add implementation
         throw new UnsupportedOperationException();
     }
