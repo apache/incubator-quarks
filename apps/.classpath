@@ -2,6 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="iot/src/main/java"/>
 	<classpathentry kind="src" path="iot/src/test/java"/>
+    <classpathentry kind="src" path="runtime/src/main/java"/>
+    <classpathentry kind="src" path="runtime/src/test/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ext"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>

@@ -1,0 +1,29 @@
+<project name="quarks.apps.runtime" default="all" 
+    xmlns:jacoco="antlib:org.jacoco.ant"
+    >
+    <description>
+        Applications monitoring the Quarks runtime
+    </description>
+
+  <property name="component.path" value="apps/runtime"/>
+  <import file="../../common-build.xml"/>
+
+  <path id="compile.classpath">
+    <pathelement location="${quarks.lib}/quarks.api.topology.jar" />
+  	<pathelement location="${quarks.lib}/quarks.runtime.jobregistry.jar" />
+  	<pathelement location="${quarks.lib}/quarks.runtime.appservice.jar" />
+  </path>
+
+  <path id="test.compile.classpath">
+    <pathelement location="${jar}" />
+    <pathelement location="${quarks.lib}/quarks.providers.development.jar" />
+    <path refid="compile.classpath"/>
+  </path>
+
+  <path id="test.classpath">
+    <pathelement location="${test.classes}" />
+    <path refid="test.compile.classpath"/>
+    <path refid="test.common.classpath" />
+  </path>
+
+</project>

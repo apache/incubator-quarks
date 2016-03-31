@@ -133,6 +133,7 @@
         <ant dir="console/servlets" target="@{target}" useNativeBasedir="true" />
         <ant dir="apps/iot" target="@{target}" useNativeBasedir="true" />
         <ant dir="providers/development" target="@{target}" useNativeBasedir="true"/>
+        <ant dir="apps/runtime" target="@{target}" useNativeBasedir="true" />
         <ant dir="providers/iot" target="@{target}" useNativeBasedir="true"/>
         <ant dir="analytics/math3" target="@{target}" useNativeBasedir="true"/>
         <ant dir="analytics/sensors" target="@{target}" useNativeBasedir="true"/>
