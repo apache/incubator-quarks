@@ -18,10 +18,6 @@ under the License.
 */
 package quarks.connectors.hdfs;
 
-import java.io.File;
-import java.nio.file.WatchService;
-import java.util.Comparator;
-
 import quarks.connectors.file.runtime.DirectoryWatcher;
 import quarks.connectors.file.runtime.IFileWriterPolicy;
 import quarks.connectors.file.runtime.TextFileReader;
@@ -33,20 +29,23 @@ import quarks.topology.TSink;
 import quarks.topology.TStream;
 import quarks.topology.TopologyElement;
 
+import java.io.File;
+import java.util.Comparator;
+
 /**
  * {@code HdfsStreams} is a connector for integrating with Hadoop file system(HDFS) objects.
  * <p>
- * File stream operations include:
+ * HDFS stream operations include:
  * <ul>
  * <li>Write tuples to text files - {@link #textFileWriter(TStream, Supplier, Supplier) textFileWriter}</li>
- * <li>Watch a directory for new files - {@link #directoryWatcher(TopologyElement, Supplier) directoryWatcher}</li>
+ * <li>Watch a directory for new files - {@link #hdfsDirectoryWatcher(TopologyElement, Supplier) directoryWatcher}</li>
  * <li>Create tuples from text files - {@link #textFileReader(TStream, Function, BiFunction) textFileReader}</li>
  * </ul>
  */
 public class HdfsStreams {
     @SuppressWarnings("unused")
-    private static final FileStreams forCodeCoverage = new FileStreams();
-    private FileStreams() {};
+    private static final HdfsStreams forCodeCoverage = new HdfsStreams();
+    private HdfsStreams() {};
 
     /**
      * Declare a stream containing the absolute pathname of
@@ -59,9 +58,9 @@ public class HdfsStreams {
      * @return Stream containing absolute pathnames of newly created files in
      *            {@code directory}.
      */
-    public static TStream<String> directoryWatcher(TopologyElement te,
+    public static TStream<String> hdfsDirectoryWatcher(TopologyElement te,
             Supplier<String> directory) {
-        return directoryWatcher(te, directory, null);
+        return hdfsDirectoryWatcher(te, directory, null);
     }
 
     /**
@@ -90,10 +89,6 @@ public class HdfsStreams {
      * pathname may need to be prepared for the pathname to no longer be
      * valid when it receives the tuple or during its processing of the tuple.
      * <p>
-     * The behavior on MacOS may be unsavory, even as recent as Java8, as
-     * MacOs Java lacks a native implementation of {@link WatchService}.
-     * The result can be a delay in detecting newly created files (e.g., 10sec)
-     * as well not detecting rapid deletion and recreation of a file.
      *
      * @param directory
      *            Name of the directory to watch.
@@ -103,7 +98,7 @@ public class HdfsStreams {
      * @return Stream containing absolute pathnames of newly created files in
      *            {@code directory}.
      */
-    public static TStream<String> directoryWatcher(TopologyElement te,
+    public static TStream<String> hdfsDirectoryWatcher(TopologyElement te,
             Supplier<String> directory, Comparator<File> comparator) {
         return te.topology().source(() -> new DirectoryWatcher(directory, comparator));
     }
