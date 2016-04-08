@@ -20,7 +20,6 @@ under the License.
 package quarks.connectors.hdfs.runtime;
 
 import org.slf4j.Logger;
-import quarks.connectors.file.runtime.FileConnector;
 import quarks.function.BiFunction;
 import quarks.function.Consumer;
 import quarks.function.Function;
@@ -37,7 +36,7 @@ import java.nio.file.Path;
 public class HdfsTextFileReader extends Pipe<String,String> {
 
     private static final long serialVersionUID = 1L;
-    private static final Logger trace = FileConnector.getTrace();
+    private static final Logger trace = HdfsConnector.getTrace();
     private volatile String encoding = "UTF-8";
     private volatile Charset charset;
     private volatile boolean shutdown;
