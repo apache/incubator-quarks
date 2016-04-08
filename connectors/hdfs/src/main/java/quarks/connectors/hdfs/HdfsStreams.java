@@ -18,10 +18,8 @@ under the License.
 */
 package quarks.connectors.hdfs;
 
-import quarks.connectors.file.runtime.DirectoryWatcher;
-import quarks.connectors.file.runtime.IFileWriterPolicy;
-import quarks.connectors.file.runtime.TextFileReader;
-import quarks.connectors.file.runtime.TextFileWriter;
+import quarks.connectors.hdfs.runtime.HdfsDirectoryWatcher;
+import quarks.connectors.hdfs.runtime.HdfsTextFileReader;
 import quarks.function.BiFunction;
 import quarks.function.Function;
 import quarks.function.Supplier;
@@ -38,7 +36,7 @@ import java.util.Comparator;
  * HDFS stream operations include:
  * <ul>
  * <li>Write tuples to text files - {@link #textFileWriter(TStream, Supplier, Supplier) textFileWriter}</li>
- * <li>Watch a directory for new files - {@link #hdfsDirectoryWatcher(TopologyElement, Supplier) directoryWatcher}</li>
+ * <li>Watch a directory for new files - {@link #DirectoryWatcher(TopologyElement, Supplier) directoryWatcher}</li>
  * <li>Create tuples from text files - {@link #textFileReader(TStream, Function, BiFunction) textFileReader}</li>
  * </ul>
  */
@@ -58,9 +56,9 @@ public class HdfsStreams {
      * @return Stream containing absolute pathnames of newly created files in
      *            {@code directory}.
      */
-    public static TStream<String> hdfsDirectoryWatcher(TopologyElement te,
+    public static TStream<String> DirectoryWatcher(TopologyElement te,
             Supplier<String> directory) {
-        return hdfsDirectoryWatcher(te, directory, null);
+        return DirectoryWatcher(te, directory, null);
     }
 
     /**
@@ -98,9 +96,9 @@ public class HdfsStreams {
      * @return Stream containing absolute pathnames of newly created files in
      *            {@code directory}.
      */
-    public static TStream<String> hdfsDirectoryWatcher(TopologyElement te,
+    public static TStream<String> DirectoryWatcher(TopologyElement te,
             Supplier<String> directory, Comparator<File> comparator) {
-        return te.topology().source(() -> new DirectoryWatcher(directory, comparator));
+        return te.topology().source(() -> new HdfsDirectoryWatcher(directory, comparator));
     }
 
     /**
@@ -180,68 +178,10 @@ public class HdfsStreams {
     public static TStream<String> textFileReader(TStream<String> pathnames,
         Function<String,String> preFn, BiFunction<String,Exception,String> postFn) {
 
-        TextFileReader reader = new TextFileReader();
+        HdfsTextFileReader reader = new HdfsTextFileReader();
         reader.setPre(preFn);
         reader.setPost(postFn);
         return pathnames.pipe(reader);
     }
 
-    /**
-     * Write the contents of a stream to files.
-     * <p>
-     * The default {@link FileWriterPolicy} is used.
-     * <p>
-     * This is the same as {@code textFileWriter(contents, basePathname, null)}.
-     * <p>
-     * Sample use:
-     * <pre>{@code
-     * // write a stream of LogEvent to files, using the default
-     * // file writer policy
-     * String basePathname = "/myLogDir/LOG"; // yield LOG_YYYYMMDD_HHMMSS
-     * TStream<MyLogEvent> events = ...
-     * TStream<String> stringEvents = events.map(event -> event.toString());
-     * FileStreams.textFileWriter(stringEvents, () -> basePathname);
-     * }</pre>
-     * @param contents the lines to write
-     * @param basePathname the base pathname of the created files
-     */
-    public static TSink<String> textFileWriter(TStream<String> contents,
-            Supplier<String> basePathname) {
-        return textFileWriter(contents, basePathname, null);
-    }
-
-    /**
-     * Write the contents of a stream to files subject to the control
-     * of a file writer policy.
-     * <p>
-     * A separate policy instance must be used for invocation.
-     * A default {@link FileWriterPolicy} is used if a policy is not specified.
-     * <p>
-     * Sample use:
-     * <pre>{@code
-     * // write a stream of LogEvent to files using a policy of:
-     * // no additional flush, 100 events per file, retain 5 files
-     * IFileWriterPolicy<String> policy = new FileWriterPolicy<String>(
-     *           FileWriterFlushConfig.newImplicitConfig(),
-     *           FileWriterCycleConfig.newCountBasedConfig(100),
-     *           FileWriterRetentionConfig.newFileCountBasedConfig(5)
-     *           );
-     * String basePathname = "/myLogDir/LOG"; // yield LOG_YYYYMMDD_HHMMSS
-     * TStream<MyLogEvent> events = ...
-     * TStream<String> stringEvents = events.map(event -> event.toString());
-     * FileStreams.textFileWriter(stringEvents, () -> basePathname, () -> policy);
-     * }</pre>
-     * @param contents the lines to write
-     * @param basePathname the base pathname of the created files
-     * @param policy the policy to use.  may be null.
-     * @see FileWriterPolicy
-     */
-    public static TSink<String> textFileWriter(TStream<String> contents,
-            Supplier<String> basePathname, Supplier<IFileWriterPolicy<String>> policy) {
-        if (policy == null) {
-            IFileWriterPolicy<String> defaultPolicy = new FileWriterPolicy<String>(){};
-            policy = () -> defaultPolicy;
-        }
-        return contents.sink(new TextFileWriter(basePathname, policy));
-    }
 }

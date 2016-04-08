@@ -20,6 +20,7 @@ under the License.
 package quarks.connectors.hdfs.runtime;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hdfs.DFSInotifyEventInputStream;
 import org.apache.hadoop.hdfs.client.HdfsAdmin;
 import org.apache.hadoop.hdfs.inotify.Event;
@@ -31,7 +32,6 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.net.URI;
-import java.nio.file.Path;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchService;
 import java.util.ArrayList;
@@ -80,8 +80,6 @@ public class HdfsDirectoryWatcher implements AutoCloseable,
     private final Supplier<String> dirSupplier;
     private final Comparator<File> comparator;
     private final Set<String> seenFiles = Collections.synchronizedSet(new HashSet<>());
-    private volatile File dirFile;
-    private WatchService watcher;
     private DFSInotifyEventInputStream eventStream;
     private Queue<String> pendingNames = new LinkedList<>();
 
@@ -112,18 +110,15 @@ public class HdfsDirectoryWatcher implements AutoCloseable,
         HdfsAdmin admin = new HdfsAdmin( URI.create( dirSupplier.get() ), new Configuration() );
         eventStream = admin.getInotifyEventStream();
 
-        trace.info("watching directory {}", dirFile);
+        trace.info("watching directory {}", dirSupplier.get());
     }
 
     @Override
     public void close() throws IOException {
-        watcher.close();
+        System.out.println("Close");
     }
 
     /**
-     * Waits for files to become available
-     * and adds them through {@link #sortAndSubmit(List)}
-     * to the pendingNames list which the iterator pulls from.
      */
     @SuppressWarnings("unchecked")
     private void watchForFiles() throws Exception {
@@ -136,27 +131,10 @@ public class HdfsDirectoryWatcher implements AutoCloseable,
 
             if (event.getEventType() == Event.EventType.CREATE) {
                 Event.CreateEvent createEvent = (Event.CreateEvent) event;
-                Path newPath = ((WatchEvent<Path>) watchEvent).context();
-                File newFile = toAbsFile(newPath);
-                if (accept(newFile))
-                    newFiles.add(newFile);
-            } else if (ENTRY_DELETE == watchEvent.kind()) {
-                Path deletedPath = ((WatchEvent<Path>) watchEvent).context();
-                File deletedFile = toAbsFile(deletedPath);
-                seenFiles.remove(deletedFile.getName());
-            } else if (OVERFLOW == watchEvent.kind()) {
-                needFullScan = true;
+                System.out.println( "  path = " + createEvent.getPath() );
+                Path newPath = new Path(createEvent.getPath());
             }
         }
-        key.reset();
-
-        if (needFullScan) {
-            Collections.addAll(newFiles, dirFile.listFiles(this));
-        }
-    }
-
-    private File toAbsFile(Path relPath) {
-        return new File(dirFile, relPath.getFileName().toString());
     }
 
     @Override
