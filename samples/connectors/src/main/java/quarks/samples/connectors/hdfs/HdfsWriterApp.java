@@ -18,30 +18,30 @@ under the License.
 */
 package quarks.samples.connectors.hdfs;
 
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hdfs.client.HdfsAdmin;
-import quarks.connectors.file.FileStreams;
-import quarks.connectors.file.FileWriterCycleConfig;
-import quarks.connectors.file.FileWriterFlushConfig;
-import quarks.connectors.file.FileWriterPolicy;
-import quarks.connectors.file.FileWriterRetentionConfig;
-import quarks.console.server.HttpServer;
-import quarks.providers.development.DevelopmentProvider;
-import quarks.topology.TStream;
-import quarks.topology.Topology;
+//import org.apache.hadoop.conf.Configuration;
+//import org.apache.hadoop.hdfs.client.HdfsAdmin;
+//import quarks.connectors.file.FileStreams;
+//import quarks.connectors.file.FileWriterCycleConfig;
+//import quarks.connectors.file.FileWriterFlushConfig;
+//import quarks.connectors.file.FileWriterPolicy;
+//import quarks.connectors.file.FileWriterRetentionConfig;
+//import quarks.console.server.HttpServer;
+//import quarks.providers.development.DevelopmentProvider;
+//import quarks.topology.TStream;
+//import quarks.topology.Topology;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
+//import java.io.File;
+//import java.io.IOException;
+//import java.net.URI;
+//import java.util.Date;
+//import java.util.concurrent.TimeUnit;
+//import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Write a TStream<String> to files.
  */
 public class HdfsWriterApp {
-    private final String hdfsDirectory;
+    /*private final String hdfsDirectory;
     private final String basePathname;
     private static final String baseLeafname = "HdfsWriterSample";
 
@@ -52,10 +52,10 @@ public class HdfsWriterApp {
         writer.run();
     }
 
-    /**
+    *//**
      *
      * @param directory an existing directory to create files in
-     */
+     *//*
     public HdfsWriterApp(String hdfsDirectory) throws IOException {
         HdfsAdmin admin = new HdfsAdmin(URI.create(hdfsDirectory), new Configuration());
         if (!dir.exists())
@@ -93,6 +93,6 @@ public class HdfsWriterApp {
         System.out.println("Console URL for the job: "
                 + tp.getServices().getService(HttpServer.class).getConsoleUrl());
         tp.submit(t);
-    }
+    }*/
 
 }

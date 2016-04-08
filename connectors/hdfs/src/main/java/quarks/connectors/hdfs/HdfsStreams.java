@@ -23,7 +23,6 @@ import quarks.connectors.hdfs.runtime.HdfsTextFileReader;
 import quarks.function.BiFunction;
 import quarks.function.Function;
 import quarks.function.Supplier;
-import quarks.topology.TSink;
 import quarks.topology.TStream;
 import quarks.topology.TopologyElement;
 
@@ -35,7 +34,7 @@ import java.util.Comparator;
  * <p>
  * HDFS stream operations include:
  * <ul>
- * <li>Write tuples to text files - {@link #textFileWriter(TStream, Supplier, Supplier) textFileWriter}</li>
+ * <li>Write tuples to text files - </li>
  * <li>Watch a directory for new files - {@link #DirectoryWatcher(TopologyElement, Supplier) directoryWatcher}</li>
  * <li>Create tuples from text files - {@link #textFileReader(TStream, Function, BiFunction) textFileReader}</li>
  * </ul>

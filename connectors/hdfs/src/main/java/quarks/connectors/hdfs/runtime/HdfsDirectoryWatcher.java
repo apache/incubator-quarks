@@ -19,6 +19,12 @@ under the License.
 
 package quarks.connectors.hdfs.runtime;
 
+import static org.apache.hadoop.hdfs.inotify.Event.EventType.CREATE;
+import static org.apache.hadoop.hdfs.inotify.Event.EventType.CLOSE;
+import static org.apache.hadoop.hdfs.inotify.Event.EventType.RENAME;
+import static org.apache.hadoop.hdfs.inotify.Event.EventType.METADATA;
+import static org.apache.hadoop.hdfs.inotify.Event.EventType.UNLINK;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hdfs.DFSInotifyEventInputStream;
@@ -32,7 +38,6 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.net.URI;
-import java.nio.file.WatchEvent;
 import java.nio.file.WatchService;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -128,12 +133,28 @@ public class HdfsDirectoryWatcher implements AutoCloseable,
         List<File> newFiles = new ArrayList<>();
         boolean needFullScan = false;
         for (Event event : eBatch.getEvents()) {
-
-            if (event.getEventType() == Event.EventType.CREATE) {
+            switch (event.getEventType()) {
+            case CREATE:
+                trace.info("inotify CREATE called");
                 Event.CreateEvent createEvent = (Event.CreateEvent) event;
                 System.out.println( "  path = " + createEvent.getPath() );
-                Path newPath = new Path(createEvent.getPath());
+                break;
+            case CLOSE:
+                trace.info("inotify CLOSE called");
+                break;
+            case RENAME:
+                trace.info("inotify RENAME called");
+                break;
+            case METADATA:
+                trace.info("inotify METADATA called");
+                break;
+            case UNLINK:
+                trace.info("inotify UNLINK called");
+                break;
+            default:
+                break;
             }
+
         }
     }
 
