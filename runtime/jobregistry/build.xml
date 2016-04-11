@@ -36,6 +36,7 @@
   <path id="test.classpath">
     <pathelement location="${test.classes}" />
     <path refid="test.compile.classpath"/>
+    <path refid="test.common.classpath"/>
   </path>
 
 
