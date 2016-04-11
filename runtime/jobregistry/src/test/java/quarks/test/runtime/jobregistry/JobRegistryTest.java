@@ -28,8 +28,8 @@ import java.util.concurrent.TimeoutException;
 import org.junit.Test;
 
 import quarks.execution.Job;
-import quarks.execution.services.job.JobRegistryService;
-import quarks.execution.services.job.JobRegistryService.EventType;
+import quarks.execution.services.JobRegistryService;
+import quarks.execution.services.JobRegistryService.EventType;
 import quarks.function.BiConsumer;
 import quarks.runtime.jobregistry.JobRegistry;
 

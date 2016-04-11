@@ -27,8 +27,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import quarks.execution.mbeans.JobMXBean;
 import quarks.execution.services.ControlService;
+import quarks.execution.services.JobRegistryService;
 import quarks.execution.services.ServiceContainer;
-import quarks.execution.services.job.JobRegistryService;
 import quarks.graph.spi.execution.AbstractGraphJob;
 import quarks.oplet.JobContext;
 import quarks.runtime.etiao.graph.DirectGraph;

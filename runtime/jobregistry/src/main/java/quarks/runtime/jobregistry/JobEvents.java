@@ -19,9 +19,9 @@ under the License.
 package quarks.runtime.jobregistry;
 
 import quarks.execution.Job;
+import quarks.execution.services.JobRegistryService;
 import quarks.execution.services.RuntimeServices;
-import quarks.execution.services.job.JobRegistryService;
-import quarks.execution.services.job.JobRegistryService.EventType;
+import quarks.execution.services.JobRegistryService.EventType;
 import quarks.function.BiConsumer;
 import quarks.function.BiFunction;
 import quarks.function.Consumer;

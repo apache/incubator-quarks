@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 import com.google.gson.JsonObject;
 
 import quarks.execution.Job;
-import quarks.execution.services.job.JobRegistryService;
+import quarks.execution.services.JobRegistryService;
 import quarks.providers.direct.DirectProvider;
 import quarks.runtime.jobregistry.JobEvents;
 import quarks.runtime.jobregistry.JobRegistry;

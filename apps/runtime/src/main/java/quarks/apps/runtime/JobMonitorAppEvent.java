@@ -22,7 +22,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import quarks.execution.Job;
-import quarks.execution.services.job.JobRegistryService;
+import quarks.execution.services.JobRegistryService;
 
 /**
  * Helpers for parsing generating and parsing a JSON representation of job
