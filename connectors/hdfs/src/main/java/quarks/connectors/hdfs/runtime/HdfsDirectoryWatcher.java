@@ -127,6 +127,7 @@ public class HdfsDirectoryWatcher implements AutoCloseable,
 
         EventBatch eBatch = eventStream.take();
 
+        System.out.println("TxId = " + eBatch.getTxid());
         List<File> newFiles = new ArrayList<>();
         boolean needFullScan = false;
         for (Event event : eBatch.getEvents()) {
@@ -134,7 +135,7 @@ public class HdfsDirectoryWatcher implements AutoCloseable,
             case CREATE:
                 trace.info("inotify CREATE called");
                 Event.CreateEvent createEvent = (Event.CreateEvent) event;
-                System.out.println( "  path = " + createEvent.getPath() );
+                System.out.println( "  path = " + createEvent.getPath());
                 break;
             case CLOSE:
                 trace.info("inotify CLOSE called");
