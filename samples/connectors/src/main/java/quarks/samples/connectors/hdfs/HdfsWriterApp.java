@@ -18,24 +18,24 @@ under the License.
 */
 package quarks.samples.connectors.hdfs;
 
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hdfs.client.HdfsAdmin;
-import quarks.connectors.file.FileStreams;
-import quarks.connectors.file.FileWriterCycleConfig;
-import quarks.connectors.file.FileWriterFlushConfig;
-import quarks.connectors.file.FileWriterPolicy;
-import quarks.connectors.file.FileWriterRetentionConfig;
-import quarks.console.server.HttpServer;
-import quarks.providers.development.DevelopmentProvider;
-import quarks.topology.TStream;
-import quarks.topology.Topology;
+//import org.apache.hadoop.conf.Configuration;
+//import org.apache.hadoop.hdfs.client.HdfsAdmin;
+//import quarks.connectors.file.FileStreams;
+//import quarks.connectors.file.FileWriterCycleConfig;
+//import quarks.connectors.file.FileWriterFlushConfig;
+//import quarks.connectors.file.FileWriterPolicy;
+//import quarks.connectors.file.FileWriterRetentionConfig;
+//import quarks.console.server.HttpServer;
+//import quarks.providers.development.DevelopmentProvider;
+//import quarks.topology.TStream;
+//import quarks.topology.Topology;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
+//import java.io.File;
+//import java.io.IOException;
+//import java.net.URI;
+//import java.util.Date;
+//import java.util.concurrent.TimeUnit;
+//import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Write a TStream<String> to files.

@@ -18,19 +18,19 @@ under the License.
 */
 package quarks.samples.connectors.hdfs;
 
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.hdfs.client.HdfsAdmin;
-import quarks.connectors.file.FileStreams;
-import quarks.connectors.hdfs.HdfsStreams;
-import quarks.console.server.HttpServer;
-import quarks.providers.development.DevelopmentProvider;
-import quarks.topology.TStream;
-import quarks.topology.Topology;
+//import org.apache.hadoop.conf.Configuration;
+//import org.apache.hadoop.fs.FileSystem;
+//import org.apache.hadoop.fs.Path;
+//import org.apache.hadoop.hdfs.client.HdfsAdmin;
+//import quarks.connectors.file.FileStreams;
+//import quarks.connectors.hdfs.HdfsStreams;
+//import quarks.console.server.HttpServer;
+//import quarks.providers.development.DevelopmentProvider;
+//import quarks.topology.TStream;
+//import quarks.topology.Topology;
 
-import java.io.IOException;
-import java.net.URI;
+//import java.io.IOException;
+//import java.net.URI;
 
 /**
  * Watch a hdfsDirectory for files and convert their contents into a stream.
