@@ -49,9 +49,6 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
-import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
-import static java.nio.file.StandardWatchEventKinds.OVERFLOW;
-
 /**
  * Watch a directory for files being added to it and create a stream
  * of pathname strings for the files.

@@ -18,26 +18,19 @@ under the License.
 */
 package quarks.samples.connectors.hdfs;
 
-//import org.apache.hadoop.conf.Configuration;
-//import org.apache.hadoop.fs.FileSystem;
-//import org.apache.hadoop.fs.Path;
-//import org.apache.hadoop.hdfs.client.HdfsAdmin;
-//import quarks.connectors.file.FileStreams;
-//import quarks.connectors.hdfs.HdfsStreams;
-//import quarks.console.server.HttpServer;
-//import quarks.providers.development.DevelopmentProvider;
-//import quarks.topology.TStream;
-//import quarks.topology.Topology;
+import quarks.connectors.hdfs.HdfsStreams;
+import quarks.console.server.HttpServer;
+import quarks.providers.development.DevelopmentProvider;
+import quarks.topology.TStream;
+import quarks.topology.Topology;
 
-//import java.io.IOException;
-//import java.net.URI;
+import java.io.IOException;
 
 /**
  * Watch a hdfsDirectory for files and convert their contents into a stream.
  */
 public class HdfsReaderApp {
-   /* private final String hdfsDirectory;
-    private final FileSystem hdfs;
+    private final String hdfsDirectory;
     private static final String baseLeafname = "HdfsReaderSample";
 
     public static void main(String[] args) throws Exception {
@@ -47,62 +40,48 @@ public class HdfsReaderApp {
         reader.run();
     }
 
-    *//**
-     *
+    /**
      * @param hdfsDirectory an existing directory to watch for file
-     *//*
+     */
     public HdfsReaderApp(String hdfsDirectory) throws IOException {
-        Configuration conf = new Configuration();
+        this.hdfsDirectory = hdfsDirectory;
+        /*Configuration conf = new Configuration();
         conf.set("fs.defaultFS", hdfsDirectory);
-        this.hdfs =FileSystem.get(conf);
+        this.hdfs = FileSystem.get(conf);
         Path path = new Path(hdfsDirectory);
 
-        if (hdfs.exists(path) && hdfs.isDirectory(path)){
+        if (hdfs.exists(path) && hdfs.isDirectory(path)) {
             this.hdfsDirectory = hdfsDirectory;
-        }else {
+        } else {
             throw new IllegalArgumentException("HDFS directory doesn't exist");
         }
-        HdfsAdmin admin = new HdfsAdmin(URI.create(hdfsDirectory), conf);
+        HdfsAdmin admin = new HdfsAdmin(URI.create(hdfsDirectory), conf);*/
     }
-    
+
     public void run() throws Exception {
         DevelopmentProvider tp = new DevelopmentProvider();
-        
+
         // build the application / topology
-        
+
         Topology t = tp.newTopology("HDFSSample consumer");
 
         // watch for files
-        TStream<String> pathNames = FileStreams.directoryWatcher(t, () -> hdfsDirectory);
-        
+        TStream<String> pathNames = HdfsStreams.directoryWatcher(t, () -> hdfsDirectory);
+
         // create a stream containing the files' contents.
         // use a preFn to include a separator in the results.
         // use a postFn to delete the file once its been processed.
-        TStream<String> contents = HdfsStreams.textFileReader(pathNames,
-                tuple -> "<PRE-FUNCTION> "+tuple, 
-                (tuple,exception) -> {
-                    // exercise a little caution in case the user pointed
-                    // us at a directory with other things in it
-                    if (tuple.contains("/"+baseLeafname+"_")) {
-                        Path path = new Path(tuple);
-                        try {
-                            hdfs.delete(path, true);
-                        } catch (IOException e) {
-                            System.out.println("HDFS File " + tuple + " does not exists");
-                            e.printStackTrace();
-                        }
-                    }
-                    return null;
-                });
-        
+        TStream<String> contents = HdfsStreams
+            .textFileReader(pathNames, tuple -> "<PRE-FUNCTION> " + tuple, null);
+
         // print out what's being read
         contents.print();
-        
+
         // run the application / topology
         System.out.println("starting the reader watching directory " + hdfsDirectory);
-        System.out.println("Console URL for the job: "
-                + tp.getServices().getService(HttpServer.class).getConsoleUrl());
+        System.out.println(
+            "Console URL for the job: " + tp.getServices().getService(HttpServer.class)
+                .getConsoleUrl());
         tp.submit(t);
     }
-*/
 }

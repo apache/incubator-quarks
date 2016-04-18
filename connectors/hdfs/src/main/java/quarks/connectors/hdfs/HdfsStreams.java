@@ -35,7 +35,7 @@ import java.util.Comparator;
  * HDFS stream operations include:
  * <ul>
  * <li>Write tuples to text files - </li>
- * <li>Watch a directory for new files - {@link #DirectoryWatcher(TopologyElement, Supplier) directoryWatcher}</li>
+ * <li>Watch a directory for new files - {@link #directoryWatcher(TopologyElement, Supplier) directoryWatcher}</li>
  * <li>Create tuples from text files - {@link #textFileReader(TStream, Function, BiFunction) textFileReader}</li>
  * </ul>
  */
@@ -55,9 +55,9 @@ public class HdfsStreams {
      * @return Stream containing absolute pathnames of newly created files in
      *            {@code directory}.
      */
-    public static TStream<String> DirectoryWatcher(TopologyElement te,
+    public static TStream<String> directoryWatcher(TopologyElement te,
             Supplier<String> directory) {
-        return DirectoryWatcher(te, directory, null);
+        return directoryWatcher(te, directory, null);
     }
 
     /**
@@ -95,7 +95,7 @@ public class HdfsStreams {
      * @return Stream containing absolute pathnames of newly created files in
      *            {@code directory}.
      */
-    public static TStream<String> DirectoryWatcher(TopologyElement te,
+    public static TStream<String> directoryWatcher(TopologyElement te,
             Supplier<String> directory, Comparator<File> comparator) {
         return te.topology().source(() -> new HdfsDirectoryWatcher(directory, comparator));
     }
