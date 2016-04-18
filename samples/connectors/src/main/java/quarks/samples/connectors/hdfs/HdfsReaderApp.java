@@ -36,7 +36,7 @@ import java.net.URI;
  * Watch a hdfsDirectory for files and convert their contents into a stream.
  */
 public class HdfsReaderApp {
-    private final String hdfsDirectory;
+   /* private final String hdfsDirectory;
     private final FileSystem hdfs;
     private static final String baseLeafname = "HdfsReaderSample";
 
@@ -47,10 +47,10 @@ public class HdfsReaderApp {
         reader.run();
     }
 
-    /**
+    *//**
      *
      * @param hdfsDirectory an existing directory to watch for file
-     */
+     *//*
     public HdfsReaderApp(String hdfsDirectory) throws IOException {
         Configuration conf = new Configuration();
         conf.set("fs.defaultFS", hdfsDirectory);
@@ -104,5 +104,5 @@ public class HdfsReaderApp {
                 + tp.getServices().getService(HttpServer.class).getConsoleUrl());
         tp.submit(t);
     }
-
+*/
 }

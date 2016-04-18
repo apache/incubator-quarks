@@ -41,7 +41,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Write a TStream<String> to files.
  */
 public class HdfsWriterApp {
-    private final String hdfsDirectory;
+    /*private final String hdfsDirectory;
     private final String basePathname;
     private static final String baseLeafname = "HdfsWriterSample";
 
@@ -52,10 +52,10 @@ public class HdfsWriterApp {
         writer.run();
     }
 
-    /**
+    *//**
      *
      * @param directory an existing directory to create files in
-     */
+     *//*
     public HdfsWriterApp(String hdfsDirectory) throws IOException {
         HdfsAdmin admin = new HdfsAdmin(URI.create(hdfsDirectory), new Configuration());
         if (!dir.exists())
@@ -93,6 +93,6 @@ public class HdfsWriterApp {
         System.out.println("Console URL for the job: "
                 + tp.getServices().getService(HttpServer.class).getConsoleUrl());
         tp.submit(t);
-    }
+    }*/
 
 }
