@@ -23,7 +23,6 @@ import quarks.connectors.hdfs.runtime.HdfsTextFileReader;
 import quarks.function.BiFunction;
 import quarks.function.Function;
 import quarks.function.Supplier;
-import quarks.topology.TSink;
 import quarks.topology.TStream;
 import quarks.topology.TopologyElement;
 
