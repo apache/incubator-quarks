@@ -19,12 +19,6 @@ under the License.
 
 package quarks.connectors.hdfs.runtime;
 
-import static org.apache.hadoop.hdfs.inotify.Event.EventType.CREATE;
-import static org.apache.hadoop.hdfs.inotify.Event.EventType.CLOSE;
-import static org.apache.hadoop.hdfs.inotify.Event.EventType.RENAME;
-import static org.apache.hadoop.hdfs.inotify.Event.EventType.METADATA;
-import static org.apache.hadoop.hdfs.inotify.Event.EventType.UNLINK;
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hdfs.DFSInotifyEventInputStream;
@@ -110,6 +104,8 @@ public class HdfsDirectoryWatcher implements AutoCloseable,
     private void initialize() throws IOException {
 
         HdfsAdmin admin = new HdfsAdmin( URI.create( dirSupplier.get() ), new Configuration() );
+        Path directoryPath = new Path(dirSupplier.get());
+        System.out.println(directoryPath.toString());
         eventStream = admin.getInotifyEventStream();
 
         trace.info("watching directory {}", dirSupplier.get());
@@ -127,7 +123,6 @@ public class HdfsDirectoryWatcher implements AutoCloseable,
 
         EventBatch eBatch = eventStream.take();
 
-        System.out.println("TxId = " + eBatch.getTxid());
         List<File> newFiles = new ArrayList<>();
         boolean needFullScan = false;
         for (Event event : eBatch.getEvents()) {
@@ -135,6 +130,7 @@ public class HdfsDirectoryWatcher implements AutoCloseable,
             case CREATE:
                 trace.info("inotify CREATE called");
                 Event.CreateEvent createEvent = (Event.CreateEvent) event;
+               //createEvent.getPath().startsWith()
                 System.out.println( "  path = " + createEvent.getPath());
                 break;
             case CLOSE:
