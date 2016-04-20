@@ -97,7 +97,10 @@ public class HdfsDirectoryWatcher implements AutoCloseable, FileFilter, Iterable
     private void initialize() throws IOException {
         URI dirSupplierURI = URI.create(dirSupplier.get());
         this.dirFile = new File(dirSupplierURI.getScheme()+"://"+dirSupplierURI.getHost()+":"+dirSupplierURI.getPort());
-        hdfs = FileSystem.get(dirFile.toURI(), new Configuration());
+        Configuration conf = new Configuration();
+        trace.info("dirFile.getPath()" + dirFile.getPath());
+        conf.set("fs.defaultFS", dirFile.getPath());
+        this.hdfs = FileSystem.get(conf);
         this.watchingDirectoryPath = dirSupplierURI.getPath();
         HdfsAdmin admin = new HdfsAdmin(dirSupplierURI, new Configuration());
         this.eventStream = admin.getInotifyEventStream();
@@ -119,7 +122,7 @@ public class HdfsDirectoryWatcher implements AutoCloseable, FileFilter, Iterable
 
 
             try {
-                Path path=new Path(file.toString());
+                Path path=new Path(file.getName());
                 System.out.println(file.toString()+ ", hdfs.exists(path) : " + hdfs.exists(path));
                 if (accept(file) && hdfs.exists(path)) {
                     pendingNames.add(file.getAbsolutePath());
