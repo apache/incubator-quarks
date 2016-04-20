@@ -141,8 +141,8 @@ public class HdfsDirectoryWatcher implements AutoCloseable,
             switch (event.getEventType()) {
             case CREATE:
                 Event.CreateEvent createEvent = (Event.CreateEvent) event;
-                trace.info("dirSupplier.get() = " + dirSupplier.get() + ", createEvent.getPath() = " + createEvent.getPath());
-                if(isParentDirectory(dirSupplier.get(), createEvent.getPath())){
+                trace.info("watchingDirectoryPath = " + watchingDirectoryPath + ", createEvent.getPath() = " + createEvent.getPath());
+                if(isParentDirectory(watchingDirectoryPath, createEvent.getPath())){
                     trace.info("inotify CREATE called. Tx Id = " + eBatch.getTxid());
                 }
                //createEvent.getPath().startsWith()
