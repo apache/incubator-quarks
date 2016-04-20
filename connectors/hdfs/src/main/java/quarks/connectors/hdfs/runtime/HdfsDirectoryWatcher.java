@@ -113,7 +113,8 @@ public class HdfsDirectoryWatcher implements AutoCloseable, FileFilter, Iterable
         }
 
         for (File file : files) {
-            System.out.println(file.toString());
+            System.out.println(file.toString()+ ", file exist : " + file.exists());
+
             if (accept(file) && file.exists()) {
                 pendingNames.add(file.getAbsolutePath());
                 seenFiles.add(file.getName());
@@ -233,6 +234,7 @@ public class HdfsDirectoryWatcher implements AutoCloseable, FileFilter, Iterable
     @Override
     public boolean accept(File pathname) {
         // our "filter" function
+        trace.info("pathname.getName() = " + pathname.getName());
         return !pathname.getName().startsWith(".") && !seenFiles.contains(pathname.getName());
     }
 
