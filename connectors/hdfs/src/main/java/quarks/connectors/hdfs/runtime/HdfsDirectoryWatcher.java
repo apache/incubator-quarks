@@ -76,6 +76,7 @@ public class HdfsDirectoryWatcher implements AutoCloseable,
     private final Supplier<String> dirSupplier;
     private final Comparator<File> comparator;
     private final Set<String> seenFiles = Collections.synchronizedSet(new HashSet<>());
+    private String watchingDirectoryPath;
     private DFSInotifyEventInputStream eventStream;
     private Queue<String> pendingNames = new LinkedList<>();
 
@@ -99,13 +100,13 @@ public class HdfsDirectoryWatcher implements AutoCloseable,
                                             o2.lastModified());
         }
         this.comparator = comparator;
+
     }
 
     private void initialize() throws IOException {
-
-        HdfsAdmin admin = new HdfsAdmin( URI.create( dirSupplier.get() ), new Configuration() );
-        Path directoryPath = new Path(dirSupplier.get());
-        System.out.println(directoryPath.toString());
+        URI dirSupplierURI = URI.create(dirSupplier.get());
+        this.watchingDirectoryPath = dirSupplierURI.getPath();
+        HdfsAdmin admin = new HdfsAdmin(dirSupplierURI, new Configuration() );
         eventStream = admin.getInotifyEventStream();
 
         trace.info("watching directory {}", dirSupplier.get());
@@ -117,6 +118,16 @@ public class HdfsDirectoryWatcher implements AutoCloseable,
     }
 
     /**
+     * Compare HDFS path to check given watchingDirectory is parent of filePath.
+     *
+     * @param watchingDirectory the path of directory to watch
+     * @param filePath file path that founded
+     */
+    private boolean isParentDirectory(String watchingDirectory, String filePath){
+        return filePath.startsWith(watchingDirectory);
+    }
+
+    /**
      */
     @SuppressWarnings("unchecked")
     private void watchForFiles() throws Exception {
@@ -125,25 +136,32 @@ public class HdfsDirectoryWatcher implements AutoCloseable,
 
         List<File> newFiles = new ArrayList<>();
         boolean needFullScan = false;
+
         for (Event event : eBatch.getEvents()) {
             switch (event.getEventType()) {
             case CREATE:
-                trace.info("inotify CREATE called");
                 Event.CreateEvent createEvent = (Event.CreateEvent) event;
+                trace.info("dirSupplier.get() = " + dirSupplier.get() + ", createEvent.getPath() = " + createEvent.getPath());
+                if(isParentDirectory(dirSupplier.get(), createEvent.getPath())){
+                    trace.info("inotify CREATE called. Tx Id = " + eBatch.getTxid());
+                }
                //createEvent.getPath().startsWith()
                 System.out.println( "  path = " + createEvent.getPath());
                 break;
             case CLOSE:
-                trace.info("inotify CLOSE called");
+                trace.info("inotify CLOSE called. Tx Id = " + eBatch.getTxid());
+                break;
+            case APPEND:
+                trace.info("inotify APPEND called. Tx Id = " + eBatch.getTxid());
                 break;
             case RENAME:
-                trace.info("inotify RENAME called");
+                trace.info("inotify RENAME called. Tx Id = " + eBatch.getTxid());
                 break;
             case METADATA:
-                trace.info("inotify METADATA called");
+                trace.info("inotify METADATA called. Tx Id = " + eBatch.getTxid());
                 break;
             case UNLINK:
-                trace.info("inotify UNLINK called");
+                trace.info("inotify UNLINK called. Tx Id = " + eBatch.getTxid());
                 break;
             default:
                 break;
