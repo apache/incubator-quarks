@@ -31,7 +31,6 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.net.URI;
-import java.nio.file.WatchService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -95,10 +94,10 @@ public class HdfsDirectoryWatcher implements AutoCloseable, FileFilter, Iterable
 
     private void initialize() throws IOException {
         URI dirSupplierURI = URI.create(dirSupplier.get());
-        this.dirFile = new File(dirSupplier.get());
+        this.dirFile = new File(dirSupplierURI.getScheme()+"://"+dirSupplierURI.getHost()+":"+dirSupplierURI.getPort());
         this.watchingDirectoryPath = dirSupplierURI.getPath();
         HdfsAdmin admin = new HdfsAdmin(dirSupplierURI, new Configuration());
-        eventStream = admin.getInotifyEventStream();
+        this.eventStream = admin.getInotifyEventStream();
 
         trace.info("watching directory {}", dirSupplier.get());
     }
@@ -214,6 +213,7 @@ public class HdfsDirectoryWatcher implements AutoCloseable, FileFilter, Iterable
                 if(isParentDirectory(watchingDirectoryPath, renameEvent.getDstPath())){
                     File newFile = toAbsFile(renameEvent.getDstPath());
                     if (accept(newFile)) {
+                        trace.info("Rename accept called : " + newFile.toString());
                         newFiles.add(newFile);
                     }
                 }
