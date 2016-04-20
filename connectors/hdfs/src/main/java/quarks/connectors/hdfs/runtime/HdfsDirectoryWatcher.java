@@ -20,6 +20,8 @@ under the License.
 package quarks.connectors.hdfs.runtime;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hdfs.DFSInotifyEventInputStream;
 import org.apache.hadoop.hdfs.client.HdfsAdmin;
 import org.apache.hadoop.hdfs.inotify.Event;
@@ -70,7 +72,7 @@ public class HdfsDirectoryWatcher implements AutoCloseable, FileFilter, Iterable
     private String watchingDirectoryPath;
     private DFSInotifyEventInputStream eventStream;
     private Queue<String> pendingNames = new LinkedList<>();
-
+    private FileSystem hdfs;
     /**
      * Watch the specified directory and generate tuples corresponding
      * to files that are created in the directory.
@@ -95,6 +97,7 @@ public class HdfsDirectoryWatcher implements AutoCloseable, FileFilter, Iterable
     private void initialize() throws IOException {
         URI dirSupplierURI = URI.create(dirSupplier.get());
         this.dirFile = new File(dirSupplierURI.getScheme()+"://"+dirSupplierURI.getHost()+":"+dirSupplierURI.getPort());
+        hdfs = FileSystem.get(dirFile.toURI(), new Configuration());
         this.watchingDirectoryPath = dirSupplierURI.getPath();
         HdfsAdmin admin = new HdfsAdmin(dirSupplierURI, new Configuration());
         this.eventStream = admin.getInotifyEventStream();
@@ -113,16 +116,22 @@ public class HdfsDirectoryWatcher implements AutoCloseable, FileFilter, Iterable
         }
 
         for (File file : files) {
-            System.out.println(file.toString()+ ", file exist : " + file.exists());
 
-            if (accept(file) && file.exists()) {
-                pendingNames.add(file.getAbsolutePath());
-                seenFiles.add(file.getName());
-                double rand = Math.random();
-                for(String f : seenFiles){
-                    System.out.println(rand + " : " + f);
+
+            try {
+                Path path=new Path(file.toString());
+                System.out.println(file.toString()+ ", hdfs.exists(path) : " + hdfs.exists(path));
+                if (accept(file) && hdfs.exists(path)) {
+                    pendingNames.add(file.getAbsolutePath());
+                    seenFiles.add(file.getName());
+                    double rand = Math.random();
+                    for(String f : seenFiles){
+                        System.out.println(rand + " : " + f);
+                    }
+
                 }
-
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
