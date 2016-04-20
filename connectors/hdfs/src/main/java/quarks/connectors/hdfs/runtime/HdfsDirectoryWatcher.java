@@ -117,6 +117,11 @@ public class HdfsDirectoryWatcher implements AutoCloseable, FileFilter, Iterable
             if (accept(file) && file.exists()) {
                 pendingNames.add(file.getAbsolutePath());
                 seenFiles.add(file.getName());
+                double rand = Math.random();
+                for(String f : seenFiles){
+                    System.out.println(rand + " : " + f);
+                }
+
             }
         }
     }
