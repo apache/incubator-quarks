@@ -141,27 +141,41 @@ public class HdfsDirectoryWatcher implements AutoCloseable,
             switch (event.getEventType()) {
             case CREATE:
                 Event.CreateEvent createEvent = (Event.CreateEvent) event;
-                trace.info("watchingDirectoryPath = " + watchingDirectoryPath + ", createEvent.getPath() = " + createEvent.getPath());
                 if(isParentDirectory(watchingDirectoryPath, createEvent.getPath())){
                     trace.info("inotify CREATE called. Tx Id = " + eBatch.getTxid());
                 }
-               //createEvent.getPath().startsWith()
                 System.out.println( "  path = " + createEvent.getPath());
                 break;
             case CLOSE:
-                trace.info("inotify CLOSE called. Tx Id = " + eBatch.getTxid());
+                Event.CloseEvent closeEvent = (Event.CloseEvent) event;
+                if(isParentDirectory(watchingDirectoryPath, closeEvent.getPath())){
+                    trace.info("inotify CLOSE called. Tx Id = " + eBatch.getTxid());
+                }
                 break;
             case APPEND:
-                trace.info("inotify APPEND called. Tx Id = " + eBatch.getTxid());
+                Event.AppendEvent appendEvent = (Event.AppendEvent) event;
+                if(isParentDirectory(watchingDirectoryPath, appendEvent.getPath())){
+                    trace.info("inotify APPEND called. Tx Id = " + eBatch.getTxid());
+                }
                 break;
             case RENAME:
-                trace.info("inotify RENAME called. Tx Id = " + eBatch.getTxid());
+                Event.RenameEvent renameEvent = (Event.RenameEvent) event;
+                if(isParentDirectory(watchingDirectoryPath, renameEvent.getDstPath())){
+                    trace.info("inotify RENAME called. Tx Id = " + eBatch.getTxid());
+                    trace.info("renameEvent.getDstPath() = " + renameEvent.getDstPath() + ", renameEvent.getSrcPath() = " + renameEvent.getSrcPath() );
+                }
                 break;
             case METADATA:
-                trace.info("inotify METADATA called. Tx Id = " + eBatch.getTxid());
+                Event.MetadataUpdateEvent metadataEvent = (Event.MetadataUpdateEvent) event;
+                if(isParentDirectory(watchingDirectoryPath, metadataEvent.getPath())){
+                    trace.info("inotify METADATA called. Tx Id = " + eBatch.getTxid());
+                }
                 break;
             case UNLINK:
-                trace.info("inotify UNLINK called. Tx Id = " + eBatch.getTxid());
+                Event.UnlinkEvent unlinkEvent = (Event.UnlinkEvent) event;
+                if(isParentDirectory(watchingDirectoryPath, unlinkEvent.getPath())){
+                    trace.info("inotify UNLINK called. Tx Id = " + eBatch.getTxid());
+                }
                 break;
             default:
                 break;
