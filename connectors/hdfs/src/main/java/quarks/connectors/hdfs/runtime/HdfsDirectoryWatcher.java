@@ -98,8 +98,8 @@ public class HdfsDirectoryWatcher implements AutoCloseable, FileFilter, Iterable
         URI dirSupplierURI = URI.create(dirSupplier.get());
         this.dirFile = new File(dirSupplierURI.getScheme()+"://"+dirSupplierURI.getHost()+":"+dirSupplierURI.getPort());
         Configuration conf = new Configuration();
-        trace.info("dirFile.getPath()" + dirFile.getPath());
-        conf.set("fs.defaultFS", dirFile.getPath());
+        trace.info("dirSupplier.get()" + dirSupplier.get());
+        conf.set("fs.defaultFS", dirSupplier.get());
         this.hdfs = FileSystem.get(conf);
         this.watchingDirectoryPath = dirSupplierURI.getPath();
         HdfsAdmin admin = new HdfsAdmin(dirSupplierURI, new Configuration());
