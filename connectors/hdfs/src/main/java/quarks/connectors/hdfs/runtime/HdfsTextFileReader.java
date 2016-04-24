@@ -19,6 +19,9 @@ under the License.
 
 package quarks.connectors.hdfs.runtime;
 
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
 import org.slf4j.Logger;
 import quarks.function.BiFunction;
 import quarks.function.Consumer;
@@ -27,11 +30,10 @@ import quarks.oplet.OpletContext;
 import quarks.oplet.core.Pipe;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URI;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 public class HdfsTextFileReader extends Pipe<String,String> {
 
@@ -93,10 +95,11 @@ public class HdfsTextFileReader extends Pipe<String,String> {
         trace.trace("reading path={}", pathname);
         Consumer<String> dst = getDestination();
         pre(pathname, dst);
-        Path path = new File(pathname).toPath();
+        Path path = new Path(pathname);
         Exception exc = null;
         int nlines = 0;
-        try (BufferedReader br = Files.newBufferedReader(path, charset)) {
+        try (FileSystem fs = FileSystem.get(URI.create(pathname), new Configuration())) {
+            BufferedReader br = new BufferedReader(new InputStreamReader(fs.open(path)));
             for (int i = 0;;i++) {
                 if (i % 10 == 0 && isShutdown())
                     break;
