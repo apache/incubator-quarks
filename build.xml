@@ -118,6 +118,7 @@
         <ant dir="connectors/iot" target="@{target}" useNativeBasedir="true"/>
         <ant dir="connectors/serial" target="@{target}" useNativeBasedir="true"/>
         <ant dir="connectors/file" target="@{target}" useNativeBasedir="true"/>
+        <ant dir="connectors/hdfs" target="@{target}" useNativeBasedir="true"/>
         <ant dir="connectors/http" target="@{target}" useNativeBasedir="true"/>
         <ant dir="connectors/iotf" target="@{target}" useNativeBasedir="true"/>
         <ant dir="connectors/jdbc" target="@{target}" useNativeBasedir="true"/>
@@ -229,6 +230,7 @@
         <fileset dir="${basedir}/connectors/iot/src/main/java" includes="**/*.java"/>
         <fileset dir="${basedir}/connectors/iotf/src/main/java" includes="**/*.java"/>
         <fileset dir="${basedir}/connectors/jdbc/src/main/java" includes="**/*.java"/>
+        <fileset dir="${basedir}/connectors/hdfs/src/main/java" includes="**/*.java"/>
         <fileset dir="${basedir}/connectors/kafka/src/main/java" includes="**/*.java"/>
         <fileset dir="${basedir}/connectors/mqtt/src/main/java" includes="**/*.java"/>
         <fileset dir="${basedir}/connectors/http/src/main/java" includes="**/*.java"/>

@@ -29,6 +29,7 @@
     <pathelement location="${quarks.connectors}/file/lib/quarks.connectors.file.jar"/>
     <pathelement location="${quarks.connectors}/iotf/lib/quarks.connectors.iotf.jar"/>
     <pathelement location="${quarks.connectors}/jdbc/lib/quarks.connectors.jdbc.jar"/>
+    <pathelement location="${quarks.connectors}/hdfs/lib/quarks.connectors.hdfs.jar"/>
     <pathelement location="${quarks.connectors}/serial/lib/quarks.connectors.serial.jar"/>
     <pathelement location="${lib}/quarks.samples.topology.jar"/>
     <pathelement location="${lib}/quarks.samples.utils.jar"/>
