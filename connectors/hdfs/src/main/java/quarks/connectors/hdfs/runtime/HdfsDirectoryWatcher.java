@@ -30,7 +30,6 @@ import org.slf4j.Logger;
 import quarks.function.Supplier;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
@@ -62,13 +61,13 @@ import java.util.Set;
  * valid when it receives the tuple or during its processing of the tuple.
  */
 
-public class HdfsDirectoryWatcher implements AutoCloseable, FileFilter, Iterable<String> {
+public class HdfsDirectoryWatcher implements AutoCloseable, Iterable<String> {
 
     private static final Logger trace = HdfsConnector.getTrace();
     private final Supplier<String> dirSupplier;
-    private final Comparator<File> comparator;
+    private final Comparator<String> comparator;
     private final Set<String> seenFiles = Collections.synchronizedSet(new HashSet<>());
-    private volatile File dirFile;
+    private String hostPath;
     private String watchingDirectoryPath;
     private DFSInotifyEventInputStream eventStream;
     private Queue<String> pendingNames = new LinkedList<>();
@@ -84,22 +83,25 @@ public class HdfsDirectoryWatcher implements AutoCloseable, FileFilter, Iterable
      * @param comparator  a comparator to order the processing of
      *                    multiple newly seen files in the directory.  may be null.
      */
-    public HdfsDirectoryWatcher(Supplier<String> dirSupplier, Comparator<File> comparator) {
+    public HdfsDirectoryWatcher(Supplier<String> dirSupplier, Comparator<String> comparator) {
         this.dirSupplier = dirSupplier;
         if (comparator == null) {
-            comparator = // TODO 2nd order alfanum compare when same LMT?
-                (o1, o2) -> Long.compare(o1.lastModified(), o2.lastModified());
+            comparator = (o1, o2) -> Integer.compare(o1.length(), o1.length());
         }
         this.comparator = comparator;
 
     }
 
+    //To-Do: Do not throws exception
     private void initialize() throws IOException {
         URI dirSupplierURI = URI.create(dirSupplier.get());
-        this.dirFile = new File(dirSupplierURI.getScheme()+"://"+dirSupplierURI.getHost()+":"+dirSupplierURI.getPort());
         Configuration conf = new Configuration();
-        trace.info("dirSupplier.get()" + dirSupplier.get());
-        conf.set("fs.defaultFS", dirSupplier.get());
+        this.hostPath =
+            dirSupplierURI.getScheme() + "://" + dirSupplierURI.getHost() + ":" + dirSupplierURI
+                .getPort();
+
+        trace.info("dirFile.getPath() = " + hostPath + dirSupplierURI.getPath());
+        conf.set("fs.defaultFS", hostPath);
         this.hdfs = FileSystem.get(conf);
         this.watchingDirectoryPath = dirSupplierURI.getPath();
         HdfsAdmin admin = new HdfsAdmin(dirSupplierURI, new Configuration());
@@ -113,20 +115,20 @@ public class HdfsDirectoryWatcher implements AutoCloseable, FileFilter, Iterable
         System.out.println("Close");
     }
 
-    protected void sortAndSubmit(List<File> files) {
+    protected void sortAndSubmit(List<String> files) {
         if (files.size() > 1) {
             Collections.sort(files, comparator);
         }
 
-        for (File file : files) {
+        for (String file : files) {
 
 
             try {
-                Path path=new Path(file.getName());
+                Path path=new Path(file);
                 System.out.println(file.toString()+ ", hdfs.exists(path) : " + hdfs.exists(path));
                 if (accept(file) && hdfs.exists(path)) {
-                    pendingNames.add(file.getAbsolutePath());
-                    seenFiles.add(file.getName());
+                    pendingNames.add(file);
+                    seenFiles.add(file);
                     double rand = Math.random();
                     for(String f : seenFiles){
                         System.out.println(rand + " : " + f);
@@ -156,10 +158,10 @@ public class HdfsDirectoryWatcher implements AutoCloseable, FileFilter, Iterable
 
         EventBatch eBatch = eventStream.take();
 
-        List<File> newFiles = new ArrayList<>();
+        List<String> newFiles = new ArrayList<>();
 
         //For Develop Logging
-/*        for (Event event : eBatch.getEvents()) {
+        /*for (Event event : eBatch.getEvents()) {
             switch (event.getEventType()) {
             case CREATE:
                 Event.CreateEvent createEvent = (Event.CreateEvent) event;
@@ -209,26 +211,23 @@ public class HdfsDirectoryWatcher implements AutoCloseable, FileFilter, Iterable
                 Event.CreateEvent createEvent = (Event.CreateEvent) event;
                 if (isParentDirectory(watchingDirectoryPath, createEvent.getPath()) && !createEvent
                     .getPath().endsWith("_COPYING_")) {
-                    File newFile = toAbsFile(createEvent.getPath());
-                    if (accept(newFile)) {
-                        newFiles.add(newFile);
+                    if (accept(createEvent.getPath())) {
+                        newFiles.add(toFullPath(createEvent.getPath()));
                     }
                 }
                 break;
             case UNLINK:
                 Event.UnlinkEvent unlinkEvent = (Event.UnlinkEvent) event;
                 if(isParentDirectory(watchingDirectoryPath, unlinkEvent.getPath())){
-                    File deletedFile = toAbsFile(unlinkEvent.getPath());
-                    seenFiles.remove(deletedFile.getName());
+                    seenFiles.remove(toFullPath(unlinkEvent.getPath()));
                 }
                 break;
             case RENAME:
                 Event.RenameEvent renameEvent = (Event.RenameEvent) event;
                 if(isParentDirectory(watchingDirectoryPath, renameEvent.getDstPath())){
-                    File newFile = toAbsFile(renameEvent.getDstPath());
-                    if (accept(newFile)) {
-                        trace.info("Rename accept called : " + newFile.toString());
-                        newFiles.add(newFile);
+                    if (accept(renameEvent.getDstPath())) {
+                        trace.info("Rename accept called : " + renameEvent.getDstPath());
+                        newFiles.add(toFullPath(renameEvent.getDstPath()));
                     }
                 }
                 break;
@@ -239,15 +238,14 @@ public class HdfsDirectoryWatcher implements AutoCloseable, FileFilter, Iterable
         sortAndSubmit(newFiles);
     }
 
-    private File toAbsFile(String relPath) {
-        return new File(dirFile, relPath);
+    private String toFullPath(String relPath) {
+        return new String(hostPath + relPath);
     }
 
-    @Override
-    public boolean accept(File pathname) {
+    public boolean accept(String pathname) {
         // our "filter" function
-        trace.info("pathname.getName() = " + pathname.getName());
-        return !pathname.getName().startsWith(".") && !seenFiles.contains(pathname.getName());
+        trace.info("pathname.getName() = " + pathname);
+        return !pathname.startsWith(".") && !seenFiles.contains(pathname);
     }
 
     @Override
