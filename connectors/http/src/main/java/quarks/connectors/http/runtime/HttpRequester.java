@@ -34,7 +34,7 @@ import quarks.function.Supplier;
 /**
  * Function that processes HTTP requests at runtime.
  */
-public class HttpRequester<T,R> implements Function<T,R>{
+public class  HttpRequester<T,R> implements Function<T,R>{
     
     /**
      * 

@@ -27,10 +27,10 @@ import quarks.topology.Topology;
 import java.io.IOException;
 
 /**
- * Watch a hdfsDirectory for files and convert their contents into a stream.
+ * Watch a hdfsLocation for files and convert their contents into a stream.
  */
 public class HdfsReaderApp {
-    private final String hdfsDirectory;
+    private final String hdfsLocation;
     private static final String baseLeafname = "HdfsReaderSample";
 
     public static void main(String[] args) throws Exception {
@@ -41,21 +41,10 @@ public class HdfsReaderApp {
     }
 
     /**
-     * @param hdfsDirectory an existing directory to watch for file
+     * @param hdfsLocation an existing directory to watch for file
      */
-    public HdfsReaderApp(String hdfsDirectory) throws IOException {
-        this.hdfsDirectory = hdfsDirectory;
-        /*Configuration conf = new Configuration();
-        conf.set("fs.defaultFS", hdfsDirectory);
-        this.hdfs = FileSystem.get(conf);
-        Path path = new Path(hdfsDirectory);
-
-        if (hdfs.exists(path) && hdfs.isDirectory(path)) {
-            this.hdfsDirectory = hdfsDirectory;
-        } else {
-            throw new IllegalArgumentException("HDFS directory doesn't exist");
-        }
-        HdfsAdmin admin = new HdfsAdmin(URI.create(hdfsDirectory), conf);*/
+    public HdfsReaderApp(String hdfsLocation) throws IOException {
+        this.hdfsLocation = hdfsLocation;
     }
 
     public void run() throws Exception {
@@ -66,7 +55,7 @@ public class HdfsReaderApp {
         Topology t = tp.newTopology("HDFSSample consumer");
 
         // watch for files
-        TStream<String> pathNames = HdfsStreams.directoryWatcher(t, () -> hdfsDirectory);
+        TStream<String> pathNames = HdfsStreams.directoryWatcher(t, () -> hdfsLocation);
 
         // create a stream containing the files' contents.
         // use a preFn to include a separator in the results.
@@ -78,7 +67,7 @@ public class HdfsReaderApp {
         contents.print();
 
         // run the application / topology
-        System.out.println("starting the reader watching directory " + hdfsDirectory);
+        System.out.println("starting the reader watching directory " + hdfsLocation);
         System.out.println(
             "Console URL for the job: " + tp.getServices().getService(HttpServer.class)
                 .getConsoleUrl());
