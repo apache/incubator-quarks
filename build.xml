@@ -30,7 +30,7 @@
   <property name="javadoc.dir" location="${target.dir}/docs/javadoc"/>
   <property name="release.dir" location="${release.base}"/>
 
-  <target name="all" depends="init,suball,copy,docs"
+  <target name="all" depends="init,suball,copy"
     description="Build the code and Javadoc into target. Requires Java 8"
     />
 
@@ -329,7 +329,7 @@
      </javadoc>
   </target>
 
-  <target name="release" depends="clean,setcommitversion,all,docs,create_release_bundle"/>
+  <target name="release" depends="clean,setcommitversion,all,create_release_bundle"/>
 	
   <target name="create_release_bundle">
       <!-- Build Java7 and Android versions -->

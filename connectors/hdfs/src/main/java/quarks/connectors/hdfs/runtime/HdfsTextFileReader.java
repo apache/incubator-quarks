@@ -98,17 +98,18 @@ public class HdfsTextFileReader extends Pipe<String,String> {
         Path path = new Path(pathname);
         Exception exc = null;
         int nlines = 0;
+
         try (FileSystem fs = FileSystem.get(URI.create(pathname), new Configuration())) {
             BufferedReader br = new BufferedReader(new InputStreamReader(fs.open(path)));
-            for (int i = 0;;i++) {
-                if (i % 10 == 0 && isShutdown())
-                    break;
-                String line = br.readLine();
-                if (line == null)
-                    break;
+            String line;
+            line=br.readLine();
+            while (line != null ) {
                 nlines++;
                 dst.accept(line);
+                line = br.readLine();
             }
+            br.close();
+            fs.close();
         }
         catch (IOException e) {
             trace.error("Error processing file '{}'", pathname, e);

@@ -42,22 +42,8 @@ import java.util.Comparator;
 public class HdfsStreams {
     @SuppressWarnings("unused")
     private static final HdfsStreams forCodeCoverage = new HdfsStreams();
-    private HdfsStreams() {};
 
-    /**
-     * Declare a stream containing the absolute pathname of
-     * newly created file names from watching {@code directory}.
-     * <p>
-     * This is the same as {@code directoryWatcher(t, () -> dir, null)}.
-     *
-     * @param directory
-     *            Name of the directory to watch.
-     * @return Stream containing absolute pathnames of newly created files in
-     *            {@code directory}.
-     */
-    public static TStream<String> directoryWatcher(TopologyElement te,
-            Supplier<String> directory) {
-        return directoryWatcher(te, directory, null);
+    private HdfsStreams() {
     }
 
     /**
@@ -87,17 +73,12 @@ public class HdfsStreams {
      * valid when it receives the tuple or during its processing of the tuple.
      * <p>
      *
-     * @param directory
-     *            Name of the directory to watch.
-     * @param comparator
-     *            Comparator to use to order newly seen file pathnames.
-     *            May be null.
+     * @param directory  Name of the directory to watch.
      * @return Stream containing absolute pathnames of newly created files in
-     *            {@code directory}.
+     * {@code directory}.
      */
-    public static TStream<String> directoryWatcher(TopologyElement te,
-            Supplier<String> directory, Comparator<File> comparator) {
-        return te.topology().source(() -> new HdfsDirectoryWatcher(directory, comparator));
+    public static TStream<String> directoryWatcher(TopologyElement te, Supplier<String> directory) {
+        return te.topology().source(() -> new HdfsDirectoryWatcher(directory));
     }
 
     /**
@@ -116,8 +97,7 @@ public class HdfsStreams {
      * contents.print();
      * }</pre>
      *
-     * @param pathnames
-     *            Stream containing pathnames of files to read.
+     * @param pathnames Stream containing pathnames of files to read.
      * @return Stream containing lines from the files.
      */
     public static TStream<String> textFileReader(TStream<String> pathnames) {
@@ -159,23 +139,20 @@ public class HdfsStreams {
      * contents.print();
      * }</pre>
      *
-     * @param pathnames
-     *            Stream containing pathnames of files to read.
-     * @param preFn
-     *            Pre-visit {@code Function<String,String>}.
-     *            The input is the pathname.
-     *            The result, when non-null, is added to the output stream.
-     *            The function may be null.
-     * @param postFn
-     *            Post-visit {@code BiFunction<String,Exception,String>}.
-     *            The input is the pathname and an exception.  The exception
-     *            is null if there were no errors.
-     *            The result, when non-null, is added to the output stream.
-     *            The function may be null.
+     * @param pathnames Stream containing pathnames of files to read.
+     * @param preFn     Pre-visit {@code Function<String,String>}.
+     *                  The input is the pathname.
+     *                  The result, when non-null, is added to the output stream.
+     *                  The function may be null.
+     * @param postFn    Post-visit {@code BiFunction<String,Exception,String>}.
+     *                  The input is the pathname and an exception.  The exception
+     *                  is null if there were no errors.
+     *                  The result, when non-null, is added to the output stream.
+     *                  The function may be null.
      * @return Stream containing lines from the files.
      */
     public static TStream<String> textFileReader(TStream<String> pathnames,
-        Function<String,String> preFn, BiFunction<String,Exception,String> postFn) {
+        Function<String, String> preFn, BiFunction<String, Exception, String> postFn) {
 
         HdfsTextFileReader reader = new HdfsTextFileReader();
         reader.setPre(preFn);
