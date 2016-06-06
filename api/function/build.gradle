@@ -1,0 +1,25 @@
+// Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements;
+// and to You under the Apache License, Version 2.0.
+
+dependencies {
+  compile configurations.qext
+}
+
+//jar {
+//  manifest {
+//   def manifestCp = configurations.qext.files.collect  {
+//     File file = it
+//        "../ext/${file.name}"
+//        }.join(' ')
+//
+//   attributes 'Class-Path': manifestCp
+//  }
+//}
+
+task copyExt(type: Copy) {
+    from configurations.qext
+    into new File(targetj8, 'ext')
+}
+
+
+build.dependsOn(copyExt)

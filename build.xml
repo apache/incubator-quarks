@@ -99,6 +99,9 @@
   <macrodef name="subprojects">
       <attribute name="target"/>
       <sequential>		
+
+      <!-- These are being built by Gradle
+            
         <ant dir="api/function" target="@{target}" useNativeBasedir="true"/>
         <ant dir="api/execution" target="@{target}" useNativeBasedir="true"/>
         <ant dir="api/window" target="@{target}" useNativeBasedir="true"/>
@@ -107,6 +110,8 @@
         <ant dir="api/topology" target="@{target}" useNativeBasedir="true"/>
         <ant dir="spi/graph" target="@{target}" useNativeBasedir="true"/>
         <ant dir="spi/topology" target="@{target}" useNativeBasedir="true"/>
+        -->
+
         <ant dir="runtime/appservice" target="@{target}" useNativeBasedir="true"/>
         <ant dir="runtime/etiao" target="@{target}" useNativeBasedir="true"/>
         <ant dir="runtime/jmxcontrol" target="@{target}" useNativeBasedir="true"/>
