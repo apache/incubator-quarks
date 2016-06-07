@@ -31,6 +31,7 @@ import quarks.function.Predicate;
 import quarks.function.ToIntFunction;
 import quarks.function.UnaryOperator;
 import quarks.oplet.core.FanIn;
+import quarks.oplet.core.Peek;
 import quarks.oplet.core.Pipe;
 import quarks.oplet.core.Sink;
 
@@ -248,6 +249,18 @@ public interface TStream<T> extends TopologyElement {
      * @return {@code this}
      */
     TStream<T> peek(Consumer<T> peeker);
+
+    /**
+     * Declare a stream that contains the same contents as this stream while
+     * peeking at each element using {@code oplet}. <BR>
+     * For each tuple {@code t} on this stream, {@code oplet.peek(t)} will be
+     * called.
+     * 
+     * @param oplet
+     *            the {@link Peek} oplet.
+     * @return {@code this}
+     */
+    TStream<T> peek(Peek<T> oplet);
 
     /**
      * Sink (terminate) this stream using a function. For each tuple {@code t} on this stream
