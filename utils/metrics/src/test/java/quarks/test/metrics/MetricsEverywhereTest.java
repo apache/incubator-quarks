@@ -153,6 +153,20 @@ public abstract class MetricsEverywhereTest extends TopologyAbstractTest {
          * OP_0 -- OP_1(Split) ----- OP_4 (Sink)
          *                       \
          *                        -- OP_5 (Sink)
+         *                        
+         * Note, OP_2 (Counter) is a peek oplet and as such
+         * is part of the split[0] stream's peek-chain.  
+         * Metrics insertion only occurs at the end of a peek-chain,
+         * so there is NOT an injected metric between 
+         * OP_1(Split) -> OP_2 (Counter).
+         * 
+         * The net is metrics are injected where the "#" are:
+         * 
+         *                        -- OP_2 (Counter) -#- OP_3 (Sink)
+         *                       / 
+         * OP_0 -#- OP_1(Split) ---#- OP_4 (Sink)
+         *                       \
+         *                        -#- OP_5 (Sink)
          */
         Topology t = newTopology();
         Graph g = t.graph();
@@ -184,10 +198,10 @@ public abstract class MetricsEverywhereTest extends TopologyAbstractTest {
         printGraph(g);
 
         Collection<Vertex<? extends Oplet<?, ?>, ?, ?>> vertices = g.getVertices();
-        assertEquals(11, vertices.size());
+        assertEquals(10, vertices.size());
 
         Collection<Edge> edges = g.getEdges();
-        assertEquals(10, edges.size());
+        assertEquals(9, edges.size());
     }
 
     @Test
