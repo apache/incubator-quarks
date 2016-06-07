@@ -31,26 +31,34 @@ public class Metrics {
     /**
      * Increment a counter metric when peeking at each tuple.
      * 
+     * <P>
+     * Same as {@code stream.peek(new CounterOp<T>())}
+     * </P>
+     * 
      * @param <T>
      *            TStream tuple type
-     * @param stream to stream to instrument
-     * @return a {@link TStream} containing the input tuples
+     * @param stream the stream to monitor
+     * @return the {@code stream} argument
      */
     public static <T> TStream<T> counter(TStream<T> stream) {
-        return stream.pipe(new CounterOp<T>());
+        return stream.peek(new CounterOp<T>());
     }
 
     /**
      * Measure current tuple throughput and calculate one-, five-, and
      * fifteen-minute exponentially-weighted moving averages.
      * 
+     * <P>
+     * Same as {@code stream.peek(new RateMeter<T>())}
+     * </P>
+     * 
      * @param <T>
      *            TStream tuple type
-     * @param stream to stream to instrument
-     * @return a {@link TStream} containing the input tuples
+     * @param stream the stream to monitor
+     * @return the {@code stream} argument
      */
     public static <T> TStream<T> rateMeter(TStream<T> stream) {
-        return stream.pipe(new RateMeter<T>());
+        return stream.peek(new RateMeter<T>());
     }
 
     /**
