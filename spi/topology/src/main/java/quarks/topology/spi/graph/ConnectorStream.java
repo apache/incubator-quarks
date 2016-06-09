@@ -162,6 +162,8 @@ public class ConnectorStream<G extends Topology, T> extends AbstractTStream<G, T
 
     @Override
     public <U> TStream<U> pipe(Pipe<T, U> pipe) {
+        if (pipe instanceof quarks.oplet.core.Peek<?>)
+          throw new IllegalArgumentException("Use peek() to add Peek oplets");
         return connectPipe(pipe);
     }
 
