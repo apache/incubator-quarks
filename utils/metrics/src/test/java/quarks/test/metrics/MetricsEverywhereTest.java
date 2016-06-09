@@ -74,7 +74,7 @@ public abstract class MetricsEverywhereTest extends TopologyAbstractTest {
         Topology t = newTopology();
         AtomicInteger n = new AtomicInteger(0);
         TStream<Integer> ints = t.poll(() -> n.incrementAndGet(), 10, TimeUnit.MILLISECONDS);
-        ints.pipe(new TestOplet<Integer>());
+        ints.peek(new TestOplet<Integer>());
 
         // Submit job
         Future<? extends Job> fj = getSubmitter().submit(t);
@@ -104,8 +104,8 @@ public abstract class MetricsEverywhereTest extends TopologyAbstractTest {
         Topology t = newTopology();
         AtomicInteger n = new AtomicInteger(0);
         TStream<Integer> ints = t.poll(() -> n.incrementAndGet(), 10, TimeUnit.MILLISECONDS);
-        TStream<Integer> ints2 = ints.pipe(new TestOplet<Integer>());
-        ints2.pipe(new TestOplet<Integer>());
+        TStream<Integer> ints2 = ints.peek(new TestOplet<Integer>());
+        ints2.peek(new TestOplet<Integer>());
 
         // Submit job
         Future<? extends Job> fj = getSubmitter().submit(t);
