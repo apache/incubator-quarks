@@ -25,7 +25,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import quarks.execution.mbeans.JobMXBean;
 import quarks.execution.services.ControlService;
 import quarks.execution.services.JobRegistryService;
 import quarks.execution.services.ServiceContainer;
@@ -67,9 +66,9 @@ public class EtiaoJob extends AbstractGraphJob implements JobContext {
         this.containerServices = container;
 
         ControlService cs = container.getService(ControlService.class);
-        if (cs != null)
-            cs.registerControl(JobMXBean.TYPE, getId(), getName(), JobMXBean.class, new EtiaoJobBean(this));
-        
+        if (cs != null) {
+            EtiaoJobBean.registerControl(cs, this);
+        }            
         this.jobs = container.getService(JobRegistryService.class);
         if (jobs != null)
             jobs.addJob(this);
@@ -176,6 +175,19 @@ public class EtiaoJob extends AbstractGraphJob implements JobContext {
         if (unit == null)
             throw new NullPointerException();
         if (getCurrentState() != State.CLOSED && getNextState() != State.CLOSED &&
+                !awaitComplete(unit.toMillis(timeout))) {
+            throw new TimeoutException();
+        }
+    }
+
+    /**
+     * Complete job closing.  This method can be invoked after a job close 
+     * has been initiated.  
+     */
+    public void completeClosing(long timeout, TimeUnit unit) throws ExecutionException, InterruptedException, TimeoutException {
+        if (unit == null)
+            throw new NullPointerException();
+        if (getCurrentState() != State.CLOSED &&
                 !awaitComplete(unit.toMillis(timeout))) {
             throw new TimeoutException();
         }

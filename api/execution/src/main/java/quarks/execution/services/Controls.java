@@ -26,7 +26,14 @@ import java.lang.reflect.Method;
  * @see ControlService
  */
 public class Controls {
-    
+    /**
+     * Number of seconds a {@link quarks.execution.mbeans.JobMXBean JobMXBean}
+     * control is held registered with the {@link ControlService} after a job
+     * gets closed.  After this period the bean gets unregistered from the 
+     * service.
+     */
+    public final static int JOB_HOLD_AFTER_CLOSE_SECS = 10; 
+
     /**
      * Test to see if an interface represents a valid
      * control service MBean.

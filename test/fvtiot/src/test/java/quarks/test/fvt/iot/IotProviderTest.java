@@ -19,6 +19,7 @@ under the License.
 package quarks.test.fvt.iot;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
@@ -42,6 +43,7 @@ import quarks.execution.Job;
 import quarks.execution.Job.Action;
 import quarks.execution.mbeans.JobMXBean;
 import quarks.execution.services.ControlService;
+import quarks.execution.services.Controls;
 import quarks.providers.iot.IotProvider;
 import quarks.runtime.jsoncontrol.JsonControlService;
 import quarks.test.apps.iot.EchoIotDevice;
@@ -157,7 +159,7 @@ public class IotProviderTest {
 
         jsc.controlRequest(closeJob);
 
-        // await for the job to complete
+        // Wait for the job to complete
         for (int i = 0; i < 30; i++) {
             Thread.sleep(100);
             if (jobMbean.getCurrentState() == Job.State.CLOSED)
@@ -165,14 +167,10 @@ public class IotProviderTest {
         }
         assertEquals(Job.State.CLOSED, jobMbean.getCurrentState());
 
-        // await for the associated control to be released
-//        for (int i = 0; i < 30; i++) {
-//            Thread.sleep(100);
-//            jobMbean = cs.getControl(JobMXBean.TYPE, "AppOne", JobMXBean.class);
-//            if (jobMbean == null)
-//                break;
-//        }
-//        assertNull(jobMbean);
-//        appStarter.stateChange(Action.CLOSE);
+        // Wait for the associated control to be released
+        Thread.sleep(1000 * (Controls.JOB_HOLD_AFTER_CLOSE_SECS + 1));
+        jobMbean = cs.getControl(JobMXBean.TYPE, "AppOne", JobMXBean.class);
+        assertNull(jobMbean);
+        appStarter.stateChange(Action.CLOSE);
     }
 }
