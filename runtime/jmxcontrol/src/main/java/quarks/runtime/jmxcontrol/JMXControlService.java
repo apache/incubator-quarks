@@ -104,7 +104,7 @@ public class JMXControlService implements ControlService {
             ObjectName on = ObjectName.getInstance(getDomain(), table);
             getMbs().registerMBean(control, on);
 
-            return on.getCanonicalName();
+            return getControlId(on);
         } catch (InstanceAlreadyExistsException | MBeanRegistrationException | NotCompliantMBeanException
                 | MalformedObjectNameException e) {
             throw new RuntimeException(e);
@@ -128,26 +128,39 @@ public class JMXControlService implements ControlService {
 
     @Override
     public <T> T  getControl(String type, String alias, Class<T> controlInterface) {
+        MBeanServer mBeanServer = getMbs();
+        ObjectName name = getObjectNameForInterface(type, alias, controlInterface);
+        return name != null ? JMX.newMXBeanProxy(mBeanServer, name, controlInterface) : null;
+    }
+
+    @Override
+    public <T> String getControlId(String type, String alias, Class<T> controlInterface) {
+        return getControlId(getObjectNameForInterface(type, alias, controlInterface));
+    }
+
+    private <T> ObjectName getObjectNameForInterface(String type, String alias, Class<T> controlInterface) {
         try {
-            MBeanServer mBeanServer = getMbs();
             Set<ObjectName> names = getObjectNamesForInterface(type, alias, controlInterface.getName());
             
             if (names.isEmpty())
                 return null;
             if (names.size() != 1)
                 throw new RuntimeException("Alias " + alias + " not unique for type " + type);
-            
-            T control = null;
-            
+    
+            ObjectName name = null;
             for (ObjectName on : names) {
-                control = JMX.newMXBeanProxy(mBeanServer, on, controlInterface);
+                name = on;
                 break;
             }
-            return control;
+            return name;
         }
         catch (MalformedObjectNameException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static String getControlId(ObjectName on) {
+        return on != null ? on.getCanonicalName() : null;
     }
 
     private Set<ObjectName> getObjectNamesForInterface(String type, String alias, String interfaceName) 

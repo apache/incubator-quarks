@@ -244,16 +244,24 @@ public class JsonControlService implements ControlService {
     }
 
     @Override
-    public synchronized <T> T getControl(String type, String alias, Class<T> controlInterface) {
+    public <T> T getControl(String type, String alias, Class<T> controlInterface) {
         String controlId = getControlId(type, null, alias);
-        
+        ControlMBean<?> bean = getControlMBean(controlId, controlInterface);        
+        return bean != null ? controlInterface.cast(bean.getControl()) : null;
+    }
+
+    @Override
+    public <T> String getControlId(String type, String alias, Class<T> controlInterface) {
+        String controlId = getControlId(type, null, alias);
+        return getControlMBean(controlId, controlInterface) != null ? controlId : null;
+    }
+
+    private synchronized <T> ControlMBean<?> getControlMBean(String controlId, Class<T> controlInterface) {
         ControlMBean<?> bean = mbeans.get(controlId);
         if (bean == null)
             return null;
-        
         if (bean.getControlInterface() != controlInterface)
             return null;
-        
-        return controlInterface.cast(bean.getControl());
+        return bean;
     }
 }

@@ -106,4 +106,18 @@ public interface ControlService {
      * @return Control Mbean or null if a matching MBean is not registered.
      */
     <T> T getControl(String type, String alias, Class<T> controlInterface);
+
+    /**
+     * Return the unique identifier for a control Mbean registered with 
+     * this service.
+     * 
+     * @param <T> Control MBean type
+     * @param type Type of the control MBean.
+     * @param alias Alias for the control MBean.
+     * @param controlInterface
+     *              Public interface of the control MBean. 
+     * @return unique identifier that can be used to unregister a control 
+     *              MBean or null if a matching MBean is not registered.
+     */
+    <T> String getControlId(String type, String alias, Class<T> controlInterface);
 }
