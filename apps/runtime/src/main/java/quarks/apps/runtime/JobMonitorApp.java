@@ -30,7 +30,10 @@ import com.google.gson.JsonObject;
 
 import quarks.execution.DirectSubmitter;
 import quarks.execution.Job;
+import quarks.execution.Job.Action;
+import quarks.execution.mbeans.JobMXBean;
 import quarks.execution.services.ControlService;
+import quarks.execution.services.Controls;
 import quarks.execution.services.JobRegistryService;
 import quarks.execution.services.RuntimeServices;
 import quarks.function.Consumer;
@@ -129,6 +132,7 @@ public class JobMonitorApp {
                         ApplicationServiceMXBean.class.getName());                
             }
 // TODO add ability to submit with the initial application configuration
+            logger.info("Restarting monitored application {}", applicationName);
             control.submit(applicationName, null);
         }
         catch (Exception e) {
@@ -136,6 +140,47 @@ public class JobMonitorApp {
         }
     }
     
+    /**
+     * Closes a job using a {@code JobMXBean} control registered with the 
+     * specified {@code ControlService}.
+     * 
+     * @param jobName the name of the job
+     * @param controlService the control service
+     */
+    public static void closeJob(String jobName, ControlService controlService) {
+        try {
+            JobMXBean jobMbean = controlService.getControl(JobMXBean.TYPE, jobName, JobMXBean.class);
+            if (jobMbean == null) {
+                throw new IllegalStateException(
+                        "Could not find a registered control for job " + jobName + 
+                        " with the following interface: " + JobMXBean.class.getName());                
+            }
+            jobMbean.stateChange(Action.CLOSE);
+            logger.debug("Closing job {}", jobName);
+            
+            // Wait for the job to complete
+            long startWaiting = System.currentTimeMillis();
+            for (long waitForMillis = Controls.JOB_HOLD_AFTER_CLOSE_SECS * 1000;
+                    waitForMillis < 0;
+                    waitForMillis -= 100) {
+                if (jobMbean.getCurrentState() == Job.State.CLOSED)
+                    break;
+                else
+                    Thread.sleep(100);
+            }
+            if (jobMbean.getCurrentState() != Job.State.CLOSED) {
+                throw new IllegalStateException(
+                        "The unhealthy job " + jobName + " did not close after " + 
+                        Controls.JOB_HOLD_AFTER_CLOSE_SECS + " seconds");                
+            }
+            logger.debug("Job {} state is CLOSED after waiting for {} milliseconds",
+                    jobName, System.currentTimeMillis() - startWaiting);
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * Declares the following topology:
      * <pre>
@@ -201,7 +246,7 @@ public class JobMonitorApp {
             JsonObject job = JobMonitorAppEvent.getJob(value);
             String applicationName = JobMonitorAppEvent.getJobName(job);
 
-            logger.info("Will restart monitored application {}, cause: {}", applicationName, value);
+            closeJob(applicationName, controlService);
             submitApplication(applicationName, controlService);
         }
     }
