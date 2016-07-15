@@ -19,9 +19,11 @@ under the License.
 package quarks.topology;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import quarks.function.BiFunction;
 import quarks.function.Function;
+import quarks.window.Window;
 
 /**
  * Partitioned window of tuples. Logically a window
@@ -36,6 +38,26 @@ import quarks.function.Function;
  * then each key has its own window containing the last
  * three tuples with the same key obtained from the tuple's identity using {@code getId()}.
  * </P>
+ * <P>
+ * A variety of aggregation processing models are provided.
+ * <UL>
+ * <LI>Partition content change triggered aggregations or timer triggered aggregations.</LI>
+ * <LI>Sliding aggregators or batch aggregators.
+ *     A sliding aggregator does not affect the contents of a partition;
+ *     a particular tuple may be included in multiple aggregations.
+ *     Sliding aggregators are typically used to perform "signal smoothing"
+ *     over the specified window.
+ *     <BR>
+ *     Batch aggregators process partition contents in batches, clearing
+ *     the contents after a batch is processed; a particular tuple is
+ *     present in at most one aggregation.
+ *     Batch aggregators are often used to perform data reduction 
+ *     - e.g., reducing a stream of 1KHz sampled sensor values down 
+ *     to a 1Hz stream of aggregated sensor values.</LI>
+ * </UL>
+ * Additionally, {@link #process(Window, BiFunction)} enables use of the
+ * lower level {@link Window} API to define and use additional 
+ * aggregation processing models.
  *
  * @param <T> Tuple type
  * @param <K> Partition key type
@@ -45,7 +67,8 @@ import quarks.function.Function;
  */
 public interface TWindow<T, K> extends TopologyElement {
     /**
-     * Declares a stream that is a continuous, sliding, aggregation of
+     * Declares a stream that is a continuous, sliding, 
+     * content change triggered aggregation of
      * partitions in this window.
      * <P>
      * Changes in a partition's contents trigger an invocation of
@@ -78,8 +101,9 @@ public interface TWindow<T, K> extends TopologyElement {
     <U> TStream<U> aggregate(BiFunction<List<T>, K, U> aggregator);
     
     /**
-     * Declares a stream that represents a batched aggregation of
-     * partitions in this window. 
+     * Declares a stream that represents a 
+     * content change triggered batched aggregation of
+     * partitions in this window.
      * <P>
      * Each partition "batch" triggers an invocation of
      * {@code batcher.apply(tuples, key)}, where {@code tuples} is
@@ -105,7 +129,84 @@ public interface TWindow<T, K> extends TopologyElement {
      * @return A stream that contains the latest aggregations of partitions in this window.
      */
     <U> TStream<U> batch(BiFunction<List<T>, K, U> batcher);
+
+    /**
+     * Declares a stream that is a continuous, sliding, 
+     * timer triggered aggregation of
+     * partitions in this window.
+     * <P>
+     * Periodically trigger an invocation of
+     * {@code aggregator.apply(tuples, key)}, where {@code tuples} is
+     * a {@code List<T>} containing all the tuples in the partition in
+     * insertion order from oldest to newest.  The list is stable
+     * during the aggregator invocation.  
+     * The list will be empty if the partition is empty.
+     * </P>
+     * <P> 
+     * A non-null {@code aggregator} result is added to the returned stream.
+     * </P>
+     * <P>
+     * Thus the returned stream will contain a sequence of tuples where the
+     * most recent tuple represents the most up to date aggregation of a
+     * partition.
+     *
+     * @param <U> Tuple type
+     * @param period how often to invoke the aggregator
+     * @param unit TimeUnit for {@code period}
+     * @param aggregator
+     *            Logic to aggregation a partition.
+     * @return A stream that contains the latest aggregations of partitions in this window.
+     * 
+     * @see #aggregate(BiFunction)
+     */
+    <U> TStream<U> timedAggregate(long period, TimeUnit unit, BiFunction<List<T>, K, U> aggregator);
     
+    /**
+     * Declares a stream that represents a 
+     * timer triggered batched aggregation of
+     * partitions in this window. 
+     * <P>
+     * Periodically trigger an invocation of
+     * {@code batcher.apply(tuples, key)}, where {@code tuples} is
+     * a {@code List<T>} containing all the tuples in the partition in
+     * insertion order from oldest to newest  The list is stable
+     * during the batcher invocation.
+     * The list will be empty if the partition is empty.
+     * <P>
+     * A non-null {@code batcher} result is added to the returned stream.
+     * The partition's contents are cleared after a batch is processed.
+     * </P>
+     * <P>
+     * Thus the returned stream will contain a sequence of tuples where the
+     * most recent tuple represents the most up to date aggregation of a
+     * partition.
+     * 
+     * @param <U> Tuple type
+     * @param period how often to invoke the batcher
+     * @param unit TimeUnit for {@code period}
+     * @param batcher
+     *            Logic to aggregation a partition.
+     * @return A stream that contains the latest aggregations of partitions in this window.
+     * 
+     * @see #batch(BiFunction)
+     */
+    <U> TStream<U> timedBatch(long period, TimeUnit unit, BiFunction<List<T>, K, U> batcher);
+    
+    /**
+     * Declares a stream that represents an aggregation of
+     * partitions in this window using the specified {@link Window}.
+     * <P>
+     * This method makes it easier to create aggregation streams
+     * using the lower level {@code Window} API to construct and
+     * supply windows with configurations not directly exposed by {@code TWindow}.
+     * 
+     * @param window the window implementation
+     * @param aggregator the aggregation function
+     *  
+     * @return A stream that contains the latest aggregations of partitions in this window.
+     */
+    <U, L extends List<T>> TStream<U> process(Window<T,K,L> window, BiFunction<List<T>, K, U> aggregator);
+
     /**
      * Returns the key function used to map tuples to partitions.
      * @return Key function used to map tuples to partitions.
