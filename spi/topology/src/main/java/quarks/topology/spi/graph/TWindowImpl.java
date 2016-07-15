@@ -23,11 +23,10 @@ import static quarks.window.Policies.alwaysInsert;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import quarks.function.BiFunction;
 import quarks.function.Function;
-import quarks.function.Functions;
-import quarks.oplet.window.Aggregate;
 import quarks.topology.TStream;
 import quarks.window.Policies;
 import quarks.window.Window;
@@ -43,15 +42,12 @@ public class TWindowImpl<T, K> extends AbstractTWindow<T, K> {
 
     @Override
     public <U> TStream<U> aggregate(BiFunction<List<T>,K, U> processor) { 
-        processor = Functions.synchronizedBiFunction(processor);
         Window<T, K, LinkedList<T>> window = Windows.lastNProcessOnInsert(size, getKeyFunction());
-        Aggregate<T,U,K> op = new Aggregate<T,U,K>(window, processor);
-        return feeder().pipe(op); 
+        return process(window, processor);
     }
 
     @Override
     public <U> TStream<U> batch(BiFunction<List<T>, K, U> batcher) {
-        batcher = Functions.synchronizedBiFunction(batcher);
         Window<T, K, List<T>> window =
                 Windows.window(
                         alwaysInsert(),
@@ -60,9 +56,29 @@ public class TWindowImpl<T, K> extends AbstractTWindow<T, K> {
                         Policies.processWhenFullAndEvict(size),
                         getKeyFunction(),
                         () -> new ArrayList<T>(size));
-        
-        Aggregate<T,U,K> op = new Aggregate<T,U,K>(window, batcher);
-        return feeder().pipe(op); 
+        return process(window, batcher);
+    }
+    
+    @Override
+    public <U> TStream<U> timedAggregate(long period, TimeUnit unit, BiFunction<List<T>,K, U> processor) {
+      return null; // TODO the window impl
+//    Window<T, K, List<T>> window =
+//            Windows.window(
+//                    alwaysInsert(),
+//                    ...
+//                    );
+//    return process(window, aggregator);
+    }
+
+    @Override
+    public <U> TStream<U> timedBatch(long period, TimeUnit unit, BiFunction<List<T>, K, U> batcher) {
+      return null; // TODO the window impl
+//    Window<T, K, List<T>> window =
+//            Windows.window(
+//                    alwaysInsert(),
+//                    ...
+//                    );
+//    return process(window, batcher);
     }
 
     /**

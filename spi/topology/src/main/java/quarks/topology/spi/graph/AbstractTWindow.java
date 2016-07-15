@@ -18,10 +18,16 @@ under the License.
 */
 package quarks.topology.spi.graph;
 
+import java.util.List;
+
+import quarks.function.BiFunction;
 import quarks.function.Function;
+import quarks.function.Functions;
+import quarks.oplet.window.Aggregate;
 import quarks.topology.TStream;
 import quarks.topology.TWindow;
 import quarks.topology.Topology;
+import quarks.window.Window;
 
 public abstract class AbstractTWindow<T, K> implements TWindow<T, K> {
     private final TStream<T> feed;
@@ -45,4 +51,12 @@ public abstract class AbstractTWindow<T, K> implements TWindow<T, K> {
     public TStream<T> feeder() {
         return feed;
     }
+
+    @Override
+    public <U, L extends List<T>> TStream<U> process(Window<T,K,L> window, BiFunction<List<T>, K, U> aggregator) {
+      aggregator = Functions.synchronizedBiFunction(aggregator);
+      Aggregate<T,U,K> op = new Aggregate<T,U,K>(window, aggregator);
+      return feeder().pipe(op); 
+    }
+
 }
