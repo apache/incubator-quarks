@@ -144,9 +144,13 @@ public class ConnectorStream<G extends Topology, T> extends AbstractTStream<G, T
 
     @Override
     public TStream<T> peek(Consumer<T> peeker) {
-        peeker = Functions.synchronizedConsumer(peeker);
-        connector.peek(new Peek<T>(peeker));
-        return this;
+        return peek(new Peek<T>(Functions.synchronizedConsumer(peeker)));
+    }
+
+    @Override
+    public TStream<T> peek(quarks.oplet.core.Peek<T> peek) {
+      connector.peek(peek);
+      return this;
     }
     
     @Override
@@ -158,6 +162,8 @@ public class ConnectorStream<G extends Topology, T> extends AbstractTStream<G, T
 
     @Override
     public <U> TStream<U> pipe(Pipe<T, U> pipe) {
+        if (pipe instanceof quarks.oplet.core.Peek<?>)
+          throw new IllegalArgumentException("Use peek() to add Peek oplets");
         return connectPipe(pipe);
     }
 

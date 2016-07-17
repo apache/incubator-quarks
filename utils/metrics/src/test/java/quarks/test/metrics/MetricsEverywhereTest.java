@@ -74,7 +74,7 @@ public abstract class MetricsEverywhereTest extends TopologyAbstractTest {
         Topology t = newTopology();
         AtomicInteger n = new AtomicInteger(0);
         TStream<Integer> ints = t.poll(() -> n.incrementAndGet(), 10, TimeUnit.MILLISECONDS);
-        ints.pipe(new TestOplet<Integer>());
+        ints.peek(new TestOplet<Integer>());
 
         // Submit job
         Future<? extends Job> fj = getSubmitter().submit(t);
@@ -104,8 +104,8 @@ public abstract class MetricsEverywhereTest extends TopologyAbstractTest {
         Topology t = newTopology();
         AtomicInteger n = new AtomicInteger(0);
         TStream<Integer> ints = t.poll(() -> n.incrementAndGet(), 10, TimeUnit.MILLISECONDS);
-        TStream<Integer> ints2 = ints.pipe(new TestOplet<Integer>());
-        ints2.pipe(new TestOplet<Integer>());
+        TStream<Integer> ints2 = ints.peek(new TestOplet<Integer>());
+        ints2.peek(new TestOplet<Integer>());
 
         // Submit job
         Future<? extends Job> fj = getSubmitter().submit(t);
@@ -154,6 +154,20 @@ public abstract class MetricsEverywhereTest extends TopologyAbstractTest {
          * OP_0 -- OP_1(Split) ----- OP_4 (Sink)
          *                       \
          *                        -- OP_5 (Sink)
+         *                        
+         * Note, OP_2 (Counter) is a peek oplet and as such
+         * is part of the split[0] stream's peek-chain.  
+         * Metrics insertion only occurs at the end of a peek-chain,
+         * so there is NOT an injected metric between 
+         * OP_1(Split) -> OP_2 (Counter).
+         * 
+         * The net is metrics are injected where the "#" are:
+         * 
+         *                        -- OP_2 (Counter) -#- OP_3 (Sink)
+         *                       / 
+         * OP_0 -#- OP_1(Split) ---#- OP_4 (Sink)
+         *                       \
+         *                        -#- OP_5 (Sink)
          */
         Topology t = newTopology();
         Graph g = t.graph();
