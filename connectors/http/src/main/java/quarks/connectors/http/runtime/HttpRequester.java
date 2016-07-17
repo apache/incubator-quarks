@@ -41,7 +41,7 @@ import quarks.function.Supplier;
  * @param <T> Tuple type of request stream
  * @param <R> Tuple type of result stream
  */
-public class HttpRequester<T,R> implements Function<T,R>{
+public class  HttpRequester<T,R> implements Function<T,R>{
     
     private static final long serialVersionUID = 1L;
     
