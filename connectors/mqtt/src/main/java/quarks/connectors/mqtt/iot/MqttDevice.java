@@ -45,7 +45,21 @@ import quarks.topology.json.JsonFunctions;
  * The connector doesn't presume a particular pattern for 
  * Device MQTT "event" topic and "command" topics though default
  * patterns are provided.
+ * </p>
  * <p>
+ * MqttDevice supports payload in String and Json formats.
+ * For command messages, JsonObject is returned with structure as follows:
+ * <br>
+ * <pre>
+ * {
+ *     "command" : "<<Command is extracted from command topic provided in config file>>",
+ *     "tsms" : "<<Current time stamp in milliseconds>>",
+ *     "format" : "<<json or string provided in command topic>>",
+ *     "payload" : "<<Actual payload as JsonObject or String>>"
+ * }
+ * </pre>
+ * <br><br>
+ * </p>
  * Connector configuration Properties fall into two categories:
  * <ul>
  * <li>MQTT Device abstraction properties</li>
