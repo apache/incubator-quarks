@@ -469,7 +469,6 @@ subprojects {
         classpath = files(classpath.collect { it.toString().replace('java8', 'java7') })
       }
       logger.debug "$project.path test.classpath: " + classpath.collect { it.toString() }
-println "#### $project.path test.classpath: " + classpath.collect { it.toString() }
     }
   }
   
