@@ -463,12 +463,13 @@ subprojects {
         classpath = files(sourceSets.test.output.classesDir.toString().replace('test', 'java7Test')) + classpath
         
         // Some of the tests have dependencies on other tests, adjust those classpaths too
-        classpath = files(classpath.collect { it.toString().replace('build/classes/test/', 'build/classes/java7test/') })
+        classpath = files(classpath.collect { it.toString().replace('build/classes/test', 'build/classes/java7test') })
       
         // Switch from java8 jars to java7 jars
         classpath = files(classpath.collect { it.toString().replace('java8', 'java7') })
       }
       logger.debug "$project.path test.classpath: " + classpath.collect { it.toString() }
+println "#### $project.path test.classpath: " + classpath.collect { it.toString() }
     }
   }
   
