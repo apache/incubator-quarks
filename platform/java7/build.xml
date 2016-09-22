@@ -273,6 +273,7 @@
 		<retro7.test.setup tdir="utils/metrics"  ldir="utils/metrics/lib"/>
 		<retro7.test.setup tdir="providers/direct" />
 		<retro7.test.setup tdir="connectors/common" ldir="connectors/common/lib"/>
+        <retro7.test.setup tdir="connectors/iot"  ldir="connectors/iot/lib"/>
 		<retro7.test.setup tdir="connectors/iotp"  ldir="connectors/iotp/lib"/>
 		<retro7.test.setup tdir="connectors/http"  ldir="connectors/http/lib"/>
 		<retro7.test.setup tdir="connectors/pubsub"  ldir="connectors/pubsub/lib"/>
@@ -304,6 +305,7 @@
 		<retro7.test.run tdir="utils/metrics"  ldir="utils/metrics/lib"/>
 		<retro7.test.run tdir="providers/direct" />
 		<retro7.test.run tdir="connectors/common" ldir="connectors/common/lib"/>
+        <retro7.test.run tdir="connectors/iot"  ldir="connectors/iot/lib"/>
 		<retro7.test.run tdir="connectors/iotp"  ldir="connectors/iotp/lib"/>
 		<retro7.test.run tdir="connectors/http"  ldir="connectors/http/lib"/>
 		<retro7.test.run tdir="connectors/pubsub"  ldir="connectors/pubsub/lib"/>
