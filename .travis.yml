@@ -18,7 +18,7 @@ script:
     - jdk_switcher use oraclejdk8
     - ./gradlew release -Dedgent.build.ci=true
 ###    - ./gradlew test -Dedgent.build.ci=true
-###    - ./gradlew test --continue -Dedgent.build.ci=true
+    - ./gradlew test --continue -Dedgent.build.ci=true
     - ./gradlew test7Compile -Dedgent.build.ci=true
     - jdk_switcher use oraclejdk7
 ###    - ./gradlew test7Run -Dedgent.build.ci=true 
