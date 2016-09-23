@@ -15,7 +15,7 @@ COUNTER=0
 while read LINE; do
   echo $LINE
   # echo $0 echoing $LINE >/dev/stderr
-  let COUNTER=COUNTER+1
+  COUNTER=$(($COUNTER+1))
   if [ $TERM_COUNT -gt 0 -a $COUNTER -ge $TERM_COUNT ]; then
     echo $0 TERMINATING after $LINE >/dev/stderr
     exit 1;
