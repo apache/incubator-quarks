@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # echo stdin to stdout.  terminate after <terminateCount> lines
 USAGE="$0 [<terminateCount>]"
