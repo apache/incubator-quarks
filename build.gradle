@@ -430,10 +430,23 @@ subprojects {
     systemProperty 'edgent.test.root.dir', rootProject.projectDir
     testLogging {
       exceptionFormat 'full'
+      showStandardStreams = System.properties['edgent.test.showOutput'] != null
+    }
+    beforeSuite { desc ->
+      if (!desc.parent) { // will match the outermost suite
+        println "$project.path testing ..."
+      }
+    }
+    afterSuite { desc, result ->
+      if (!desc.parent) { // will match the outermost suite
+        def duration = String.format('%.3fsec', (result.endTime - result.startTime) / 1000)
+        println "$project.path $duration $result.resultType ($result.testCount tests, $result.failedTestCount failures, $result.skippedTestCount skipped)"
+      }
     }
     reports {
-      junitXml.enabled = true
-      html.enabled = true
+      // individual <project>/build/reports not needed with aggregate junit/jacoco reports
+      junitXml.enabled = System.properties['edgent.test.projectReports'] != null
+      html.enabled = System.properties['edgent.test.projectReports'] != null
     }
     doFirst {
       // The project's tests are supposed to run against its target-dir jar.
