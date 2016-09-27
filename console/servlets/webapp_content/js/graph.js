@@ -16,15 +16,31 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 */
-opletColor = {"org.apache.edgent.streamscope.oplets.StreamScope": "#c7c7c7",
-        "org.apache.edgent.metrics.oplets.CounterOp": "#c7c7c7", "org.apache.edgent.metrics.oplets.RateMeter": "#aec7e8", "org.apache.edgent.oplet.core.FanIn": "#ff7f0e",
-		"org.apache.edgent.oplet.core.FanOut": "#ffbb78", "org.apache.edgent.oplet.core.Peek": "#2ca02c", "org.apache.edgent.oplet.core.PeriodicSource": "#98df8a", 
-		"org.apache.edgent.oplet.core.Pipe": "#d62728", "org.apache.edgent.oplet.core.PipeWindow": "#ff9896", "org.apache.edgent.oplet.core.ProcessSource": "#9467bd", 
-		"org.apache.edgent.oplet.core.Sink": "#c5b0d5", "org.apache.edgent.oplet.core.Source": "#8c564b", "org.apache.edgent.oplet.core.Split": "#c49c94", "org.apache.edgent.oplet.core.Union" : "#1f77b4",
-		"org.apache.edgent.oplet.functional.ConsumerEventSource": "#e377c2", "org.apache.edgent.oplet.functional.ConsumerPeek": "#f7b6d2", "org.apache.edgent.oplet.functional.ConsumerSink": "#7f7f7f", 
-		"org.apache.edgent.oplet.functional.Filter": "#7F7F7F", "org.apache.edgent.oplet.functional.FlatMapper": "#bcbd22", "org.apache.edgent.oplet.functional.Isolate": "#dbdb8d", 
-		"org.apache.edgent.oplet.functional.Map": "#17becf", "org.apache.edgent.oplet.functional.SupplierPeriodicSource": "#9edae5", "org.apache.edgent.oplet.functional.SupplierSource": "#b5cf6b", 
-		"org.apache.edgent.oplet.plumbing.PressureReliever": "#e7cb94", "org.apache.edgent.oplet.plumbing.TextFileReader": "#ad494a", "org.apache.edgent.oplet.plumbing.UnorderedIsolate": "#de9ed6"};
+opletColor = {
+		"org.apache.edgent.metrics.oplets.CounterOp": "#c7c7c7",
+		"org.apache.edgent.metrics.oplets.RateMeter": "#1f77b4",
+		"org.apache.edgent.oplet.core.FanIn": "#aec7e8",
+		"org.apache.edgent.oplet.core.FanOut": "#ff7f0e",
+		"org.apache.edgent.oplet.core.Peek": "#ffbb78",
+		"org.apache.edgent.oplet.core.PeriodicSource": "#bcbd22",
+		"org.apache.edgent.oplet.core.Pipe": "#98df8a",
+		"org.apache.edgent.oplet.core.ProcessSource": "#d62728",
+		"org.apache.edgent.oplet.core.Sink": "#ff9896",
+		"org.apache.edgent.oplet.core.Source": "#9467bd",
+		"org.apache.edgent.oplet.core.Split": "#c5b0d5",
+		"org.apache.edgent.oplet.core.Union": "#c49c94",
+		"org.apache.edgent.oplet.functional.Filter": "#e377c2",
+		"org.apache.edgent.oplet.functional.Isolate": "#f7b6d2",
+		"org.apache.edgent.oplet.functional.Map": "#f2d979",
+		"org.apache.edgent.oplet.functional.Peek": "#dbdb8d",
+		"org.apache.edgent.oplet.functional.SupplierPeriodicSource": "#17becf",
+		"org.apache.edgent.oplet.functional.SupplierSource": "#9edae5",
+		"org.apache.edgent.oplet.plumbing.Isolate": "#79a7f2",
+		"org.apache.edgent.oplet.plumbing.PressureReliever": "#2ca02c",
+		"org.apache.edgent.oplet.plumbing.TextFileReader": "#c0f279",
+		"org.apache.edgent.oplet.plumbing.UnorderedIsolate": "#e279f2",
+		"org.apache.edgent.streamscope.oplets.StreamScope": "#c7c7c7"
+};
 colorMap = {};
 
 addValuesToEdges = function(graph, counterMetrics) {

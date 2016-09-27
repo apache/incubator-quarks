@@ -766,6 +766,204 @@ var makeRows = function() {
 	return theRows;
 };
 
+// Convert HSV to RGB
+var hsvToRGB = function(h, s, v) {
+	var r, g, b, i, f, p, q, t;
+	if (arguments.length === 1) {
+		s = h.s, v = h.v, h = h.h;
+	}
+	i = Math.floor(h * 6);
+	f = h * 6 - i;
+	p = v * (1 - s);
+	q = v * (1 - f * s);
+	t = v * (1 - (1 - f) * s);
+	switch (i % 6) {
+		case 0:
+			r = v, g = t, b = p;
+			break;
+		case 1:
+			r = q, g = v, b = p;
+			break;
+		case 2:
+			r = p, g = v, b = t;
+			break;
+		case 3:
+			r = p, g = q, b = v;
+			break;
+		case 4:
+			r = t, g = p, b = v;
+			break;
+		case 5:
+			r = v, g = p, b = q;
+			break;
+	}
+	return {
+		r: Math.round(r * 255),
+		g: Math.round(g * 255),
+		b: Math.round(b * 255)
+	};
+};
+
+var componentToHex = function(c) {
+	var hex = c.toString(16);
+	return hex.length == 1 ? "0" + hex : hex;
+};
+
+// Convert RGB to Hex
+var rgbToHex = function(r, g, b) {
+	return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+};
+
+// Convert Hex to RGB
+var hexToRGB = function(hex) {
+	var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+	return result ? {
+		r: parseInt(result[1], 16),
+		g: parseInt(result[2], 16),
+		b: parseInt(result[3], 16)
+	} : null;
+};
+
+// Convert RGB to XYZ
+var rgbToXYZ = function(r, g, b) {
+	var _r = (r / 255);
+	var _g = (g / 255);
+	var _b = (b / 255);
+
+	if (_r > 0.04045) {
+		_r = Math.pow(((_r + 0.055) / 1.055), 2.4);
+	} else {
+		_r = _r / 12.92;
+	}
+
+	if (_g > 0.04045) {
+		_g = Math.pow(((_g + 0.055) / 1.055), 2.4);
+	} else {
+		_g = _g / 12.92;
+	}
+
+	if (_b > 0.04045) {
+		_b = Math.pow(((_b + 0.055) / 1.055), 2.4);
+	} else {
+		_b = _b / 12.92;
+	}
+
+	_r = _r * 100;
+	_g = _g * 100;
+	_b = _b * 100;
+
+	var X = _r * 0.4124 + _g * 0.3576 + _b * 0.1805;
+	var Y = _r * 0.2126 + _g * 0.7152 + _b * 0.0722;
+	var Z = _r * 0.0193 + _g * 0.1192 + _b * 0.9505;
+
+	return [X, Y, Z];
+};
+
+// Convert XYZ to LAB
+var xyzToLAB = function(x, y, z) {
+	var ref_X = 95.047;
+	var ref_Y = 100.000;
+	var ref_Z = 108.883;
+
+	var _X = x / ref_X;
+	var _Y = y / ref_Y;
+	var _Z = z / ref_Z;
+
+	if (_X > 0.008856) {
+		_X = Math.pow(_X, (1 / 3));
+	} else {
+		_X = (7.787 * _X) + (16 / 116);
+	}
+
+	if (_Y > 0.008856) {
+		_Y = Math.pow(_Y, (1 / 3));
+	} else {
+		_Y = (7.787 * _Y) + (16 / 116);
+	}
+
+	if (_Z > 0.008856) {
+		_Z = Math.pow(_Z, (1 / 3));
+	} else {
+		_Z = (7.787 * _Z) + (16 / 116);
+	}
+
+	var CIE_L = (116 * _Y) - 16;
+	var CIE_a = 500 * (_X - _Y);
+	var CIE_b = 200 * (_Y - _Z);
+
+	return [CIE_L, CIE_a, CIE_b];
+};
+
+// Compute Delta E using CIE94
+var getDeltaE = function(x, y, isTextiles) {
+	var x = {
+		l: x[0],
+		a: x[1],
+		b: x[2]
+	};
+	var y = {
+		l: y[0],
+		a: y[1],
+		b: y[2]
+	};
+	labx = x;
+	laby = y;
+	var k2;
+	var k1;
+	var kl;
+	var kh = 1;
+	var kc = 1;
+	if (isTextiles) {
+		k2 = 0.014;
+		k1 = 0.048;
+		kl = 2;
+	} else {
+		k2 = 0.015;
+		k1 = 0.045;
+		kl = 1;
+	}
+
+	var c1 = Math.sqrt(x.a * x.a + x.b * x.b);
+	var c2 = Math.sqrt(y.a * y.a + y.b * y.b);
+
+	var sh = 1 + k2 * c1;
+	var sc = 1 + k1 * c1;
+	var sl = 1;
+
+	var da = x.a - y.a;
+	var db = x.b - y.b;
+	var dc = c1 - c2;
+
+	var dl = x.l - y.l;
+	var dh = Math.sqrt(da * da + db * db - dc * dc);
+
+	return Math.sqrt(Math.pow((dl / (kl * sl)), 2) + Math.pow((dc / (kc * sc)), 2) + Math.pow((dh / (kh * sh)), 2));
+};
+
+// Generate a random color using the golden ratio conjugate
+var genRandomColor = function(s, v) {
+	var goldenRatioConjugate = 0.618033988749895;
+	var h = Math.random();
+	h += goldenRatioConjugate;
+	h %= 1;
+	var hsv = {
+		h: h,
+		s: s,
+		v: v
+	};
+	var rgb = hsvToRGB(hsv.h, hsv.s, hsv.v);
+	var hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+	return {
+		hsv: hsv,
+		rgb: rgb,
+		hex: hex
+	};
+};
+
+var checkDeltaE = function(deltaE) {
+    return deltaE >= 15;
+};
+
 vertexMap = {};
 
 var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
@@ -937,7 +1135,9 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
     			return document.createElementNS(d3.ns.prefix.svg, 'circle');
     		}
       });
-      
+
+	var assignedOpletColors = [];
+
   	node.selectAll("circle")
   	.attr("cx", sankey.nodeWidth()/2)
   	.attr("cy", function(d){
@@ -950,11 +1150,53 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
   		if (!colorMap[d.id.toString()]) {
   			colorMap[d.id.toString()] = color20(d.id.toString());
   		}
+
+  		// Generate a random color that is perceptually different than all assigned colors:
+  		// 1. Convert the assigned oplet colors from Hex to LAB
+  		// 2. Generate a random color in the RGB color space
+  		// 3. Convert RGB to XYZ
+  		// 4. Convert XYZ to LAB
+  		// 5. For each assigned oplet color, compute Delta E between the two LAB colors (new and assigned)
+  		// 6. If Delta E >= 15, consider the color to be different enough from the other colors
   		if (!opletColor[d.invocation.kind]) {
-  			opletColor[d.invocation.kind] = color20(d.invocation.kind);
+  	  		var assignedOpletColorsLAB = [];
+  	  		for (var i = 0; i < assignedOpletColors.length; i++) {
+  	  			var rgb = hexToRGB(assignedOpletColors[i]);
+  	  			var xyz = rgbToXYZ(rgb.r, rgb.g, rgb.b);
+  	  			var lab = xyzToLAB(xyz[0], xyz[1], xyz[2]);
+  	  			assignedOpletColorsLAB.push(lab);
+  	  		}
+
+  	  		var deltaEs = [];
+  	  		var c = null;
+  	  		var uniqueColor = false;
+
+  	  		while (!uniqueColor) {
+  	  			// Use a different color scheme for non-org.apache.edgent defined oplets
+  	  			if (d.invocation.kind.includes("org.apache.edgent")) {
+  	  				c = genRandomColor(0.5, 0.95);
+  	  			} else {
+  	  				c = genRandomColor(0.99, 0.99);
+  	  			}
+
+  	  			var xyz = rgbToXYZ(c.rgb.r, c.rgb.g, c.rgb.b);
+  	  			var lab = xyzToLAB(xyz[0], xyz[1], xyz[2]);
+
+  	  			// Compare color to assigned colors and check for similarity
+  	  			deltaEs = [];
+  	  			for (var m = 0; m < assignedOpletColorsLAB.length; m++) {
+  	  				deltaE = getDeltaE(lab, assignedOpletColorsLAB[m], false);
+  	  				deltaEs.push(deltaE);
+  	  			}
+  	  			uniqueColor = deltaEs.every(checkDeltaE);
+  	  		}
+
+  			opletColor[d.invocation.kind] = c.hex;
   		}
   		
-  		return getVertexFillColor(layer, d, counterMetrics);
+  		var color = getVertexFillColor(layer, d, counterMetrics);
+  		assignedOpletColors.push(color);
+  		return color;
   	
   	})
   	.attr("data-legend", function(d) {
