@@ -437,16 +437,38 @@ subprojects {
         println "$project.path testing ..."
       }
     }
+    ext.failedTestResultPaths = []
+    ext.summaryResult = null
+    ext.printFile = { path ->
+      ant.concat { fileset(file: path) }
+    }
     afterSuite { desc, result ->
-      if (!desc.parent) { // will match the outermost suite
-        def duration = String.format('%.3fsec', (result.endTime - result.startTime) / 1000)
-        println "$project.path $duration $result.resultType ($result.testCount tests, $result.failedTestCount failures, $result.skippedTestCount skipped)"
+      if (desc.parent && desc.className != null) {  // individual test class result
+        def resultFile = "$testResultsDir/test/TEST-${desc.className}.xml"
+        println "Testrun results: $resultFile"
+        if (result.resultType == TestResult.ResultType.FAILURE) {
+          failedTestResultPaths.add resultFile
+        }
+      }
+      else { // project's overall results
+        summaryResult = result 
       }
     }
+    doLast {
+      if (System.properties['edgent.build.ci'] != null) {
+        failedTestResultPaths.each { path ->
+          println path
+          printFile path
+        }
+      }
+      def result = summaryResult
+      def duration = String.format('%.3fsec', (result.endTime - result.startTime) / 1000)
+      println "$project.path $duration $result.resultType ($result.testCount tests, $result.failedTestCount failures, $result.skippedTestCount skipped)"
+    }
     reports {
-      // individual <project>/build/reports not needed with aggregate junit/jacoco reports
-      junitXml.enabled = System.properties['edgent.test.projectReports'] != null
-      html.enabled = System.properties['edgent.test.projectReports'] != null
+      junitXml.enabled = true  // generate build/test-results/test/TEST-*.xml
+      // individual <project>/build/reports junit/jacoco html reports not needed with aggregate report
+      html.enabled = System.properties['edgent.test.project.htmlReports'] != null
     }
     doFirst {
       // The project's tests are supposed to run against its target-dir jar.
