@@ -354,6 +354,34 @@ subprojects {
       addTargetDirExtJarDependency 'runtime', 'slf4j-jdk14-1.7.12.jar'
     }
   }
+  
+  ext.copyProjectExtJarsFn = {
+    // Copy the project jar's "private" external dependencies (transitively)
+    // into the project's ext dir in the target-dir.
+
+    // If our project's jar task lacks any actions (e.g., platform:android)
+    // there's nothing to do.
+    if (!jar.actions)
+      return
+    
+    // FYI we're getting more transitive ext deps than the ant build
+    // in some cases - e.g., for watson iot we "knew" we only needed a subset
+    // of all watson iot deps known to maven
+    
+    def projectExtDir = project.targetRelProjExtDir
+    def nonCommonExtFiles = getProjectNonCommonExtDepFiles(project)
+    logger.info "$project.path copying projExtDepFiles jars: "+nonCommonExtFiles.collect { it.getName() }
+    copy {
+      from nonCommonExtFiles
+      includeEmptyDirs = false
+      into "$target_java8_dir/$projectExtDir"
+    }
+  }
+  
+  task copyProjectExtJars << {
+    // Helper for setupExternalJars task
+    copyProjectExtJarsFn()
+  }
 
   jar {
     // adjust jar task config and also augment the task to do our additional processing
@@ -373,21 +401,7 @@ subprojects {
     }
     
     doLast {
-      // Copy the project jar's "private" external dependencies (transitively)
-      // into the project's ext dir in the target-dir.
-      
-      // FYI we're getting more transitive ext deps than the ant build
-      // in some cases - e.g., for watson iot we "knew" we only needed a subset
-      // of all watson iot deps known to maven
-      
-      def projectExtDir = targetRelProjExtDir
-      def nonCommonExtFiles = getProjectNonCommonExtDepFiles(project)
-      logger.info "$project.path copying projExtDepFiles jars: "+nonCommonExtFiles.collect { it.getName() }
-      copy {
-        from nonCommonExtFiles
-        includeEmptyDirs = false
-        into "$target_java8_dir/$projectExtDir"
-      }
+      copyProjectExtJarsFn()
     }
   }
 
@@ -672,6 +686,11 @@ task test7Reports {
 build {
   dependsOn filteredSubprojects.build, reports
   reports.mustRunAfter filteredSubprojects.build 
+}
+
+task setupExternalJars {
+  description = 'Add all of the dependant external jars to the target-dir (make available to Eclipse, etc)'
+  dependsOn copyCommonExtJars, filteredSubprojects.copyProjectExtJars
 }
 
 task wrapper(type: Wrapper) {

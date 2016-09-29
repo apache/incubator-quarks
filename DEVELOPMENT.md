@@ -313,8 +313,12 @@ Notes with the above PR merge directions:
 
 ### Using Eclipse
 
-The repo contains Eclipse project definitions for the top-level directories that
+The Edgent git repository contains Eclipse project definitions for the top-level directories that
 contain code, such as api, runtime, connectors.
+
+*The repository does not include the 3rd party jars that Edgent depends on
+and Eclipse builds of Edgent projects will fail until a gradle task is run
+to make them available in your workspace.  See the steps below.*
 
 Using the plugin Eclipse Git Team Provider allows you to import these projects
 into your Eclipse workspace directly from your fork.
@@ -327,7 +331,11 @@ into your Eclipse workspace directly from your fork.
 1. Select the branch, usually master and click Next
 1. Set the directory where your local clone will be stored and click Next (the directory edgent under this directory is where you can build and run tests using the Ant targets)
 1. Select Import existing Eclipse projects and click Next
-1. In the Import Projects window, make sure that the Search for nested projects checkbox is selected. Click Finish to bring in all Edgent projects
+1. In the Import Projects window, make sure that the Search for nested projects checkbox is selected. Click Finish to bring in all Edgent projects.  *Expect build failures until you...*
+1. Run a gradle task to make all of the dependant 3rd party jars available to Eclipse.
+``` sh
+$ ./gradlew setupExternalJars
+```
 
 The project `_edgent` exists to make the top level artifacts such as 
 `build.xml` manageable via Eclipse.  Unfortunately folders for the
