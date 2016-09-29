@@ -18,9 +18,10 @@ The gradle build environment and the ant environment create artifacts in
 different places in the workspace so they do not interfere with each other.
 
 Once the 3rd party jars have been removed from the Edgent repository, the
-ant based environment and the current Eclipse based Edgent runtime development
-environment will no longer work.  [EDGENT-251](https://issues.apache.org/jira/browse/EDGENT-251)
-is in progress working on the Eclipse environment.
+ant based environment will no longer work.
+
+*See _Using Eclipse_ below for a gradle task that must be run to make the
+3rd party jars available to an Eclipse Edgent runtime development environment.*
 
 Timeline:
 - Sep 27 - Start using the gradle build environment for developing Edgent.
