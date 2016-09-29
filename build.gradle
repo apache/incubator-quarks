@@ -45,6 +45,8 @@ ext {
   DSTAMP = String.format('%tY%<tm%<td', now)
   TSTAMP = String.format('%tH%<tM', now)
                    
+  external_jars_dir = "$rootProject.projectDir/externalJars"  // unaffected by clean
+  
   target_dir = "$distsDir"
   target_java8_dir = "$target_dir/java8"
   target_java8_ext_dir = "$target_java8_dir/ext"
@@ -98,10 +100,17 @@ ext {
 dependencies {
   compile common_ext_dependencies
 }
-task copyCommonExtJars(type: Copy) {
-  description = "Copy common external jars to target_java8_ext_dir"
-  from configurations.compile.files
-  into target_java8_ext_dir
+ext.copyCommonExtJarsFn = { targetDir ->
+  copy {
+    from configurations.compile.files
+    into targetDir
+  }
+}
+task setupCommonExtJars << {
+  copyCommonExtJarsFn "$external_jars_dir/ext"
+}
+task copyCommonExtJars << {
+  copyCommonExtJarsFn target_java8_ext_dir
 }
 
 def String mkJarNameFromSpec(String jarSpec) {
@@ -355,7 +364,7 @@ subprojects {
     }
   }
   
-  ext.copyProjectExtJarsFn = {
+  ext.copyProjectExtJarsFn = { targetDir ->
     // Copy the project jar's "private" external dependencies (transitively)
     // into the project's ext dir in the target-dir.
 
@@ -374,13 +383,13 @@ subprojects {
     copy {
       from nonCommonExtFiles
       includeEmptyDirs = false
-      into "$target_java8_dir/$projectExtDir"
+      into "$targetDir/$projectExtDir"
     }
   }
   
-  task copyProjectExtJars << {
+  task setupProjectExtJars << {
     // Helper for setupExternalJars task
-    copyProjectExtJarsFn()
+    copyProjectExtJarsFn external_jars_dir
   }
 
   jar {
@@ -401,7 +410,7 @@ subprojects {
     }
     
     doLast {
-      copyProjectExtJarsFn()
+      copyProjectExtJarsFn target_java8_dir
     }
   }
 
@@ -690,7 +699,7 @@ build {
 
 task setupExternalJars {
   description = 'Add all of the dependant external jars to the target-dir (make available to Eclipse, etc)'
-  dependsOn copyCommonExtJars, filteredSubprojects.copyProjectExtJars
+  dependsOn setupCommonExtJars, filteredSubprojects.setupProjectExtJars
 }
 
 task wrapper(type: Wrapper) {
