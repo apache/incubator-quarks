@@ -175,7 +175,9 @@ label.metricsTitle {
 }
 
 th.smaller {
-	padding: 5px;
+	padding: 3px;
+	font-weight: normal;
+	font-size: 0.95em;
 }
 
 th {
@@ -188,39 +190,29 @@ th {
 td.left {
 	padding: 8px;
 	text-align: left;
-	width: 150px;
-	word-wrap:break-word;
 }
 
 td.right {
 	padding: 8px;
 	text-align: right;
-	width: 150px;
-	word-wrap:break-word;
 }
 
-td.smallRight {
-	padding: 5px;
-	text-align: right;
-	word-wrap:break-word;
-	width: 80px;
+td.smallLeft, td.smallCenter, td.smallRight {
+	padding: 3px;
 	font-size: 0.85em;
-}
-
-td.smallCenter {
-	padding: 5px;
-	text-align: center;
-	word-wrap:break-word;
-	width: 80px;
-	font-size: 0.85em;
+	white-space: nowrap;
 }
 
 td.smallLeft {
-	padding: 5px;
-	text-align: left;
-	word-wrap:break-word;
-	width: 80px;
-	font-size: 0.85em;
+    text-align: left;
+}
+
+td.smallCenter {
+	text-align: center;
+}
+
+td.smallRight {
+	text-align: right;
 }
 
 td.center {
@@ -233,8 +225,6 @@ td.center {
 td.center100 {
 	padding: 8px;
 	text-align: center;
-	width: 100px;
-	word-wrap:break-word;
 }
 
 caption {

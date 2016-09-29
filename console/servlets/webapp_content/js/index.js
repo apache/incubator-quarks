@@ -502,14 +502,10 @@ var displayRowsTooltip = function(newRequest) {
 				}
 			}
 
-			if (newKey === "Name"){
+			if (newKey === "Name" || newKey === "Tuple count" || newKey === "Oplet kind"){
 				content += "<td class='center100' tabindex=0>" + row[newKey] + "</td>";
-			} else if (newKey === "Tuple count"){
-				content += "<td class='right' tabindex=0>" + row[newKey] + "</td>";
-			} else if (newKey === "Oplet kind"){
-				content += "<td class='left' tabindex=0>" + row[newKey] + "</td>";
 			} else {
-				content += "<td class='center' tabindex=0 style='white-space:nowrap;'>" + row[newKey] + "</td>";
+				content += "<td class='left' tabindex=0 style='white-space:nowrap;'>" + row[newKey] + "</td>";
 			}
 		}
 		firstTime = false;
@@ -701,26 +697,59 @@ var hideStateTooltip = function() {
 var makeRows = function() {
 	var nodes = refreshedRowValues !== null ? refreshedRowValues : sankey.nodes();
 	var theRows = [];
-	 nodes.forEach(function(n) {
-		 var sources = [];
-	   	 var sourceStreamsMap = new Map();
-		 n.targetLinks.forEach(function(trg){
+	nodes.forEach(function(n) {
+		var sourceStreamTupleCountsMap = new Map();
+		var sourceStreamAliasesMap = new Map();
+		var sourceStreamTagsMap = new Map();
+		n.targetLinks.forEach(function(trg) {
 			var source = trg.sourceIdx.idx.toString();
-			sources.push(source);
- 	  		if (trg.tags && trg.tags.length > 0) {
-   	  			sourceStreamsMap.set(source, trg.tags);
-   	  		}
-		 });
-		 var targets = [];
-		 var targetStreamsMap = new Map();
-		 n.sourceLinks.forEach(function(src){
+			var sourceLinks = trg.sourceIdx.sourceLinks;
+			for (var i = 0; i < sourceLinks.length; i++) {
+				if (trg.sourceId == sourceLinks[i].sourceId && trg.targetId == sourceLinks[i].targetId) {
+					sourceStreamTupleCountsMap.set(source, formatNumber(sourceLinks[i].value));
+					if (sourceLinks[i].hasOwnProperty("alias")) {
+						sourceStreamAliasesMap.set(source, sourceLinks[i].alias);
+					} else {
+						sourceStreamAliasesMap.set(source, "");
+					}
+				}
+			}
+
+			if (trg.tags && trg.tags.length > 0) {
+				sourceStreamTagsMap.set(source, trg.tags);
+			} else {
+				sourceStreamTagsMap.set(source, []);
+			}
+		});
+
+		var targetStreamTupleCountsMap = new Map();
+		var targetStreamAliasesMap = new Map();
+		var targetStreamTagsMap = new Map();
+		n.sourceLinks.forEach(function(src) {
 			var target = src.targetIdx.idx.toString();
-			targets.push(target);
-   	  		if (src.tags && src.tags.length > 0) {
-   	  			targetStreamsMap.set(target, src.tags);
-   	  		}
-		 });
+			var targetLinks = src.targetIdx.targetLinks;
+			for (var i = 0; i < targetLinks.length; i++) {
+				if (src.sourceId == targetLinks[i].sourceId && src.targetId == targetLinks[i].targetId) {
+					targetStreamTupleCountsMap.set(target, formatNumber(targetLinks[i].value));
+					if (targetLinks[i].hasOwnProperty("alias")) {
+						targetStreamAliasesMap.set(target, targetLinks[i].alias);
+					} else {
+						targetStreamAliasesMap.set(target, "");
+					}
+				}
+			}
+
+			if (src.tags && src.tags.length > 0) {
+				targetStreamTagsMap.set(target, src.tags);
+			} else {
+				targetStreamTagsMap.set(target, []);
+			}
+		});
+
    	  	var kind = parseOpletKind(n.invocation.kind);
+		var index = kind.indexOf("(");
+		var kindName = kind.substring(0, index-1);
+		var kindPkg = kind.substring(index);
 
    	  	var value = "";
    	  	if (n.derived === true) {
@@ -732,35 +761,51 @@ var makeRows = function() {
    	  	}
    	  	
 		var sStreamString = "";
-		if (sourceStreamsMap.size == 0) {
+		if (sourceStreamAliasesMap.size == 0 && sourceStreamTagsMap.size == 0) {
 			sStreamString = "None";
-		} else if (sourceStreamsMap.size == 1) {
-			for (var value of sourceStreamsMap.values()) {
-				sStreamString = value.join(", ");
-			}
 		} else {
-			for (var [key, value] of sourceStreamsMap) {
-				sStreamString += "[" + key + "] " + value.join(", ") + "<br/>";
+			for (var [id, alias] of sourceStreamAliasesMap) {
+				var tupleCount = sourceStreamTupleCountsMap.get(id);
+				var tags = sourceStreamTagsMap.get(id);
+				sStreamString += "[" + id + "] ";
+
+				sStreamString += "<strong>tuples</strong>: " + formatNumber(tupleCount);
+
+				if (alias != "") {
+					sStreamString += ", <strong>alias</strong>: " + alias;
+				}
+				if (tags.length != 0) {
+					sStreamString += ", <strong>tags</strong>: " + tags.join(", ");
+				}
+
+				sStreamString += "<br/>";
 			}
 		}
 
 		var tStreamString = "";
-		if (targetStreamsMap.size == 0) {
+		if (targetStreamAliasesMap.size == 0 && targetStreamTagsMap.size == 0) {
 			tStreamString = "None";
-		} else if (targetStreamsMap.size == 1) {
-			for (var value of targetStreamsMap.values()) {
-				tStreamString = value.join(", ");
-			}
 		} else {
-			for (var [key, value] of targetStreamsMap) {
-				tStreamString += "[" + key + "] " + value.join(", ") + "<br/>";
+			for (var [id, alias] of targetStreamAliasesMap) {
+				var tupleCount = targetStreamTupleCountsMap.get(id);
+				var tags = targetStreamTagsMap.get(id);
+				tStreamString += "[" + id + "] ";
+
+				tStreamString += "<strong>tuples</strong>: " + formatNumber(tupleCount);
+
+				if (alias != "") {
+					tStreamString += ", <strong>alias</strong>: " + alias;
+				}
+				if (tags.length != 0) {
+					tStreamString += ", <strong>tags</strong>: " + tags.join(", ");
+				}
+
+				tStreamString += "<br/>";
 			}
 		}
 
-   	  	var rowObj = {"Name": n.idx, "Oplet kind": kind, "Tuple count": formatNumber(n.value), 
-   	  			"Sources": sources.toString(), "Targets": targets.toString(), 
-   	  			"Source stream tags": sStreamString,
-   	  			"Target stream tags": tStreamString};
+   	  	var rowObj = {"Name": n.idx, "Oplet kind": kindName + "<br/>" + kindPkg, "Tuple count": formatNumber(n.value),
+   	  			"Source streams": sStreamString, "Target streams": tStreamString};
 		theRows.push(rowObj);
 	 });
 	return theRows;
@@ -1111,6 +1156,9 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
     	  if (layerVal === "flow") {
     		  retString += "\n" + value; 
     	  }
+    	  if (d.alias) {
+    		  retString += "\nStream alias: " + d.alias;
+    	  }
     	  if (d.tags && d.tags.length > 0) {
     		  retString += "\nStream tags: " + d.tags.toString();
     	  }
@@ -1234,64 +1282,112 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
   	svg.selectAll("circle")
 	.on("mouseover", function(d, i) {
   	  	var kind = parseOpletKind(d.invocation.kind);
-		var headStr =  "<div><table style='table-layout:fixed;word-wrap: break-word;'><tr><th class='smaller'>Name</th>" +
-			"<th class='smaller'>Oplet kind</th><th class='smaller'>Tuple count</th><th class='smaller'>Sources</th>" +
-			"<th class='smaller'>Targets</th><th class='smaller'>Source stream tags</th><th class='smaller'>Target stream tags</th></tr>";
-		var valueStr = "<tr><td class='smallCenter'>" + d.idx.toString() + "</td><td class='smallLeft'>" + kind + "</td><td class='smallRight'>" 
-			+ formatNumber(d.value) + "</td>";
+		var index = kind.indexOf("(");
+		var kindName = kind.substring(0, index-1);
+		var kindPkg = kind.substring(index);
+		var headStr1 =  "<div style='width:100%;'><table style='width:100%;'><tr><th class='smaller'>Name</th>" +
+			"<th class='smaller'>Oplet kind</th><th class='smaller'>Tuple count</th></tr>";
+		var valueStr1 = "<tr><td class='smallCenter'>" + d.idx.toString() + "</td><td class='smallCenter'>" + kindName + "<br/>" + kindPkg +
+			"</td><td class='smallCenter'>" + formatNumber(d.value) + "</td></tr></table>";
 
-		var sources = [];
-		var sourceStreamsMap = new Map();
-		d.targetLinks.forEach(function(trg){
-            var source = trg.sourceIdx.idx.toString();
-            sources.push(source);
-            if (trg.tags && trg.tags.length > 0) {
-                sourceStreamsMap.set(source, trg.tags);
-            }
+		var headStr2 =  "<table style='width:100%;'><tr><th class='smaller'>Source streams</th>" + "<th class='smaller'>Target streams</th></tr>";
+
+		var sourceStreamTupleCountsMap = new Map();
+		var sourceStreamAliasesMap = new Map();
+		var sourceStreamTagsMap = new Map();
+		d.targetLinks.forEach(function(trg) {
+			var source = trg.sourceIdx.idx.toString();
+			var sourceLinks = trg.sourceIdx.sourceLinks;
+			for (var i = 0; i < sourceLinks.length; i++) {
+				if (trg.sourceId == sourceLinks[i].sourceId && trg.targetId == sourceLinks[i].targetId) {
+					sourceStreamTupleCountsMap.set(source, formatNumber(sourceLinks[i].value));
+					if (sourceLinks[i].hasOwnProperty("alias")) {
+						sourceStreamAliasesMap.set(source, sourceLinks[i].alias);
+					} else {
+						sourceStreamAliasesMap.set(source, "");
+					}
+				}
+			}
+
+			if (trg.tags && trg.tags.length > 0) {
+				sourceStreamTagsMap.set(source, trg.tags);
+			} else {
+				sourceStreamTagsMap.set(source, []);
+			}
 		});
-		var targets = [];
-        var targetStreamsMap = new Map();
-		d.sourceLinks.forEach(function(src){
+
+		var targetStreamTupleCountsMap = new Map();
+		var targetStreamAliasesMap = new Map();
+		var targetStreamTagsMap = new Map();
+		d.sourceLinks.forEach(function(src) {
 			var target = src.targetIdx.idx.toString();
-			targets.push(target);
-   	  		if (src.tags && src.tags.length > 0) {
-   	  			targetStreamsMap.set(target, src.tags);
-   	  		}
-		});
+			var targetLinks = src.targetIdx.targetLinks;
+			for (var i = 0; i < targetLinks.length; i++) {
+				if (src.sourceId == targetLinks[i].sourceId && src.targetId == targetLinks[i].targetId) {
+					targetStreamTupleCountsMap.set(target, formatNumber(targetLinks[i].value));
+					if (targetLinks[i].hasOwnProperty("alias")) {
+						targetStreamAliasesMap.set(target, targetLinks[i].alias);
+					} else {
+						targetStreamAliasesMap.set(target, "");
+					}
+				}
+			}
 
-		valueStr += "<td class='smallCenter'>" + sources.toString() + "</td>";
-		valueStr += "<td class='smallCenter'>" + targets.toString() + "</td>";
+			if (src.tags && src.tags.length > 0) {
+				targetStreamTagsMap.set(target, src.tags);
+			} else {
+				targetStreamTagsMap.set(target, []);
+			}
+		});
 		
 		var sStreamString = "";
-		if (sourceStreamsMap.size == 0) {
+		if (sourceStreamAliasesMap.size == 0 && sourceStreamTagsMap.size == 0) {
 			sStreamString = "None";
-		} else if (sourceStreamsMap.size == 1) {
-			for (var value of sourceStreamsMap.values()) {
-				sStreamString = value.join(", ");
-			}
 		} else {
-			for (var [key, value] of sourceStreamsMap) {
-				sStreamString += "[" + key + "] " + value.join(", ") + "<br/>";
+			for (var [id, alias] of sourceStreamAliasesMap) {
+				var tupleCount = sourceStreamTupleCountsMap.get(id);
+				var tags = sourceStreamTagsMap.get(id);
+				sStreamString += "[" + id + "] ";
+
+				sStreamString += "<strong>tuples</strong>: " + formatNumber(tupleCount);
+
+				if (alias != "") {
+					sStreamString += ", <strong>alias</strong>: " + alias;
+				}
+				if (tags.length != 0) {
+					sStreamString += ", <strong>tags</strong>: " + tags.join(", ");
+				}
+
+				sStreamString += "<br/>";
 			}
 		}
-		valueStr += "<td class='smallCenter' style='white-space:nowrap;'>" + sStreamString + "</td>";
+		var valueStr2 = "<tr><td class='smallLeft'>" + sStreamString + "</td>";
 
 		var tStreamString = "";
-		if (targetStreamsMap.size == 0) {
+		if (targetStreamAliasesMap.size == 0 && targetStreamTagsMap.size == 0) {
 			tStreamString = "None";
-		} else if (targetStreamsMap.size == 1) {
-			for (var value of targetStreamsMap.values()) {
-				tStreamString = value.join(", ");
-			}
 		} else {
-			for (var [key, value] of targetStreamsMap) {
-				tStreamString += "[" + key + "] " + value.join(", ") + "<br/>";
+			for (var [id, alias] of targetStreamAliasesMap) {
+				var tupleCount = targetStreamTupleCountsMap.get(id);
+				var tags = targetStreamTagsMap.get(id);
+				tStreamString += "[" + id + "] ";
+
+				tStreamString += "<strong>tuples</strong>: " + formatNumber(tupleCount);
+
+				if (alias != "") {
+					tStreamString += ", <strong>alias</strong>: " + alias;
+				}
+				if (tags.length != 0) {
+					tStreamString += ", <strong>tags</strong>: " + tags.join(", ");
+				}
+
+				tStreamString += "<br/>";
 			}
 		}
-		valueStr += "<td class='smallCenter' style='white-space:nowrap;'>" + tStreamString + "</td>";
+		valueStr2 += "<td class='smallLeft'>" + tStreamString + "</td>";
 
-		valueStr += "</tr></table></div>";
-		var str = headStr + valueStr;
+		valueStr2 += "</tr></table></div>";
+		var str = headStr1 + valueStr1 + headStr2 + valueStr2;
 		showTooltip(str, d, i, d3.event);
 	})
 	.on("mouseout", function(d, i){
@@ -1301,9 +1397,12 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
   	svg.selectAll("rect")
   	.on("mouseover", function(d, i){
   		var kind = parseOpletKind(d.invocation.kind);
+		var index = kind.indexOf("(");
+		var kindName = kind.substring(0, index-1);
+		var kindPkg = kind.substring(index);
   		var headStr = "<div><table style='table-layout:fixed;word-wrap: break-word;'><tr><th class='smaller'>Name</th>" +
 		"<th class='smaller'>Oplet kind</th></tr>";
-  		var valueStr = "<tr><td class='smallCenter'>" + d.idx.toString() + "</td><td class='smallLeft'>" + kind + "</td></tr><table></div>";
+  		var valueStr = "<tr><td class='smallCenter'>" + d.idx.toString() + "</td><td class='smallCenter'>" + kindName + "<br/>" + kindPkg + "</td></tr><table></div>";
   		var str = headStr + valueStr;
 		showTooltip(str, d, i, d3.event);
   	})
