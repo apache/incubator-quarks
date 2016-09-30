@@ -1,6 +1,6 @@
 # edgent.IoTFRangeSensor
 
-See Recipe this was created for [here](https://developer.ibm.com/recipes/tutorials/apache-edgent-on-pi-to-watson-iot-foundation/). 
+See the Recipe this was created for [here](https://developer.ibm.com/recipes/tutorials/apache-quarks-on-pi-to-watson-iot-foundation/).  If that link doesn't work, try [here](https://developer.ibm.com/recipes/tutorials/apache-edgent-on-pi-to-watson-iot-foundation/). 
 
 ## Requirements: 
 * You must have Edgent downloaded and built. The sample uses Pi4J. It is included with the built sample under `samples/ext`.
