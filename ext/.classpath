@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-    <classpathentry exported="true" kind="lib" path="../externalJars/ext/gson-2.2.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="../externalJars/ext/metrics-core-3.1.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="../externalJars/ext/slf4j-api-1.7.12.jar"/>
-	<classpathentry exported="true" kind="lib" path="../externalJars/ext/slf4j-jdk14-1.7.12.jar"/>
+    <classpathentry exported="true" kind="lib" path="../externalJars/java8/ext/gson-2.2.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="../externalJars/java8/ext/metrics-core-3.1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="../externalJars/java8/ext/slf4j-api-1.7.12.jar"/>
+	<classpathentry exported="true" kind="lib" path="../externalJars/java8/ext/slf4j-jdk14-1.7.12.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

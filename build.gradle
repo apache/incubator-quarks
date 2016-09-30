@@ -45,7 +45,7 @@ ext {
   DSTAMP = String.format('%tY%<tm%<td', now)
   TSTAMP = String.format('%tH%<tM', now)
                    
-  external_jars_dir = "$rootProject.projectDir/externalJars"  // unaffected by clean
+  external_jars_dir = "$rootProject.projectDir/externalJars/java8"
   
   target_dir = "$distsDir"
   target_java8_dir = "$target_dir/java8"
