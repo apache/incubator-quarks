@@ -45,6 +45,8 @@ ext {
   DSTAMP = String.format('%tY%<tm%<td', now)
   TSTAMP = String.format('%tH%<tM', now)
                    
+  external_jars_dir = "$rootProject.projectDir/externalJars/java8"
+  
   target_dir = "$distsDir"
   target_java8_dir = "$target_dir/java8"
   target_java8_ext_dir = "$target_java8_dir/ext"
@@ -98,10 +100,17 @@ ext {
 dependencies {
   compile common_ext_dependencies
 }
-task copyCommonExtJars(type: Copy) {
-  description = "Copy common external jars to target_java8_ext_dir"
-  from configurations.compile.files
-  into target_java8_ext_dir
+ext.copyCommonExtJarsFn = { targetDir ->
+  copy {
+    from configurations.compile.files
+    into targetDir
+  }
+}
+task setupCommonExtJars << {
+  copyCommonExtJarsFn "$external_jars_dir/ext"
+}
+task copyCommonExtJars << {
+  copyCommonExtJarsFn target_java8_ext_dir
 }
 
 def String mkJarNameFromSpec(String jarSpec) {
@@ -354,6 +363,34 @@ subprojects {
       addTargetDirExtJarDependency 'runtime', 'slf4j-jdk14-1.7.12.jar'
     }
   }
+  
+  ext.copyProjectExtJarsFn = { targetDir ->
+    // Copy the project jar's "private" external dependencies (transitively)
+    // into the project's ext dir in the target-dir.
+
+    // If our project's jar task lacks any actions (e.g., platform:android)
+    // there's nothing to do.
+    if (!jar.actions)
+      return
+    
+    // FYI we're getting more transitive ext deps than the ant build
+    // in some cases - e.g., for watson iot we "knew" we only needed a subset
+    // of all watson iot deps known to maven
+    
+    def projectExtDir = project.targetRelProjExtDir
+    def nonCommonExtFiles = getProjectNonCommonExtDepFiles(project)
+    logger.info "$project.path copying projExtDepFiles jars: "+nonCommonExtFiles.collect { it.getName() }
+    copy {
+      from nonCommonExtFiles
+      includeEmptyDirs = false
+      into "$targetDir/$projectExtDir"
+    }
+  }
+  
+  task setupProjectExtJars << {
+    // Helper for setupExternalJars task
+    copyProjectExtJarsFn external_jars_dir
+  }
 
   jar {
     // adjust jar task config and also augment the task to do our additional processing
@@ -373,21 +410,7 @@ subprojects {
     }
     
     doLast {
-      // Copy the project jar's "private" external dependencies (transitively)
-      // into the project's ext dir in the target-dir.
-      
-      // FYI we're getting more transitive ext deps than the ant build
-      // in some cases - e.g., for watson iot we "knew" we only needed a subset
-      // of all watson iot deps known to maven
-      
-      def projectExtDir = targetRelProjExtDir
-      def nonCommonExtFiles = getProjectNonCommonExtDepFiles(project)
-      logger.info "$project.path copying projExtDepFiles jars: "+nonCommonExtFiles.collect { it.getName() }
-      copy {
-        from nonCommonExtFiles
-        includeEmptyDirs = false
-        into "$target_java8_dir/$projectExtDir"
-      }
+      copyProjectExtJarsFn target_java8_dir
     }
   }
 
@@ -672,6 +695,11 @@ task test7Reports {
 build {
   dependsOn filteredSubprojects.build, reports
   reports.mustRunAfter filteredSubprojects.build 
+}
+
+task setupExternalJars {
+  description = 'Add all of the dependant external jars to the target-dir (make available to Eclipse, etc)'
+  dependsOn setupCommonExtJars, filteredSubprojects.setupProjectExtJars
 }
 
 task wrapper(type: Wrapper) {

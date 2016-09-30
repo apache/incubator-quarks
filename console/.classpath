@@ -3,15 +3,15 @@
 	<classpathentry kind="src" path="server/src/main/java"/>
 	<classpathentry kind="src" path="server/src/test/java"/>
 	<classpathentry kind="src" path="servlets/src/main/java"/>
-	<classpathentry kind="lib" path="server/ext/jetty-9.3.6/jetty-http-9.3.6.v20151106.jar"/>
-	<classpathentry kind="lib" path="server/ext/jetty-9.3.6/jetty-io-9.3.6.v20151106.jar"/>
-	<classpathentry kind="lib" path="server/ext/jetty-9.3.6/jetty-security-9.3.6.v20151106.jar"/>
-	<classpathentry kind="lib" path="server/ext/jetty-9.3.6/jetty-server-9.3.6.v20151106.jar"/>
-	<classpathentry kind="lib" path="server/ext/jetty-9.3.6/jetty-servlet-9.3.6.v20151106.jar"/>
-	<classpathentry kind="lib" path="server/ext/jetty-9.3.6/jetty-util-9.3.6.v20151106.jar"/>
-	<classpathentry kind="lib" path="server/ext/jetty-9.3.6/jetty-webapp-9.3.6.v20151106.jar"/>
-	<classpathentry kind="lib" path="server/ext/jetty-9.3.6/jetty-xml-9.3.6.v20151106.jar"/>
-	<classpathentry kind="lib" path="server/ext/jetty-9.3.6/servlet-api-3.1.jar"/>
+	<classpathentry kind="lib" path="../externalJars/java8/console/server/ext/jetty-http-9.3.6.v20151106.jar"/>
+	<classpathentry kind="lib" path="../externalJars/java8/console/server/ext/jetty-io-9.3.6.v20151106.jar"/>
+	<classpathentry kind="lib" path="../externalJars/java8/console/server/ext/jetty-security-9.3.6.v20151106.jar"/>
+	<classpathentry kind="lib" path="../externalJars/java8/console/server/ext/jetty-server-9.3.6.v20151106.jar"/>
+	<classpathentry kind="lib" path="../externalJars/java8/console/server/ext/jetty-servlet-9.3.6.v20151106.jar"/>
+	<classpathentry kind="lib" path="../externalJars/java8/console/server/ext/jetty-util-9.3.6.v20151106.jar"/>
+	<classpathentry kind="lib" path="../externalJars/java8/console/server/ext/jetty-webapp-9.3.6.v20151106.jar"/>
+	<classpathentry kind="lib" path="../externalJars/java8/console/server/ext/jetty-xml-9.3.6.v20151106.jar"/>
+	<classpathentry kind="lib" path="../externalJars/java8/console/server/ext/javax.servlet-api-3.1.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ext"/>
