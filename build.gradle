@@ -29,6 +29,9 @@ allprojects {
 }
 
 apply plugin: 'java'
+jar {
+  deleteAllActions()  // Avoid creating/staging an empty jar for the "root"
+}
 
 
 ext {
