@@ -58,7 +58,7 @@ public class IotpRangeSensor {
         if (args.length != 3) {
             System.out.println("Proper Usage is:\n   " + "   java program device.cfg sensorIsSimulated LEDIsSimulated\n"
                     + "Example: \n"
-                    + "   java -cp $EDGENT/target/java8/samples/lib/'*':$PI4J_LIB/'*':bin/ com.ibm.streamsx.iotp.range.IotpRangeSensor device.cfg false true");
+                    + "   java -cp $EDGENT/build/distributions/java8/samples/lib/edgent.samples.scenarios.jar org.apache.edgent.samples.scenarios.iotp.range.sensor.IotpRangeSensor device.cfg false true");
             System.exit(0);
         }
 
