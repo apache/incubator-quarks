@@ -1,0 +1,177 @@
+This binary release contains a number of bundled dependencies (jars)
+used by various Edgent components.
+
+LICENSE and NOTICE information for the bundled dependencies are enumerated and summarized here:
+
+--------------------------------
+ext/    # common dependencies for all Edgent components
+    gson-2.2.4.jar          com.google.code.gson:gson:2.2.4
+        LICENSE: ASL-2.0 https://github.com/google/gson/blob/master/LICENSE
+        NOTICE:  none
+    metrics-core-3.1.2.jar  io.dropwizard.metrics:metrics-core:3.1.2
+        LICENSE: ASL-2.0 https://github.com/dropwizard/metrics/blob/master/LICENSE
+        NOTICE:  https://github.com/dropwizard/metrics/blob/master/NOTICE
+    slf4j-api-1.7.12.jar    org.slf4j:slf4j-api:1.7.12
+    slf4j-jdk14-1.7.12.jar
+        LICENSE: MIT License http://www.slf4j.org/license.html
+        NOTICE:  none
+        
+--------------------------------
+analytics/math3/ext/
+    commons-math3-3.4.1.jar org.apache.commons:commons-math3:3.4.1
+        LICENSE: ASL-2.0 plus others commons-math3-3.4.1.jar/META-INF/LICENSE.txt
+        NOTICE:  commons-math3-3.4.1.jar/META-INF/NOTICE.txt
+
+--------------------------------
+connectors/http/ext
+  httpclient-4.5.1          org.apache.httpcomponents:httpclient:4.5.1
+        LICENSE: ASL-2.0  httpclient-4.5.1.jar/META-INF/LICENSE
+        NOTICE:  standard ASF notice  httpclient-4.5.1.jar/META-INF/NOTICE
+  httpcore-4.4.4.jar        org.apache.httpcomponents:httpcore:4.4.4
+        LICENSE: ASL-2.0 + CCPL  httpcore-4.4.4.jar/META-INF/LICENSE
+        NOTICE:  augmented notice  httpcore-4.4.4.jar/META-INF/NOTICE
+  commons-codec-1.9.jar     org.apache.commons:commons-codec:1.9
+        LICENSE: ASL-2.0 commons-codec-1.9.jar/META-INF/LICENSE.txt
+        NOTICE:  augmented notice  commons-codec-1.9.jar/META-INF/NOTICE.txt
+  commons-logging-1.2.jar   org.apache.commons:commons-logging:1.2
+        LICENSE: ASL-2.0  commons-logging-1.2.jar/META-INF/LICENSE.txt
+        NOTICE:  standard ASF notice  commons-logging-1.2.jar/META-INF/NOTICE.txt
+        
+--------------------------------
+connectors/iotp/ext
+  watson-iot-0.1.5.jar      com.ibm.messaging:watson-iot:0.1.5
+        LICENSE: EPL-1.0 watson-iot-0.1.5.jar/META-INF/maven/com.ibm.messaging/watson-iot/pom.xml
+        NOTICE:  none
+  commons-codec-1.10.jar    org.apache.commons:commons-codec:1.10
+        LICENSE: ASL-2.0  commons-codec-1.10.jar/META-INF/LICENSE.txt
+        NOTICE:  ASF plus attributions  commons-codec-1.10.jar/META-INF/NOTICE.txt
+  commons-lang3-3.4.jar     org.apache.commons:commons-lang3:3.4
+        LICENSE: ASL-2.0  commons-lang3-3.4.jar/META-INF/LICENSE.txt
+        NOTICE:  ASF plus attributions  commons-lang3-3.4.jar/META-INF/NOTICE.txt
+  commons-logging-1.2.jar   org.apache.commons:commons-logging:1.2
+        LICENSE: ASL-2.0  commons-logging-1.2.jar/META-INF/LICENSE.txt
+        NOTICE:  standard ASF notice  commons-logging-1.2.jar/META-INF/NOTICE.txt
+  commons-net-3.3.jar       org.apache.commons:commons-net:3.3
+        LICENSE: ASL-2.0  commons-net-3.3.jar/META-INF/LICENSE.txt
+        NOTICE:  standard ASF notice  commons-net-3.3.jar/META-INF/NOTICE.txt
+  gson-2.6.1.jar            com.google.code.gson:gson:2.6.1
+        LICENSE: ASL-2.0 https://github.com/google/gson/blob/master/LICENSE
+        NOTICE:  none
+  httpclient-4.5.1.jar      org.apache.httpcomponents:httpclient:4.5.1
+        LICENSE: ASL-2.0  httpclient-4.5.1.jar/META-INF/LICENSE
+        NOTICE:  standard ASF notice  httpclient-4.5.1.jar/META-INF/NOTICE
+  httpcore-4.4.3.jar        org.apache.httpcomponents:httpcore:4.4.3
+        LICENSE: ASL-2.0 + CCPL httpcore-4.4.3.jar/META-INF/LICENSE
+        NOTICE:  ASF plus attributions httpcore-4.4.3.jar/META-INF/NOTICE
+  joda-time-2.9.2.jar       joda-time:joda-time:2.9.2
+        LICENSE: ASL-2.0  joda-time-2.9.2.jar/META-INF/LICENSE.txt
+        NOTICE:  ASF plus attributions joda-time-2.9.2.jar/META-INF/NOTICE.txt
+  log4j-1.2.17.jar          log4j:log4j:1.2.17
+        LICENSE: ASL-2.0  log4j-1.2.17.jar/meta-inf/license
+        NOTICE:  standard ASF notice  log4j-1.2.17.jar/meta-inf/notice
+  org.eclipse.paho.client.mqttv3-1.1.0.jar
+        LICENSE: EPL-1.0  org.eclipse.paho.client.mqttv3-1.1.0.jar/about.html
+        NOTICE:  none
+        
+--------------------------------
+connectors/kafka/ext
+  kafka_2.10-0.8.2.2.jar    org.apache.kafka:kafka_2.10:0.8.2.2
+        LICENSE: ASL-2.0  kafka_2.10-0.8.2.2.jar/LICENSE
+        NOTICE:  standard ASF notice  kafka_2.10-0.8.2.2.jar/NOTICE
+  kafka-clients-0.8.2.2.jar org.apache.kafka:kafka-clients:0.8.2.2
+        LICENSE: ASL-2.0  kafka_2.10-0.8.2.2.jar/LICENSE
+        NOTICE:  standard ASF notice  kafka_2.10-0.8.2.2.jar/NOTICE
+  log4j-1.2.16.jar          log4j:log4j:1.2.16
+        LICENSE: ASL-2.0  log4j-1.2.16.jar/meta-inf/license
+        NOTICE:  standard ASF notice  log4j-1.2.16.jar/meta-inf/notice
+  metrics-core-2.2.0.jar    com.yammer.metrics:metrics-core:2.2.0
+        LICENSE: ASL-2.0 https://github.com/dropwizard/metrics/blob/master/LICENSE
+        NOTICE:  https://github.com/dropwizard/metrics/blob/master/NOTICE
+  scala-library-2.10.4.jar  org.scala-lang:scala-library:2.10.4
+        LICENSE: BSD 3-clause  http://www.scala-lang.org/license.html
+        NOTICE:  none        
+  zkclient-0.3.jar          com.101tec:zkclient:0.3
+        LICENSE: ASL-2.0  https://github.com/sgroschupf/zkclient/blob/master/LICENSE
+        NOTICE:  none
+  zookeeper-3.4.6.jar       org.apache.zookeeper:zookeeper:3.4.6
+        LICENSE: ASL-2.0  zookeeper-3.4.6.jar/LICENSE.TXT
+        NOTICE:  none
+
+--------------------------------
+connectors/mqtt/ext
+  org.eclipse.paho.client.mqttv3-1.0.2.jar  org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.0.2
+        LICENSE: EPL-1.0    org.eclipse.paho.client.mqttv3-1.0.2.jar/about.html
+        NOTICE:  none
+
+--------------------------------
+console/server/ext
+  jetty-http-9.3.6.v20151106.jar  org.eclipse.jetty:jetty-http:9.3.6.v20151106
+        LICENSE: EPL-1.0 and ASL-2.0  jetty-http-9.3.6.v20151106.jar/about.html
+        NOTICE:  none  
+  jetty-io-9.3.6.v20151106.jar    org.eclipse.jetty:jetty-io:9.3.6.v20151106
+        LICENSE: EPL-1.0 and ASL-2.0  jetty-io-9.3.6.v20151106.jar/about.html
+        NOTICE:  none  
+  jetty-security-9.3.6.v20151106.jar org.eclipse.jetty:jetty-security:9.3.6.v20151106
+        LICENSE: EPL-1.0 and ASL-2.0  jetty-security-9.3.6.v20151106.jar/about.html
+        NOTICE:  none  
+  jetty-server-9.3.6.v20151106.jar   org.eclipse.jetty:jetty-server:9.3.6.v20151106
+        LICENSE: EPL-1.0 and ASL-2.0  jetty-server-9.3.6.v20151106.jar/about.html
+        NOTICE:  none  
+  jetty-servlet-9.3.6.v20151106.jar  org.eclipse.jetty:jetty-servlet:9.3.6.v20151106
+        LICENSE: EPL-1.0 and ASL-2.0  jetty-servlet-9.3.6.v20151106.jar/about.html
+        NOTICE:  none  
+  jetty-util-9.3.6.v20151106.jar     org.eclipse.jetty:jetty-util:9.3.6.v20151106
+        LICENSE: EPL-1.0 and ASL-2.0  jetty-util-9.3.6.v20151106.jar/about.html
+        NOTICE:  none  
+  jetty-webapp-9.3.6.v20151106.jar   org.eclipse.jetty:jetty-webapp:9.3.6.v20151106
+        LICENSE: EPL-1.0 and ASL-2.0  jetty-webapp-9.3.6.v20151106.jar/about.html
+        NOTICE:  none  
+  jetty-xml-9.3.6.v20151106.jar      org.eclipse.jetty:jetty-xml:9.3.6.v20151106
+        LICENSE: EPL-1.0 and ASL-2.0  jetty-xml-9.3.6.v20151106.jar/about.html
+        NOTICE:  none  
+  javax.servlet-api-3.1.0.jar       javax.servlet:javax.servlet-api:3.1.0
+        LICENSE: CDDL-2 and GPL     javax.servlet-api-3.1.0.jar/manifest.mf
+        NOTICE:  none  
+  
+--------------------------------
+console/servlets/ext
+  javax.servlet-api-3.1.0.jar       javax.servlet:javax.servlet-api:3.1.0
+        LICENSE: CDDL-2 and GPL     javax.servlet-api-3.1.0.jar/manifest.mf
+        NOTICE:  none  
+    
+--------------------------------
+connectors/edgent.javax.websocket/ext
+  javax.websocket-api-1.0.jar       javax.websocket:javax.websocket-api:1.0
+        LICENSE: CDDL-2 and GPL     javax.websocket-api-1.0.jar/manifest.mf
+        NOTICE:  none  
+
+--------------------------------
+connectors/javax.websocket-client/ext
+  javax-websocket-client-impl-9.3.6.v20151106.jar  org.eclipse.jetty.websocket:javax-websocket-client-impl:9.3.6.v20151106
+        LICENSE: EPL-1.0 and ASL-2.0  javax-websocket-client-impl-9.3.6.v20151106.jar/about.html
+        NOTICE:  none  
+  jetty-io-9.3.6.v20151106.jar          org.eclipse.jetty.websocket:javax-websocket-client-impl:9.3.6.v20151106
+        LICENSE: EPL-1.0 and ASL-2.0  jetty-io-9.3.6.v20151106.jar/about.html
+        NOTICE:  none  
+  jetty-util-9.3.6.v20151106.jar        org.eclipse.jetty.websocket:javax-websocket-client-impl:9.3.6.v20151106              
+        LICENSE: EPL-1.0 and ASL-2.0  jetty-util-9.3.6.v20151106.jar/about.html
+        NOTICE:  none  
+  websocket-api-9.3.6.v20151106.jar     org.eclipse.jetty.websocket:javax-websocket-client-impl:9.3.6.v20151106
+        LICENSE: EPL-1.0 and ASL-2.0  websocket-api-9.3.6.v20151106.jar/about.html
+        NOTICE:  none  
+  websocket-client-9.3.6.v20151106.jar  org.eclipse.jetty.websocket:javax-websocket-client-impl:9.3.6.v20151106
+        LICENSE: EPL-1.0 and ASL-2.0  websocket-client-9.3.6.v20151106.jar/about.html
+        NOTICE:  none  
+  websocket-common-9.3.6.v20151106.jar  org.eclipse.jetty.websocket:javax-websocket-client-impl:9.3.6.v20151106
+        LICENSE: EPL-1.0 and ASL-2.0  websocket-common-9.3.6.v20151106.jar/about.html
+        NOTICE:  none  
+
+  javax.websocket-api-1.0.jar       javax.websocket:javax.websocket-api:1.0
+        LICENSE: CDDL-2 and GPL  javax.websocket-api-1.0.jar/manifest.mf
+        NOTICE:  none  
+    
+--------------------------------
+samples/scenarios/ext
+  pi4j-core-1.0.jar         com.pi4j:pi4j-core:1.0                                   
+        LICENSE: LGPL-3.0  pi4j-core-1.0.jar/LICENSE.txt
+        NOTICE:  pi4j-core-1.0.jar/NOTICE.txt
