@@ -445,7 +445,25 @@ subprojects {
     }
   }
   
+  ext.printFile = { path ->
+    ant.concat { fileset(file: path) }
+  }
   ext.adjustTest7Classpath = false
+  
+  task testSummaryFinalizer << {
+    def testTask = tasks.getByName('test')
+    if (System.properties['edgent.build.ci'] != null) {
+      testTask.failedTestResultPaths.each { path ->
+        println path
+        printFile path
+      }
+    }
+    def result = testTask.summaryResult
+    if (result != null) {
+      def duration = String.format('%.3fsec', (result.endTime - result.startTime) / 1000)
+      println "$project.path $duration $result.resultType ($result.testCount tests, $result.failedTestCount failures, $result.skippedTestCount skipped)"
+    }
+  }
 
   test {
     filter {
@@ -456,10 +474,34 @@ subprojects {
     systemProperty 'edgent.test.root.dir', rootProject.projectDir
     testLogging {
       exceptionFormat 'full'
+      showStandardStreams = System.properties['edgent.test.showOutput'] != null
     }
+    beforeSuite { desc ->
+      if (!desc.parent) { // will match the outermost suite
+        println "$project.path testing ..."
+      }
+    }
+    ext.failedTestResultPaths = []
+    ext.summaryResult = null
+    afterSuite { desc, result ->
+      // make failures in edgent.build.ci runs more debuggable
+      // wish the junit xml files existed at this moment but they don't
+      if (desc.parent && desc.className != null) {  // individual test class result
+        if (result.resultType == TestResult.ResultType.FAILURE) {
+          def resultFile = "$testResultsDir/test/TEST-${desc.className}.xml"
+          println "\nFailed testrun results: $resultFile"
+          failedTestResultPaths.add resultFile
+        }
+      }
+      else if (!desc.parent) { // project's overall results
+        summaryResult = result 
+      }
+    }
+    finalizedBy "testSummaryFinalizer" // a doLast isn't invoked if there's a test failure
     reports {
-      junitXml.enabled = true
-      html.enabled = true
+      junitXml.enabled = true  // generate build/test-results/test/TEST-*.xml
+      // individual <project>/build/reports junit/jacoco html reports not needed with aggregate report
+      html.enabled = System.properties['edgent.test.project.htmlReports'] != null
     }
     doFirst {
       // The project's tests are supposed to run against its target-dir jar.
@@ -487,6 +529,9 @@ subprojects {
         // Change from using the normal test classes dir to the java7 test classes dir
         classpath -= files(sourceSets.test.output.classesDir)
         classpath = files(sourceSets.test.output.classesDir.toString().replace('test', 'java7Test')) + classpath
+        
+        // Some of the tests have dependencies on other tests, adjust those classpaths too
+        classpath = files(classpath.collect { it.toString().replace('build/classes/test', 'build/classes/java7Test') })
       
         // Switch from java8 jars to java7 jars
         classpath = files(classpath.collect { it.toString().replace('java8', 'java7') })

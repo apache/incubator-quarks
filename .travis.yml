@@ -3,23 +3,21 @@ language: java
 matrix:
    fast_finish: true
 
-before_install:
-  - wget --tries=40 --retry-connrefused --waitretry=1 http://archive.apache.org/dist/ant/binaries/apache-ant-1.9.4-bin.tar.gz
-  - tar xzf apache-ant-1.9.4-bin.tar.gz
-  - wget --tries=40 --retry-connrefused --waitretry=1 -O jacoco-0.7.5.zip http://search.maven.org/remotecontent?filepath=org/jacoco/jacoco/0.7.5.201505241946/jacoco-0.7.5.201505241946.zip
-  - unzip -d jacoco-0.7.5 jacoco-0.7.5.zip
-
-addons:
-  apt:
-    packages:
-    - junit4
-
 install: true
+
+# avoid uploading the cache after every build (per travis doc)
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
 
 script:
     - jdk_switcher use oraclejdk8
-    - apache-ant-1.9.4/bin/ant -Dedgent.build.ci=true -lib /usr/share/java/junit4.jar -lib jacoco-0.7.5/lib clean all test release
-    - apache-ant-1.9.4/bin/ant -buildfile platform/java7 -Dedgent.build.ci=true -lib /usr/share/java/junit4.jar -lib jacoco-0.7.5/lib test7.setup
+    - ./gradlew release -Dedgent.build.ci=true
+    - ./gradlew test --continue -Dedgent.build.ci=true
+    - ./gradlew test7Compile -Dedgent.build.ci=true
     - jdk_switcher use oraclejdk7
-    - apache-ant-1.9.4/bin/ant -buildfile platform/java7 -Dedgent.build.ci=true -lib /usr/share/java/junit4.jar -lib jacoco-0.7.5/lib test7.run
-    
+    - ./gradlew test7Run --continue -Dedgent.build.ci=true 
