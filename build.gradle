@@ -680,13 +680,24 @@ task mkTargetDir << {
     if( !d.exists() ) { d.mkdirs() }
 }
 
-task addMiscDistFiles {
+task addMiscDistFiles(type: Copy) {
   description = 'Add misc things to target_dir'
   dependsOn mkTargetDir, addVersionDotTxt
   addVersionDotTxt.mustRunAfter mkTargetDir
-  doLast {
-    copy { from 'LICENSE'; into target_dir }
-    copy { from 'README.md'; into target_dir }
+  
+  into target_dir
+  from 'README.md'
+  with copySpec {
+    rename { 'LICENSE' }
+    from rootProject.file('legal/binary-release-license')
+  }
+  with copySpec {
+    rename { 'NOTICE' }
+    from rootProject.file('legal/binary-release-notice')
+  }
+  with copySpec {
+    rename { 'binary-release-bundled-dependencies' }
+    from rootProject.file('legal/binary-release-bundled-dependencies')
   }
 }
 
@@ -699,6 +710,8 @@ task releaseTarGz(type: Tar) {
   into "${build_name}"
   // make some things first in the tgz
   from "$target_dir/LICENSE"
+  from "$target_dir/NOTICE"
+  from "$target_dir/binary-release-bundled-dependencies"
   from "$target_dir/README.md"
   from "$target_dir/version.txt"
   from target_dir

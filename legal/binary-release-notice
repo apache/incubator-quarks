@@ -1,0 +1,21 @@
+Apache Edgent
+Copyright 2016 The Apache Software Foundation
+
+Apache Edgent is currently undergoing Incubation at the Apache Software Foundation.
+
+This bundle includes software developed at
+The Apache Software Foundation (http://www.apache.org/).
+===============================================================================
+
+Portions of this bundle were developed by IBM Corp.
+Copyright IBM Corp. 2015, 2016
+
+===============================================================================
+
+This binary release contains a number of bundled dependencies (jars)
+used by Edgent components.
+
+NOTICE information for the bundled dependencies can be found in
+the following file included in the release:
+
+    binary-release-bundled-dependencies
