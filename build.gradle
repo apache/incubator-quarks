@@ -472,6 +472,7 @@ subprojects {
 
     systemProperty 'edgent.test.top.dir.file.path', rootProject.projectDir
     systemProperty 'edgent.test.root.dir', rootProject.projectDir
+    systemProperty 'edgent.build.ci', System.properties['edgent.build.ci']
     testLogging {
       exceptionFormat 'full'
       showStandardStreams = System.properties['edgent.test.showOutput'] != null
