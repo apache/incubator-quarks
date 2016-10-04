@@ -390,6 +390,19 @@ subprojects {
     }
   }
   
+  ext.copyProjectExtJarsFn2 = { targetDir ->
+    // Copy the project jar's "private" external dependencies (transitively)
+    // into target-dir.
+    
+    def nonCommonExtFiles = getProjectNonCommonExtDepFiles(project)
+    logger.info "$project.path copying projExtDepFiles jars: "+nonCommonExtFiles.collect { it.getName() }
+    copy {
+      from nonCommonExtFiles
+      includeEmptyDirs = false
+      into "$targetDir"
+    }
+  }
+  
   task setupProjectExtJars << {
     // Helper for setupExternalJars task
     copyProjectExtJarsFn external_jars_dir

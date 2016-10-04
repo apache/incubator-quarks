@@ -35,10 +35,12 @@
     <property name="slf4j.version" value="1.7.12"/>
     <property name="gson.version" value="2.2.4"/>
     <property name="metrics.version" value="3.1.2"/>
+    <property name="retrolambda.version" value="2.1.0"/>
 
 	<property name="slf4j.ext.dir" value="slf4j-${slf4j.version}/"/>
     <property name="gson.ext.dir" value="google-gson-${gson.version}/"/>
     <property name="metrics.ext.dir" value="metrics-${metrics.version}/"/>
+    <property name="retrolambda.jar" location="ext/retrolambda-${retrolambda.version}.jar"/>
 
 	<path id="edgent.classpath">
         <pathelement location="${ext.dir}/${slf4j.ext.dir}slf4j-api-${slf4j.version}.jar"/>
@@ -69,7 +71,7 @@
 				<arg value="-Dretrolambda.outputDir=${output.dir}"/>
 				<arg value="-Dretrolambda.defaultMethods=false"/>
 				<arg value="-jar"/>
-				<arg value="ext/retrolambda-2.1.0.jar"/>
+				<arg value="${retrolambda.jar}"/>
 			</exec>
 			<mkdir dir="${edgent7.target}/@{qdir}"/>
 			<jar destfile="${edgent7.target}/@{qdir}/@{qjar}"
@@ -202,7 +204,7 @@
 				<arg value="-Dretrolambda.outputDir=${edgent}/@{tdir}/test7.classes"/>
 				<arg value="-Dretrolambda.defaultMethods=true"/>
 				<arg value="-jar"/>
-				<arg value="ext/retrolambda-2.1.0.jar"/>
+                <arg value="${retrolambda.jar}"/>
 			</exec>
 			<delete dir="${edgent}/@{tdir}/test.classes"/>
 			<move   file="${edgent}/@{tdir}/test7.classes"

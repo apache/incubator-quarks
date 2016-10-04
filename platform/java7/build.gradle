@@ -14,6 +14,14 @@
 
 defaultTasks 'addJava7TargetDir'
 
+ext.retrolambdaVersion = '2.1.0'
+ext.retrolambdaJarName = "retrolambda-${retrolambdaVersion}.jar"
+
+dependencies {
+  // TODO try the retrolambda gradle plugin!
+  addProjectExtDependency 'compile', "net.orfjackal.retrolambda:retrolambda:$retrolambdaVersion"
+}
+
 // Avoid creating/staging an empty jar (this is a 'java' subproject) 
 jar {
   deleteAllActions()
@@ -42,6 +50,10 @@ task preAntTask << {
     }
   }
   ant.properties.qcp = ant.references['edgent.classpath']
+  
+  // make retrolambda available to the ant tooling
+  copyProjectExtJarsFn2 "$external_jars_dir/tools"
+  ant.properties['retrolambda.jar'] = "$external_jars_dir/tools/$retrolambdaJarName"
 }
 
 ant_retro7.doFirst { 
