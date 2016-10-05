@@ -706,7 +706,7 @@ var makeRows = function() {
 			var sourceLinks = trg.sourceIdx.sourceLinks;
 			for (var i = 0; i < sourceLinks.length; i++) {
 				if (trg.sourceId == sourceLinks[i].sourceId && trg.targetId == sourceLinks[i].targetId) {
-					sourceStreamTupleCountsMap.set(source, formatNumber(sourceLinks[i].value));
+					sourceStreamTupleCountsMap.set(source, parseInt(sourceLinks[i].value));
 					if (sourceLinks[i].hasOwnProperty("alias")) {
 						sourceStreamAliasesMap.set(source, sourceLinks[i].alias);
 					} else {
@@ -730,7 +730,7 @@ var makeRows = function() {
 			var targetLinks = src.targetIdx.targetLinks;
 			for (var i = 0; i < targetLinks.length; i++) {
 				if (src.sourceId == targetLinks[i].sourceId && src.targetId == targetLinks[i].targetId) {
-					targetStreamTupleCountsMap.set(target, formatNumber(targetLinks[i].value));
+					targetStreamTupleCountsMap.set(target, parseInt(targetLinks[i].value));
 					if (targetLinks[i].hasOwnProperty("alias")) {
 						targetStreamAliasesMap.set(target, targetLinks[i].alias);
 					} else {
@@ -1056,6 +1056,9 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
 		
 		var i = 0;
 		graph.edges.forEach(function(edge) {
+			// Store the real flow value so that we can access it in the static layer
+			edge.flowValue = edge.value;
+
 			var value = "";
 			if (layer === "static" || !edge.value) {
 				value = generatedFlowValues[i];
@@ -1303,7 +1306,12 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
 			var sourceLinks = trg.sourceIdx.sourceLinks;
 			for (var i = 0; i < sourceLinks.length; i++) {
 				if (trg.sourceId == sourceLinks[i].sourceId && trg.targetId == sourceLinks[i].targetId) {
-					sourceStreamTupleCountsMap.set(source, formatNumber(sourceLinks[i].value));
+					if (layer == "static") {
+						sourceStreamTupleCountsMap.set(source, parseInt(sourceLinks[i].flowValue));
+					} else {
+						sourceStreamTupleCountsMap.set(source, parseInt(sourceLinks[i].value));
+					}
+
 					if (sourceLinks[i].hasOwnProperty("alias")) {
 						sourceStreamAliasesMap.set(source, sourceLinks[i].alias);
 					} else {
@@ -1327,7 +1335,12 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
 			var targetLinks = src.targetIdx.targetLinks;
 			for (var i = 0; i < targetLinks.length; i++) {
 				if (src.sourceId == targetLinks[i].sourceId && src.targetId == targetLinks[i].targetId) {
-					targetStreamTupleCountsMap.set(target, formatNumber(targetLinks[i].value));
+					if (layer == "static") {
+						targetStreamTupleCountsMap.set(target, parseInt(targetLinks[i].flowValue));
+					} else {
+						targetStreamTupleCountsMap.set(target, parseInt(targetLinks[i].value));
+					}
+
 					if (targetLinks[i].hasOwnProperty("alias")) {
 						targetStreamAliasesMap.set(target, targetLinks[i].alias);
 					} else {
