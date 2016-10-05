@@ -761,11 +761,13 @@ var makeRows = function() {
    	  	}
    	  	
 		var sStreamString = "";
+		var inTupleCount = 0;
 		if (sourceStreamAliasesMap.size == 0 && sourceStreamTagsMap.size == 0) {
 			sStreamString = "None";
 		} else {
 			for (var [id, alias] of sourceStreamAliasesMap) {
 				var tupleCount = sourceStreamTupleCountsMap.get(id);
+				inTupleCount += parseInt(tupleCount);
 				var tags = sourceStreamTagsMap.get(id);
 				sStreamString += "[" + id + "] ";
 
@@ -783,11 +785,13 @@ var makeRows = function() {
 		}
 
 		var tStreamString = "";
+		var outTupleCount = 0;
 		if (targetStreamAliasesMap.size == 0 && targetStreamTagsMap.size == 0) {
 			tStreamString = "None";
 		} else {
 			for (var [id, alias] of targetStreamAliasesMap) {
 				var tupleCount = targetStreamTupleCountsMap.get(id);
+				outTupleCount += parseInt(tupleCount);
 				var tags = targetStreamTagsMap.get(id);
 				tStreamString += "[" + id + "] ";
 
@@ -804,7 +808,8 @@ var makeRows = function() {
 			}
 		}
 
-   	  	var rowObj = {"Name": n.idx, "Oplet kind": kindName + "<br/>" + kindPkg, "Tuple count": formatNumber(n.value),
+   	  	var rowObj = {"Name": n.idx, "Oplet kind": kindName + "<br/>" + kindPkg,
+   	  			"Tuple count": "In: " + formatNumber(inTupleCount) + "<br/>Out: " + formatNumber(outTupleCount),
    	  			"Source streams": sStreamString, "Target streams": tStreamString};
 		theRows.push(rowObj);
 	 });
@@ -1288,9 +1293,7 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
 		var headStr1 =  "<div style='width:100%;'><table style='width:100%;'><tr><th class='smaller'>Name</th>" +
 			"<th class='smaller'>Oplet kind</th><th class='smaller'>Tuple count</th></tr>";
 		var valueStr1 = "<tr><td class='smallCenter'>" + d.idx.toString() + "</td><td class='smallCenter'>" + kindName + "<br/>" + kindPkg +
-			"</td><td class='smallCenter'>" + formatNumber(d.value) + "</td></tr></table>";
-
-		var headStr2 =  "<table style='width:100%;'><tr><th class='smaller'>Source streams</th>" + "<th class='smaller'>Target streams</th></tr>";
+			"</td><td class='smallCenter'>";
 
 		var sourceStreamTupleCountsMap = new Map();
 		var sourceStreamAliasesMap = new Map();
@@ -1341,11 +1344,13 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
 		});
 		
 		var sStreamString = "";
+		var inTupleCount = 0;
 		if (sourceStreamAliasesMap.size == 0 && sourceStreamTagsMap.size == 0) {
 			sStreamString = "None";
 		} else {
 			for (var [id, alias] of sourceStreamAliasesMap) {
 				var tupleCount = sourceStreamTupleCountsMap.get(id);
+				inTupleCount += parseInt(tupleCount);
 				var tags = sourceStreamTagsMap.get(id);
 				sStreamString += "[" + id + "] ";
 
@@ -1361,14 +1366,15 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
 				sStreamString += "<br/>";
 			}
 		}
-		var valueStr2 = "<tr><td class='smallLeft'>" + sStreamString + "</td>";
 
 		var tStreamString = "";
+		var outTupleCount = 0;
 		if (targetStreamAliasesMap.size == 0 && targetStreamTagsMap.size == 0) {
 			tStreamString = "None";
 		} else {
 			for (var [id, alias] of targetStreamAliasesMap) {
 				var tupleCount = targetStreamTupleCountsMap.get(id);
+				outTupleCount += parseInt(tupleCount);
 				var tags = targetStreamTagsMap.get(id);
 				tStreamString += "[" + id + "] ";
 
@@ -1384,9 +1390,13 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
 				tStreamString += "<br/>";
 			}
 		}
-		valueStr2 += "<td class='smallLeft'>" + tStreamString + "</td>";
 
-		valueStr2 += "</tr></table></div>";
+		valueStr1 += "In: " + formatNumber(inTupleCount) + "<br/>Out: " + formatNumber(outTupleCount) + "</td></tr></table>";
+
+		var headStr2 =  "<table style='width:100%;'><tr><th class='smaller'>Source streams</th>" + "<th class='smaller'>Target streams</th></tr>";
+		var valueStr2 = "<tr><td class='smallLeft'>" + sStreamString + "</td>";
+		valueStr2 += "<td class='smallLeft'>" + tStreamString + "</td></tr></table></div>";
+
 		var str = headStr1 + valueStr1 + headStr2 + valueStr2;
 		showTooltip(str, d, i, d3.event);
 	})
