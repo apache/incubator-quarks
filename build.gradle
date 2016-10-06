@@ -724,6 +724,29 @@ task releaseTarGz(type: Tar) {
   }
 }  
 
+task srcReleaseTarGz(type: Tar) {
+  description = 'Create source tgz in target_dir'
+  archiveName = "${build_name}-source-v${build_version}-${DSTAMP}-${TSTAMP}.tgz"
+  compression = Compression.GZIP
+  destinationDir = new File("${target_dir}/../release-edgent")
+  duplicatesStrategy 'exclude'
+  into "${build_name}"
+  // make some things first in the tgz
+  from "LICENSE", "NOTICE", "KEYS"
+  from "DEVELOPMENT.md", "README.md"
+  from '.'
+  exclude '.git', '.gradle', '.settings'
+  exclude '**/build/'           // gradle generated artifacts
+  exclude '**/externalJars/'    // gradle generated artifacts for eclipse
+  exclude '**/bin/'             // eclipse generated artifacts
+  exclude '**/classes/'         // ant generated artifacts
+  doLast {
+    ant.checksum algorithm: 'md5', file: archivePath
+    ant.checksum algorithm: 'sha1', file: archivePath
+    println "created $destinationDir/$archiveName"
+  }
+}  
+
 assemble {
   description = "Assemble distribution artifacts and populate the target_dir with jars, doc, etc. Like 'build' w/o 'test'"
   dependsOn filteredSubprojects.assemble, aggregateJavadoc, copyScripts
@@ -743,7 +766,7 @@ task release {
   description = 'Assemble distribution artifacts, populate target_dir, and create a release tgz'
   dependsOn cleanAll, addMiscDistFiles, assemble,
        ':platform:java7:addJava7TargetDir', ':platform:android:addAndroidTargetDir',
-       releaseTarGz
+       srcReleaseTarGz, releaseTarGz
   addMiscDistFiles.mustRunAfter cleanAll
   assemble.mustRunAfter addMiscDistFiles
   releaseTarGz.mustRunAfter assemble,':platform:java7:addJava7TargetDir',':platform:android:addAndroidTargetDir'
