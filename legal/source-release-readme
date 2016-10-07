@@ -1,0 +1,25 @@
+Building Edgent from a Source Distribution
+
+Apache Edgent is an effort undergoing incubation at The Apache Software Foundation (ASF),
+sponsored by the Incubator PMC. Incubation is required of all newly accepted
+projects until a further review indicates that the infrastructure, communications,
+and decision making process have stabilized in a manner consistent with other
+successful ASF projects. While incubation status is not necessarily a reflection
+of the completeness or stability of the code, it does indicate that the project
+has yet to be fully endorsed by the ASF.
+
+Pre-requisites:
+- Java 8 is required to build an Edgent binary distribution
+
+Build an Edgent binary distribution:
+$ cd edgent           # the root of your Edgent source tree
+$ ./gradlew release   # .\gradlew.bat on Windows
+
+The build reports the location of the binary distribution bundle that can then
+be unpacked and used in building applications.
+See Getting Started https://edgent.apache.org/docs/edgent-getting-started
+
+For more information about the Edgent sources, testing, and
+contributing to Edgent runtime development see DEVELOPMENT.md in the source tree
+or in the github repository http://www.apache.org/dist/incubator/edgent
+

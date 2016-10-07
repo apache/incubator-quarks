@@ -670,23 +670,21 @@ task addVersionDotTxt {
       'edgent.version': "$build_version",
       ]
     def f = new File("$target_dir/version.txt");
+    def d = new File(target_dir);
+    if( !d.exists() ) { d.mkdirs() }
     f.createNewFile()
     map.forEach { k,v -> f.append "$k=$v\n" }
   }
 }
 
-task mkTargetDir << {
-    def d = new File(target_dir);
-    if( !d.exists() ) { d.mkdirs() }
-}
-
-task addMiscDistFiles(type: Copy) {
-  description = 'Add misc things to target_dir'
-  dependsOn mkTargetDir, addVersionDotTxt
-  addVersionDotTxt.mustRunAfter mkTargetDir
-  
-  into target_dir
-  from 'README.md', 'DISCLAIMER', 'KEYS'
+task releaseTarGz(type: Tar) {
+  description = 'Create binary release tgz in target_dir'
+  archiveName = "${build_name}-v${build_version}-${DSTAMP}-${TSTAMP}.tgz"
+  compression = Compression.GZIP
+  destinationDir = new File("${target_dir}/../release-edgent")
+  duplicatesStrategy 'exclude'
+  into "${build_name}"
+  // make some things first in the tgz
   with copySpec {
     rename { 'LICENSE' }
     from rootProject.file('legal/binary-release-license')
@@ -699,19 +697,11 @@ task addMiscDistFiles(type: Copy) {
     rename { 'binary-release-bundled-dependencies' }
     from rootProject.file('legal/binary-release-bundled-dependencies')
   }
-}
-
-task releaseTarGz(type: Tar) {
-  description = 'Create tgz in target_dir'
-  archiveName = "${build_name}-v${build_version}-${DSTAMP}-${TSTAMP}.tgz"
-  compression = Compression.GZIP
-  destinationDir = new File("${target_dir}/../release-edgent")
-  duplicatesStrategy 'exclude'
-  into "${build_name}"
-  // make some things first in the tgz
-  from "$target_dir/LICENSE", "$target_dir/NOTICE", "$target_dir/DISCLAIMER", "$target_dir/KEYS"
-  from "$target_dir/binary-release-bundled-dependencies"
-  from "$target_dir/README.md"
+  from 'DISCLAIMER', 'KEYS', 'JAVA_SUPPORT.md'
+  with copySpec {
+    rename { 'README' }
+    from rootProject.file('legal/binary-release-readme')
+  }
   from "$target_dir/version.txt"
   from target_dir
   exclude '**/test/svt/'
@@ -724,15 +714,21 @@ task releaseTarGz(type: Tar) {
 }  
 
 task srcReleaseTarGz(type: Tar) {
-  description = 'Create source tgz in target_dir'
+  description = 'Create source release tgz in target_dir'
   archiveName = "${build_name}-source-v${build_version}-${DSTAMP}-${TSTAMP}.tgz"
   compression = Compression.GZIP
   destinationDir = new File("${target_dir}/../release-edgent")
   duplicatesStrategy 'exclude'
   into "${build_name}"
   // make some things first in the tgz
-  from "LICENSE", "NOTICE", "DISCLAIMER", "KEYS"
-  from "DEVELOPMENT.md", "README.md"
+  from 'LICENSE', 'NOTICE'
+  from 'DISCLAIMER', 'KEYS', 'JAVA_SUPPORT.md'
+  with copySpec {
+    rename { 'README' }
+    from rootProject.file('legal/source-release-readme')
+  }
+  exclude 'README.md'
+  from 'DEVELOPMENT.md'
   from '.'
   exclude '.git', '.gradle', '.settings'
   exclude '**/build/'           // gradle generated artifacts
@@ -763,11 +759,11 @@ task cleanAll {
 
 task release {
   description = 'Assemble distribution artifacts, populate target_dir, and create a release tgz'
-  dependsOn cleanAll, addMiscDistFiles, assemble,
+  dependsOn cleanAll, addVersionDotTxt, assemble,
        ':platform:java7:addJava7TargetDir', ':platform:android:addAndroidTargetDir',
        srcReleaseTarGz, releaseTarGz
-  addMiscDistFiles.mustRunAfter cleanAll
-  assemble.mustRunAfter addMiscDistFiles
+  addVersionDotTxt.mustRunAfter cleanAll
+  assemble.mustRunAfter addVersionDotTxt
   releaseTarGz.mustRunAfter assemble,':platform:java7:addJava7TargetDir',':platform:android:addAndroidTargetDir'
 }
 

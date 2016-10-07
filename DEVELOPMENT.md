@@ -70,8 +70,20 @@ These are optional
 * Android SDK - Allows building of Android specific modules. Set the environment variable `ANDROID_SDK_PLATFORM` to
 the location of the Android platform so that ${ANDROID_SDK_PLATFORM}/android.jar points to a valid jar.
 
+### Building a Binary Release Bundle
 
-### Building
+Building an Edgent binary release bundle:
+``` sh
+$ ./gradlew release
+```
+
+The build reports the location of the binary distribution bundle that can then
+be unpacked and used in building applications.
+
+See [Getting Started](https://edgent.apache.org/docs/edgent-getting-started)
+for information on using the binary release bundle.
+
+### Building for Edgent Runtime Development
 
 The primary build process is using [Gradle](https://gradle.org/), 
 any pull request is expected to maintain the build success of `clean, assemble, test`.
