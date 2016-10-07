@@ -686,7 +686,7 @@ task addMiscDistFiles(type: Copy) {
   addVersionDotTxt.mustRunAfter mkTargetDir
   
   into target_dir
-  from 'README.md'
+  from 'README.md', 'DISCLAIMER', 'KEYS'
   with copySpec {
     rename { 'LICENSE' }
     from rootProject.file('legal/binary-release-license')
@@ -709,8 +709,7 @@ task releaseTarGz(type: Tar) {
   duplicatesStrategy 'exclude'
   into "${build_name}"
   // make some things first in the tgz
-  from "$target_dir/LICENSE"
-  from "$target_dir/NOTICE"
+  from "$target_dir/LICENSE", "$target_dir/NOTICE", "$target_dir/DISCLAIMER", "$target_dir/KEYS"
   from "$target_dir/binary-release-bundled-dependencies"
   from "$target_dir/README.md"
   from "$target_dir/version.txt"
@@ -732,7 +731,7 @@ task srcReleaseTarGz(type: Tar) {
   duplicatesStrategy 'exclude'
   into "${build_name}"
   // make some things first in the tgz
-  from "LICENSE", "NOTICE", "KEYS"
+  from "LICENSE", "NOTICE", "DISCLAIMER", "KEYS"
   from "DEVELOPMENT.md", "README.md"
   from '.'
   exclude '.git', '.gradle', '.settings'
