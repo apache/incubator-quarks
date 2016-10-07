@@ -4,7 +4,7 @@ The files under servlets/webapp_content/ext are:
 d3.legend.js: 
 Obtained from: https://github.com/jieter/d3-legend/blob/master/d3.legend.js
 License type: MIT license
-License: console/servlets/webapp_content/exit/MIT.LICENSE
+License: https://opensource.org/licenses/MIT
 
 
 d3.min.js: 
