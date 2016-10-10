@@ -174,9 +174,3 @@ connectors/javax.websocket-client/ext
   javax.websocket-api-1.0.jar         javax.websocket:javax.websocket-api:1.0
         LICENSE: CDDL-2 and GPL       <jar>/meta-inf/manifest.mf
         NOTICE:  none  
-    
---------------------------------
-samples/scenarios/ext
-  pi4j-core-1.0.jar         com.pi4j:pi4j-core:1.0                                   
-        LICENSE: LGPL-3.0  <jar>/LICENSE.txt
-        NOTICE:  <jar>/NOTICE.txt

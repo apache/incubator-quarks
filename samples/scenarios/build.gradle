@@ -11,6 +11,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+sourceSets {
+  main {
+    java {
+      if (System.env.PI4J_LIB == null) {
+        exclude "**/scenarios/iotp/range/sensor/**"
+        logger.lifecycle 'PI4J_LIB ev not set. Omitting scenarios/iotp/range/sensor/.'
+      } 
+    }
+  }
+}
+
 dependencies {
   // N.B. common dependencies are set in root build.gradle
 
@@ -19,7 +31,14 @@ dependencies {
   addTargetDirProjectJarDependency 'compile', ':providers:iot'
   addTargetDirProjectJarDependency 'compile', ':connectors:iot'
   addTargetDirProjectJarDependency 'compile', ':connectors:iotp'
-  addProjectExtDependency 'compile', 'com.pi4j:pi4j-core:1.0'
+  
+  // N.B. pi4J is strictly LGPL and hence incompatible with ASF licensing.
+  // Users will have to download it themselves and build the sample.
+  // addProjectExtDependency 'compile', 'com.pi4j:pi4j-core:1.0'
+  if (System.env.PI4J_LIB != null) {
+    // addProjectExtDependency 'compile', files("$System.env.PI4J_LIB/pi4j-core.jar")
+    compile files("$System.env.PI4J_LIB/pi4j-core.jar")
+  }
 
   // N.B. root project adds test common dependencies
 }
