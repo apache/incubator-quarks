@@ -14,7 +14,7 @@
  specific language governing permissions and limitations
  under the License.
  -->
-<project name="edgent" default="all"
+<project name="edgent" default="UseGradle"
   xmlns:jacoco="antlib:org.jacoco.ant"
   >
     <description>
@@ -29,7 +29,11 @@
   <property name="target.dir" location="target"/>
   <property name="javadoc.dir" location="${target.dir}/docs/javadoc"/>
   <property name="release.dir" location="${release.base}"/>
-
+	
+  <target name="UseGradle">
+    <fail message="The ant tooling is no longer functional.  See DEVELOPMENT.md."/>
+  </target>
+	
   <target name="all" depends="init,suball,copy,docs"
     description="Build the code and Javadoc into target. Requires Java 8"
     />
@@ -82,7 +86,7 @@
   <target name="suball">
      <subprojects target="all"/>
   </target>
-  <target name="test"
+  <target name="test"  depends="UseGradle"
      description="Run all JUnit tests. Requires Java 8"
      >
      <echo message="HINT: to include tests for some connectors do: ant -Dtest.base.pattern='**/*TestManual.java' test"/>
@@ -334,7 +338,7 @@
      </javadoc>
   </target>
 
-  <target name="release" depends="clean,setcommitversion,all,docs,create_release_bundle"/>
+  <target name="release" depends="UseGradle,clean,setcommitversion,all,docs,create_release_bundle"/>
 	
   <target name="create_release_bundle">
       <!-- Build Java7 and Android versions -->
