@@ -8,41 +8,10 @@ This describes development of Apache Edgent itself, not how to develop Edgent ap
 The Edgent community welcomes contributions, please *Get Involved*!
  * http://edgent.incubator.apache.org/docs/community
 
-## Switching from Ant to Gradle
+## Switched from Ant to Gradle
 
-We are getting close to being able to permanently switch over to a gradle based
-build tooling [EDGENT-139](https://issues.apache.org/jira/browse/EDGENT-139).
-
-For a short time, both the gradle and ant build tooling environments will be functional.
-The gradle build tooling and the ant tooling create artifacts in
-different places in the workspace so they do not interfere with each other.
-
-Once the 3rd party jars have been removed from the Edgent repository, the
-ant based tooling will no longer work.
-
-**See _Using Eclipse_ below for a gradle task that must be run to make the
-3rd party jars available to an Eclipse Edgent runtime development environment.**
-
-Gradle tooling:
-- creates release images under `<edgent>/build/release-edgent`
-- creates build artifacts under `<edgent>/build/distributions` and `<edgent>/<project>/build`
-
-Ant tooling:
-- creates release images under `<edgent>/release-edgent`
-- creates build artifacts under `<edgent>/target` and `<edgent>/<project>/{classes,test.classes}`
-
-Eclipse:
-- creates build artifacts under `<edgent>/<project>/bin`
-
-
-Timeline:
-- Sep 27 - Start using the gradle build tooling for developing Edgent.
-           See below for using gradle.
-- Sep 30 - Eclipse based Edgent runtime development doesn't use 3rd party jars in the repo
-- Oct 01 - switch travis-ci builds to using the gradle tooling
-- Nov 01 - remove the 3rd party jars from the Edgent repository.
-           The ant build tooling and "old" Eclipse build environment no
-           longer function.
+See the updated _Building_ and _Using Eclipse_ sections below.  
+The Ant tooling is no longer functional.
 
 It's recommended that developers of Edgent create a new workspace instead of
 reusing current ant-based Edgent workspaces.
@@ -95,6 +64,11 @@ will automatically download it if needed.  e.g.:
 $ ./gradlew --version
 $ ./gradlew clean build
 ```
+
+The gradle tooling:
+- creates release images under `<edgent>/build/release-edgent`
+- creates build artifacts under `<edgent>/build/distributions` and `<edgent>/<project>/build`
+
 
 The top-level Gradle file is `edgent/build.gradle` and it contains several
 unique tasks:
@@ -176,15 +150,6 @@ $ ./gradlew test7Run      # run the tests with a java7 VM
 $ ./gradlew test7Reports  # generate the junit and coverage tests
 ```
 
-[DEPRECATED] using the Ant tooling
-``` sh
- # run with JAVA_HOME set for Java8
-$ ant -buildfile platform/java7 test7.setup  # compile the Edgent tests to operate in a java7 environment
-
- # run with JAVA_HOME set for Java7
-$ ant -buildfile platform/java7 test7.run    # run the tests with a java7 VM
-```
-
 #### Publish to Maven Repository
 
 Initial support for publishing to a local Maven repository has been added.
@@ -199,36 +164,6 @@ The published groupId is `org.apache.edgent`. The artifactIds match the
 names of the jars in the target-dir / release tgz.
 
 E.g. `org.apache.edgent:edgent.api.topology:0.4.0`
-
-
-### [DEPRECATED] Ant specific Setup
-
-Once you have forked the repository and created your local clone you need to download
-these additional development software tools.
-
-* Apache Ant 1.9.4: The build uses Ant, the version it has been tested with is 1.9.4. - https://ant.apache.org/
-* JUnit 4.10: Java unit tests are written using JUnit, tested at version 4.10. - http://junit.org/
-* Jacoco 0.7.5: The JUnit tests have code coverage enabled by default, using Jacoco, tested with version 0.7.5. - http://www.eclemma.org/jacoco/
-
-The Apache Ant `build.xml` files are setup to assume that the Junit and Jacoco jars are copied into `$HOME/.ant/lib`.
-``` sh
-$ ls $HOME/.ant/lib
-jacocoagent.jar  jacocoant.jar  junit-4.10.jar
-```
-
-### [DEPRECATED] Building with Ant
-
-Any pull request is expected to maintain the build success of `clean, all, test`.
-
-The top-level Ant file `edgent/build.xml` has these main targets:
-
-* `all` (default) : Build all code and Javadoc into `target`. The build will fail on any code error or Javadoc warning or error.
-* `clean` : Clean the project
-* `test` : Run the JUnit tests, if any test fails the test run stops.
-* `reports` : Generate JUnit and Code Coverage reports, use after executing the `test` target.
-* `release` : Build a release bundle, that includes subsets of the Edgent jars that run on Java 7 (`target/java7`) and Android (`target/android`).
-
-The build process has been tested on Linux and MacOSX.
 
 
 ### Code Layout
@@ -363,12 +298,12 @@ $ ./gradlew setupExternalJars
 ```
 
 The project `_edgent` exists to make the top level artifacts such as 
-`build.xml` manageable via Eclipse.  Unfortunately folders for the
+`build.gradle` manageable via Eclipse.  Unfortunately folders for the
 other projects (e.g., `api`) also show up in the `_edgent` folder and
 are best ignored.
 
-Builds and junit testing of Edgent in Eclipse is independent from the artifacts
-generated by the gradle/ant build tooling.  Neither environment is affected by
+Builds and junit testing of Edgent in Eclipse are independent from the artifacts
+generated by the gradle build tooling.  Neither environment is affected by
 the other. This is not ideal but it's where things are at at this time.
 Both sets of tooling can be, and typically are, used in the same workspace.
 
