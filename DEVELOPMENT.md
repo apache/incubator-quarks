@@ -330,7 +330,7 @@ the usual GitHub based merge workflow for committers isn’t supported.
 Committers can use one of several ways to ultimately merge the pull request
 into the repo at the ASF. One way is described here:
 
-* http://mail-archives.apache.org/mod_mbox/incubator-edgent-dev/201603.mbox/%3C1633289677.553519.1457733763078.JavaMail.yahoo%40mail.yahoo.com%3E
+* http://mail-archives.apache.org/mod_mbox/incubator-quarks-dev/201603.mbox/%3C1633289677.553519.1457733763078.JavaMail.yahoo%40mail.yahoo.com%3E
 
 Notes with the above PR merge directions:
   * use an https url unless you have a ssh key setup at GitHub:
