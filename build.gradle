@@ -32,6 +32,7 @@ apply plugin: 'java'
 jar {
   deleteAllActions()  // Avoid creating/staging an empty jar for the "root"
 }
+apply plugin: 'signing'
 
 
 ext {
@@ -679,7 +680,7 @@ task addVersionDotTxt {
 
 task releaseTarGz(type: Tar) {
   description = 'Create binary release tgz in target_dir'
-  archiveName = "${build_name}-v${build_version}-${DSTAMP}-${TSTAMP}.tgz"
+  archiveName = "${build_name}-${build_version}-${DSTAMP}-${TSTAMP}-bin.tgz"
   compression = Compression.GZIP
   destinationDir = new File("${target_dir}/../release-edgent")
   duplicatesStrategy 'exclude'
@@ -697,7 +698,7 @@ task releaseTarGz(type: Tar) {
     rename { 'binary-release-bundled-dependencies' }
     from rootProject.file('legal/binary-release-bundled-dependencies')
   }
-  from 'DISCLAIMER', 'KEYS', 'JAVA_SUPPORT.md'
+  from 'DISCLAIMER', 'JAVA_SUPPORT.md'
   with copySpec {
     rename { 'README' }
     from rootProject.file('legal/binary-release-readme')
@@ -708,21 +709,21 @@ task releaseTarGz(type: Tar) {
   exclude '**/connectors/javax.websocket-server/' // just part of wsclient test harness
   doLast {
     ant.checksum algorithm: 'md5', file: archivePath
-    ant.checksum algorithm: 'sha1', file: archivePath
+    ant.checksum algorithm: 'sha-512', fileext: '.sha', file: archivePath
     println "created $destinationDir/$archiveName"
   }
 }  
 
 task srcReleaseTarGz(type: Tar) {
   description = 'Create source release tgz in target_dir'
-  archiveName = "${build_name}-source-v${build_version}-${DSTAMP}-${TSTAMP}.tgz"
+  archiveName = "${build_name}-${build_version}-${DSTAMP}-${TSTAMP}-src.tgz"
   compression = Compression.GZIP
   destinationDir = new File("${target_dir}/../release-edgent")
   duplicatesStrategy 'exclude'
   into "${build_name}"
   // make some things first in the tgz
   from 'LICENSE', 'NOTICE'
-  from 'DISCLAIMER', 'KEYS', 'JAVA_SUPPORT.md'
+  from 'DISCLAIMER', 'JAVA_SUPPORT.md'
   with copySpec {
     rename { 'README' }
     from rootProject.file('legal/source-release-readme')
@@ -737,10 +738,16 @@ task srcReleaseTarGz(type: Tar) {
   exclude '**/classes/'         // ant generated artifacts
   doLast {
     ant.checksum algorithm: 'md5', file: archivePath
-    ant.checksum algorithm: 'sha1', file: archivePath
+    ant.checksum algorithm: 'sha-512', fileext: '.sha', file: archivePath
     println "created $destinationDir/$archiveName"
   }
 }  
+
+signing {
+// creates circular dep...   :assemble -> :signReleaseTgz -> :releaseTarGz -> :assemble
+//  sign srcReleaseTarGz  // creates task signSrcReleaseTarGz
+//  sign releaseTarGz     // creates task signReleaseTarGz
+}
 
 assemble {
   description = "Assemble distribution artifacts and populate the target_dir with jars, doc, etc. Like 'build' w/o 'test'"
