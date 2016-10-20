@@ -21,5 +21,5 @@ See Getting Started https://edgent.apache.org/docs/edgent-getting-started
 
 For more information about the Edgent sources, testing, and
 contributing to Edgent runtime development see DEVELOPMENT.md in the source tree
-or in the github repository http://www.apache.org/dist/incubator/edgent
-
+or in the ASF git repository https://git-wip-us.apache.org/repos/asf/incubator-edgent.git
+or in the repository mirror at github https://github.com/apache/incubator-edgent.
