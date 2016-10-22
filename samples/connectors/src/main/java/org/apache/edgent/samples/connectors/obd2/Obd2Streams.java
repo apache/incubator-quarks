@@ -56,7 +56,7 @@ public class Obd2Streams {
      * (slope) over the last minute, partitioned by parameter
      * {@link org.apache.edgent.samples.connectors.elm327.Cmd#PID pid}. Filter so that only
      * those with a rate of increase greater than
-     * or equal to 1°C/minute is present on the returned stream.
+     * or equal to 1 degree C/minute is present on the returned stream.
      * 
      * Temperatures included are
      * {@link org.apache.edgent.samples.connectors.elm327.Pids01#AIR_INTAKE_TEMP AIR_INTAKE_TEMP} and
@@ -78,7 +78,7 @@ public class Obd2Streams {
         TStream<JsonObject> temperatureRate = JsonAnalytics.aggregate(window, PID, VALUE, MAX, SLOPE);
 
         // Have the stream contain only tuples where
-        // the rise in temperatures >= 1°C/minute
+        // the rise in temperatures >= 1 degree C/minute
         temperatureRate = temperatureRate.filter(j -> {
             JsonObject v = getObject(j, "value");
             return v.has("SLOPE") && getDouble(v, "SLOPE") >= 1.0;

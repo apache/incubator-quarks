@@ -40,7 +40,7 @@ public enum Pids01 implements Cmd {
 	AVAILABLE_PIDS("00"),
 	
 	/**
-	 * Engine coolant temperature in °C.
+	 * Engine coolant temperature in degrees C.
 	 */
 	ENGINE_COOLANT_TEMP("05") {
 		@Override
@@ -86,7 +86,7 @@ public enum Pids01 implements Cmd {
 	},
 	
 	/**
-     * Engine air intake temperature in °C.
+     * Engine air intake temperature in degrees C.
      */
 	AIR_INTAKE_TEMP("0F"){
 		@Override
