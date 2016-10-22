@@ -34,11 +34,6 @@ these additional development software tools.
 
 * Java 8 - The development setup assumes Java 8 and Linux. 
 
-These are optional
-
-* Android SDK - Allows building of Android specific modules. Set the environment variable `ANDROID_SDK_PLATFORM` to
-the location of the Android platform so that ${ANDROID_SDK_PLATFORM}/android.jar points to a valid jar.
-
 ### Building a Binary Release Bundle
 
 Building an Edgent binary release bundle:

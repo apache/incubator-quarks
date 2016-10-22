@@ -42,6 +42,13 @@
     <property name="metrics.ext.dir" value="metrics-${metrics.version}/"/>
     <property name="retrolambda.jar" location="ext/retrolambda-${retrolambda.version}.jar"/>
 
+    <property name="android.sdk.platform.jar" value=""/>
+<!--	
+    <condition property="android.sdk.platform.jar" value="env.ANDROID_SDK_PLATFORM_JAR">
+      <isset property="env.ANDROID_SDK_PLATFORM_JAR" />
+    </condition>
+-->
+
 	<path id="edgent.classpath">
         <pathelement location="${ext.dir}/${slf4j.ext.dir}slf4j-api-${slf4j.version}.jar"/>
         <pathelement location="${ext.dir}/${gson.ext.dir}gson-${gson.version}.jar"/>
@@ -175,7 +182,7 @@
 		</copy>
 
 	</target>
-	<target name="retro7.edgent.android" if="env.ANDROID_SDK_PLATFORM">
+	<target name="retro7.edgent.android" if="android.sdk.platform.jar">
 		<retro7 qjar="edgent.android.topology.jar" qdir="android/topology/lib" />
 		<retro7 qjar="edgent.android.hardware.jar" qdir="android/hardware/lib" />
 	</target>

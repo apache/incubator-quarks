@@ -131,7 +131,9 @@ task copyCommonExtJars << {
 
 def String mkJarNameFromSpec(String jarSpec) {
   // e.g. 'com.google.code.gson:gson:2.2.4' => gson-2.2.4.jar
-  return jarSpec.split(':')[1] + '-' + jarSpec.split(':')[2] + '.jar'
+  // e.g. 'com.google.code.gson:gson:2.2.4@jar' => gson-2.2.4.jar
+  def sfx = jarSpec.endsWith('@jar') ? "" : '.jar'
+  return jarSpec.split(':')[1] + '-' + jarSpec.split(':')[2].replace('@','.') + sfx
 }
 
 def getProjectExtDepFiles(Project proj) { // project's direct ext deps and their transitive deps

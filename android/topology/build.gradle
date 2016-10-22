@@ -12,13 +12,10 @@
  * limitations under the License.
  */
 
-// NB settings.gradle conditionally includes this project
-// based on System.env.ANDROID_SDK_PLATFORM
-
 dependencies {
   addTargetDirProjectJarDependency 'compile', ':api:topology'
   addTargetDirProjectJarDependency 'compile', ':api:oplet'
-  compile files("${System.env.ANDROID_SDK_PLATFORM}/android.jar")
+  addProjectExtDependency 'compile', project(':android:hardware').androidJarSpec
 
   // N.B. root project adds test common dependencies
 }

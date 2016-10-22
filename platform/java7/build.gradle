@@ -54,6 +54,12 @@ task preAntTask << {
   // make retrolambda available to the ant tooling
   copyProjectExtJarsFn2 "$external_jars_dir/tools"
   ant.properties['retrolambda.jar'] = "$external_jars_dir/tools/$retrolambdaJarName"
+  
+  // make android.jar available to the ant tooling
+  def hwProj = project(':android:hardware')
+  hwProj.copyProjectExtJarsFn "$external_jars_dir"
+  ant.properties['android.sdk.platform.jar'] = 
+    "$external_jars_dir/${hwProj.targetRelProjExtDir}/" + mkJarNameFromSpec(hwProj.androidJarSpec)
 }
 
 ant_retro7.doFirst { 

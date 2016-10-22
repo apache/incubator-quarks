@@ -66,12 +66,7 @@ include 'test:fvtiot'
 include 'test:svt'
 include 'platform:java7'
 include 'platform:android'
-if (System.env.ANDROID_SDK_PLATFORM != null) {
-  include 'android:topology'
-  include 'android:hardware'
-}
-else {
-  logger.lifecycle 'ANDROID_SDK_PLATFORM ev not set. Omitting android:{topology,hardware} projects.'
-}
+include 'android:topology'
+include 'android:hardware'
 
 rootProject.name = build_name

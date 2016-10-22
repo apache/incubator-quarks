@@ -12,12 +12,11 @@
  * limitations under the License.
  */
 
-// NB settings.gradle conditionally includes this project
-// based on System.env.ANDROID_SDK_PLATFORM
+ext.androidJarSpec = 'com.google.android:android:4.1.1.4@jar'
 
 dependencies {
   addTargetDirProjectJarDependency 'compile', ':api:topology'
-  compile files("${System.env.ANDROID_SDK_PLATFORM}/android.jar")
+  addProjectExtDependency 'compile', androidJarSpec
   
   // N.B. root project adds test common dependencies
 }

@@ -27,6 +27,13 @@
   <property name="component.path" value="android/topology"/>
   <import file="../../common-build.xml"/>
 
+  <property name="android.sdk.platform.jar" value=""/>
+<!--	
+  <condition property="android.sdk.platform.jar" value="env.ANDROID_SDK_PLATFORM_JAR">
+    <isset property="env.ANDROID_SDK_PLATFORM_JAR" />
+  </condition>
+-->
+
   <path id="compile.classpath">
     <pathelement location="${edgent.lib}/edgent.api.topology.jar" />
     <pathelement location="${edgent.lib}/edgent.api.oplet.jar" />
@@ -35,7 +42,7 @@
 
   <path id="android.classpath">
     <path refid="compile.classpath"/>
-    <pathelement location="${env.ANDROID_SDK_PLATFORM}/android.jar"/>
+    <pathelement location="${android.sdk.platform.jar}"/>
   </path>
 
   <path id="test.compile.classpath">
@@ -49,7 +56,7 @@
     <path refid="test.common.classpath" />
   </path>
 
- <target name="all" if="env.ANDROID_SDK_PLATFORM">
+ <target name="all" if="android.sdk.platform.jar">
     <antcall target="edgent.common.all"/>
  </target>
 
