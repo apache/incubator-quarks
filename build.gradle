@@ -717,6 +717,7 @@ task releaseTarGz(type: Tar) {
     rename { 'README' }
     from rootProject.file('legal/binary-release-readme')
   }
+  from 'RELEASE_NOTES'
   from "$target_dir/version.txt"
   from target_dir
   exclude '**/test/svt/'
@@ -738,6 +739,7 @@ task srcReleaseTarGz(type: Tar) {
   // make some things first in the tgz
   from 'LICENSE', 'NOTICE'
   from 'DISCLAIMER', 'JAVA_SUPPORT.md'
+  from 'RELEASE_NOTES'
   with copySpec {
     rename { 'README' }
     from rootProject.file('legal/source-release-readme')

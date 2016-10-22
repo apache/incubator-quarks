@@ -1,0 +1,95 @@
+Apache Edgent (incubating) 1.0.0
+==================
+The first official Apache Edgent release
+
+New Features
+____________
+EDGENT-8    Restart topology on uncaught exception
+EDGENT-21   Create test application using GPS/OBD sensors
+EDGENT-22   Add functionality to sample the tuples in a stream
+EDGENT-91   Support joining a stream against another stream/window
+EDGENT-96   Add an HTTP POST utility method
+EDGENT-114  Have IotProvider start applications using ApplicationService
+EDGENT-128  update to Watson IoT Platform release
+EDGENT-166  Add Gate plumbing
+EDGENT-173  Add load balanced parallel()
+EDGENT-178  console: stream hover should report "alias" in addition to tags
+EDGENT-198  Accessibility enhancements to Javadoc
+EDGENT-200  Console: stream hovers in oplet kind layout lack tuple counts
+EDGENT-214  testFileWriter needs to support compressed rolling log generation
+EDGENT-215  Job control gets unregistered from ControlService after job gets closed (BUG)
+EDGENT-217  promote IoT device heart beat to a connector utility
+EDGENT-218  Add multivariable JsonAnalytics
+EDGENT-220  add things to help with csv strings
+EDGENT-226  Add connector for "command / OS process"
+EDGENT-304  Always build edgent.android.{hardware,topology}.jar
+
+Incompatible changes
+--------------------
+EDGENT-232  Rename Quarks to Edgent
+    Rename packages from quarks.* to org.apache.edgent.*
+    Rename jars from quarks.jar to edgent.*.jar
+EDGENT-236  Rename Iotf connector to Iotp
+    Rename package to org.apache.edgent.connectors.iotp
+    Rename jar to edgent.connectors.iotp.jar
+EDGENT-139  Rename ./ext/slf4j-1.7.12/slf4j-jdk14-1.7.12.jar
+    This jar was available to Edgent applications to provide them and the
+    Edgent runtime with an SLF4J logging implementation.
+    The name is now ./ext/slf4j-jdk14-1.7.12.jar
+
+Miscellaneous changes
+---------------------    
+EDGENT-139  Replace Ant build with Gradle tooling
+EDGENT-261  Remove all third party jars from the Edgent repository
+EDGENT-263  Add source tgz generation
+EDGENT-281  Change release bundle names
+    the bundles are now org.apache.edgent-<version>-{src,bin}.tgz
+EDGENT-281  Change the name of the directory that a binary release bundle extracts to
+    An official release bundle extracts to "edgent-<version>"
+    A snapshot release bundle extracts to "edgent-<version>-SNAPSHOT-<date>-<time>"
+EDGENT-281  Change names and/or versions of some external dependency jars in the binary release bundle
+    Mentioned for completeness but those jars are intended
+    to be private the Edgent runtime components.
+        
+Known Issues
+--------
+None yet
+
+Bug Fixes
+---------
+EDGENT-6    Change in JOB MXBean ObjectName causing console not to getch jobs
+EDGENT-83   Getting Started documentation page should tell how to build Quarks or explain releases are not Apache
+EDGENT-97   Document HTTPStreams.getJson
+EDGENT-120  bad graph generation with certain API / oplet sequence
+EDGENT-130  Application hands when trying to read commands from iotf
+EDGENT-137  Tuple count: Source oplet flows into Peek.  Source tuple count is less than Peek's count.
+EDGENT-152  "Quarks SPI" javadoc group declared but not generated
+EDGENT-164  Navigation menu works the wrong way
+EDGENT-167  width of FanOut output streams is wrong
+EDGENT-168  Console Splitter properties hover output tags wrong
+EDGENT-169  Console: hover on stream between Filter and Peek doesn't report tuple count
+EDGENT-171  Remove JobMXBean,State or Job.State
+EDGENT-172  Add stateChange() to JobMXBean
+EDGENT-177  Job name not set correctly for control service
+EDGENT-179  console: oplet coloring gradients "too close"
+EDGENT-180  Calling stateChange(CLOSE) on JobMXBean does not change its state fully
+EDGENT-187  Console: TopologyTesstBasic doesn't render after QUARKS-22 changes
+EDGENT-188  Console metric propagation shouldn't traverse non-injected metric ops
+EDGENT-189  Undesirable metric op injection
+EDGENT-201  Make the quarks console keyboard navigible
+EDGENT-207  Iotf connect does not receive commands when only subscribing to to commands
+EDGENT-208  Improve TWindow aggregate() javadoc
+EDGENT-209  No need to insert PlumbingStreams.isolate after JobEvents.source
+EDGENT-210  Submit an app, closing an app and the attempting to resubmit an app "kills" the parent app
+EDGENT-213  testFileWriter is naming rolling log files with day-in-year not day-in-month
+EDGENT-247  "ant release" with ANDROID_SDK_PLATFORM set fails
+EDGENT-255  StreamScope.setEnabled(true) resets buffer if already enabled
+EDGENT-257  samples.scenarios.iotp no longer functional
+
+Apache Quarks (incubating) 0.4.0
+==================
+0.4.0 was an unofficial release
+
+Apache Quarks (incubating) 0.3.0
+==================
+0.3.0 was an unofficial release
