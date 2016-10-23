@@ -85,11 +85,3 @@ EDGENT-213  testFileWriter is naming rolling log files with day-in-year not day-
 EDGENT-247  "ant release" with ANDROID_SDK_PLATFORM set fails
 EDGENT-255  StreamScope.setEnabled(true) resets buffer if already enabled
 EDGENT-257  samples.scenarios.iotp no longer functional
-
-Apache Quarks (incubating) 0.4.0
-==================
-0.4.0 was an unofficial release
-
-Apache Quarks (incubating) 0.3.0
-==================
-0.3.0 was an unofficial release
