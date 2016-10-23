@@ -752,6 +752,8 @@ task srcReleaseTarGz(type: Tar) {
   exclude '**/externalJars/'    // gradle generated artifacts for eclipse
   exclude '**/bin/'             // eclipse generated artifacts
   exclude '**/classes/'         // ant generated artifacts
+  exclude '**/*.class'          // exclude class files
+  exclude 'target/**'		// exclude target
   doLast {
     ant.checksum algorithm: 'md5', file: archivePath
     ant.checksum algorithm: 'sha-512', fileext: '.sha', file: archivePath
