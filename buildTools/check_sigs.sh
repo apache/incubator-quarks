@@ -22,7 +22,7 @@
 # Checks the signatures of all bundles in the build/release-edgent directory
 # Or checks the bundles in the specified directory
 
-if [ $1 == "-?" || $1 == "help" || $# -gt 1 ]
+if [ $1 == "-?" -o $1 == "help" -o $# -gt 1 ]
 then
     echo "Usage: check_sigs.sh [bundle-directory]"
     exit 1
