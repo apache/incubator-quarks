@@ -147,8 +147,8 @@
 		<retro7 qjar="edgent.apps.iot.jar"  qdir="apps/iot/lib" />
 		<retro7 qjar="edgent.apps.runtime.jar"  qdir="apps/runtime/lib" />
         <!-- analytics/math3 - why not java7? -->
-        <!-- analytics/sensors - why not java7? -->
 		<retro7 qjar="edgent.providers.iot.jar" />
+		<retro7 qjar="edgent.analytics.sensors.jar" qdir="analytics/sensors/lib" />
 
                 <retro7 qjar="edgent.samples.apps.jar" qdir="samples/lib" />
                 <retro7 qjar="edgent.samples.connectors.jar" qdir="samples/lib" />
@@ -288,6 +288,7 @@
 		<retro7.test.setup tdir="connectors/pubsub"  ldir="connectors/pubsub/lib"/>
 		<retro7.test.setup tdir="apps/iot"  ldir="apps/iot/lib"/>
 		<retro7.test.setup tdir="apps/runtime"  ldir="apps/runtime/lib"/>
+		<retro7.test.setup tdir="analytics/sensors"  ldir="analytics/sensors/lib"/>
 	</target>
 
         <!--
@@ -320,6 +321,7 @@
 		<retro7.test.run tdir="connectors/pubsub"  ldir="connectors/pubsub/lib"/>
 		<retro7.test.run tdir="apps/iot"  ldir="apps/iot/lib"/>
 		<retro7.test.run tdir="apps/runtime"  ldir="apps/runtime/lib"/>
+		<retro7.test.run tdir="analytics/sensors"  ldir="analytics/sensors/lib"/>
 	</target>
 
 	<target name="clean">
