@@ -2,7 +2,7 @@
 
 *Apache Edgent is an effort undergoing incubation at The Apache Software Foundation (ASF), sponsored by the Incubator PMC. Incubation is required of all newly accepted projects until a further review indicates that the infrastructure, communications, and decision making process have stabilized in a manner consistent with other successful ASF projects. While incubation status is not necessarily a reflection of the completeness or stability of the code, it does indicate that the project has yet to be fully endorsed by the ASF.*
  
-See (README.md) for high level information about Apache Edgent.
+See [README.md](README.md) for high level information about Apache Edgent.
 
 This document describes development of Apache Edgent itself, not how to develop Edgent applications.
  * See http://edgent.incubator.apache.org/docs/edgent-getting-started for getting started using Edgent
@@ -133,7 +133,7 @@ Building a release (`./gradlew release`) produces three sets of jars under
 * build/distributions/java7 - Java 7 SE
 * build/distributions/android - Android
 
-See (JAVA_SUPPORT.md) for which Edgent capabilities / jars are supported
+See [JAVA_SUPPORT.md](JAVA_SUPPORT.md) for which Edgent capabilities / jars are supported
 for each environment.
 
 #### Adding Edgent Runtime Jars to Java 7 & Android

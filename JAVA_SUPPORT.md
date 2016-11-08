@@ -10,7 +10,7 @@ Each target platform directory contains a set of jars for that platform
 * android - Android
 
 When building an Edgent release (`./gradlew release`) the above platform
-directories are in `build/distributions`.  See (DEVELOPMENT.md) for more
+directories are in `build/distributions`.  See [DEVELOPMENT.md](DEVELOPMENT.md) for more
 information.
 
 This page documents which jars are expected to work in each environment.
