@@ -7,4 +7,7 @@ successful ASF projects. While incubation status is not necessarily a reflection
 of the completeness or stability of the code, it does indicate that the project
 has yet to be fully endorsed by the ASF.
 
+Apache Edgent is supported on several Java target platforms.
+For more information see JAVA_SUPPORT.md 
+
 See Getting Started https://edgent.apache.org/docs/edgent-getting-started

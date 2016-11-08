@@ -1,8 +1,10 @@
 ## Development of Apache Edgent
 
 *Apache Edgent is an effort undergoing incubation at The Apache Software Foundation (ASF), sponsored by the Incubator PMC. Incubation is required of all newly accepted projects until a further review indicates that the infrastructure, communications, and decision making process have stabilized in a manner consistent with other successful ASF projects. While incubation status is not necessarily a reflection of the completeness or stability of the code, it does indicate that the project has yet to be fully endorsed by the ASF.*
+ 
+See (README.md) for high level information about Apache Edgent.
 
-This describes development of Apache Edgent itself, not how to develop Edgent applications.
+This document describes development of Apache Edgent itself, not how to develop Edgent applications.
  * See http://edgent.incubator.apache.org/docs/edgent-getting-started for getting started using Edgent
 
 The Edgent community welcomes contributions, please *Get Involved*!
@@ -32,7 +34,10 @@ reusing their Quarks workspace.
 Once you have forked the repository and created your local clone you need to download
 these additional development software tools.
 
-* Java 8 - The development setup assumes Java 8 and Linux. 
+* Java 8 - The development setup assumes Java 8 and Linux.
+
+All Edgent runtime development is done using Java 8.  Jars for Java 7 and Android
+platforms are created as described below.
 
 ### Building a Binary Release Bundle
 
@@ -119,6 +124,28 @@ following statement:
 
 Closing and reopening a pull request will kick off a new build against the pull request.
 
+### Java 7 and Android
+Java 7 and Android target platforms are supported through use of
+retrolambda to convert Edgent Java8 jars to Java7 jars.
+
+Building a release (`./gradlew release`) produces three sets of jars under
+* build/distributions/java8 - Java 8 SE
+* build/distributions/java7 - Java 7 SE
+* build/distributions/android - Android
+
+See (JAVA_SUPPORT.md) for which Edgent capabilities / jars are supported
+for each environment.
+
+#### Adding Edgent Runtime Jars to Java 7 & Android
+
+The gradle tooling uses some ant tooling to create the Java 7 and Android platform jars.
+
+Java 7 Edgent runtime jars are created using `platform/java7/build.xml`. Adding a jar just requires:
+* Adding it to target `retro7.edgent` - Copy entry for an existing jar.
+* Adding any tests for it to targets `test7.setup` and `test7.run` - Copy entry for an existing jar.
+
+Any Java 7 jar is automatically included in Android unless it is explictly excluded in `platform/android/build.xml`.
+
 ### Test reports
 
 Running the `reports` target produces two reports:
@@ -148,7 +175,7 @@ $ ./gradlew test7Run      # run the tests with a java7 VM
 $ ./gradlew test7Reports  # generate the junit and coverage tests
 ```
 
-#### Publish to Maven Repository
+### Publish to Maven Repository
 
 Initial support for publishing to a local Maven repository has been added.
 Use the following to do the publish.

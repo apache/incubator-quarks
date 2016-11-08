@@ -1,18 +1,17 @@
 # Edgent Java support
 
-As documented in (DEVELOPMENT.md) Edgent development is performed
-using Java 8 but Java 7 and Android is supported through use of
-retrolambda to build specific jars.
+The Edgent runtime is supported on all Java 8 SE, Java 7 SE, and Android
+platforms with the exceptions noted below.
 
-Building a release `ant release` produces three sets of Jars under
-* target/java8 - Java 8 SE
-* target/java7 - Java 7 SE
-* target/android - Android
+An Edgent binary release bundle has a directory for each of the target platforms.
+Each target platform directory contains a set of jars for that platform
+* java8 - Java 8 SE
+* java7 - Java 7 SE
+* android - Android
 
-[WIP] Building a release `./gradlew release` produces three sets of Jars under
-* build/distributions/java8 - Java 8 SE
-* build/distributions/java7 - Java 7 SE
-* build/distributions/android - Android
+When building an Edgent release (`./gradlew release`) the above platform
+directories are in `build/distributions`.  See (DEVELOPMENT.md) for more
+information.
 
 This page documents which jars are expected to work in each environment.
 
@@ -21,7 +20,7 @@ and no investigation has taken place to see if it can be supported.
 
 ## Core
 
-| Jar | Java 8 | Java 7 SE | Android | Notes |
+| Jar | Java 8 SE | Java 7 SE | Android | Notes |
 |---|---|---|---|---|
 |edgent.api.execution.jar| yes | yes | yes |
 |edgent.api.function.jar| yes | yes | yes |
@@ -93,13 +92,6 @@ and no investigation has taken place to see if it can be supported.
 |edgent.android.topology.jar | no | no | yes | |
 |edgent.android.hardware.jar | no | no | yes | |
 
-## Adding Jars to Java 7 & Android
-
-Java 7 jars are created using `platform/java7/build.xml`. Adding a Java just requires:
-* Adding it to target `retro7.edgent` - Copy entry for an existing jar.
-* Adding any tests for it to targets `test7.setup` and `test7.run` - Copy entry for an existing jar.
-
-Any Java 7 jar is automatically included in Android unless it is explictly excluded in `platform/android/build.xml`.
 
 ## Java API Usage
 

@@ -8,6 +8,11 @@ successful ASF projects. While incubation status is not necessarily a reflection
 of the completeness or stability of the code, it does indicate that the project
 has yet to be fully endorsed by the ASF.
 
+Apache Edgent is supported on several Java target platforms.
+For more information see JAVA_SUPPORT.md in the source tree
+or in the ASF git repository https://git-wip-us.apache.org/repos/asf/incubator-edgent.git
+or in the repository mirror at github https://github.com/apache/incubator-edgent.
+
 Pre-requisites:
 - Java 8 is required to build an Edgent binary distribution
 
@@ -17,6 +22,7 @@ $ ./gradlew release   # .\gradlew.bat on Windows
 
 The build reports the location of the binary distribution bundle that can then
 be unpacked and used in building applications.
+
 See Getting Started https://edgent.apache.org/docs/edgent-getting-started
 
 For more information about the Edgent sources, testing, and
