@@ -16,6 +16,9 @@ Building a release `ant release` produces three sets of Jars under
 
 This page documents which jars are expected to work in each environment.
 
+A blank entry means a jar is currently not supported in that environment
+and no investigation has taken place to see if it can be supported.
+
 ## Core
 
 | Jar | Java 8 | Java 7 SE | Android | Notes |
@@ -68,7 +71,7 @@ This page documents which jars are expected to work in each environment.
 | Jar | Java 8 SE | Java 7 SE | Android | Notes |
 |---|---|---|---|---|
 |edgent.analytics.math3.jar | yes | | | |
-|edgent.analytics.sensors.jar | yes | | | |
+|edgent.analytics.sensors.jar | yes | yes | yes | |
 
 ### Utilities
 
