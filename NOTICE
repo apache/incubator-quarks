@@ -9,36 +9,3 @@ The Apache Software Foundation (http://www.apache.org/).
 
 Portions of this software were developed by IBM Corp.
 Copyright IBM Corp. 2015, 2016
-   
-======================================
-console/servlets/webapp_content/js/ext/jquery-ui-1.11.4.custom
-
-  Copyright jQuery Foundation and other contributors, https://jquery.org/
-  
-  This software consists of voluntary contributions made by many
-  individuals. For exact contribution history, see  the revision history
-  available at https://github.com/jquery/jquery-ui
-  
-  This software consists of voluntary contributions made by many
-  individuals. For exact contribution history, see the revision history
-  available at https://github.com/jquery/jquery
-  
-======================================
-console/servlets/webapp_content/js/ext/d3.legend.js
-
-  Copyright (c) 2012 ziggy.jonsson.nyc@gmail.com
-
-======================================
-console/servlets/webapp_content/js/ext/d3.min.js
-
-  Copyright 2010-2016 Mike Bostock
-  All rights reserved.
-
-======================================
-console/servlets/webapp_content/js/ext/sankey_edgent.js
-
-  Copyright 2015, Mike Bostock
-  All rights reserved.
-  
-======================================
-  
