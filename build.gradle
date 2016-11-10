@@ -715,7 +715,7 @@ task releaseTarGz(type: Tar) {
   from 'DISCLAIMER', 'JAVA_SUPPORT.md'
   with copySpec {
     rename { 'README' }
-    from rootProject.file('legal/binary-release-readme')
+    from rootProject.file('README-binary-release')
   }
   from 'RELEASE_NOTES'
   from "$target_dir/version.txt"
@@ -740,10 +740,7 @@ task srcReleaseTarGz(type: Tar) {
   from 'LICENSE', 'NOTICE'
   from 'DISCLAIMER', 'JAVA_SUPPORT.md'
   from 'RELEASE_NOTES'
-  with copySpec {
-    rename { 'README' }
-    from rootProject.file('legal/source-release-readme')
-  }
+  from 'README'
   exclude 'README.md'
   from 'DEVELOPMENT.md'
   from '.'
