@@ -8,6 +8,8 @@ successful ASF projects. While incubation status is not necessarily a reflection
 of the completeness or stability of the code, it does indicate that the project
 has yet to be fully endorsed by the ASF.
 
+Apache Edgent is released under the Apache License Version 2.0.
+
 Apache Edgent is supported on several Java target platforms.
 For more information see JAVA_SUPPORT.md in the source tree
 or in the ASF git repository https://git-wip-us.apache.org/repos/asf/incubator-edgent.git
@@ -17,7 +19,6 @@ Pre-requisites:
 - Java 8 is required to build an Edgent binary distribution
 
 Build an Edgent binary distribution:
-$ cd edgent           # the root of your Edgent source tree
 $ ./gradlew release   # .\gradlew.bat on Windows
 
 The build reports the location of the binary distribution bundle that can then
