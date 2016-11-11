@@ -8,7 +8,7 @@ The source code for the application can be found under the
 
 Use:
 
-See SensorAnalytics sample link <edgent-release>/docs/javadoc/overview-summary.html
+See the SensorAnalytics sample link in <edgent-release>/docs/javadoc/overview-summary.html
 for full information on configuring and running the application
 and observing its behavior.  In particular, the default configuration
 connects to MQTT server url "tcp://localhost:1883".

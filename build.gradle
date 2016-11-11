@@ -461,14 +461,14 @@ subprojects {
     metaInf {
       with( copySpec {
         rename { 'LICENSE' }
-        from rootProject.file('legal/apache-v2_0-license')
+        from rootProject.file('binary-release/apache-v2_0-license')
       })
       with( copySpec {
         rename { 'NOTICE' }
         from rootProject.file(
           projectsWithPreApacheContribs.contains(project.path)
-            ? 'legal/ibm-contrib-notice'
-            : 'legal/apache-notice')
+            ? 'binary-release/ibm-contrib-notice'
+            : 'binary-release/apache-notice')
       })
     }
   }
@@ -700,23 +700,11 @@ task releaseTarGz(type: Tar) {
   duplicatesStrategy 'exclude'
   into "${build_name}-${build_version}${snapshotId}"
   // make some things first in the tgz
-  with copySpec {
-    rename { 'LICENSE' }
-    from rootProject.file('legal/binary-release-license')
-  }
-  with copySpec {
-    rename { 'NOTICE' }
-    from rootProject.file('legal/binary-release-notice')
-  }
-  with copySpec {
-    rename { 'binary-release-bundled-dependencies' }
-    from rootProject.file('legal/binary-release-bundled-dependencies')
-  }
+  from rootProject.file('binary-release/LICENSE')
+  from rootProject.file('binary-release/NOTICE')
+  into ('licenses') { from 'licenses' }
   from 'DISCLAIMER', 'JAVA_SUPPORT.md'
-  with copySpec {
-    rename { 'README' }
-    from rootProject.file('README-binary-release')
-  }
+  from rootProject.file('binary-release/README')
   from 'RELEASE_NOTES'
   from "$target_dir/version.txt"
   from target_dir
