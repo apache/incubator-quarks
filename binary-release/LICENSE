@@ -332,7 +332,7 @@ connectors/javax.websocket-client/ext
 --------------------------------
 console/server/ext
   javax.servlet-api-3.1.0.jar        javax.servlet:javax.servlet-api:3.1.0
-        LICENSE: CDDL-1.1            For details, see licenses/binary-release/javax.servlet-api-3.1.0.CDDL-1.1
+        LICENSE: CDDL-1.0            For details, see licenses/binary-release/javax.servlet-api-3.1.0.CDDL-1.0
         
   jetty-http-9.3.6.v20151106.jar     org.eclipse.jetty:jetty-http:9.3.6.v20151106
         LICENSE: ASL-2.0             For details, see licenses/binary-release/jetty-http-9.3.6.ASL-2.0
@@ -361,7 +361,7 @@ console/server/ext
 --------------------------------
 console/servlets/ext
   javax.servlet-api-3.1.0.jar       javax.servlet:javax.servlet-api:3.1.0
-        LICENSE: CDDL-1.1           For details, see licenses/binary-release/javax.servlet-api-3.1.0.CDDL-1.1
+        LICENSE: CDDL-1.0           For details, see licenses/binary-release/javax.servlet-api-3.1.0.CDDL-1.0
 
 --------------------------------
 console/webapps
