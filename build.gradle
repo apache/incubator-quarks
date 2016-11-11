@@ -736,9 +736,13 @@ task srcReleaseTarGz(type: Tar) {
   exclude '**/build/'           // gradle generated artifacts
   exclude '**/externalJars/'    // gradle generated artifacts for eclipse
   exclude '**/bin/'             // eclipse generated artifacts
-  exclude '**/classes/'         // ant generated artifacts
-  exclude '**/*.class'          // exclude class files
-  exclude 'target/**'		// exclude target
+  exclude '**/classes/'         // old ant generated artifacts
+  exclude '**/classes.in/'      // our retrolambda processing cruft
+  exclude '**/classes.out/'     // our retrolambda processing cruft
+  exclude '**/*.class'          // final backstop just in case
+  exclude 'target/**'           // old ant generated artifacts
+  exclude 'connectors/jdbc/derby.log'         // test cruft
+  exclude 'connectors/jdbc/JdbcStreamsTestDb' // test cruft
   doLast {
     ant.checksum algorithm: 'md5', file: archivePath
     ant.checksum algorithm: 'sha-512', fileext: '.sha', file: archivePath
