@@ -8,6 +8,9 @@ of the completeness or stability of the code, it does indicate that the project
 has yet to be fully endorsed by the ASF.
 
 Apache Edgent is released under the Apache License Version 2.0.
+This Apache Edgent binary release includes a number of subcomponents with
+separate copyright notices and license terms. It includes some binary content
+with associated EPL and CDDL licenses.  See LICENSE for details.
 
 Apache Edgent is supported on several Java target platforms.
 For more information see JAVA_SUPPORT.md 

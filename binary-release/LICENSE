@@ -207,6 +207,11 @@ This Apache Edgent binary release includes a number of subcomponents with
 separate copyright notices and license terms.  Your use of these
 components is subject to the terms and conditions of the following licenses.
 
+The binary release includes some binary content with associated
+Eclipse Public License ("EPL-1.0") and 
+Common Development and Distribution License ("CDDL-1.0" and CDDL-1.1")
+licenses as noted below.
+
 --------------------------------
 ext/    # common dependencies for all Edgent components
   gson-2.2.4.jar                    com.google.code.gson:gson:2.2.4
@@ -242,6 +247,8 @@ connectors/http/ext
 connectors/iotp/ext
   watson-iot-0.1.5.jar              com.ibm.messaging:watson-iot:0.1.5
         LICENSE: EPL-1.0            For details, see licenses/binary-release/watson-iot-0.1.5.EPL-1.0
+                                    Only binary form content is included.
+                                    https://mvnrepository.com/artifact/com.ibm.messaging/watson-iot/0.1.5
         
   commons-codec-1.10.jar            org.apache.commons:commons-codec:1.10
         LICENSE: ASL-2.0            For details, see licenses/binary-release/commons-codec-1.10.ASL-2.0
@@ -271,7 +278,7 @@ connectors/iotp/ext
         LICENSE: ASL-2.0            For details, see licenses/binary-release/log4j-1.2.17.ASL-2.0
         
   org.eclipse.paho.client.mqttv3-1.1.0.jar  org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0
-        LICENSE: EPL-1.0            For details, see licenses/binary-release/mqttv3-1.1.0.EPL-1.0
+        LICENSE: EDL-1.0            For details, see licenses/binary-release/mqttv3-1.1.0.EDL-1.0
         
 --------------------------------
 connectors/kafka/ext
@@ -299,12 +306,14 @@ connectors/kafka/ext
 --------------------------------
 connectors/mqtt/ext
   org.eclipse.paho.client.mqttv3-1.0.2.jar  org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.0.2
-        LICENSE: EPL-1.0            For details, see licenses/binary-release/mqttv3-1.0.2.EPL-1.0
+        LICENSE: EDL-1.0            For details, see licenses/binary-release/mqttv3-1.0.2.EDL-1.0
 
 --------------------------------
 connectors/edgent.javax.websocket/ext
   javax.websocket-api-1.0.jar       javax.websocket:javax.websocket-api:1.0
         LICENSE: CDDL-1.1           For details, see licenses/binary-release/javax.websocket-api-1.0.CDDL-1.1
+                                    Only binary form content is included.
+                                    https://mvnrepository.com/artifact/javax.websocket/javax.websocket-api/1.0
 
 --------------------------------
 connectors/javax.websocket-client/ext
@@ -313,6 +322,8 @@ connectors/javax.websocket-client/ext
         
   javax.websocket-api-1.0.jar         javax.websocket:javax.websocket-api:1.0
         LICENSE: CDDL-1.1             For details, see licenses/binary-release/javax.websocket-api-1.0.CDDL-1.1
+                                      Only binary form content is included.
+                                      https://mvnrepository.com/artifact/javax.websocket/javax.websocket-api/1.0
         
   jetty-io-9.3.6.v20151106.jar        org.eclipse.jetty.websocket:javax-websocket-client-impl:9.3.6.v20151106
         LICENSE: ASL-2.0              For details, see licenses/binary-release/jetty-io-9.3.6.ASL-2.0
@@ -333,6 +344,8 @@ connectors/javax.websocket-client/ext
 console/server/ext
   javax.servlet-api-3.1.0.jar        javax.servlet:javax.servlet-api:3.1.0
         LICENSE: CDDL-1.0            For details, see licenses/binary-release/javax.servlet-api-3.1.0.CDDL-1.0
+                                     Only binary form content is included.
+                                     https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api/3.1.0
         
   jetty-http-9.3.6.v20151106.jar     org.eclipse.jetty:jetty-http:9.3.6.v20151106
         LICENSE: ASL-2.0             For details, see licenses/binary-release/jetty-http-9.3.6.ASL-2.0
@@ -360,8 +373,9 @@ console/server/ext
   
 --------------------------------
 console/servlets/ext
-  javax.servlet-api-3.1.0.jar       javax.servlet:javax.servlet-api:3.1.0
-        LICENSE: CDDL-1.0           For details, see licenses/binary-release/javax.servlet-api-3.1.0.CDDL-1.0
+  javax.servlet-api-3.1.0.jar        javax.servlet:javax.servlet-api:3.1.0
+        LICENSE: CDDL-1.0            For details, see licenses/binary-release/javax.servlet-api-3.1.0.CDDL-1.0
+                                     https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api/3.1.0
 
 --------------------------------
 console/webapps
