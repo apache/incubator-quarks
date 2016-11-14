@@ -215,10 +215,10 @@ licenses as noted below.
 --------------------------------
 ext/    # common dependencies for all Edgent components
   gson-2.2.4.jar                    com.google.code.gson:gson:2.2.4
-        LICENSE: ASL-2.0            For details, see licenses/binary-release/gson-2.2.4.ASL-2.0
+        LICENSE: AL-2.0             For details, see licenses/binary-release/gson-2.2.4.AL-2.0
         
   metrics-core-3.1.2.jar            io.dropwizard.metrics:metrics-core:3.1.2
-        LICENSE: ASL-2.0            For details, see licenses/binary-release/metrics-core-3.1.2.ASL-2.0
+        LICENSE: AL-2.0             For details, see licenses/binary-release/metrics-core-3.1.2.AL-2.0
         
   slf4j-api-1.7.12.jar              org.slf4j:slf4j-api:1.7.12
   slf4j-jdk14-1.7.12.jar
@@ -227,21 +227,21 @@ ext/    # common dependencies for all Edgent components
 --------------------------------
 analytics/math3/ext/
   commons-math3-3.4.1.jar           org.apache.commons:commons-math3:3.4.1
-        LICENSE: ASL-2.0            For details, see licenses/binary-release/commons-math3-3.4.1.ASL-2.0
+        LICENSE: AL-2.0             For details, see licenses/binary-release/commons-math3-3.4.1.AL-2.0
 
 --------------------------------
 connectors/http/ext
   httpclient-4.5.1.jar              org.apache.httpcomponents:httpclient:4.5.1
-        LICENSE: ASL-2.0            For details, see licenses/binary-release/httpclient-4.5.1.ASL-2.0
+        LICENSE: AL-2.0             For details, see licenses/binary-release/httpclient-4.5.1.AL-2.0
         
   httpcore-4.4.4.jar                org.apache.httpcomponents:httpcore:4.4.4
-        LICENSE: ASL-2.0            For details, see licenses/binary-release/httpcore-4.4.4.ASL-2.0
+        LICENSE: AL-2.0             For details, see licenses/binary-release/httpcore-4.4.4.AL-2.0
         
   commons-codec-1.9.jar             org.apache.commons:commons-codec:1.9
-        LICENSE: ASL-2.0            For details, see licenses/binary-release/commons-codec-1.9.ASL-2.0
+        LICENSE: AL-2.0             For details, see licenses/binary-release/commons-codec-1.9.AL-2.0
         
   commons-logging-1.2.jar           org.apache.commons:commons-logging:1.2
-        LICENSE: ASL-2.0            For details, see licenses/binary-release/commons-logging-1.2.ASL-2.0
+        LICENSE: AL-2.0             For details, see licenses/binary-release/commons-logging-1.2.AL-2.0
         
 --------------------------------
 connectors/iotp/ext
@@ -251,31 +251,31 @@ connectors/iotp/ext
                                     https://mvnrepository.com/artifact/com.ibm.messaging/watson-iot/0.1.5
         
   commons-codec-1.10.jar            org.apache.commons:commons-codec:1.10
-        LICENSE: ASL-2.0            For details, see licenses/binary-release/commons-codec-1.10.ASL-2.0
+        LICENSE: AL-2.0             For details, see licenses/binary-release/commons-codec-1.10.AL-2.0
         
   commons-lang3-3.4.jar             org.apache.commons:commons-lang3:3.4
-        LICENSE: ASL-2.0            For details, see licenses/binary-release/commons-lang3-3.4.ASL-2.0
+        LICENSE: AL-2.0             For details, see licenses/binary-release/commons-lang3-3.4.AL-2.0
         
   commons-logging-1.2.jar           org.apache.commons:commons-logging:1.2
-        LICENSE: ASL-2.0            For details, see licenses/binary-release/commons-logging-1.2.ASL-2.0
+        LICENSE: AL-2.0             For details, see licenses/binary-release/commons-logging-1.2.AL-2.0
         
   commons-net-3.3.jar               org.apache.commons:commons-net:3.3
-        LICENSE: ASL-2.0            For details, see licenses/binary-release/commons-net-3.3.ASL-2.0
+        LICENSE: AL-2.0             For details, see licenses/binary-release/commons-net-3.3.AL-2.0
         
   gson-2.6.1.jar                    com.google.code.gson:gson:2.6.1
-        LICENSE: ASL-2.0            For details, see licenses/binary-release/gson-2.6.1.ASL-2.0
+        LICENSE: AL-2.0             For details, see licenses/binary-release/gson-2.6.1.AL-2.0
         
   httpclient-4.5.1.jar              org.apache.httpcomponents:httpclient:4.5.1
-        LICENSE: ASL-2.0            For details, see licenses/binary-release/httpclient-4.5.1.ASL-2.0
+        LICENSE: AL-2.0             For details, see licenses/binary-release/httpclient-4.5.1.AL-2.0
         
   httpcore-4.4.3.jar                org.apache.httpcomponents:httpcore:4.4.3
-        LICENSE: ASL-2.0            For details, see licenses/binary-release/httpcore-4.4.3.ASL-2.0
+        LICENSE: AL-2.0             For details, see licenses/binary-release/httpcore-4.4.3.AL-2.0
         
   joda-time-2.9.2.jar               joda-time:joda-time:2.9.2
-        LICENSE: ASL-2.0            For details, see licenses/binary-release/joda-time-2.9.2.ASL-2.0
+        LICENSE: AL-2.0             For details, see licenses/binary-release/joda-time-2.9.2.AL-2.0
         
   log4j-1.2.17.jar                  log4j:log4j:1.2.17
-        LICENSE: ASL-2.0            For details, see licenses/binary-release/log4j-1.2.17.ASL-2.0
+        LICENSE: AL-2.0             For details, see licenses/binary-release/log4j-1.2.17.AL-2.0
         
   org.eclipse.paho.client.mqttv3-1.1.0.jar  org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0
         LICENSE: EDL-1.0            For details, see licenses/binary-release/mqttv3-1.1.0.EDL-1.0
@@ -283,25 +283,25 @@ connectors/iotp/ext
 --------------------------------
 connectors/kafka/ext
   kafka-clients-0.8.2.2.jar         org.apache.kafka:kafka-clients:0.8.2.2
-        LICENSE: ASL-2.0            For details, see licenses/binary-release/kafka-clients-0.8.2.2.ASL-2.0
+        LICENSE: AL-2.0             For details, see licenses/binary-release/kafka-clients-0.8.2.2.AL-2.0
         
   kafka_2.10-0.8.2.2.jar            org.apache.kafka:kafka_2.10:0.8.2.2
-        LICENSE: ASL-2.0            For details, see licenses/binary-release/kafka-2.10-0.8.2.2.ASL-2.0
+        LICENSE: AL-2.0             For details, see licenses/binary-release/kafka-2.10-0.8.2.2.AL-2.0
         
   log4j-1.2.16.jar                  log4j:log4j:1.2.16
-        LICENSE: ASL-2.0            For details, see licenses/binary-release/log4j-1.2.16.ASL-2.0
+        LICENSE: AL-2.0             For details, see licenses/binary-release/log4j-1.2.16.AL-2.0
         
   metrics-core-2.2.0.jar            com.yammer.metrics:metrics-core:2.2.0
-        LICENSE: ASL-2.0            For details, see licenses/binary-release/metrics-core-2.2.0.ASL-2.0
+        LICENSE: AL-2.0             For details, see licenses/binary-release/metrics-core-2.2.0.AL-2.0
         
   scala-library-2.10.4.jar          org.scala-lang:scala-library:2.10.4
-        LICENSE: ASL-2.0            For details, see licenses/binary-release/scala-library-2.10.4.BSD
+        LICENSE: AL-2.0             For details, see licenses/binary-release/scala-library-2.10.4.BSD
         
   zkclient-0.3.jar                  com.101tec:zkclient:0.3
-        LICENSE: ASL-2.0            For details, see licenses/binary-release/zkclient-0.3.ASL-2.0
+        LICENSE: AL-2.0             For details, see licenses/binary-release/zkclient-0.3.AL-2.0
         
   zookeeper-3.4.6.jar               org.apache.zookeeper:zookeeper:3.4.6
-        LICENSE: ASL-2.0            For details, see licenses/binary-release/zookeeper-3.4.6.ASL-2.0
+        LICENSE: AL-2.0             For details, see licenses/binary-release/zookeeper-3.4.6.AL-2.0
 
 --------------------------------
 connectors/mqtt/ext
@@ -318,7 +318,7 @@ connectors/edgent.javax.websocket/ext
 --------------------------------
 connectors/javax.websocket-client/ext
   javax-websocket-client-impl-9.3.6.v20151106.jar  org.eclipse.jetty.websocket:javax-websocket-client-impl:9.3.6.v20151106
-        LICENSE: ASL-2.0              For details, see licenses/binary-release/javax-websocket-client-impl-9.3.6.ASL-2.0
+        LICENSE: AL-2.0               For details, see licenses/binary-release/javax-websocket-client-impl-9.3.6.AL-2.0
         
   javax.websocket-api-1.0.jar         javax.websocket:javax.websocket-api:1.0
         LICENSE: CDDL-1.1             For details, see licenses/binary-release/javax.websocket-api-1.0.CDDL-1.1
@@ -326,19 +326,19 @@ connectors/javax.websocket-client/ext
                                       https://mvnrepository.com/artifact/javax.websocket/javax.websocket-api/1.0
         
   jetty-io-9.3.6.v20151106.jar        org.eclipse.jetty.websocket:javax-websocket-client-impl:9.3.6.v20151106
-        LICENSE: ASL-2.0              For details, see licenses/binary-release/jetty-io-9.3.6.ASL-2.0
+        LICENSE: AL-2.0               For details, see licenses/binary-release/jetty-io-9.3.6.AL-2.0
         
   jetty-util-9.3.6.v20151106.jar      org.eclipse.jetty.websocket:javax-websocket-client-impl:9.3.6.v20151106              
-        LICENSE: ASL-2.0              For details, see licenses/binary-release/jetty-util-9.3.6.ASL-2.0
+        LICENSE: AL-2.0               For details, see licenses/binary-release/jetty-util-9.3.6.AL-2.0
         
   websocket-api-9.3.6.v20151106.jar   org.eclipse.jetty.websocket:javax-websocket-client-impl:9.3.6.v20151106
-        LICENSE: ASL-2.0              For details, see licenses/binary-release/websocket-api-9.3.6.ASL-2.0
+        LICENSE: AL-2.0               For details, see licenses/binary-release/websocket-api-9.3.6.AL-2.0
         
   websocket-client-9.3.6.v20151106.jar  org.eclipse.jetty.websocket:javax-websocket-client-impl:9.3.6.v20151106
-        LICENSE: ASL-2.0              For details, see licenses/binary-release/websocket-client-9.3.6.ASL-2.0
+        LICENSE: AL-2.0               For details, see licenses/binary-release/websocket-client-9.3.6.AL-2.0
         
   websocket-common-9.3.6.v20151106.jar  org.eclipse.jetty.websocket:javax-websocket-client-impl:9.3.6.v20151106
-        LICENSE: ASL-2.0              For details, see licenses/binary-release/websocket-common-9.3.6.ASL-2.0
+        LICENSE: AL-2.0               For details, see licenses/binary-release/websocket-common-9.3.6.AL-2.0
 
 --------------------------------
 console/server/ext
@@ -348,28 +348,28 @@ console/server/ext
                                      https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api/3.1.0
         
   jetty-http-9.3.6.v20151106.jar     org.eclipse.jetty:jetty-http:9.3.6.v20151106
-        LICENSE: ASL-2.0             For details, see licenses/binary-release/jetty-http-9.3.6.ASL-2.0
+        LICENSE: AL-2.0              For details, see licenses/binary-release/jetty-http-9.3.6.AL-2.0
         
   jetty-io-9.3.6.v20151106.jar       org.eclipse.jetty:jetty-io:9.3.6.v20151106
-        LICENSE: ASL-2.0             For details, see licenses/binary-release/jetty-io-9.3.6.ASL-2.0
+        LICENSE: AL-2.0              For details, see licenses/binary-release/jetty-io-9.3.6.AL-2.0
         
   jetty-security-9.3.6.v20151106.jar org.eclipse.jetty:jetty-security:9.3.6.v20151106
-        LICENSE: ASL-2.0             For details, see licenses/binary-release/jetty-security-9.3.6.ASL-2.0
+        LICENSE: AL-2.0              For details, see licenses/binary-release/jetty-security-9.3.6.AL-2.0
         
   jetty-server-9.3.6.v20151106.jar   org.eclipse.jetty:jetty-server:9.3.6.v20151106
-        LICENSE: ASL-2.0             For details, see licenses/binary-release/jetty-server-9.3.6.ASL-2.0
+        LICENSE: AL-2.0              For details, see licenses/binary-release/jetty-server-9.3.6.AL-2.0
         
   jetty-servlet-9.3.6.v20151106.jar  org.eclipse.jetty:jetty-servlet:9.3.6.v20151106
-        LICENSE: ASL-2.0             For details, see licenses/binary-release/jetty-servlet-9.3.6.ASL-2.0
+        LICENSE: AL-2.0              For details, see licenses/binary-release/jetty-servlet-9.3.6.AL-2.0
         
   jetty-util-9.3.6.v20151106.jar     org.eclipse.jetty:jetty-util:9.3.6.v20151106
-        LICENSE: ASL-2.0             For details, see licenses/binary-release/jetty-util-9.3.6.ASL-2.0
+        LICENSE: AL-2.0              For details, see licenses/binary-release/jetty-util-9.3.6.AL-2.0
         
   jetty-webapp-9.3.6.v20151106.jar   org.eclipse.jetty:jetty-webapp:9.3.6.v20151106
-        LICENSE: ASL-2.0             For details, see licenses/binary-release/jetty-webapp-9.3.6.ASL-2.0
+        LICENSE: AL-2.0              For details, see licenses/binary-release/jetty-webapp-9.3.6.AL-2.0
         
   jetty-xml-9.3.6.v20151106.jar      org.eclipse.jetty:jetty-xml:9.3.6.v20151106
-        LICENSE: ASL-2.0             For details, see licenses/binary-release/jetty-xml-9.3.6.ASL-2.0
+        LICENSE: AL-2.0              For details, see licenses/binary-release/jetty-xml-9.3.6.AL-2.0
   
 --------------------------------
 console/servlets/ext
