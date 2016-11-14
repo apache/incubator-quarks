@@ -191,7 +191,7 @@ public abstract class PlumbingTest extends TopologyAbstractTest {
         
         assertTrue(tcProcessed.getResult().size() > tcSlowM.getResult().size());
         for (TimeAndId delay : tcSlowM.getResult())
-            assertTrue(delay.ms < 300);
+            assertTrue("delay:"+delay, delay.ms < 300);
 
         // Must not lose any tuples in the non relieving path
         Set<TimeAndId> uniq = new HashSet<>(tcRaw.getResult());
