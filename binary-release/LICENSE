@@ -295,7 +295,7 @@ connectors/kafka/ext
         LICENSE: AL-2.0             For details, see licenses/binary-release/metrics-core-2.2.0.AL-2.0
         
   scala-library-2.10.4.jar          org.scala-lang:scala-library:2.10.4
-        LICENSE: AL-2.0             For details, see licenses/binary-release/scala-library-2.10.4.BSD
+        LICENSE: BSD                For details, see licenses/binary-release/scala-library-2.10.4.BSD
         
   zkclient-0.3.jar                  com.101tec:zkclient:0.3
         LICENSE: AL-2.0             For details, see licenses/binary-release/zkclient-0.3.AL-2.0
