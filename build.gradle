@@ -215,8 +215,10 @@ subprojects {
   if (aggregatorOnlyProjects.contains(project.path)) {
     return
   }
-
-  apply plugin: 'maven-publish'
+  
+  if(!project.group.equals("edgent.platform")){
+  	apply plugin: 'maven-publish'
+  }
   apply plugin: 'java'
   apply plugin: "jacoco"
  
@@ -626,6 +628,7 @@ subprojects {
 
   // support for 'gradle publishToMavenLocal' etc 
   // TODO publishing test.{fvt,svt} and samples ... doesn't seem desirable? e.g., we're excluding test.{fvt,svt} jars from the tgz
+  if(!project.group.equals("edgent.platform")){
   publishing {
     publications {
       mavenJava(MavenPublication) {
@@ -641,6 +644,7 @@ subprojects {
         }
       }
     }
+  }
   }  
 }
 
