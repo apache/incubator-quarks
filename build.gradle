@@ -56,6 +56,7 @@ ext {
   now = new Date()
   DSTAMP = String.format('%tY%<tm%<td', now)
   TSTAMP = String.format('%tH%<tM', now)
+  COPYRIGHT_YEAR = String.format('%tY', now)
   
   snapshotId = "-SNAPSHOT-${DSTAMP}-${TSTAMP}"
   if (System.properties['edgent.snapshotId'] != null) {

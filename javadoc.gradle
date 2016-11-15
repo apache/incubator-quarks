@@ -27,7 +27,7 @@ task aggregateJavadoc(type: Javadoc) {
     use = true
     docTitle "Apache Edgent (incubating) v${build_version}"
     footer '<a href="http://edgent.incubator.apache.org">Apache Edgent (incubating)</a>'
-    bottom "Copyright &#169; 2016 The Apache Software Foundation. All Rights Reserved - ${commithash}-${DSTAMP}-${TSTAMP}"
+    bottom "Copyright &#169; ${COPYRIGHT_YEAR} The Apache Software Foundation. All Rights Reserved - ${commithash}-${DSTAMP}-${TSTAMP}"
     overview "edgent_overview.html"
     windowTitle "Edgent v${build_version}"
 
