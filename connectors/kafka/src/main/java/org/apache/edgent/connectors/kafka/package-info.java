@@ -20,7 +20,7 @@ under the License.
  * Apache Kafka enterprise messing hub stream connector.
  * <p>
  * The connector uses and includes components from the Kafka 0.8.2.2 release.
- * It has been successfully tested against a kafka_2.11-0.9.0.0 server as well.
+ * It has been successfully tested against kafka_2.11-0.10.1.0 and kafka_2.11-0.9.0.0 server as well.
  * <p>
  * Stream tuples may be published to Kafka broker topics
  * and created by subscribing to broker topics.
