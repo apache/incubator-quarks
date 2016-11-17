@@ -12,7 +12,7 @@ The Edgent community welcomes contributions, please *Get Involved*!
 
 ## Switched from Ant to Gradle
 
-See the updated [Building](#building) and [Using Eclipse](#using-eclipse) sections below.
+See the updated _Building_ and _Using Eclipse_ sections below.
 The Ant tooling is no longer functional.
 
 It's recommended that developers of Edgent create a new workspace instead of
@@ -39,9 +39,7 @@ these additional development software tools.
 All Edgent runtime development is done using Java 8.  JARs for Java 7 and Android
 platforms are created as described below.
 
-<a name="building">
 ### Building a Binary Release Bundle
-</a>
 
 Building an Edgent binary release bundle:
 ``` sh
@@ -298,9 +296,7 @@ Notes with the above PR merge directions:
   * Use an HTTPS URL unless you have a SSH key setup at GitHub:
     - `$ git remote add mirror https://github.com/apache/incubator-edgent.git`
 
-<a name="using-eclipse">
 ### Using Eclipse
-</a>
 
 The Edgent Git repository contains Eclipse project definitions for the
 top-level directories that contain code, such as api, runtime, connectors.
