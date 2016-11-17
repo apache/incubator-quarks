@@ -101,7 +101,7 @@ of the Java 8 compact1 definition.
 
 | Feature  | Packages              | Edgent Usage      | Notes |
 |----------|-----------------------|-------------------|-------|
-|JMX       | `java.lang.managem-ent, javax.managment*` |     | JMX not supported on Android |
+|JMX       | `java.lang.management, javax.managment*` |     | JMX not supported on Android |
 |JMX       |                       | utils/metrics     | Optional utility methods |
 |JMX       |                       | console/servlets, runtime/jmxcontrol | 
 |Servlet   | `javax.servlet*`      | console/servlets  |
