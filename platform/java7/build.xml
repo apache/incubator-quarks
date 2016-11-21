@@ -87,6 +87,9 @@
 	  >
 				<fileset dir="${output.dir}"/>
 			</jar>
+			
+            <delete dir="${input.dir}"/>
+            <delete dir="${output.dir}"/>
 		</sequential>
 	</macrodef>
 

@@ -29,7 +29,7 @@ dependencies {
 //Build a jar file containing the applications to test the ApplicationService
 task testApplicationJar{
   doLast{
-    ant.jar(destfile: "test.classes/edgent.api.topology.APPS.TEST.jar") {
+    ant.jar(destfile: "${buildDir}/lib/test/edgent.api.topology.APPS.TEST.jar") {
       service(type: 'org.apache.edgent.topology.services.TopologyBuilder') {
         provider(classname: 'org.apache.edgent.test.topology.services.TestApplications$AppOne')
         provider(classname: 'org.apache.edgent.test.topology.services.TestApplications$AppTwo')

@@ -705,7 +705,7 @@ task addVersionDotTxt {
 
 task releaseTarGz(type: Tar) {
   description = 'Create binary release tgz in target_dir'
-  archiveName = "apache-${build_name}-${build_version}${snapshotId}-bin.tgz"
+  archiveName = "apache-${build_name}-${build_version}-incubating-${snapshotId}-bin.tgz"
   compression = Compression.GZIP
   destinationDir = new File("${target_dir}/../release-edgent")
   duplicatesStrategy 'exclude'
@@ -716,7 +716,7 @@ task releaseTarGz(type: Tar) {
   into ('licenses') { from 'licenses' }
   from 'DISCLAIMER', 'JAVA_SUPPORT.md'
   from rootProject.file('binary-release/README')
-  from 'RELEASE_NOTES'
+  from 'RELEASE_NOTES', 'CONTRIBUTORS'
   from "$target_dir/version.txt"
   from target_dir
   exclude '**/test/svt/'
@@ -730,7 +730,7 @@ task releaseTarGz(type: Tar) {
 
 task srcReleaseTarGz(type: Tar) {
   description = 'Create source release tgz in target_dir'
-  archiveName = "apache-${build_name}-${build_version}${snapshotId}-src.tgz"
+  archiveName = "apache-${build_name}-${build_version}-incubating-${snapshotId}-src.tgz"
   compression = Compression.GZIP
   destinationDir = new File("${target_dir}/../release-edgent")
   duplicatesStrategy 'exclude'
@@ -743,15 +743,12 @@ task srcReleaseTarGz(type: Tar) {
   exclude 'README.md'
   from 'DEVELOPMENT.md'
   from '.'
+  exclude 'KEYS'
   exclude '.git', '.gradle', '.settings'
   exclude '**/build/'           // gradle generated artifacts
   exclude '**/externalJars/'    // gradle generated artifacts for eclipse
   exclude '**/bin/'             // eclipse generated artifacts
-  exclude '**/classes/'         // old ant generated artifacts
-  exclude '**/classes.in/'      // our retrolambda processing cruft
-  exclude '**/classes.out/'     // our retrolambda processing cruft
   exclude '**/*.class'          // final backstop just in case
-  exclude 'target/**'           // old ant generated artifacts
   exclude 'connectors/jdbc/derby.log'         // test cruft
   exclude 'connectors/jdbc/JdbcStreamsTestDb' // test cruft
   doLast {
@@ -826,6 +823,11 @@ task all(dependsOn: assemble) {
 task cleanAll {
   description = 'clean aggregator'  // "release dependsOn clean" only does top-level clean
   dependsOn clean, filteredSubprojects*.clean
+  // purge old ant build artifacts
+  delete fileTree('target')
+  delete fileTree('reports')
+  delete fileTree(dir: '.', includes:['**/classes/**', '**/test.classes/**']) 
+  delete fileTree(dir: '.', includes:['**/classes.in/**', '**/classes.out/**']) 
 }
 
 task release {

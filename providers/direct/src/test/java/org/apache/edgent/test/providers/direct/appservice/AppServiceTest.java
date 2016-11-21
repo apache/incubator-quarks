@@ -57,7 +57,7 @@ public class AppServiceTest {
         
         String qd = System.getProperty("edgent.test.root.dir");
         assertNotNull(qd);
-        File testAppsJar = new File(qd, "api/topology/test.classes/edgent.api.topology.APPS.TEST.jar");
+        File testAppsJar = new File(qd, "api/topology/build/lib/test/edgent.api.topology.APPS.TEST.jar");
         assertTrue(testAppsJar.exists());
         
         URL testAppsJarURL = testAppsJar.toURI().toURL();

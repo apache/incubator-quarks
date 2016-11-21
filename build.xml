@@ -34,7 +34,7 @@
     <fail message="The ant tooling is no longer functional.  See README."/>
   </target>
 	
-  <target name="all" depends="init,suball,copy,docs"
+  <target name="all" depends="DoNotUseAnt,init,suball,copy,docs"
     description="Build the code and Javadoc into target. Requires Java 8"
     />
 
@@ -289,11 +289,11 @@
     </jacoco:report>
    </target>
 
-  <target name="reports" depends="junit.report,coverage.report"
+  <target name="reports" depends="DoNotUseAnt,junit.report,coverage.report"
     description="Produce test and coverage reports under reports after executing the test target"
     />
 
-  <target name="docs">
+  <target name="docs" depends="DoNotUseAnt">
   <mkdir dir="${javadoc.dir}"/>
   <javadoc
       destdir="${javadoc.dir}"
