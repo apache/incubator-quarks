@@ -705,7 +705,7 @@ task addVersionDotTxt {
 
 task releaseTarGz(type: Tar) {
   description = 'Create binary release tgz in target_dir'
-  archiveName = "apache-${build_name}-${build_version}-incubating-${snapshotId}-bin.tgz"
+  archiveName = "apache-${build_name}-${build_version}-incubating${snapshotId}-bin.tgz"
   compression = Compression.GZIP
   destinationDir = new File("${target_dir}/../release-edgent")
   duplicatesStrategy 'exclude'
@@ -730,7 +730,7 @@ task releaseTarGz(type: Tar) {
 
 task srcReleaseTarGz(type: Tar) {
   description = 'Create source release tgz in target_dir'
-  archiveName = "apache-${build_name}-${build_version}-incubating-${snapshotId}-src.tgz"
+  archiveName = "apache-${build_name}-${build_version}-incubating${snapshotId}-src.tgz"
   compression = Compression.GZIP
   destinationDir = new File("${target_dir}/../release-edgent")
   duplicatesStrategy 'exclude'
