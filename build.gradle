@@ -820,14 +820,15 @@ task all(dependsOn: assemble) {
   description = "alias for 'assemble'"
 }
 
-task cleanAll {
+task cleanAll(type: Delete) {
   description = 'clean aggregator'  // "release dependsOn clean" only does top-level clean
   dependsOn clean, filteredSubprojects*.clean
   // purge old ant build artifacts
-  delete fileTree('target')
-  delete fileTree('reports')
-  delete fileTree(dir: '.', includes:['**/classes/**', '**/test.classes/**']) 
-  delete fileTree(dir: '.', includes:['**/classes.in/**', '**/classes.out/**']) 
+  delete 'target'
+  delete 'reports'
+  delete fileTree(dir: '.', includes:['**/classes/', '**/test.classes/'])
+  // retro7 processing cruft 
+  delete fileTree(dir: '.', includes:['**/classes.in/', '**/classes.out/']) 
 }
 
 task release {
