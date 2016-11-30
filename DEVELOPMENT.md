@@ -35,11 +35,18 @@ Once you have forked the repository and created your local clone you need to dow
 these additional development software tools.
 
 * Java 8 - The development setup assumes Java 8 and Linux.
+* gradle - (https://gradle.org/) only if building from a source release bundle
 
 All Edgent runtime development is done using Java 8.  JARs for Java 7 and Android
 platforms are created as described below.
 
 ### Building a Binary Release Bundle
+
+Building from a source release bundle (lacking a `./gradlew`) requires
+performing a one-time bootstrap step using an installed version of gradle:
+``` sh
+$ gradle          # one time gradle build bootstrap setup.
+```
 
 Building an Edgent binary release bundle:
 ``` sh
@@ -73,7 +80,8 @@ The Gradle tooling:
 The top-level Gradle file is `edgent/build.gradle` and it contains several
 unique tasks:
 
-* `assemble` (default) : Build all code and Javadoc into `build\distributions`. The build will fail on any code error or Javadoc warning or error.
+* `downloadWrapper` (default) : one-time bootstrap processing for use when building from a source release bundle 
+* `assemble` : Build all code and Javadoc into `build\distributions`. The build will fail on any code error or Javadoc warning or error.
 * `all` : Synonym for `assemble`
 * `build` : Essentially like "assemble test reports"
 * `clean` : Clean the project

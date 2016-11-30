@@ -17,8 +17,15 @@ or in the repository mirror at github https://github.com/apache/incubator-edgent
 
 Pre-requisites:
 - Java 8 is required to build an Edgent binary distribution
+- gradle (https://gradle.org/) only if building from a source release bundle
+
+Building from a source release bundle (lacking a ./gradlew) requires
+performing a one-time bootstrap step using an installed version of gradle:
+
+$ gradle          # one time gradle build bootstrap setup.
 
 Build an Edgent binary distribution:
+
 $ ./gradlew release   # .\gradlew.bat on Windows
 
 The build reports the location of the binary distribution bundle that can then

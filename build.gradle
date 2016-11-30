@@ -17,7 +17,11 @@ specific language governing permissions and limitations
 under the License.
 */
  
-defaultTasks 'assemble'
+ext {
+  gradleVersion = "3.1"
+  gradleDistributionSha256Sum = "c7de3442432253525902f7e8d7eac8b5fd6ce1623f96d76916af6d0e383010fc"
+}
+apply from: 'wrapper.gradle'
 
 apply from: 'other.gradle'
 
@@ -745,6 +749,7 @@ task srcReleaseTarGz(type: Tar) {
   from '.'
   exclude 'KEYS'
   exclude '.git', '.gradle', '.settings'
+  exclude '.gradle-wrapper', 'gradlew', 'gradlew.bat'
   exclude '**/build/'           // gradle generated artifacts
   exclude '**/externalJars/'    // gradle generated artifacts for eclipse
   exclude '**/bin/'             // eclipse generated artifacts
