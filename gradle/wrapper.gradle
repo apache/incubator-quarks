@@ -17,10 +17,10 @@
  * under the License.
  */
 
-defaultTasks 'downloadWrapper'
+defaultTasks 'wrapper'
 
-task downloadWrapper(type: Wrapper) {
-    description = "Download the gradle wrapper and requisite files. Overwrites existing wrapper files."
+task wrapper(type: Wrapper) {
+    description = "Initialize the gradle wrapper. Overwrites existing wrapper files."
     jarFile = "${project.projectDir}/.gradle-wrapper/gradle-wrapper.jar"
     
     gradleVersion = project.gradleVersion
@@ -28,11 +28,24 @@ task downloadWrapper(type: Wrapper) {
     // distributionSha256Sum = project.gradleDistributionSha256Sum
     
     doLast {
-      File wrapperProps = file(propertiesFile)
-      wrapperProps.append("distributionSha256Sum=${project.gradleDistributionSha256Sum}\n");
+      if (project.hasProperty("gradleDistributionSha256Sum")) {
+        File wrapperProps = file(propertiesFile)
+        wrapperProps.append("distributionSha256Sum=${project.gradleDistributionSha256Sum}\n");
+      }
     }
     doLast {
       println "The gradle wrapper is now initialized." +
             "\nUse ./gradlew for subsequent build operations."
     }
 }
+
+gradle.taskGraph.whenReady {taskGraph ->
+  if (!taskGraph.hasTask(wrapper)) {
+    if (GradleVersion.current() < GradleVersion.version(gradleVersion)) {
+      throw new GradleException('Running with unsupported Gradle Version (' + GradleVersion.current() + ').' +
+              '\nUse Gradle Wrapper or with Gradle version >= ' + gradleVersion +
+              '\nRun \'gradle\' (default task) to initialize the wrapper.')
+    }
+  }
+}
+

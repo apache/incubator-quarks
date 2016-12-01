@@ -17,13 +17,8 @@ specific language governing permissions and limitations
 under the License.
 */
  
-ext {
-  gradleVersion = "3.1"
-  gradleDistributionSha256Sum = "c7de3442432253525902f7e8d7eac8b5fd6ce1623f96d76916af6d0e383010fc"
-}
-apply from: 'wrapper.gradle'
-
-apply from: 'other.gradle'
+apply from: 'gradle/wrapper.gradle'
+apply from: 'gradle/other.gradle'
 
 import org.gradle.plugins.signing.Sign
 import java.io.Console
@@ -686,8 +681,8 @@ task createJunitReport << {
   ant.move(file: "TESTS-TestSuites.xml", tofile: "${target_report_dir}/TESTS-TestSuites.xml")
 }
 
-apply from: 'jacoco.gradle'
-apply from: 'javadoc.gradle'
+apply from: 'gradle/jacoco.gradle'
+apply from: 'gradle/javadoc.gradle'
 
 task addVersionDotTxt {
   description = 'Add version.txt in target_dir'
@@ -872,8 +867,4 @@ build {
 task setupExternalJars {
   description = 'Add all of the dependant external jars to the target-dir (make available to Eclipse, etc)'
   dependsOn setupCommonExtJars, filteredSubprojects.setupProjectExtJars
-}
-
-task wrapper(type: Wrapper) {
-  jarFile = rootProject.file('.gradle-wrapper/gradle-wrapper.jar')
 }

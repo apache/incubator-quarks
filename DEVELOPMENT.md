@@ -80,7 +80,7 @@ The Gradle tooling:
 The top-level Gradle file is `edgent/build.gradle` and it contains several
 unique tasks:
 
-* `downloadWrapper` (default) : one-time bootstrap processing for use when building from a source release bundle 
+* `wrapper` (default) : one-time bootstrap processing for use when building from a source release bundle 
 * `assemble` : Build all code and Javadoc into `build\distributions`. The build will fail on any code error or Javadoc warning or error.
 * `all` : Synonym for `assemble`
 * `build` : Essentially like "assemble test reports"
