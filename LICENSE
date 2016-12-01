@@ -223,4 +223,7 @@ For details, see licenses/jquery-ui.MIT
 This product bundles portions of jquery which is available under a MIT license.
 For details, see licenses/jquery.MIT
 
+The bundled jquery bundles Sizzle which is available under a MIT license.
+For details, see licenses/sizzle.MIT
+
 ======================================
