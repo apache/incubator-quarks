@@ -1,20 +1,24 @@
 /*
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
- 
-defaultTasks 'assemble'
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
 
-apply from: 'other.gradle'
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+*/
+ 
+apply from: 'gradle/wrapper.gradle'
+apply from: 'gradle/other.gradle'
 
 import org.gradle.plugins.signing.Sign
 import java.io.Console
@@ -51,6 +55,7 @@ ext {
   now = new Date()
   DSTAMP = String.format('%tY%<tm%<td', now)
   TSTAMP = String.format('%tH%<tM', now)
+  COPYRIGHT_YEAR = String.format('%tY', now)
   
   snapshotId = "-SNAPSHOT-${DSTAMP}-${TSTAMP}"
   if (System.properties['edgent.snapshotId'] != null) {
@@ -463,14 +468,14 @@ subprojects {
     metaInf {
       with( copySpec {
         rename { 'LICENSE' }
-        from rootProject.file('legal/apache-v2_0-license')
+        from rootProject.file('binary-release/apache-v2_0-license')
       })
       with( copySpec {
         rename { 'NOTICE' }
         from rootProject.file(
           projectsWithPreApacheContribs.contains(project.path)
-            ? 'legal/ibm-contrib-notice'
-            : 'legal/apache-notice')
+            ? 'binary-release/ibm-contrib-notice'
+            : 'binary-release/apache-notice')
       })
     }
   }
@@ -623,24 +628,25 @@ subprojects {
 
   // support for 'gradle publishToMavenLocal' etc 
   // TODO publishing test.{fvt,svt} and samples ... doesn't seem desirable? e.g., we're excluding test.{fvt,svt} jars from the tgz
-  if(!project.group.equals("edgent.platform")){
-  publishing {
-    publications {
-      mavenJava(MavenPublication) {
-        // specify dependencies like: org.apache.edgent:edgent.api.topology:0.4.0
-        groupId = build_group
-        artifactId = "${project.group}.${project.name}" 
-        artifact sourceJar
-        if (project.pluginManager.hasPlugin('war')) {
-          from components.web
-        }
-        else {
-          from components.java
+  if (project.pluginManager.hasPlugin('publishing')) {
+    publishing {
+      publications {
+        mavenJava(MavenPublication) {
+          // specify dependencies like: org.apache.edgent:edgent.api.topology:0.4.0
+          groupId = build_group
+          artifactId = "${project.group}.${project.name}" 
+          artifact sourceJar
+          if (project.pluginManager.hasPlugin('war')) {
+            from components.web
+          }
+          else {
+            from components.java
+          }
         }
       }
     }
   }
-  }  
+    
 }
 
 task copyScripts(type: Copy) {
@@ -675,8 +681,8 @@ task createJunitReport << {
   ant.move(file: "TESTS-TestSuites.xml", tofile: "${target_report_dir}/TESTS-TestSuites.xml")
 }
 
-apply from: 'jacoco.gradle'
-apply from: 'javadoc.gradle'
+apply from: 'gradle/jacoco.gradle'
+apply from: 'gradle/javadoc.gradle'
 
 task addVersionDotTxt {
   description = 'Add version.txt in target_dir'
@@ -698,30 +704,18 @@ task addVersionDotTxt {
 
 task releaseTarGz(type: Tar) {
   description = 'Create binary release tgz in target_dir'
-  archiveName = "apache-${build_name}-${build_version}${snapshotId}-bin.tgz"
+  archiveName = "apache-${build_name}-${build_version}-incubating${snapshotId}-bin.tgz"
   compression = Compression.GZIP
   destinationDir = new File("${target_dir}/../release-edgent")
   duplicatesStrategy 'exclude'
   into "${build_name}-${build_version}${snapshotId}"
   // make some things first in the tgz
-  with copySpec {
-    rename { 'LICENSE' }
-    from rootProject.file('legal/binary-release-license')
-  }
-  with copySpec {
-    rename { 'NOTICE' }
-    from rootProject.file('legal/binary-release-notice')
-  }
-  with copySpec {
-    rename { 'binary-release-bundled-dependencies' }
-    from rootProject.file('legal/binary-release-bundled-dependencies')
-  }
+  from rootProject.file('binary-release/LICENSE')
+  from rootProject.file('binary-release/NOTICE')
+  into ('licenses') { from 'licenses' }
   from 'DISCLAIMER', 'JAVA_SUPPORT.md'
-  with copySpec {
-    rename { 'README' }
-    from rootProject.file('legal/binary-release-readme')
-  }
-  from 'RELEASE_NOTES'
+  from rootProject.file('binary-release/README')
+  from 'RELEASE_NOTES', 'CONTRIBUTORS'
   from "$target_dir/version.txt"
   from target_dir
   exclude '**/test/svt/'
@@ -735,7 +729,7 @@ task releaseTarGz(type: Tar) {
 
 task srcReleaseTarGz(type: Tar) {
   description = 'Create source release tgz in target_dir'
-  archiveName = "apache-${build_name}-${build_version}${snapshotId}-src.tgz"
+  archiveName = "apache-${build_name}-${build_version}-incubating${snapshotId}-src.tgz"
   compression = Compression.GZIP
   destinationDir = new File("${target_dir}/../release-edgent")
   duplicatesStrategy 'exclude'
@@ -744,18 +738,19 @@ task srcReleaseTarGz(type: Tar) {
   from 'LICENSE', 'NOTICE'
   from 'DISCLAIMER', 'JAVA_SUPPORT.md'
   from 'RELEASE_NOTES'
-  with copySpec {
-    rename { 'README' }
-    from rootProject.file('legal/source-release-readme')
-  }
+  from 'README'
   exclude 'README.md'
   from 'DEVELOPMENT.md'
   from '.'
+  exclude 'KEYS'
   exclude '.git', '.gradle', '.settings'
+  exclude '.gradle-wrapper', 'gradlew', 'gradlew.bat'
   exclude '**/build/'           // gradle generated artifacts
   exclude '**/externalJars/'    // gradle generated artifacts for eclipse
   exclude '**/bin/'             // eclipse generated artifacts
-  exclude '**/classes/'         // ant generated artifacts
+  exclude '**/*.class'          // final backstop just in case
+  exclude 'connectors/jdbc/derby.log'         // test cruft
+  exclude 'connectors/jdbc/JdbcStreamsTestDb' // test cruft
   doLast {
     ant.checksum algorithm: 'md5', file: archivePath
     ant.checksum algorithm: 'sha-512', fileext: '.sha', file: archivePath
@@ -825,9 +820,15 @@ task all(dependsOn: assemble) {
   description = "alias for 'assemble'"
 }
 
-task cleanAll {
+task cleanAll(type: Delete) {
   description = 'clean aggregator'  // "release dependsOn clean" only does top-level clean
   dependsOn clean, filteredSubprojects*.clean
+  // purge old ant build artifacts
+  delete 'target'
+  delete 'reports'
+  delete fileTree(dir: '.', includes:['**/classes/', '**/test.classes/'])
+  // retro7 processing cruft 
+  delete fileTree(dir: '.', includes:['**/classes.in/', '**/classes.out/']) 
 }
 
 task release {
@@ -866,8 +867,4 @@ build {
 task setupExternalJars {
   description = 'Add all of the dependant external jars to the target-dir (make available to Eclipse, etc)'
   dependsOn setupCommonExtJars, filteredSubprojects.setupProjectExtJars
-}
-
-task wrapper(type: Wrapper) {
-  jarFile = rootProject.file('.gradle-wrapper/gradle-wrapper.jar')
 }

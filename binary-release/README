@@ -1,0 +1,20 @@
+
+Apache Edgent is an effort undergoing incubation at The Apache Software Foundation (ASF),
+sponsored by the Incubator PMC. Incubation is required of all newly accepted
+projects until a further review indicates that the infrastructure, communications,
+and decision making process have stabilized in a manner consistent with other
+successful ASF projects. While incubation status is not necessarily a reflection
+of the completeness or stability of the code, it does indicate that the project
+has yet to be fully endorsed by the ASF.
+
+Apache Edgent is released under the Apache License Version 2.0.
+This Apache Edgent binary release includes a number of subcomponents with
+separate copyright notices and license terms. It includes some binary content
+with associated EPL and CDDL licenses.  See LICENSE for details.
+
+Apache Edgent is supported on several Java target platforms.
+For more information see JAVA_SUPPORT.md 
+
+See Getting Started https://edgent.apache.org/docs/edgent-getting-started for
+information about using this binary release to develop applications that
+use Edgent.

@@ -200,5 +200,30 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 
-   ======================================
-   This product contains content covered by MIT and "BSD 3 Clause" licenses. See console/servlets/LICENSE.
+======================================
+APACHE EDGENT SUBCOMPONENTS:
+
+Apache Edgent source includes a number of subcomponents with
+separate copyright notices and license terms.  Your use of the
+source code for these components is subject to the terms and
+conditions of the following licenses.
+
+This product bundles d3-legend which is available under a MIT license.
+For details, see licenses/d3-legend.MIT
+
+This product bundles portions of d3 which is available under a BSD license.
+For details, see licenses/d3.BSD
+
+This product bundles portions of d3-sankey which is available under a BSD license.
+For details, see licenses/d3-sankey.BSD
+ 
+This product bundles portions of jquery-ui which is available under a MIT license.
+For details, see licenses/jquery-ui.MIT
+ 
+The bundled jquery-ui bundles jquery which is available under a MIT license.
+For details, see licenses/jquery.MIT
+
+The bundled jquery bundles Sizzle which is available under a MIT license.
+For details, see licenses/sizzle.MIT
+
+======================================

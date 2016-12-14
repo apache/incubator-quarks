@@ -10,6 +10,7 @@ EDGENT-22   Add functionality to sample the tuples in a stream
 EDGENT-91   Support joining a stream against another stream/window
 EDGENT-96   Add an HTTP POST utility method
 EDGENT-114  Have IotProvider start applications using ApplicationService
+EDGENT-117  Support IotProvider on Java 7 and Android
 EDGENT-128  update to Watson IoT Platform release
 EDGENT-166  Add Gate plumbing
 EDGENT-173  Add load balanced parallel()
@@ -42,6 +43,8 @@ Miscellaneous changes
 EDGENT-139  Replace Ant build with Gradle tooling
 EDGENT-261  Remove all third party jars from the Edgent repository
 EDGENT-263  Add source tgz generation
+EDGENT-271  Conform to license and notice standards for binary bundle
+EDGENT-272  Conform to license and notice standards for source bundle
 EDGENT-281  Change release bundle names
     the bundles are now org.apache.edgent-<version>-{src,bin}.tgz
 EDGENT-281  Change the name of the directory that a binary release bundle extracts to
@@ -85,11 +88,4 @@ EDGENT-213  testFileWriter is naming rolling log files with day-in-year not day-
 EDGENT-247  "ant release" with ANDROID_SDK_PLATFORM set fails
 EDGENT-255  StreamScope.setEnabled(true) resets buffer if already enabled
 EDGENT-257  samples.scenarios.iotp no longer functional
-
-Apache Quarks (incubating) 0.4.0
-==================
-0.4.0 was an unofficial release
-
-Apache Quarks (incubating) 0.3.0
-==================
-0.3.0 was an unofficial release
+EDGENT-307  Improve supported platform documentation

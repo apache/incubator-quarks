@@ -1,0 +1,51 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+defaultTasks 'wrapper'
+
+task wrapper(type: Wrapper) {
+    description = "Initialize the gradle wrapper. Overwrites existing wrapper files."
+    jarFile = "${project.projectDir}/.gradle-wrapper/gradle-wrapper.jar"
+    
+    gradleVersion = project.gradleVersion
+    // ugh... must manually set in generated gradle-wrapper.properties
+    // distributionSha256Sum = project.gradleDistributionSha256Sum
+    
+    doLast {
+      if (project.hasProperty("gradleDistributionSha256Sum")) {
+        File wrapperProps = file(propertiesFile)
+        wrapperProps.append("distributionSha256Sum=${project.gradleDistributionSha256Sum}\n");
+      }
+    }
+    doLast {
+      println "The gradle wrapper is now initialized." +
+            "\nUse ./gradlew for subsequent build operations."
+    }
+}
+
+gradle.taskGraph.whenReady {taskGraph ->
+  if (!taskGraph.hasTask(wrapper)) {
+    if (GradleVersion.current() < GradleVersion.version(gradleVersion)) {
+      throw new GradleException('Running with unsupported Gradle Version (' + GradleVersion.current() + ').' +
+              '\nUse Gradle Wrapper or with Gradle version >= ' + gradleVersion +
+              '\nRun \'gradle\' (default task) to initialize the wrapper.')
+    }
+  }
+}
+

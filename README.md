@@ -90,6 +90,10 @@ Your back-end systems can also use analytics to interact with and control edge d
 * A traffic alert system can send an alert to vehicles that are heading towards an area where an accident occurred
 * A vehicle monitoring system can reduce the maximum engine revs to reduce the chance of failure before the next scheduled service if it detects patterns that indicate a potential problem
 
+## Runtime environments
+Edgent has a language binding for Java. See [JAVA SUPPORT](JAVA_SUPPORT.md) for information about the supported Java environments.
+
+## Getting Started
 See [Edgent](http://edgent.incubator.apache.org/) for more information on all
 aspects of Edgent including Getting Started.
 

@@ -14,7 +14,7 @@
  specific language governing permissions and limitations
  under the License.
  -->
-<project name="edgent" default="UseGradle"
+<project name="edgent" default="DoNotUseAnt"
   xmlns:jacoco="antlib:org.jacoco.ant"
   >
     <description>
@@ -30,11 +30,11 @@
   <property name="javadoc.dir" location="${target.dir}/docs/javadoc"/>
   <property name="release.dir" location="${release.base}"/>
 	
-  <target name="UseGradle">
-    <fail message="The ant tooling is no longer functional.  See DEVELOPMENT.md."/>
+  <target name="DoNotUseAnt">
+    <fail message="The ant tooling is no longer functional.  See README."/>
   </target>
 	
-  <target name="all" depends="init,suball,copy,docs"
+  <target name="all" depends="DoNotUseAnt,init,suball,copy,docs"
     description="Build the code and Javadoc into target. Requires Java 8"
     />
 
@@ -86,7 +86,7 @@
   <target name="suball">
      <subprojects target="all"/>
   </target>
-  <target name="test"  depends="UseGradle"
+  <target name="test"  depends="DoNotUseAnt"
      description="Run all JUnit tests. Requires Java 8"
      >
      <echo message="HINT: to include tests for some connectors do: ant -Dtest.base.pattern='**/*TestManual.java' test"/>
@@ -289,11 +289,11 @@
     </jacoco:report>
    </target>
 
-  <target name="reports" depends="junit.report,coverage.report"
+  <target name="reports" depends="DoNotUseAnt,junit.report,coverage.report"
     description="Produce test and coverage reports under reports after executing the test target"
     />
 
-  <target name="docs">
+  <target name="docs" depends="DoNotUseAnt">
   <mkdir dir="${javadoc.dir}"/>
   <javadoc
       destdir="${javadoc.dir}"
@@ -338,7 +338,7 @@
      </javadoc>
   </target>
 
-  <target name="release" depends="UseGradle,clean,setcommitversion,all,docs,create_release_bundle"/>
+  <target name="release" depends="DoNotUseAnt,clean,setcommitversion,all,docs,create_release_bundle"/>
 	
   <target name="create_release_bundle">
       <!-- Build Java7 and Android versions -->
