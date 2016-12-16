@@ -21,58 +21,26 @@
 
 set -e
 
-# Checks the signatures of all bundles in the build/release-edgent directory
-# Or checks the bundles in the specified directory
+# Create a tag on the release branch for the release candidate
+# Edgent version from gradle.properties/build_version
+# Prompts before taking actions unless "--nquery"
+#
+# Run from the root of the release management git clone.
 
 . `dirname $0`/common.sh
 
-setUsage "`basename $0` [bundle-directory]"
+setUsage "`basename $0` [--nquery] <rc-num>"
 handleHelp "$@"
 
-if [ $# -ge 1 ]
-then
-    BUNDLE_DIR=$1; shift
+NQUERY=
+if [ "$1" == "--nquery" ]; then
+  NQUERY="--nquery"; shift
 fi
+
+requireArg "$@"
+RC_NUM=$1; shift
+checkRcNum ${RC_NUM} || usage "Not a release candidate number \"${RC_NUM}\""
 
 noExtraArgs "$@"
 
-[ -d ${BUNDLE_DIR} ] || die "Bundle directory \"${BUNDLE_DIR}\" does not exist"
-
-function checkFile() {
-    FILE="$1"
-    echo
-    echo "Checking $FILE..."
-    
-    HASH=`md5 -q "${FILE}"`
-    CHECK=`cat "${FILE}.md5"`
-
-    if [ "$HASH" != "$CHECK" ]
-    then
-        echo "${FILE} MD5 incorrect"
-        exit 1;
-    else
-       echo "${FILE} MD5 OK";
-    fi
-    
-    HASH=`shasum -p -a 512 "${FILE}" | awk '{print$1}'`
-    CHECK=`cat "${FILE}.sha"`
-
-    if [ "$HASH" != "$CHECK" ]
-    then
-        echo "${FILE} SHA incorrect"
-        exit 1;
-    else
-       echo "${FILE} SHA OK";
-    fi
-
-    gpg --verify "${FILE}.asc"
-
-}
-
-for bundle in ${BUNDLE_DIR}/*.tgz
-do
-    checkFile ${bundle}
-done
-
-echo
-echo "SUCCESS: all checksum and signature files OK"
+`dirname $0`/tag_release.sh ${NQUERY} --as-rcnum ${RC_NUM} 

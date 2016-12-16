@@ -21,18 +21,8 @@
 
 set -e
 
-# Creates a branch for the release.
-# Uses the version id from gradle.properties.
-# Prompts before taking actions unless "--nquery".
-#
-# Run from the root of the release management git clone.
-#
-# Prior to running this, create a new release management clone
-# from the ASF git repository.  The name of the clone's directory should
-# start with "mgmt-edgent" as the builtTools scripts check for that
-# to help keep one on the right path, e.g.,
-#
-#   git clone https://git-wip-us.apache.org/repos/asf/incubator-edgent.git mgmt-edgent<version>
+# Refresh the clone's release branch from the "origin" git remote.
+# Prompts before taking actions unless "--nquery"
 
 . `dirname $0`/common.sh
 
@@ -50,15 +40,12 @@ checkEdgentSourceRootGitDie
 checkUsingMgmtCloneWarn || [ ${NQUERY} ] || confirm "Proceed using this clone?" || exit
 
 VER=`getEdgentVer gradle`
-RELEASE_BRANCH=`getReleaseBranch $VER`
+RELEASE_BRANCH=`getReleaseBranch ${VER}`
 
-(set -x; git checkout -q master)
+(set -x; git checkout -q ${RELEASE_BRANCH})
 (set -x; git status)
-[ ${NQUERY} ] || confirm "Proceed to create release branch ${RELEASE_BRANCH}?" || exit
 
-echo "Creating release branch ${RELEASE_BRANCH}"
-# don't just use "git push -u origin master:${RELEASE_BRANCH}" as some suggested
-# to *create* the branch as that changes the local master to track the new
-# remote branch. yikes.
-(set -x; git checkout -b ${RELEASE_BRANCH})
-(set -x; git push -u origin ${RELEASE_BRANCH}) 
+[ ${NQUERY} ] || confirm "Proceed to refresh branch ${RELEASE_BRANCH} from the origin?" || exit
+
+echo "Refreshing branch ${RELEASE_BRANCH}"
+(set -x; git pull origin ${RELEASE_BRANCH})

@@ -21,44 +21,47 @@
 
 set -e
 
-# Creates a branch for the release.
-# Uses the version id from gradle.properties.
-# Prompts before taking actions unless "--nquery".
+# Merges the release branch to the master branch.
+# Uses the version id from gradle.properties to identify the branch.
+# Prompts before taking actions.
 #
 # Run from the root of the release management git clone.
-#
-# Prior to running this, create a new release management clone
-# from the ASF git repository.  The name of the clone's directory should
-# start with "mgmt-edgent" as the builtTools scripts check for that
-# to help keep one on the right path, e.g.,
-#
-#   git clone https://git-wip-us.apache.org/repos/asf/incubator-edgent.git mgmt-edgent<version>
 
 . `dirname $0`/common.sh
 
-setUsage "`basename $0` [--nquery]"
+setUsage "`basename $0`"
 handleHelp "$@"
-
-NQUERY=
-if [ "$1" == "--nquery" ]; then
-  NQUERY="--nquery"; shift
-fi
 
 noExtraArgs "$@"
 
 checkEdgentSourceRootGitDie
-checkUsingMgmtCloneWarn || [ ${NQUERY} ] || confirm "Proceed using this clone?" || exit
+checkUsingMgmtCloneWarn || confirm "Proceed using this clone?" || exit
 
 VER=`getEdgentVer gradle`
 RELEASE_BRANCH=`getReleaseBranch $VER`
 
 (set -x; git checkout -q master)
 (set -x; git status)
-[ ${NQUERY} ] || confirm "Proceed to create release branch ${RELEASE_BRANCH}?" || exit
 
-echo "Creating release branch ${RELEASE_BRANCH}"
-# don't just use "git push -u origin master:${RELEASE_BRANCH}" as some suggested
-# to *create* the branch as that changes the local master to track the new
-# remote branch. yikes.
-(set -x; git checkout -b ${RELEASE_BRANCH})
-(set -x; git push -u origin ${RELEASE_BRANCH}) 
+confirm "Proceed to refresh the local master branch prior to merging?" || exit
+(set -x; git pull origin master)
+
+echo
+echo "If you proceed to merge and there are conflicts you will need to"
+echo "fix the conflicts and then commit the merge and push:"
+echo "    git commit -m \"merged ${RELEASE_BRANCH}\""
+echo "    git push origin master"
+echo "If you choose not to proceed you may run this script again later."
+
+confirm "Proceed to (no-commit) merge branch ${RELEASE_BRANCH} to master?" || exit
+(set -x; git merge --no-commit --no-ff ${RELEASE_BRANCH})
+
+echo
+echo "If you choose not to proceed you will need to manually complete the"
+echo "merge and push:"
+echo "    git commit -m \"merged ${RELEASE_BRANCH}\""
+echo "    git push origin master"
+
+confirm "Proceed to commit the merge and push?" || exit
+(set -x; git commit -m "merged ${RELEASE_BRANCH}")
+(set -x; git push origin master)
