@@ -63,12 +63,11 @@ import org.junit.Test;
  * }</pre>
  * 
  * <p>
- * The tests and sample require certain test topics.  Create them:
+ * Create the test's topics:
  * <pre>{@code
  * # create our kafka test and sample topics
  * bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic testTopic1
  * bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic testTopic2
- * bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic kafkaSampleTopic
  * bin/kafka-topics.sh --list --zookeeper localhost:2181
  * 
  * # quick verify
