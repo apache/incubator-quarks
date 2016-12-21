@@ -104,8 +104,7 @@ The build process has been tested on Linux and macOS.
 
 To build on Windows probably needs some changes, please get involved and contribute them!
 
-
-**Continuous Integration**
+### Continuous Integration
 
 When a pull request is opened on the GitHub mirror site, the Travis CI service runs a full build.
 
@@ -160,6 +159,57 @@ Running the `reports` target produces two reports:
 * `builds/distributions/reports/tests/index.html` - JUnit test report
 * `builds/distributions/reports/coverage/index.html` - Code coverage report.
 
+### Testing the Kafka Connector
+
+The kafka connector tests aren't run by default as the connector must
+connect to a running Kafka/Zookeeper config.
+
+There are apparently ways to embedd Kafka and Zookeeper for testing purposes but
+we're not there yet. Contributions welcome!
+
+Setting up the servers is easy.
+Follow the steps in the [KafkaStreamsTestManual](connectors/kafka/src/test/java/org/apache/edgent/test/connectors/kafka/KafkaStreamsTestManual.java) javadoc.
+
+Once kafka/zookeeper are running you can run the tests and samples:
+```sh
+#### run the kafka tests
+./gradlew connectors:kafka:test --tests '*.*Manual'
+
+#### run the sample
+cd java8/scripts/connectors/kafka
+cat README
+./runkafkasample.sh sub
+./runkafkasample.sh pub
+```
+
+### Testing the JDBC Connector
+
+The JDBC connector tests are written to run against Apache Derby 
+as the backing dbms and the derby jar needs to be on the classpath.
+The tests are skipped if derby can't be loaded.
+The test harness adds $DERBY_HOME/db/lib/derby.jar to the classpath.
+See [JdbcStreamsTest](connectors/jdbc/src/test/java/org/apache/edgent/test/connectors/jdbc/JdbcStreamsTest.java) 
+for more info but the following should suffice:
+
+```sh
+export DERBY_HOME=$JAVA_HOME/db
+
+#### if JAVA_HOME isn't set - e.g., on OSX...
+export DERBY_HOME=`/usr/libexec/java_home`/db
+```
+
+Once DERBY_HOME is set the tests and samples can be run as follows
+```sh
+#### run the jdbc tests
+./gradlew connectors:jdbc:test
+
+#### run the sample
+cd java8/scripts/connectors/jdbc
+cat README
+./runjdbcsample.sh writer
+./runjdbcsample.sh reader
+```
+
 ### Testing Edgent with Java7
 
 All of the standard build system _tasks_ above must be run with
@@ -173,14 +223,17 @@ See [JAVA_SUPPORT](JAVA_SUPPORT.md) for information about what
 Edgent features are supported in the different environments.
 
 ``` sh
- # run with JAVA_HOME set for Java8
+ # run with JAVA_HOME/PATH set for Java8
 $ ./gradlew test7Compile  # compile the Edgent tests to operate in a Java7 environment
 
- # run with JAVA_HOME set for Java7
-$ ./gradlew test7Run      # run the tests with a Java7 VM
+$ sh   # muck with EVs for Java7 in a subshell
+  $ export JAVA_HOME=`/usr/libexec/java_home -v 1.7`   # on OSX
+  $ export PATH=$JAVA_HOME/bin:$PATH
+  $ ./gradlew test7Run      # run the tests with a Java7 VM
+  $ exit
 
  # run with JAVA_HOME set for Java8
-$ ./gradlew test7Reports  # generate the JUnit and coverage tests
+$ ./gradlew test7Reports  # generate the JUnit and coverage reports
 ```
 
 ### Publish to Maven Repository

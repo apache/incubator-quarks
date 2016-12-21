@@ -37,6 +37,49 @@ import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.plumbing.PlumbingStreams;
 import org.junit.Test;
 
+/**
+ * Test the Kafka connector.
+ * <p>
+ * The tests expect a Kafka/Zookeeper running on the local host at their
+ * default ports: 9092 and 2181 respectively.
+ * <p>
+ * The following system properties may be used to override that:
+ * <ul>
+ *   <li>org.apache.edgent.test.connectors.kafka.bootstrap.servers=localhost:9092</li>
+ *   <li>org.apache.edgent.test.connectors.kafka.zookeeper.connect=localhost:2181</li>
+ * </ul>
+ * <p>
+ * Setting up a Kafka/Zookeeper config on the default localhost ports is simple
+ * and well documented at https://kafka.apache.org/quickstart.  This should do it:
+ * <p>
+ * After downloading kafka:
+ * <pre>{@code
+ * tar zxf ~/Downloads/kafka_2.11-0.10.1.0.tgz
+ * cd kafka_2.11-0.10.1.0/
+ * 
+ * # start the servers (best in separate windows)
+ * bin/zookeeper-server-start.sh config/zookeeper.properties
+ * bin/kafka-server-start.sh config/server.properties
+ * }</pre>
+ * 
+ * <p>
+ * The tests and sample require certain test topics.  Create them:
+ * <pre>{@code
+ * # create our kafka test and sample topics
+ * bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic testTopic1
+ * bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic testTopic2
+ * bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic kafkaSampleTopic
+ * bin/kafka-topics.sh --list --zookeeper localhost:2181
+ * 
+ * # quick verify
+ * bin/kafka-console-producer.sh --broker-list localhost:9092 --topic testTopic1
+ * hi
+ * there
+ * ^D
+ * bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic testTopic1 --from-beginning
+ * ... you should see the "hi" and "there" messages.
+ * }</pre>
+ */
 public class KafkaStreamsTestManual extends ConnectorTestBase {
     private static final int PUB_DELAY_MSEC = 4*1000;
     private static final int SEC_TIMEOUT = 10;

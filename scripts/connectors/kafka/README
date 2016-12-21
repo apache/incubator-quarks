@@ -6,8 +6,8 @@ By default the samples require the following kafka broker configuration:
 - kafka topic "kafkaSampleTopic" exists
 - no authentication
 
-See http://kafka.apache.org for the code and setup information for
-a Kafka broker.
+See README-kafka for information about setting up a kafka server
+and creating the topic.
 
 The source code for the samples is in the <edgent-release>/samples directory.
 

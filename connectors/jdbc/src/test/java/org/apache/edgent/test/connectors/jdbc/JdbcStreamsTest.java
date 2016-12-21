@@ -52,9 +52,15 @@ import org.junit.Test;
  * Manually install Derby for other JDKs if required.
  * Arrange for the classpath to be configured by one of:
  * <ul>
- * <li>set the DERBY_HOME environment variable.  build.xml adds 
- *     $DERBY_HOME/lib/derby.jar to the classpath when running the tests.</li>
  * <li>manually add derby.jar to the classpath</li>
+ * <li>set the DERBY_HOME environment variable.  connectors/jdbc/build.gradle adds 
+ *     $DERBY_HOME/lib/derby.jar to the classpath when running the tests.
+ *     e.g., try
+ *     <ul>
+ *       <li> export DERBY_HOME=$JAVA_HOME/db</li>
+ *       <li> OSX: export DERBY_HOME=`/usr/libexec/java_home`/db
+ *     </ul>
+ *     </li>
  * </ul>
  * The tests are "skipped" if the dbms's jdbc driver can't be found.
  */
