@@ -78,3 +78,5 @@ echo
 echo "The ASF dev and release repositories have been updated:"
 echo "    ${EDGENT_ASF_SVN_DEV_URL}"
 echo "    ${EDGENT_ASF_SVN_RELEASE_URL}"
+echo "    ${EDGENT_ASF_DIST_URL}"
+echo "    ${EDGENT_ASF_DIST_DYN_URL}"
