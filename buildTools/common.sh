@@ -25,6 +25,8 @@ EDGENT_ROOT_DIR=.
 BUNDLE_DIR=${EDGENT_ROOT_DIR}/build/release-edgent
 
 EDGENT_ASF_GIT_URL=https://git-wip-us.apache.org/repos/asf/incubator-edgent.git
+EDGENT_ASF_DIST_URL=https://www.apache.org/dist/incubator/edgent
+EDGENT_ASF_DIST_DYN_URL=https://www.apache.org/dyn/closer.cgi/incubator/edgent
 EDGENT_ASF_SVN_RELEASE_URL=https://dist.apache.org/repos/dist/release/incubator/edgent
 EDGENT_ASF_SVN_RC_URL=https://dist.apache.org/repos/dist/dev/incubator/edgent
 

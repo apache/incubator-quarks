@@ -49,6 +49,8 @@ confirm "Proceed to refresh the local master branch prior to merging?" || exit
 echo
 echo "If you proceed to merge and there are conflicts you will need to"
 echo "fix the conflicts and then commit the merge and push:"
+echo "    git status  # see the conflicts"
+echo "    ... fix the conflicts
 echo "    git commit -m \"merged ${RELEASE_BRANCH}\""
 echo "    git push origin master"
 echo "If you choose not to proceed you may run this script again later."
