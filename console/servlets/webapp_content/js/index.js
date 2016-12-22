@@ -17,6 +17,7 @@ specific language governing permissions and limitations
 under the License.
 */
 var layerVal = "flow";
+var layer = "";
 var refreshInt = 5000;
 var metricChartType = 'barChart';
 
@@ -706,7 +707,11 @@ var makeRows = function() {
 			var sourceLinks = trg.sourceIdx.sourceLinks;
 			for (var i = 0; i < sourceLinks.length; i++) {
 				if (trg.sourceId == sourceLinks[i].sourceId && trg.targetId == sourceLinks[i].targetId) {
-					sourceStreamTupleCountsMap.set(source, parseInt(sourceLinks[i].value));
+					if (layer == "static") {
+						sourceStreamTupleCountsMap.set(source, parseInt(sourceLinks[i].flowValue));
+					} else {
+						sourceStreamTupleCountsMap.set(source, parseInt(sourceLinks[i].value));
+					}
 					if (sourceLinks[i].hasOwnProperty("alias")) {
 						sourceStreamAliasesMap.set(source, sourceLinks[i].alias);
 					} else {
@@ -730,7 +735,11 @@ var makeRows = function() {
 			var targetLinks = src.targetIdx.targetLinks;
 			for (var i = 0; i < targetLinks.length; i++) {
 				if (src.sourceId == targetLinks[i].sourceId && src.targetId == targetLinks[i].targetId) {
-					targetStreamTupleCountsMap.set(target, parseInt(targetLinks[i].value));
+					if (layer == "static") {
+						targetStreamTupleCountsMap.set(target, parseInt(targetLinks[i].flowValue));
+					} else {
+						targetStreamTupleCountsMap.set(target, parseInt(targetLinks[i].value));
+					}
 					if (targetLinks[i].hasOwnProperty("alias")) {
 						targetStreamAliasesMap.set(target, targetLinks[i].alias);
 					} else {
@@ -1026,7 +1035,7 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
 		if (!jsonresp.response || jsonresp.response === "") {
 			return;
 		}
-		var layer = d3.select("#layers")
+		layer = d3.select("#layers")
 					.node().value;
 		var graph = JSON.parse(jsonresp.response);
 		
@@ -1150,7 +1159,7 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
   // this is the hover text for the links between the nodes
   link.append("title")
       .text(function(d) {
-    	  var value = format(d.value);
+    	  var value = (layer == "static") ? format(d.flowValue) : format(d.value);
     	  if (d.derived) {
     		  value = "No value - counter not present";
     	  } else if (d.isZero) {
@@ -1159,11 +1168,8 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
     	  var sKind = parseOpletKind(d.sourceIdx.invocation.kind);
     	  var tKind = parseOpletKind(d.targetIdx.invocation.kind);
     	  var retString = "Oplet name: " + d.sourceIdx.idx + "\nOplet kind: " + sKind + " --> \n"
-    	  + "Oplet name: " + d.targetIdx.idx + "\nOplet kind: " + tKind;
-    	  
-    	  if (layerVal === "flow") {
-    		  retString += "\n" + value; 
-    	  }
+    	  + "Oplet name: " + d.targetIdx.idx + "\nOplet kind: " + tKind + "\n" + value;
+
     	  if (d.alias) {
     		  retString += "\nStream alias: " + d.alias;
     	  }
