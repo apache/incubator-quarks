@@ -508,6 +508,10 @@ subprojects {
     systemProperty 'edgent.test.top.dir.file.path', rootProject.projectDir
     systemProperty 'edgent.test.root.dir', rootProject.projectDir
     systemProperty 'edgent.build.ci', System.properties['edgent.build.ci']
+    
+    // pass along any org.apache.edgent system props
+    systemProperties System.properties.findAll { it.key.startsWith("org.apache.edgent") }
+    
     testLogging {
       exceptionFormat 'full'
       showStandardStreams = System.properties['edgent.test.showOutput'] != null
