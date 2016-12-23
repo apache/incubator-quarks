@@ -9,6 +9,8 @@ This document describes development of Apache Edgent itself, not how to develop 
 
 The Edgent community welcomes contributions, please *Get Involved*!
  * http://edgent.incubator.apache.org/docs/community
+ 
+If you are interested in developing a new connector see [Writing Connectors for Edgent Applications](https://cwiki.apache.org/confluence/display/EDGENT/Writing+Connectors+For+Edgent+Applications) 
 
 ## Switched from Ant to Gradle
 
