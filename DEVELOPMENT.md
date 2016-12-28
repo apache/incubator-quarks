@@ -31,7 +31,7 @@ Users of Edgent will need to update their references to the above.
 It's recommended that developers of Edgent create a new workspace instead of
 reusing their Quarks workspace.
 
-### Setup
+## Setup
 
 Once you have forked the repository and created your local clone you need to download
 these additional development software tools.
@@ -42,7 +42,7 @@ these additional development software tools.
 All Edgent runtime development is done using Java 8.  JARs for Java 7 and Android
 platforms are created as described below.
 
-### Building a Binary Release Bundle
+## Building a Binary Release Bundle
 
 Building from a source release bundle (lacking a `./gradlew`) requires
 performing a one-time bootstrap step using an installed version of gradle:
@@ -61,7 +61,7 @@ be unpacked and used in building applications.
 See [Getting Started](https://edgent.apache.org/docs/edgent-getting-started)
 for information on using the binary release bundle.
 
-### Building for Edgent Runtime Development
+## Building for Edgent Runtime Development
 
 The primary build process is using [Gradle](https://gradle.org/),
 any pull request is expected to maintain the build success of `clean, assemble, test`.
@@ -98,6 +98,7 @@ unique tasks:
   * `reports\tests\overview-summary.html` - JUnit test report
   * `reports\coverage\index.html` - Code coverage report
 * `release` : Build release bundles in `build/release-edgent`, that includes subsets of the Edgent JARs that run on Java 7 (`build/distributions/java7`) and Android (`build/distributions/android`). By default, SNAPSHOT bundles are created.  Specify `-Dedgent.snapshotId=""` to create bundles for a formal release.
+* `rat` : run the Apache Release Analysis Tool (license checking).
 * `signAll` : Sign the release bundles in `build/release-edgent` (first run `release`).  You will be promoted for your PGP code signing key's ID, the location of the keyring file, and the secret key password.  Default response values may be set with environment variables:
   * `GPG_ID` - the code signing key's ID (e.g., D0F56CAD)
   * `GPG_SECRING` - path to the secret key's keyring file
@@ -106,7 +107,7 @@ The build process has been tested on Linux and macOS.
 
 To build on Windows probably needs some changes, please get involved and contribute them!
 
-### Continuous Integration
+## Continuous Integration
 
 When a pull request is opened on the GitHub mirror site, the Travis CI service runs a full build.
 
@@ -133,7 +134,7 @@ following statement:
 
 Closing and reopening a pull request will kick off a new build against the pull request.
 
-### Java 7 and Android
+## Java 7 and Android
 Java 7 and Android target platforms are supported through use of
 retrolambda to convert Edgent Java8 JARs to Java7 JARs.
 
@@ -145,7 +146,7 @@ Building a release (`./gradlew release`) produces three sets of JARs under
 See [JAVA_SUPPORT.md](JAVA_SUPPORT.md) for which Edgent capabilities / JARs are supported
 for each environment.
 
-#### Adding Edgent Runtime JARs to Java 7 & Android
+### Adding Edgent Runtime JARs to Java 7 & Android
 
 The Gradle tooling uses some Ant tooling to create the Java 7 and Android platform JARs.
 
@@ -155,13 +156,13 @@ Java 7 Edgent runtime JARs are created using `platform/java7/build.xml`. Adding 
 
 Any Java 7 JAR is automatically included in Android unless it is explictly excluded in `platform/android/build.xml`.
 
-### Test reports
+## Test reports
 
 Running the `reports` target produces two reports:
 * `builds/distributions/reports/tests/index.html` - JUnit test report
 * `builds/distributions/reports/coverage/index.html` - Code coverage report.
 
-### Testing the Kafka Connector
+## Testing the Kafka Connector
 
 The kafka connector tests aren't run by default as the connector must
 connect to a running Kafka/Zookeeper config.
@@ -184,7 +185,7 @@ cat README
 ./runkafkasample.sh pub
 ```
 
-### Testing the JDBC Connector
+## Testing the JDBC Connector
 
 The JDBC connector tests are written to run against Apache Derby 
 as the backing dbms and the derby jar needs to be on the classpath.
@@ -212,7 +213,7 @@ cat README
 ./runjdbcsample.sh reader
 ```
 
-### Testing Edgent with Java7
+## Testing Edgent with Java7
 
 All of the standard build system _tasks_ above must be run with
 `JAVA_HOME` set to use a Java8 VM.
@@ -238,7 +239,7 @@ $ sh   # muck with EVs for Java7 in a subshell
 $ ./gradlew test7Reports  # generate the JUnit and coverage reports
 ```
 
-### Publish to Maven Repository
+## Publish to Maven Repository
 
 Initial support for publishing to a local Maven repository has been added.
 Use the following to do the publish.
@@ -254,7 +255,7 @@ names of the JARs in the target-dir / release tgz.
 For example: `org.apache.edgent:edgent.api.topology:0.4.0`
 
 
-### Code Layout
+## Code Layout
 
 The code is broken into a number of projects and modules within those projects defined by directories under `edgent`.
 Each top level directory is a project and contains one or more modules:
@@ -283,7 +284,7 @@ such as an MQTT broker, Apache Kafka, a cloud based IoT service, etc.
 * `android` - Code specific to Android.
 * `test` - SVT
 
-### Coding Conventions
+## Coding Conventions
 
 Placeholder: see [EDGENT-23](https://issues.apache.org/jira/browse/EDGENT-23)
 
@@ -291,8 +292,12 @@ A couple of key items in the mean time:
 * Use spaces not hard tabs, indent is 4 spaces
 * Don't use wildcard imports
 * Don't deliver code with warnings (e.g., unused imports)
+* All source files, scripts, etc must have the standard Apache License header
+  * run the `rat` build task to check license headers
+* Per ASF policy, released source bundles must not contain binaries (e.g., .class, .jar)
+* Per ASF policy, release source and binary bundle LICENSE and NOTICE files must be accurate and up to date, and only bundled 3rd party dependencies whose license meets the ASF licensing requirements can be included. 
 
-### Logging
+## Logging
 
 [SLF4J](http://www.slf4j.org) is used for logging and tracing.
 
@@ -318,7 +323,7 @@ In general, most code is expected to work on Android (but might not yet) with th
 * Functionality aimed at the developer environment, such as console and development provider
 * Any JMX related code
 
-### The ASF / GitHub Integration
+## The ASF / GitHub Integration
 
 The Edgent code is in ASF resident git repositories:
 
@@ -359,7 +364,7 @@ Notes with the above PR merge directions:
   * Use an HTTPS URL unless you have a SSH key setup at GitHub:
     - `$ git remote add mirror https://github.com/apache/incubator-edgent.git`
 
-### Using Eclipse
+## Using Eclipse
 
 The Edgent Git repository contains Eclipse project definitions for the
 top-level directories that contain code, such as api, runtime, connectors.
