@@ -20,6 +20,7 @@ package org.apache.edgent.test.connectors.command;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assume.assumeTrue;
 
 import java.io.File;
 import java.lang.ProcessBuilder.Redirect;
@@ -50,6 +51,28 @@ public class CommandStreamsTest extends TopologyAbstractTest implements DirectTe
             "Line 2",
             "Line 3",
     };
+    
+    private boolean isWindows() {
+      return System.getProperty("os.name").contains("Windows");
+    }
+    
+    private String[] mkCatFileCmd(String path) {
+      if (isWindows()) {
+        return new String[] {"cmd", "/c", "type", path};
+      }
+      else {
+        return new String[] {"cat", path};
+      }
+    }
+    
+    private String[] mkCatStdInOutCmd() {
+      if (isWindows()) {
+        return new String[] {"cmd", "/c", "findstr", "^"};
+      }
+      else {
+        return new String[] {"cat"};
+      }
+    }
 
     public String[] getLines() {
         return stdLines;
@@ -77,7 +100,7 @@ public class CommandStreamsTest extends TopologyAbstractTest implements DirectTe
       Path tempFile1 = FileUtil.createTempFile("test1", ".txt", getLines());
       System.out.println("Test: "+t.getName()+" "+tempFile1);
       
-      ProcessBuilder cmd = new ProcessBuilder("cat", tempFile1.toString());
+      ProcessBuilder cmd = new ProcessBuilder(mkCatFileCmd(tempFile1.toString()));
       
       int NUM_POLLS = 3;
       List<String> expLines = new ArrayList<>();
@@ -103,7 +126,7 @@ public class CommandStreamsTest extends TopologyAbstractTest implements DirectTe
       Path tempFile1 = FileUtil.createTempFile("test1", ".txt", getLines());
       System.out.println("Test: "+t.getName()+" "+tempFile1);
       
-      ProcessBuilder cmd = new ProcessBuilder("cat", tempFile1.toString());
+      ProcessBuilder cmd = new ProcessBuilder(mkCatFileCmd(tempFile1.toString()));
       
       // N.B. if looking at trace: EDGENT-224 generate() continues running after job is closed
       TStream<String> s = CommandStreams.generate(t, cmd);
@@ -123,7 +146,7 @@ public class CommandStreamsTest extends TopologyAbstractTest implements DirectTe
       Path tempFile1 = FileUtil.createTempFile("test1", ".txt", getLines());
       System.out.println("Test: "+t.getName()+" "+tempFile1);
       
-      ProcessBuilder cmd = new ProcessBuilder("cat", tempFile1.toString());
+      ProcessBuilder cmd = new ProcessBuilder(mkCatFileCmd(tempFile1.toString()));
 
       int NUM_RUNS = 3;
       List<String> expLines = new ArrayList<>();
@@ -144,7 +167,7 @@ public class CommandStreamsTest extends TopologyAbstractTest implements DirectTe
       Path tempFile1 = FileUtil.createTempFile("test1", ".txt", new String[0]);
       System.out.println("Test: "+t.getName()+" "+tempFile1);
       
-      ProcessBuilder cmd = new ProcessBuilder("cat")
+      ProcessBuilder cmd = new ProcessBuilder(mkCatStdInOutCmd())
           .redirectOutput(Redirect.appendTo(tempFile1.toFile()));
       
       TStream<String> s = t.strings(getLines());
@@ -168,6 +191,11 @@ public class CommandStreamsTest extends TopologyAbstractTest implements DirectTe
     @Test
     public void testSinkRestart() throws Exception {
       Topology t = newTopology("testSinkRestart");
+
+      // until someone cares enough to create Win version of sinkcmd
+      if (isWindows()) {
+        assumeTrue("need sinkcmd for Windows", false);
+      }
 
       Path tempFile1 = FileUtil.createTempFile("test1", ".txt", new String[0]);
       System.out.println("Test: "+t.getName()+" "+tempFile1);
