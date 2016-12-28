@@ -193,9 +193,7 @@ public class CommandStreamsTest extends TopologyAbstractTest implements DirectTe
       Topology t = newTopology("testSinkRestart");
 
       // until someone cares enough to create Win version of sinkcmd
-      if (isWindows()) {
-        assumeTrue("need sinkcmd for Windows", false);
-      }
+      assumeTrue(!isWindows());
 
       Path tempFile1 = FileUtil.createTempFile("test1", ".txt", new String[0]);
       System.out.println("Test: "+t.getName()+" "+tempFile1);
