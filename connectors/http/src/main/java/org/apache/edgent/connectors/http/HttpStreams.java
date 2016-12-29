@@ -19,6 +19,8 @@ under the License.
 
 package org.apache.edgent.connectors.http;
 
+import java.nio.charset.StandardCharsets;
+
 import org.apache.edgent.connectors.http.runtime.HttpRequester;
 import org.apache.edgent.function.BiFunction;
 import org.apache.edgent.function.Function;
@@ -178,7 +180,7 @@ public class HttpStreams {
 
         return HttpStreams.<JsonObject, JsonObject> requestsWithBody(stream,
                 clientCreator, t -> HttpPost.METHOD_NAME, uri, 
-                t -> new ByteArrayEntity(body.apply(t).toString().getBytes()),
+                t -> new ByteArrayEntity(body.apply(t).toString().getBytes(StandardCharsets.UTF_8)),
                 HttpResponders.json());
     }
     
@@ -225,7 +227,7 @@ public class HttpStreams {
             UnaryOperator<JsonObject> body) {
         return HttpStreams.<JsonObject, JsonObject> requestsWithBody(stream,
                 clientCreator, t -> HttpPut.METHOD_NAME, uri, 
-                t -> new ByteArrayEntity(body.apply(t).toString().getBytes()),
+                t -> new ByteArrayEntity(body.apply(t).toString().getBytes(StandardCharsets.UTF_8)),
                 HttpResponders.json());
     }
     
