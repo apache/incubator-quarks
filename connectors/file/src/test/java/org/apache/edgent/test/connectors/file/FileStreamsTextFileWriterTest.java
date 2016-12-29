@@ -35,6 +35,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -407,7 +408,7 @@ public class FileStreamsTextFileWriterTest extends TopologyAbstractTest implemen
         // net one tuple per file
         List<List<String>> expResults = buildExpResults(lines, tuple -> true);
         // agg size only enough for last two lines
-        long aggregateFileSize = 2 * (("1-"+getStr()).getBytes().length + 1/*eol*/);
+        long aggregateFileSize = 2 * (("1-"+getStr()).getBytes(StandardCharsets.UTF_8).length + 1/*eol*/);
         expResults.remove(0);
         expResults.remove(0);
         assertEquals(2, expResults.size());
@@ -929,7 +930,7 @@ public class FileStreamsTextFileWriterTest extends TopologyAbstractTest implemen
           
           assertEquals(entryName, entry.getName());
 
-          BufferedReader br = new BufferedReader(new InputStreamReader(zin));
+          BufferedReader br = new BufferedReader(new InputStreamReader(zin, StandardCharsets.UTF_8));
           for (String line : lines) {
             ++lineCnt;
             String actLine = br.readLine();
