@@ -25,6 +25,7 @@ import static org.junit.Assume.assumeTrue;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -301,12 +302,12 @@ public class WebSocketClientTest extends ConnectorTestBase {
         String[] expected = new String[] { getStr1(), getStr2() };
         
         TStream<byte[]> s = t.strings(expected)
-                                .map(tup -> tup.getBytes());
+                                .map(tup -> tup.getBytes(StandardCharsets.UTF_8));
         s = PlumbingStreams.blockingOneShotDelay(s, 2, TimeUnit.SECONDS);
         wsClient.sendBytes(s);
         
         TStream<String> rcvd = wsClient.receiveBytes()
-                                .map(tup -> new String(tup));
+                                .map(tup -> new String(tup, StandardCharsets.UTF_8));
         
         completeAndValidate("", t, rcvd, SEC_TMO, expected);
     }
@@ -375,7 +376,7 @@ public class WebSocketClientTest extends ConnectorTestBase {
         
         String[] expected = new String[] { getStr1(), getStr2(), getStr3(), getStr4() };
         
-        TStream<byte[]> s = t.strings(expected).map(tup -> tup.getBytes());
+        TStream<byte[]> s = t.strings(expected).map(tup -> tup.getBytes(StandardCharsets.UTF_8));
         s = PlumbingStreams.blockingOneShotDelay(s, 2, TimeUnit.SECONDS);
         
         // send one, two, restart the server to force reconnect, send the next
@@ -396,7 +397,7 @@ public class WebSocketClientTest extends ConnectorTestBase {
         
         TStream<String> rcvd = wsClient.receiveBytes()
                                 .peek(tuple -> latch.countDown())
-                                .map(tup -> new String(tup));
+                                .map(tup -> new String(tup, StandardCharsets.UTF_8));
         
         completeAndValidate("", t, rcvd, SEC_TMO + 10, expected);
     }
