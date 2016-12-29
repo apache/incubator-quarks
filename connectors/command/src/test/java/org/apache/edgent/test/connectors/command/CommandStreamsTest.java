@@ -67,7 +67,7 @@ public class CommandStreamsTest extends TopologyAbstractTest implements DirectTe
     
     private String[] mkCatStdInOutCmd() {
       if (isWindows()) {
-        return new String[] {"cmd", "/c", "findstr", "^"};
+        return new String[] {"cmd", "/c", "findstr", ".*"};
       }
       else {
         return new String[] {"cat"};

@@ -86,6 +86,14 @@ abstract class CommandConnector implements AutoCloseable {
   
   protected void closeProcess() {
     if (currentProcess != null) {
+      if (currentProcess.getOutputStream() != null) {
+        try {
+          currentProcess.getOutputStream().close();
+        }
+        catch (IOException e) {
+          logger.error("Unable to close OutputStream to cmd {}", toCmdForMsg(), e);
+        }
+      }
       currentProcess.destroy();
       currentProcess = null;
     }
