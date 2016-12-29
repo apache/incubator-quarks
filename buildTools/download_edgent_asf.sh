@@ -77,39 +77,49 @@ if [ ${IS_RC} ]; then
 fi
 
 DST_BASE_DIR=downloaded-edgent-${VER}${RC_SFX}
-DST_VER_DIR=${DST_BASE_DIR}/${VER}-incubating
-if [ ${IS_RC} ]; then
-  DST_VER_DIR=${DST_VER_DIR}/${RC_SFX}
-fi
 [ -d ${DST_BASE_DIR} ] && die "${DST_BASE_DIR} already exists"
 
 [ ${NQUERY} ] || confirm "Proceed to download to ${DST_BASE_DIR} from ${BASE_URL}?" || exit
 
 echo Downloading to ${DST_BASE_DIR} ...
 
-# make a template structure of everything we're going to retrieve
+function mywget() {
+  # OSX lacks wget by default
+  (set -x; curl -f -O $1)
+}
+
+function getSignedBundle() {
+  mywget ${1}
+  mywget ${1}.asc
+  mywget ${1}.md5
+  mywget ${1}.sha
+}
+
 mkdir -p ${DST_BASE_DIR}
-(cd ${DST_BASE_DIR}; touch KEYS)
+cd ${DST_BASE_DIR}
+ABS_BASE_DIR=`pwd`
+URL=${BASE_URL}
+mywget ${URL}/KEYS
+
+DST_VER_DIR=${VER}-incubating
+URL=${BASE_URL}/${VER}-incubating
+if [ ${IS_RC} ]; then
+  DST_VER_DIR=${DST_VER_DIR}/${RC_SFX}
+  URL=${URL}/${RC_SFX}
+fi
 
 mkdir -p ${DST_VER_DIR}
-(cd ${DST_VER_DIR}; touch LICENSE README RELEASE_NOTES apache-edgent-${VER}-incubating-src.tgz{,.asc,.md5,.sha} )
+cd ${DST_VER_DIR}
+mywget ${URL}/LICENSE
+mywget ${URL}/README
+mywget ${URL}/RELEASE_NOTES
+getSignedBundle ${URL}/apache-edgent-${VER}-incubating-src.tgz
 
-mkdir -p ${DST_VER_DIR}/binaries
-(cd ${DST_VER_DIR}/binaries; touch LICENSE apache-edgent-${VER}-incubating-bin.tgz{,.asc,.md5,.sha} )
-
-# download everything identified in the template tree
-ORIG_DIR=`pwd`
-cd `pwd`/${DST_BASE_DIR}
-for i in `find . -type f`; do
-  echo ======= $i
-  uri=`echo $i | sed -e s?^./??`  # strip leading "./"
-  url=${BASE_URL}/$uri
-  d=`dirname $i`
-  # OSX lacks wget by default
-  echo "(cd $d; curl -f -O $url)"
-  (cd $d; curl -f -O $url)
-done
-cd ${ORIG_DIR}
+mkdir binaries
+cd binaries
+URL=${URL}/binaries
+mywget ${URL}/LICENSE
+getSignedBundle ${URL}/apache-edgent-${VER}-incubating-bin.tgz
 
 echo
 echo Done Downloading to ${DST_BASE_DIR}
@@ -122,6 +132,8 @@ echo "If the following bundle gpg signature checks fail, you may need to"
 echo "import the project's list of signing keys to your keyring"
 echo "    $ gpg ${DST_BASE_DIR}/KEYS            # show the included keys"
 echo "    $ gpg --import ${DST_BASE_DIR}/KEYS"
+
+cd ${ABS_BASE_DIR}
 
 echo
 echo "Verifying the source bundle signatures..."
