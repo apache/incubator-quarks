@@ -25,6 +25,7 @@ import static org.apache.edgent.analytics.math3.stat.Statistic.MIN;
 import static org.apache.edgent.analytics.math3.stat.Statistic.STDDEV;
 
 import org.apache.edgent.analytics.math3.json.JsonAnalytics;
+import org.apache.edgent.console.server.HttpServer;
 import org.apache.edgent.providers.development.DevelopmentProvider;
 import org.apache.edgent.providers.direct.DirectProvider;
 import org.apache.edgent.samples.utils.sensor.SimulatedSensors;
@@ -76,6 +77,9 @@ public class SensorsAggregates {
         TStream<JsonObject> sensors = sensorsAB(topology);
         
         sensors.print();
+
+        System.out.println("#### Console URL for the job: "
+            + tp.getServices().getService(HttpServer.class).getConsoleUrl());
 
         tp.submit(topology);
     }

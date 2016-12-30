@@ -137,8 +137,8 @@ cd ${ABS_BASE_DIR}
 
 echo
 echo "Verifying the source bundle signatures..."
-$BUILDTOOLS_DIR/check_sigs.sh ${DST_VER_DIR}
+(set -x; $BUILDTOOLS_DIR/check_sigs.sh ${DST_VER_DIR})
 
 echo
 echo "Verifying the binary bundle signatures..."
-$BUILDTOOLS_DIR/check_sigs.sh ${DST_VER_DIR}/binaries
+(set -x; $BUILDTOOLS_DIR/check_sigs.sh ${DST_VER_DIR}/binaries)
