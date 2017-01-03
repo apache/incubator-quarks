@@ -627,10 +627,9 @@ public class PlumbingStreams {
     /**
      * Control the flow of tuples to an output stream.
      * <P>
-     * A {@link Semaphore}
-     * is used to control the flow of tuples
-     * through the {@code gate}
-     * . The gate acquires a permit from the
+     * A {@link Semaphore} is used to control the flow of tuples
+     * through the {@code gate}.
+     * The gate acquires a permit from the
      * semaphore to pass the tuple through, blocking until a permit is
      * acquired (and applying backpressure upstream while blocked).
      * Elsewhere, some code calls {@link Semaphore#release(int)}
@@ -651,7 +650,7 @@ public class PlumbingStreams {
      * <pre>{@code
      * TStream<Integer> readings = ...;
      * Semaphore gateControl = new Semaphore(1); // allow the first to pass through
-     * TStream<Integer> gated = gate(readings, gateControl);
+     * TStream<Integer> gated = PlumbingStreams.gate(readings, gateControl);
      * 
      * // Create the concurrent pipeline combiner and have it
      * // signal that concurrent processing of the tuple has completed.
@@ -659,7 +658,10 @@ public class PlumbingStreams {
      * // each pipeline result.
      * 
      * Function<TStream<List<Integer>>,TStream<List<Integer>>> combiner =
-     *   stream -> stream.map(list -> { * gateControl.release(); * return list; * });
+     *   stream -> stream.map(list -> {
+     *       gateControl.release();
+     *       return list;
+     *     });
      *   
      * TStream<List<Integer>> results = PlumbingStreams.concurrent(gated, pipelines, combiner);
      * }</pre>
