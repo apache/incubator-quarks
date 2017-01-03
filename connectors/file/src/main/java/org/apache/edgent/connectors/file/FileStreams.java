@@ -117,11 +117,31 @@ public class FileStreams {
      * <p>
      * This is the same as {@code textFileReader(pathnames, null, null)}
      * <p>
-     * Sample use:
+     * Sample uses:
+     * 
      * <pre>{@code
+     * // continuously watch a directory for new files and process each one once
      * String dir = "/some/directory/path";
      * Topology t = ...
      * TStream<String> pathnames = FileStreams.directoryWatcher(t, () -> dir);
+     * TStream<String> contents = FileStreams.textFileReader(pathnames);
+     * contents.print();
+     * }</pre>
+     * 
+     * <pre>{@code
+     * // periodically process one or more files
+     * Supplier<List<String>> myPathnamesSupplier = () -> } {
+     * {@code
+     *    // implementation of List<String> get() - return a list of pathnames
+     *      //  return Arrays.asList("/some/pathname"); // a fixed list
+     *      //  return Arrays.asList(new File("/some/dir").list()); // query a directory
+     *      //  or query some other object(s) for a list ...
+     * }
+     *    };
+     * {@code
+     * Topology t = ...
+     * TStream<String> pathnames = t.poll(myPathnamesSupplier, 30, TimeUnit.SECONDS)
+     *                              .flatMap(tuple -> tuple);
      * TStream<String> contents = FileStreams.textFileReader(pathnames);
      * contents.print();
      * }</pre>
