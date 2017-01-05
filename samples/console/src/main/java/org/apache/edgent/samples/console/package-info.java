@@ -18,9 +18,7 @@ under the License.
 */
 
 /**
- * Samples showing use of the
- * <a href="{@docRoot}/org/apache/edgent/console/package-summary.html">
- *     Console web application</a>.
+ * Samples showing use of the Console web application.
  * The following simple samples are provided:
  * <ul>
  * <li>ConsoleWaterDetector.java - a simple application topology demonstrating features of the console like viewing the topology by
