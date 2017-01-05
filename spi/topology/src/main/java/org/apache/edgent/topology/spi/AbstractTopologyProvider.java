@@ -24,6 +24,11 @@ import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.TopologyProvider;
 
 public abstract class AbstractTopologyProvider<T extends Topology> implements TopologyProvider {
+  
+    protected void checkName(String name) {
+      if (name == null || name.isEmpty())
+        throw new IllegalArgumentException();
+    }
 
     @Override
     public abstract T newTopology(String name);

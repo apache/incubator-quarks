@@ -74,6 +74,7 @@ public class DirectProvider extends AbstractTopologyProvider<DirectTopology>
 
     @Override
     public DirectTopology newTopology(String name) {
+        checkName(name);
         return new DirectTopology(name, services);
     }
 

@@ -86,7 +86,7 @@ public interface ApplicationService {
      * be the classpath of this service.
      * 
      * @param jarURL URL of Jar containing new applications.
-     * @param jsonConfig Configuration information, currently unused.
+     * @param jsonConfig JSON configuration serialized as a String (currently unused).
      * @throws Exception if failure
      */
     void registerJar(String jarURL, String jsonConfig) throws Exception;

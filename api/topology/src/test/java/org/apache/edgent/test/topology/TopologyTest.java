@@ -51,6 +51,16 @@ public abstract class TopologyTest extends TopologyAbstractTest {
         assertEquals("T123", t.getName());
         assertSame(t, t.topology());
     }
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void testNullName() {
+      newTopology(null);
+    }
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void testEmptyName() {
+      newTopology("");
+    }
 
     @Test
     public void testDefaultName() {

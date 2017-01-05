@@ -50,6 +50,22 @@ public class AppServiceTest {
         assertTrue(appService.getApplicationNames().contains("SecondApp"));
     }
     
+    @Test(expected=IllegalArgumentException.class)
+    public void testRegisterNullTopologyName() {
+        DirectProvider direct = new DirectProvider();
+        ApplicationService appService = AppService.createAndRegister(direct, direct);
+        
+        appService.registerTopology(null, (t,c) -> t.strings("a"));      
+    }
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void testRegisterEmptyTopologyName() {
+        DirectProvider direct = new DirectProvider();
+        ApplicationService appService = AppService.createAndRegister(direct, direct);
+        
+        appService.registerTopology("", (t,c) -> t.strings("a"));      
+    }
+    
     @Test
     public void testRegisterJar() throws Exception {
         DirectProvider direct = new DirectProvider();
