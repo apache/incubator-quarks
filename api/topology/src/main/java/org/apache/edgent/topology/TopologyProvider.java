@@ -29,6 +29,7 @@ public interface TopologyProvider {
      *
      * @param name name for topology
      * @return A new topology.
+     * @throws IllegalArgumentException for null or empty name
      */
     Topology newTopology(String name);
 

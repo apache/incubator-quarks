@@ -107,6 +107,9 @@ public class AppService implements ApplicationService {
 
     @Override
     public void registerTopology(String applicationName, BiConsumer<Topology, JsonObject> builder) {
+        if (applicationName == null || applicationName.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
         logger.trace("Register application name: {}", applicationName);
         applications.put(applicationName, builder);
     }
