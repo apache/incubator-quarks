@@ -371,7 +371,7 @@ public class WindowTest {
         
         window.registerScheduledExecutorService(new ScheduledThreadPoolExecutor(5));
 
-        ScheduledFuture sf = ses.scheduleAtFixedRate(() -> {
+        ScheduledFuture<?> sf = ses.scheduleAtFixedRate(() -> {
             window.insert(1);
         }, 0, 10, TimeUnit.MILLISECONDS);
 
@@ -410,7 +410,7 @@ public class WindowTest {
         
         window.registerScheduledExecutorService(new ScheduledThreadPoolExecutor(5));
 
-        ScheduledFuture sf = ses.scheduleAtFixedRate(() -> {
+        ScheduledFuture<?> sf = ses.scheduleAtFixedRate(() -> {
         	for(int i = 0; i < 5; i++)
         		window.insert(i);
         }, 0, 1, TimeUnit.MILLISECONDS);
@@ -452,7 +452,7 @@ public class WindowTest {
         
         window.registerScheduledExecutorService(new ScheduledThreadPoolExecutor(5));
 
-        ScheduledFuture sf = ses.scheduleAtFixedRate(new Runnable(){
+        ScheduledFuture<?> sf = ses.scheduleAtFixedRate(new Runnable(){
             private int count = 0;
             @Override
             public void run() {
