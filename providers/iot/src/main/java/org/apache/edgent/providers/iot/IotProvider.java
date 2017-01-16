@@ -21,7 +21,10 @@ package org.apache.edgent.providers.iot;
 import static org.apache.edgent.topology.services.ApplicationService.SYSTEM_APP_PREFIX;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.Future;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
@@ -104,6 +107,8 @@ public class IotProvider implements TopologyProvider,
      * System applications by name.
      */
     private final List<String> systemApps = new ArrayList<>();
+
+    private final Map<String,JsonObject> autoSubmitApps = new HashMap<>();  // <appName,config>
 
     private JsonControlService controlService = new JsonControlService();
     
@@ -313,7 +318,8 @@ public class IotProvider implements TopologyProvider,
     }
     
     /**
-     * Start this provider by starting its system applications.
+     * Start this provider by starting its system applications 
+     * and any autoSubmit-enabled registered applications.
      * 
      * @throws Exception on failure starting applications.
      */
@@ -323,6 +329,10 @@ public class IotProvider implements TopologyProvider,
         
         for (String systemAppName : systemApps) {
             bean.submit(systemAppName, null /* no config */);
+        }
+        
+        for (Entry<String,JsonObject> e : autoSubmitApps.entrySet()) {
+          submitApplication(e.getKey(), e.getValue());
         }
     }
 
@@ -354,6 +364,18 @@ public class IotProvider implements TopologyProvider,
     /**
      * Register an application that uses an {@code IotDevice}.
      * <BR>
+     * Same as {@link #registerTopology(String, BiConsumer, boolean, JsonObject) registerTopology(appName, builder, false, null)}.
+     * 
+     * @param applicationName Application name
+     * @param builder Function that builds the topology.
+     */
+    public void registerTopology(String applicationName, BiConsumer<IotDevice, JsonObject> builder) {
+      registerTopology(applicationName, builder, false, null);
+    }
+    
+    /**
+     * Register an application that uses an {@code IotDevice}.
+     * <BR>
      * Wrapper around {@link ApplicationService#registerTopology(String, BiConsumer)}
      * that passes in an {@link IotDevice} and configuration to the supplied
      * function {@code builder} that builds the application. The passed
@@ -366,12 +388,39 @@ public class IotProvider implements TopologyProvider,
      * {@link org.apache.edgent.topology.mbeans.ApplicationServiceMXBean#submit(String, String) submitted} {@code builder.accept(iotDevice, config)}
      * is called to build the application's graph.
      * </P>
+     * <P>
+     * Specify {@code autoSubmit==true}, to have the provider submit the application
+     * when {@link #start} is called.
+     * </P>
      * 
      * @param applicationName Application name
      * @param builder Function that builds the topology.
+     * @param autoSubmit auto submit the application when {@link #start()} is called.
+     * @param config config for auto-submitted application.
+     *        See {@link #submit(Topology, JsonObject) submit}. May be null.
      */
-    public void registerTopology(String applicationName, BiConsumer<IotDevice, JsonObject> builder) {
+    public void registerTopology(String applicationName, BiConsumer<IotDevice, JsonObject> builder, boolean autoSubmit, JsonObject config) {
         getApplicationService().registerTopology(applicationName,
-                (topology,config) -> builder.accept(IotDevicePubSub.addIotDevice(topology), config));
+                (topology,cfg) -> builder.accept(IotDevicePubSub.addIotDevice(topology), cfg));
+        if (autoSubmit) {
+          autoSubmitApps.put(applicationName, config);
+        }
+    }
+
+    /**
+     * Submit the specified application previously registered
+     * via {@link #registerTopology(String, BiConsumer) registerTopology}.
+     * @param appName name of registered application
+     * @param config See {@link #submit(Topology, JsonObject) submit}. May be null.
+     * 
+     * @throws Exception on failure starting applications.
+     */
+    public void submitApplication(String appName, JsonObject config) throws Exception {
+      if (systemApps.contains(appName)) {
+        throw new IllegalArgumentException("appName");
+      }
+      ApplicationServiceMXBean bean = getControlService().getControl(ApplicationServiceMXBean.TYPE,
+          ApplicationService.ALIAS, ApplicationServiceMXBean.class);
+      bean.submit(appName, config==null ? null : config.toString());
     }
 }
