@@ -124,7 +124,7 @@ public class MqttConfig {
         setConfig(p, "mqtt.persistence", 
                 val -> config.setPersistence(newPersistenceProvider(val)));
         setConfig(p, "mqtt.serverURLs", 
-                val -> config.setServerURLs(val.split(",")));
+                val -> config.setServerURLs(val.trim().split(",")));
         setConfig(p, "mqtt.subscriberIdleReconnectIntervalSec", 
                 val -> config.setSubscriberIdleReconnectInterval(Integer.valueOf(val)));
         setConfig(p, "mqtt.trustStore", 
