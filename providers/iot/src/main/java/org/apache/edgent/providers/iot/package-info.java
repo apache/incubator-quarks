@@ -39,7 +39,7 @@ under the License.
  * <BR>
  * The command's data (JSON) uniquely identifies a control MBean through its type and
  * alias, and indicates the operation to call on the MBean and the arguments to
- * pass the control MBean.
+ * pass to the operation.
  * <BR>
  * Thus any control operation can be remotely invoked through a {@code edgentControl} device command,
  * including arbitrary control mbeans registered by applications.
@@ -48,32 +48,36 @@ under the License.
  * <table border="1" summary="Provider operations">
  * <tr>
  *     <th id="operation">Operation</th><th id="cmdIdentifier">Command identifier</th>
- *     <th id="type">Type</th><th id="alias">Alias</th><th id="method">Method</th><th id="args">Arguments</th>
+ *     <th id="type">type</th><th id="alias">alias</th><th id="op">op</th><th id="args">args</th>
  *     <th id="controlMbean">Control MBean</th>
  * </tr>
  * <tr>
  *    <td rowspan="2" headers="operation"><strong>Submit (start) a registered application</strong></td>
- *    <td headers="cmdIdentifier">{@code edgentControl}</td><td headers="type">{@code appService}</td>
- *    <td headers="alias">{@code edgent}</td><td headers="methorg.apache.edgent.topologyapache.edgent.topology.mbeans.ApplicationServiceMXBean#submit(String, String) submit}</td>
- *    <td headers="args"><em>{@code [applicationName, config]}</em></td>
- *    <td headers=org.apache.edgent.topology{@link org.apache.edgent.topology.mbeans.ApplicationServiceMXBean ApplicationServiceMXBean}</td>
+ *    <td headers="cmdIdentifier">{@code edgentControl}</td>
+ *    <td headers="type">{@code appService}</td>
+ *    <td headers="alias">{@code edgent}</td>
+ *    <td headers="op">{@link org.apache.edgent.topology.mbeans.ApplicationServiceMXBean#submit(String, String) submit}</td>
+ *    <td headers="args"><em>{@code [applicationName, configJSONObject]}</em></td>
+ *    <td headers="controlMbean">{@link org.apache.edgent.topology.mbeans.ApplicationServiceMXBean ApplicationServiceMXBean}</td>
  * </tr>
  * <tr>
  *    <td headers="cmdIdentifier"><strong>Sample command data</strong></td>
- *    <td colspan=5 headers="type alias method args controlMbean">{@code {"type":"appService","alias":"edgent","op":"submit","args":["Heartbeat",{}]}}</td>
+ *    <td colspan=5 headers="type alias op args controlMbean">{@code {"type":"appService","alias":"edgent","op":"submit","args":["Heartbeat",{}]}</td>
  * </tr>
  * <tr></tr>
  * 
  * <tr>
  *    <td rowspan="2" headers="operation"><strong>Close (stop) a running registered application</strong></td>
- *    <td headers="cmdIdentifier">{@code edgentControl}</td><td headers="type">{@link org.apache.edgent.execution.mbeans.JobMXBean#TYPE job}</td>
- *    <td headers="type"><em>{@code applicationName}</em></td><td headers="methorg.apache.edgent.execution.mbeans.org.apache.edgent.executionhange(org.apache.edgent.execution.Job.Action) stateChange}</td>
+ *    <td headers="cmdIdentifier">{@code edgentControl}</td>
+ *    <td headers="type">{@code job}</td>
+ *    <td headers="alias"><em>{@code applicationName}</em></td>
+ *    <td headers="op">{@link org.apache.edgent.execution.mbeans.JobMXBean#stateChange(org.apache.edgent.execution.Job.Action) stateChange}</td>
  *    <td headers="args">{@code ["CLOSE"]}</td>
- *    <org.apache.edgent.executionrolMbean">{@link org.apache.edgent.execution.mbeans.JobMXBean JobMXBean}</td>
+ *    <td headers="controlMbean">{@link org.apache.edgent.execution.mbeans.JobMXBean JobMXBean}</td>
  * </tr>
  * <tr>
  *    <td headers="cmdIdentifier"><strong>Sample command data</strong></td>
- *    <td colspan=5 headers="type alias method args controlMbean">{@code {"type":"job","alias":"Heartbeat","op":"stateChange","args":["CLOSE"]}}</td>
+ *    <td colspan=5 headers="type alias op args controlMbean">{@code {"type":"job","alias":"Heartbeat","op":"stateChange","args":["CLOSE"]}</td>
  * </tr>
  * <tr></tr>
  * </table>
