@@ -188,15 +188,23 @@ public class IotProviderTest {
     
     @Test
     public void testPreferences() throws BackingStoreException {
+      
+        String PP1 = this.getClass().getName() + "-PP1";
+        String PP2 = this.getClass().getName() + "-PP2";
         
-        Preferences.userNodeForPackage(IotProvider.class).removeNode();     
+        Preferences.userNodeForPackage(IotProvider.class).node(PP1).removeNode();     
+        Preferences.userNodeForPackage(IotProvider.class).node(PP2).removeNode();     
         
         {
-            IotProvider provider1 = new IotProvider("PP1", EchoIotDevice::new);
-            IotProvider provider2 = new IotProvider("PP2", EchoIotDevice::new);
+            Preferences pp1S = IotProvider.getPreferences(PP1);
+            assertNotNull(pp1S);
+            
+            IotProvider provider1 = new IotProvider(PP1, EchoIotDevice::new);
+            IotProvider provider2 = new IotProvider(PP2, EchoIotDevice::new);
 
             Preferences pp1 = provider1.getServices().getService(Preferences.class);
             assertNotNull(pp1);
+            assertSame(pp1, pp1S);
 
             Preferences pp2 = provider2.getServices().getService(Preferences.class);
             assertNotNull(pp2);
@@ -217,22 +225,23 @@ public class IotProviderTest {
             pp2.flush();
         }
         
-        // Create a new proivder with the same name
+        // Create a new provider with the same name
         // it should pick up the previously values.
         {
-            IotProvider provider1N = new IotProvider("PP1", EchoIotDevice::new);
+            IotProvider provider1N = new IotProvider(PP1, EchoIotDevice::new);
             Preferences pp1N = provider1N.getServices().getService(Preferences.class);
             assertNotNull(pp1N);
             assertEquals("one", pp1N.get("a", "unset"));
         }
         {
-            IotProvider provider2N = new IotProvider("PP2", EchoIotDevice::new);
+            IotProvider provider2N = new IotProvider(PP2, EchoIotDevice::new);
             Preferences pp2N = provider2N.getServices().getService(Preferences.class);
             assertNotNull(pp2N);
             assertEquals("two", pp2N.get("a", "unset"));
         }
         
         // Remove the nodes
-        Preferences.userNodeForPackage(IotProvider.class).removeNode();
+        Preferences.userNodeForPackage(IotProvider.class).node(PP1).removeNode();     
+        Preferences.userNodeForPackage(IotProvider.class).node(PP2).removeNode();     
     }
 }
