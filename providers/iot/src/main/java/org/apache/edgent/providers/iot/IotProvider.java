@@ -68,7 +68,7 @@ import com.google.gson.JsonObject;
  * <LI>{@link PublishSubscribeService publish-subscribe} - An instance of {@link ProviderPubSub}</LI>
  * <LI>preferences (optional) - An instance of {@code java.util.pref.Preferences} to store application
  * and service preferences. A {@code Preferences} node is created if the provider is created with
- * a name that is not {@code null}. if the preferences implementation supports persistence
+ * a name that is not {@code null}. If the preferences implementation supports persistence
  * then any preferences will be maintained across provider and JVM restarts when creating a
  * provider with the same name. The {@code Preferences} node is a user node.
  * </UL>
@@ -240,23 +240,29 @@ public class IotProvider implements TopologyProvider,
                 new ProviderPubSub());
     }
     
-    /**
-     * @throws BackingStoreException 
-     * 
-     */
     protected void registerPreferencesService() {
         if (getName() == null)
             return;
-        Preferences classNode = Preferences.userNodeForPackage(IotProvider.class);
-        Preferences providerNode = classNode.node(getName());
+        Preferences providerNode = getPreferences(getName());
+        getServices().addService(Preferences.class, providerNode);
         
         try {
             providerNode.flush();
-            getServices().addService(Preferences.class, providerNode);
         } catch (BackingStoreException e) {
-            // No preferences available
+            // TODO log that preference changes may not be persisted
             ;
         }
+    }
+    
+    /**
+     * Get the Preferences node that will be used for the IotProvider with the specified name.
+     * @param providerName The value that will be passed into {@link IotProvider#IotProvider(String, TopologyProvider, DirectSubmitter, Function) IotProvider()}
+     * @return
+     */
+    public static Preferences getPreferences(String providerName) {
+      Preferences classNode = Preferences.userNodeForPackage(IotProvider.class);
+      Preferences providerNode = classNode.node(providerName);
+      return providerNode;
     }
 
     protected JsonControlService getControlService() {
