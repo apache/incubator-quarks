@@ -415,7 +415,7 @@ public class IotProvider implements TopologyProvider,
      * 
      * @throws Exception on failure starting applications.
      */
-    public void submitApplication(String appName, JsonObject config) throws Exception {
+    private void submitApplication(String appName, JsonObject config) throws Exception {
       if (systemApps.contains(appName)) {
         throw new IllegalArgumentException("appName");
       }
