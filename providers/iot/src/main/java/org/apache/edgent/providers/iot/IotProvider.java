@@ -309,7 +309,7 @@ public class IotProvider implements TopologyProvider,
                 } catch (Exception re) {
                     // If the command fails then don't stop this application,
                     // just process the next command.
-                    LoggerFactory.getLogger(ControlService.class).error("Control request failed: {}", cmd);
+                    LoggerFactory.getLogger(ControlService.class).error("Control request failed: {}", cmd, re);
                 }
             });
         });
