@@ -29,6 +29,22 @@ import com.google.gson.JsonObject;
 
 /**
  * Generic Internet of Things device connector.
+ * <p>
+ * IotDevice characteristics:
+ * <ul>
+ * <li>{@code IotDevice.getDeviceTypeId()} returns an opaque value whose form
+ *      is the domain of an IoT connector implementation.</li>
+ * <li>{@code IotDevice.getDeviceId()} returns an opaque value whose form
+ *      is the domain of an IoT connector implementation.
+ *      The value is unique for a particular a logical device.
+ * <li>{@code IotDevice.equals()} returns true if two IotDevice instances are
+ *     for the same logical device, false otherwise.</li>
+ * <li>{@code IotDevice.hashCode()} returns the same value for all IotDevice instances
+ *     for the same logical device.</li>
+ * <li>{@code IotDevice} may be used as a {@link org.apache.edgent.topology.TWindow TWindow} partition key.</li> 
+ * </ul>
+ * 
+ * @see IotGateway
  */
 public interface IotDevice extends TopologyElement {
     
@@ -36,6 +52,20 @@ public interface IotDevice extends TopologyElement {
      * Device event and command identifiers starting with {@value} are reserved for use by Edgent.
      */
     String RESERVED_ID_PREFIX = "edgent";
+    
+    /**
+     * Get the device's opaque device type identifier.
+     * TODO remove the "default" - avoids compilation errors while discussing this.
+     * @return
+     */
+    public default String getDeviceType() { return "a-device-type-id"; }
+    
+    /**
+     * Get the device's unique opaque device identifier.
+     * TODO remove the "default" - avoids compilation errors while discussing this.
+     * @return
+     */
+    public default String getDeviceId() { return "a-device-id"; }
 
     /**
      * Publish a stream's tuples as device events.
@@ -106,12 +136,21 @@ public interface IotDevice extends TopologyElement {
      * @see #commands(String...)
      */
     String CMD_PAYLOAD = "payload";
+    /**
+     * Device identifier key.
+     * Key is {@value}.
+     * The value is the result of {@link #getDeviceId()}.
+     * 
+     * @see #commands(String...)
+     */
+    String CMD_DEVICE = "device";
 
     /**
      * Create a stream of device commands as JSON objects.
      * Each command sent to the device matching {@code commands} will result in a tuple
      * on the stream. The JSON object has these keys:
      * <UL>
+     * <LI>{@link #CMD_DEVICE device} - Command's opaque target device's id String.
      * <LI>{@link #CMD_ID command} - Command identifier as a String</LI>
      * <LI>{@link #CMD_TS tsms} - Timestamp of the command in milliseconds since the 1970/1/1 epoch.</LI>
      * <LI>{@link #CMD_FORMAT format} - Format of the command as a String</LI>
@@ -125,7 +164,7 @@ public interface IotDevice extends TopologyElement {
      * 
      * 
      * @param commands Command identifiers to include. If no command identifiers are provided then the
-     * stream will contain all device commands.
+     * stream will contain all of this IotDevice's device commands.
      * @return Stream containing device commands.
      */
     TStream<JsonObject> commands(String... commands);
