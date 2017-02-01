@@ -156,8 +156,10 @@ public class JsonControlService implements ControlService {
             mbean = mbeans.get(controlId);
         }
 
-        if (mbean == null)
+        if (mbean == null) {
+            logger.warn("Unable to find mbean for control id: {}", controlId);
             return new JsonPrimitive(Boolean.FALSE);
+        }
 
         String methodName = request.get(OP_KEY).getAsString();
         
@@ -173,8 +175,10 @@ public class JsonControlService implements ControlService {
 
         Method method = findMethod(mbean.getControlInterface(), methodName, argumentCount);
 
-        if (method == null)
+        if (method == null) {
+            logger.warn("Unable to find method \"{}\" with {} args in {}", methodName, argumentCount, mbean.getControlInterface().getName());
             return new JsonPrimitive(Boolean.FALSE);
+        }
 
         logger.trace("Execute operation - control id: {} method: {}", controlId, methodName);
         
