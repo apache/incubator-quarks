@@ -257,7 +257,7 @@ public class IotProvider implements TopologyProvider,
     /**
      * Get the Preferences node that will be used for the IotProvider with the specified name.
      * @param providerName The value that will be passed into {@link IotProvider#IotProvider(String, TopologyProvider, DirectSubmitter, Function) IotProvider()}
-     * @return
+     * @return Preferences
      */
     public static Preferences getPreferences(String providerName) {
       Preferences classNode = Preferences.userNodeForPackage(IotProvider.class);

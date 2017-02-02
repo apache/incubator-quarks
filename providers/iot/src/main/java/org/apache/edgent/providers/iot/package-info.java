@@ -62,7 +62,7 @@ under the License.
  * </tr>
  * <tr>
  *    <td headers="cmdIdentifier"><strong>Sample command data</strong></td>
- *    <td colspan=5 headers="type alias op args controlMbean">{@code {"type":"appService","alias":"edgent","op":"submit","args":["Heartbeat",{}]}</td>
+ *    <td colspan=5 headers="type alias op args controlMbean">{@code {"type":"appService","alias":"edgent","op":"submit","args":["Heartbeat",{}]}}</td>
  * </tr>
  * <tr></tr>
  * 
@@ -77,7 +77,7 @@ under the License.
  * </tr>
  * <tr>
  *    <td headers="cmdIdentifier"><strong>Sample command data</strong></td>
- *    <td colspan=5 headers="type alias op args controlMbean">{@code {"type":"job","alias":"Heartbeat","op":"stateChange","args":["CLOSE"]}</td>
+ *    <td colspan=5 headers="type alias op args controlMbean">{@code {"type":"job","alias":"Heartbeat","op":"stateChange","args":["CLOSE"]}}</td>
  * </tr>
  * <tr></tr>
  * </table>
