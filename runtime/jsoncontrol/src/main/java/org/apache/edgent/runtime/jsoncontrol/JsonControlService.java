@@ -43,7 +43,7 @@ import com.google.gson.JsonPrimitive;
  * to {@link #controlRequest(JsonObject)} to invoke a control
  * operation (method) on a registered MBean.
  * 
- *  @see org.apache.edgent.runtime.jsoncontrol Format of control request operation
+ * @see <a href="{@docRoot}/org/apache/edgent/runtime/jsoncontrol/package-summary.html">Control Request JSON</a>
  */
 public class JsonControlService implements ControlService {
     

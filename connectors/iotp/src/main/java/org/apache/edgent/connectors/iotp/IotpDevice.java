@@ -53,7 +53,7 @@ import com.ibm.iotf.client.device.Command;
  * <em>Note IBM Watson IoT Platform was previously known as
  * IBM Internet of Things Foundation.</em>
  * 
- * @see org.apache.edgent.connectors.iot Edgent generic device model
+ * @see <a href="{@docRoot}/org/apache/edgent/connectors/iot/package-summary.html">Edgent generic device model</a>
  * @see <a href="http://www.ibm.com/internet-of-things/iot-platform.html">IBM Watson IoT Platform</a>
  * @see org.apache.edgent.samples.connectors.iotp.IotpSensors Sample application
  */

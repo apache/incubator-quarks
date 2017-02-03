@@ -19,7 +19,7 @@ under the License.
 package org.apache.edgent.connectors.iot;
 
 /**
- * Devic command identifiers used by Edgent.
+ * Device command identifiers used by Edgent.
  * 
  * @see IotDevice#RESERVED_ID_PREFIX
  */

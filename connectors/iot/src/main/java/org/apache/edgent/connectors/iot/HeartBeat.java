@@ -30,6 +30,9 @@ import org.apache.edgent.topology.plumbing.PlumbingStreams;
 
 import com.google.gson.JsonObject;
 
+/**
+ * An IoT device heartbeat event generator.
+ */
 public class HeartBeat {
   private HeartBeat() { };
   

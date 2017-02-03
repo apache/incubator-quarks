@@ -41,7 +41,7 @@ import org.apache.edgent.samples.connectors.iotp.IotpSensors;
  * </P>
  * 
  * @see org.apache.edgent.topology.mbeans.ApplicationServiceMXBean
- * @see org.apache.edgent.topology.mbeans
+ * @see <a href="{@docRoot}/org/apache/edgent/topology/mbeans/package-summary.html">org.apache.edgent.topology.mbeans</a>
  */
 public class IotpFullScenario {
     
