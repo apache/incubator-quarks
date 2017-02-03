@@ -28,7 +28,7 @@ import org.apache.edgent.topology.TopologyElement;
 import com.google.gson.JsonObject;
 
 /**
- * Generic Internet of Things device connector.
+ * A generic IoT device IoT hub connector.
  * <p>
  * IotDevice characteristics:
  * <ul>
@@ -41,9 +41,9 @@ import com.google.gson.JsonObject;
  *     for the same logical device, false otherwise.</li>
  * <li>{@code IotDevice.hashCode()} returns the same value for all IotDevice instances
  *     for the same logical device.</li>
- * <li>{@code IotDevice} may be used as a {@link org.apache.edgent.topology.TWindow TWindow} partition key.</li> 
  * </ul>
  * 
+ * @see <a href="{@docRoot}/org/apache/edgent/connectors/iot/package-summary.html">Edgent generic IoT device model</a>
  * @see IotGateway
  */
 public interface IotDevice extends TopologyElement {
@@ -56,14 +56,14 @@ public interface IotDevice extends TopologyElement {
     /**
      * Get the device's opaque device type identifier.
      * TODO remove the "default" - avoids compilation errors while discussing this.
-     * @return
+     * @return the device's type
      */
     public default String getDeviceType() { return "a-device-type-id"; }
     
     /**
      * Get the device's unique opaque device identifier.
      * TODO remove the "default" - avoids compilation errors while discussing this.
-     * @return
+     * @return the device's id
      */
     public default String getDeviceId() { return "a-device-id"; }
 

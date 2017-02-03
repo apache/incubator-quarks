@@ -20,13 +20,25 @@ under the License.
 /**
  * Edgent IoT device and IoT Gateway device connector API to an IoT message hub.
  * <P>
- * An IoT device can publish device events and receive device commands from an IoT hub.
- * An IoT Gateway device is an IoT device that also acts as a conduit for
- * its "connected" IoT devices.  The connected devices lack direct connectivity to the
- * IoT hub.  Their events are published and their commands are received via the gateway.
+ * An IoT environment consists of an enterprise IoT message hub and devices and other clients
+ * connected to it.
+ * Each IoT device has an identity in the hub. The form of a device's identity is the domain
+ * of an IoT hub implementation.
+ * How a device becomes registered to an IoT hub and generally what device management capabilities
+ * exist and how a device is managed is beyond the scope of the 
+ * "analytic pipelines" focused Edgent APIs.
  * </P>
  * <P>
- * More specifically, the generic device model consists of:
+ * An IoT device can publish device events to and receive device commands from an IoT hub.
+ * An IoT gateway device is an IoT device that is also conduit for a collection of IoT devices 
+ * that lack direct connection to the enterprise IoT hub.
+ * A gateway can publish events on behalf of its connected devices and 
+ * receive commands from the hub targeted to them.
+ * An Edgent IoT hub connector bridges the gap between this generic model and and
+ * particular IoT hub implementation's underlying protocols.
+ * </P>
+ * <P>
+ * More specifically, the generic IoT device model consists of:
  * <UL>
  * <LI>
  * <B>Device events</B> - A device {@link org.apache.edgent.connectors.iot.IotDevice#events(org.apache.edgent.topology.TStream, String, int) publishes} <em>events</em> as messages to a message hub to allow
