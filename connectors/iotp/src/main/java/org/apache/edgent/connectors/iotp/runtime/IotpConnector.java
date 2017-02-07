@@ -38,6 +38,7 @@ public class IotpConnector implements Serializable, AutoCloseable {
     private Properties options;
     private File optionsFile;
     private transient DeviceClient client;
+    private boolean disconnectOnClose = true;
 
     /**
      * Create a new connector to the specified MQTT server.
@@ -50,6 +51,11 @@ public class IotpConnector implements Serializable, AutoCloseable {
 
     public IotpConnector(File optionsFile) {
         this.optionsFile = optionsFile;
+    }
+
+    public IotpConnector(DeviceClient iotpDeviceClient) {
+        this.client = iotpDeviceClient;
+        this.disconnectOnClose = false;
     }
 
     synchronized DeviceClient connect() {
@@ -100,7 +106,8 @@ public class IotpConnector implements Serializable, AutoCloseable {
         if (client == null)
             return;
 
-        client.disconnect();
+        if (disconnectOnClose)
+          client.disconnect();
         client = null;
     }
 }

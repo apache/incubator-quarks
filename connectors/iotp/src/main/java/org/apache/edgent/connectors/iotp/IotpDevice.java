@@ -40,9 +40,10 @@ import org.apache.edgent.topology.Topology;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.ibm.iotf.client.device.Command;
+import com.ibm.iotf.client.device.DeviceClient;
 
 /**
- * Connector for IBM Watson IoT Platform.
+ * A Device Connector to IBM Watson IoT Platform (WIoTP).
  * <BR>
  * IBM Watson IoT Platform is a cloud based internet of things
  * scale message hub that provides a device model on top of MQTT.
@@ -52,9 +53,26 @@ import com.ibm.iotf.client.device.Command;
  * <BR>
  * <em>Note IBM Watson IoT Platform was previously known as
  * IBM Internet of Things Foundation.</em>
+ * <p>
+ * This connector is a thin wrapper over the WIoTP {@code DeviceClient} Java API.
+ * The constructor {@code Properties} and {@code optionsFile} contents are those
+ * demanded by {@code DeviceClient}.
+ * <p>
+ * For more complex use cases this connector can be constructed to use
+ * a supplied {@code DeviceClient}.  This gives an application complete
+ * control over the construction and configuration of the underlying
+ * connection to WIoTP.
+ * <p>
+ * An application that wants to be a WIoTP <i>managed device</i>
+ * and an Edgent application must construct a WIoTP {@code ManagedDevice} instance
+ * and construct this device connector using it.
+ * <P>
+ * If the following link's page doesn't render in javadoc, paste it into a browser window.
+ * <BR>
+ * See the IBM Watson IoT Platform documentation for Developing devices at
+ * <a href="https://internetofthings.ibmcloud.com/">https://internetofthings.ibmcloud.com/</a>
  * 
  * @see <a href="{@docRoot}/org/apache/edgent/connectors/iot/package-summary.html">Edgent generic device model</a>
- * @see <a href="http://www.ibm.com/internet-of-things/iot-platform.html">IBM Watson IoT Platform</a>
  * @see org.apache.edgent.samples.connectors.iotp.IotpSensors Sample application
  */
 public class IotpDevice implements IotDevice {
@@ -70,8 +88,7 @@ public class IotpDevice implements IotDevice {
     private TStream<Command> commandStream;
 
     /**
-     * Create a connector to the IBM Watson IoT Platform Bluemix service with the device
-     * specified by {@code options}.
+     * Create a connector for the IoT device specified by {@code options}.
      * <BR>
      * These properties must be set in {@code options}.
      * 
@@ -95,7 +112,6 @@ public class IotpDevice implements IotDevice {
      * IotDevice iotDevice = new IotpDevice(options);
      * </code>
      * </pre>
-
      * <p>
      * Connecting to the server occurs when the topology is submitted for
      * execution.
@@ -104,6 +120,8 @@ public class IotpDevice implements IotDevice {
      * @param options control options
      * @param topology
      *            the connector's associated {@code Topology}.
+     *            
+     * @see the IBM Watson IoT Platform documentation for additional properties.
      */
     public IotpDevice(Topology topology, Properties options) {
         this.topology = topology;
@@ -111,9 +129,7 @@ public class IotpDevice implements IotDevice {
     }
 
     /**
-     * Create a connector to the IBM Watson IoT Platform Bluemix service.
-     * Device identifier and authorization are specified
-     * by a configuration file.
+     * Create a connector for the IoT device specified by {@code optionsFile}.
      * <BR>
      * The format of the file is:
      * <pre>
@@ -143,10 +159,22 @@ public class IotpDevice implements IotDevice {
      * </p>
      * @param topology the connector's associated {@code Topology}.
      * @param optionsFile File containing connection information.
+     * 
+     * @see the IBM Watson IoT Platform documentation for additional properties.
      */
     public IotpDevice(Topology topology, File optionsFile) {
         this.topology = topology;
         this.connector = new IotpConnector(optionsFile);
+    }
+    
+    /**
+     * Create a connector using the supplied WIoTP {@code DeviceClient}.
+     * @param topology the connector's associated {@code Topology}.
+     * @param deviceClient a WIoTP device client API object.
+     */
+    public IotpDevice(Topology topology, DeviceClient deviceClient) {
+      this.topology = topology;
+      this.connector = new IotpConnector(deviceClient);
     }
     
     /**
