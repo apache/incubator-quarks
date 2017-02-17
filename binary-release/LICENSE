@@ -245,10 +245,10 @@ connectors/http/ext
         
 --------------------------------
 connectors/iotp/ext
-  watson-iot-0.1.5.jar              com.ibm.messaging:watson-iot:0.1.5
-        LICENSE: EPL-1.0            For details, see licenses/binary-release/watson-iot-0.1.5.EPL-1.0
+  watson-iot-0.2.2.jar              com.ibm.messaging:watson-iot:0.2.2
+        LICENSE: EPL-1.0            For details, see licenses/binary-release/watson-iot-0.2.2.EPL-1.0
                                     Only binary form content is included.
-                                    https://mvnrepository.com/artifact/com.ibm.messaging/watson-iot/0.1.5
+                                    https://mvnrepository.com/artifact/com.ibm.messaging/watson-iot/0.2.2
         
   commons-codec-1.10.jar            org.apache.commons:commons-codec:1.10
         LICENSE: AL-2.0             For details, see licenses/binary-release/commons-codec-1.10.AL-2.0

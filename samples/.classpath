@@ -19,7 +19,7 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/runtime"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/provider_iot"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/apps"/>
-    <classpathentry kind="lib" path="../externalJars/java8/connectors/iotp/ext/watson-iot-0.1.5.jar"/>
+    <classpathentry kind="lib" path="../externalJars/java8/connectors/iotp/ext/watson-iot-0.2.2.jar"/>
     <classpathentry kind="lib" path="../externalJars/java8/connectors/iotp/ext/org.eclipse.paho.client.mqttv3-1.1.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

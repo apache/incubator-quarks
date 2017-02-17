@@ -19,7 +19,7 @@ under the License.
 dependencies {
   addTargetDirProjectJarDependency 'compile', ':api:topology'
   addTargetDirProjectJarDependency 'compile', ':connectors:iot'
-  addProjectExtDependency 'compile', 'com.ibm.messaging:watson-iot:0.1.5'
+  addProjectExtDependency 'compile', 'com.ibm.messaging:watson-iot:0.2.2'
   addTargetDirCoreExtJarDependencies 'compile'
   
   addTargetDirProjectJarDependency 'testCompile', ':providers:direct'

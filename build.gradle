@@ -78,7 +78,7 @@ rat {
     'licenses/binary-release/javax.websocket-api-1.0.CDDL-1.1',  // OK, only binary form content
     'licenses/binary-release/mqttv3-1.0.2.EDL-1.0',  // OK, EDL-1.0
     'licenses/binary-release/mqttv3-1.1.0.EDL-1.0',  // OK, EDL-1.0
-    'licenses/binary-release/watson-iot-0.1.5.EPL-1.0',  // OK, only binary form content
+    'licenses/binary-release/watson-iot-0.2.2.EPL-1.0',  // OK, only binary form content
     'samples/**/*.properties',
     'samples/**/device.cfg',
     'scripts/**/*.properties',
@@ -321,7 +321,7 @@ subprojects {
   // e.g.,
   //   dependencies {
   //     addTargetDirProjectJarDependency 'compile', ':api:topology' # NOT compile project(':api:topology')
-  //     addProjectExtDependency 'compile', 'com.ibm.messaging:watson-iot:0.1.5'  # NOT compile 'com.ibm.messaging:watson-iot:0.1.5'
+  //     addProjectExtDependency 'compile', 'com.ibm.messaging:watson-iot:0.2.2'  # NOT compile 'com.ibm.messaging:watson-iot:0.2.2'
   //     addProjectExtDependency 'compile', 'org.apache.kafka:kafka_2.10:0.8.2.2@jar'
   //     addTargetDirCoreExtDependencies 'compile'
   //     addMyTargetDirProjectJarDependency 'testCompile'

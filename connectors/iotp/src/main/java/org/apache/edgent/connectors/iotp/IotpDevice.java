@@ -71,7 +71,14 @@ import com.ibm.iotf.client.device.DeviceClient;
  * <BR>
  * See the IBM Watson IoT Platform documentation for Developing devices at
  * <a href="https://internetofthings.ibmcloud.com/">https://internetofthings.ibmcloud.com/</a>
- * 
+ * <p>
+ * See <a href="https://github.com/ibm-watson-iot/iot-java/releases">WIoTP Java Client Library Releases</a>
+ * for general information.
+ * <p>
+ * See <a href="https://github.com/ibm-watson-iot/iot-java/tree/master#migration-from-release-015-to-021">WIoTP Migration from release 0.1.5 to 0.2.1</a>
+ * for details of changes that occurred to device event payloads
+ * and how to revert the behavior if needed.
+ * <p>
  * @see <a href="{@docRoot}/org/apache/edgent/connectors/iot/package-summary.html">Edgent generic device model</a>
  * @see org.apache.edgent.samples.connectors.iotp.IotpSensors Sample application
  */
@@ -278,21 +285,31 @@ public class IotpDevice implements IotDevice {
         return all.map(cmd -> {
             JsonObject full = new JsonObject();
             full.addProperty("command", cmd.getCommand());
-            full.addProperty("tsms", cmd.getTimestamp().getMillis());
+            full.addProperty("tsms", System.currentTimeMillis());
             full.addProperty("format", cmd.getFormat());
-            if ("json".equals(cmd.getFormat())) {
+            if ("json".equalsIgnoreCase(cmd.getFormat())) {
                 JsonParser parser = new JsonParser();
+                // iot-java 0.2.2 bug https://github.com/ibm-watson-iot/iot-java/issues/81
+                // cmd.getData() returns byte[] instead of JsonObject (or String).
+                // Must continue to use the deprecated method until that's fixed.
+                // final JsonObject jsonPayload = (JsonObject) cmd.getData();
+                // final JsonObject jsonPayload = (JsonObject) parser.parse((String)cmd.getData());
+                @SuppressWarnings("deprecation")
                 final JsonObject jsonPayload = (JsonObject) parser.parse(cmd.getPayload());
                 final JsonObject cmdData;
+                // wiotp java client API >= 0.2.1 (other clients earlier?)
+                // A json fmt command's msg payload may or may not have "d" wrapping of
+                // the actual command data.
+                // The wiotp client API doesn't mask that from clients
+                // so deal with that here.
                 if (jsonPayload.has("d")) {
                     cmdData = jsonPayload.getAsJsonObject("d");
                 } else {
-                    // No data, create an empty object.
-                    cmdData = new JsonObject();
+                    cmdData = jsonPayload;
                 }
                 full.add("payload", cmdData);
             } else {
-                full.addProperty("payload", cmd.getPayload());
+                full.addProperty("payload", cmd.getData().toString());
             }
             return full;
             
