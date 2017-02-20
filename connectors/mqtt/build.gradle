@@ -20,7 +20,7 @@ dependencies {
   addTargetDirProjectJarDependency 'compile', ':api:topology'
   addTargetDirProjectJarDependency 'compile', ':connectors:iot'
   addTargetDirProjectJarDependency 'compile', ':connectors:common'
-  addProjectExtDependency 'compile', 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.0.2'
+  addProjectExtDependency 'compile', 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0'
   
   addTargetDirProjectJarDependency 'testCompile', ':providers:direct'
   // N.B. root project adds test common dependencies

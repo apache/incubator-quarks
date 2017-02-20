@@ -76,7 +76,7 @@ rat {
     'licenses/d3.BSD',                        // OK, BSD 3-clause
     'licenses/binary-release/javax.servlet-api-3.1.0.CDDL-1.0',  // OK, only binary form content
     'licenses/binary-release/javax.websocket-api-1.0.CDDL-1.1',  // OK, only binary form content
-    'licenses/binary-release/mqttv3-1.0.2.EDL-1.0',  // OK, EDL-1.0
+    'licenses/binary-release/mqttv3-1.1.0.EDL-1.0',  // OK, EDL-1.0
     'licenses/binary-release/mqttv3-1.1.0.EDL-1.0',  // OK, EDL-1.0
     'licenses/binary-release/watson-iot-0.2.2.EPL-1.0',  // OK, only binary form content
     'samples/**/*.properties',

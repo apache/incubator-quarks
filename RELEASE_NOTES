@@ -1,9 +1,11 @@
-Apache Edgent (incubating) 1.?.?
+Apache Edgent (incubating) 1.1.0
 ==================
-This release blah blah blah...
+
+This release includes a number of minor bugfixes and enhancements listed below.
 
 See EDGENT-379 below for important information related to the 
 Edgent connector for the IBM Watson IoT Platform.
+See EDGENT-380 below for information about the MQTT connector.
 
 New Features
 --------------------
@@ -15,7 +17,7 @@ TODO
 
 Miscellaneous changes
 ---------------------
-EDGENT-379 - upgrade to the WIoTP 0.2.2 Java client API
+EDGENT-379  Upgrade to the WIoTP 0.2.2 Java client API
    Upgrade the Edgent connector for the IBM Watson IoT Platform to use
    the WIoTP 0.2.2 Java client API.
    Note: the WIoTP API changed the way it publishes device events.
@@ -23,7 +25,8 @@ EDGENT-379 - upgrade to the WIoTP 0.2.2 Java client API
    https://github.com/ibm-watson-iot/iot-java/tree/master#migration-from-release-015-to-021
    for details including how to revert the behavior if needed.
    See https://github.com/ibm-watson-iot/iot-java/releases
-   for general release information about the WIoTP Java client API.  
+   for general release information about the WIoTP Java client API.
+EDGENT-380  Upgrade the MQTT connector to use paho-mqtt 1.1.0
     
 Known Issues
 --------

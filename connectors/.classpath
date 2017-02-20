@@ -48,7 +48,7 @@
 	<classpathentry kind="lib" path="../externalJars/java8/connectors/kafka/ext/scala-library-2.10.4.jar"/>
 	<classpathentry kind="lib" path="../externalJars/java8/connectors/kafka/ext/zkclient-0.3.jar"/>
 	<classpathentry kind="lib" path="../externalJars/java8/connectors/kafka/ext/zookeeper-3.4.6.jar"/>
-	<classpathentry kind="lib" path="../externalJars/java8/connectors/mqtt/ext/org.eclipse.paho.client.mqttv3-1.0.2.jar"/>
+	<classpathentry kind="lib" path="../externalJars/java8/connectors/mqtt/ext/org.eclipse.paho.client.mqttv3-1.1.0.jar"/>
 	<classpathentry kind="lib" path="../externalJars/java8/connectors/javax.websocket-client/ext/javax-websocket-client-impl-9.3.6.v20151106.jar"/>
 	<classpathentry kind="lib" path="../externalJars/java8/connectors/javax.websocket-client/ext/javax.websocket-api-1.0.jar"/>
 	<classpathentry kind="lib" path="../externalJars/java8/connectors/javax.websocket-client/ext/jetty-util-9.3.6.v20151106.jar"/>
