@@ -102,10 +102,7 @@ public class IotpConnector implements Serializable, AutoCloseable {
             throw new RuntimeException(e);
 
         }
-        boolean success = client.publishEvent(eventId, event, qos);
-        if (!success) {
-          // TODO log
-        }
+        client.publishEvent(eventId, event, qos);
     }
 
     void publishHttpEvent(String eventId, JsonObject event) {
