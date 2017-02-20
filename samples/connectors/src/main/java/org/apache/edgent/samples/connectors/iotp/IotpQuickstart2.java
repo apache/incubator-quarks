@@ -18,11 +18,12 @@ under the License.
 */
 package org.apache.edgent.samples.connectors.iotp;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.edgent.connectors.iot.IotDevice;
 import org.apache.edgent.connectors.iot.QoS;
 import org.apache.edgent.connectors.iotp.IotpDevice;
 import org.apache.edgent.providers.direct.DirectProvider;
@@ -49,12 +50,14 @@ import com.ibm.iotf.devicemgmt.device.ManagedDevice;
  * as it received by the Quickstart service.
  * <P>
  * This sample demonstrates using the WIoTP API to initialize the IotpDevice
- * connector.
+ * connector as well as the ability to publish events using the WIoTP HTTP protocol.
  */
 public class IotpQuickstart2 {
 
     public static void main(String[] args) throws Exception {
-        boolean useDeviceClient = args.length > 0 && args[0].equals("useDeviceClient");
+        List<String> argList = Arrays.asList(args);
+        boolean useDeviceClient = argList.contains("useDeviceClient");
+        boolean useHttp = argList.contains("useHttp");
 
         DirectProvider tp = new DirectProvider();
         Topology topology = tp.newTopology("IotpQuickstart");
@@ -65,7 +68,7 @@ public class IotpQuickstart2 {
         options.setProperty("org", "quickstart");
         options.setProperty("type", IotpDevice.QUICKSTART_DEVICE_TYPE);
         options.setProperty("id", deviceId);
-        IotDevice device;
+        IotpDevice device;
         if (useDeviceClient) {
           System.out.println("Using WIoTP DeviceClient");
           device = new IotpDevice(topology, new DeviceClient(options));
@@ -99,8 +102,14 @@ public class IotpQuickstart2 {
             j.addProperty("objectTemp", v[2]);
             return j;
         });
-        
-        device.events(json, "sensors", QoS.FIRE_AND_FORGET);
+
+        if (!useHttp) {
+          device.events(json, "sensors", QoS.FIRE_AND_FORGET);
+        }
+        else {
+          System.out.println("Publishing events using HTTP");
+          device.httpEvents(json, "sensors");
+        }
 
         tp.submit(topology);
     }

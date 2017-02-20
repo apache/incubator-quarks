@@ -24,8 +24,11 @@ import java.io.Serializable;
 import java.util.Properties;
 
 import org.apache.edgent.function.Consumer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.JsonObject;
+import com.ibm.iotf.client.api.APIClient.ContentType;
 import com.ibm.iotf.client.device.Command;
 import com.ibm.iotf.client.device.DeviceClient;
 
@@ -34,6 +37,7 @@ import com.ibm.iotf.client.device.DeviceClient;
  */
 public class IotpConnector implements Serializable, AutoCloseable {
     private static final long serialVersionUID = 1L;
+    private static final Logger logger = LoggerFactory.getLogger(IotpConnector.class);
 
     private Properties options;
     private File optionsFile;
@@ -98,7 +102,24 @@ public class IotpConnector implements Serializable, AutoCloseable {
             throw new RuntimeException(e);
 
         }
-        client.publishEvent(eventId, event, qos);
+        boolean success = client.publishEvent(eventId, event, qos);
+        if (!success) {
+          // TODO log
+        }
+    }
+
+    void publishHttpEvent(String eventId, JsonObject event) {
+        try {
+            DeviceClient client = getClient();
+            client.api().publishDeviceEventOverHTTP(eventId, event, ContentType.json);
+        } catch (Exception e) {
+            // throw new RuntimeException(e);
+            // If the publish throws, a RuntimeException will cause
+            // everything to unwind and the app/topology can terminate.
+            // See the commentary/impl of MqttPublisher.accept().
+            // See EDGENT-382
+            logger.error("Unable to publish tuple for event " + eventId, e);
+        }
     }
 
     @Override
