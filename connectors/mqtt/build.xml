@@ -30,7 +30,7 @@
     <pathelement location="${edgent.lib}/edgent.api.topology.jar" />
     <pathelement location="${edgent.connectors}/common/lib/edgent.connectors.common.jar" />
     <pathelement location="${edgent.connectors}/iot/lib/edgent.connectors.iot.jar" />
-    <pathelement location="${component.ext}/org.eclipse.paho.client.mqttv3-1.0.2.jar"/>
+    <pathelement location="${component.ext}/org.eclipse.paho.client.mqttv3-1.1.0.jar"/>
   </path>
 
   <path id="test.compile.classpath">

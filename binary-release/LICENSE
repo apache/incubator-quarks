@@ -305,8 +305,8 @@ connectors/kafka/ext
 
 --------------------------------
 connectors/mqtt/ext
-  org.eclipse.paho.client.mqttv3-1.0.2.jar  org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.0.2
-        LICENSE: EDL-1.0            For details, see licenses/binary-release/mqttv3-1.0.2.EDL-1.0
+  org.eclipse.paho.client.mqttv3-1.1.0.jar  org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0
+        LICENSE: EDL-1.0            For details, see licenses/binary-release/mqttv3-1.1.0.EDL-1.0
 
 --------------------------------
 connectors/edgent.javax.websocket/ext
