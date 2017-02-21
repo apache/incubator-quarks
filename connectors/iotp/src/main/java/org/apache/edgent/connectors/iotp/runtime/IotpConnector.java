@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.gson.JsonObject;
+import com.ibm.iotf.client.api.APIClient;
 import com.ibm.iotf.client.api.APIClient.ContentType;
 import com.ibm.iotf.client.device.Command;
 import com.ibm.iotf.client.device.DeviceClient;
@@ -102,20 +103,24 @@ public class IotpConnector implements Serializable, AutoCloseable {
             throw new RuntimeException(e);
 
         }
-        client.publishEvent(eventId, event, qos);
+        if (!client.publishEvent(eventId, event, qos)) {
+          logger.error("Publish event failed for eventId {}", eventId);
+        }
     }
 
     void publishHttpEvent(String eventId, JsonObject event) {
         try {
-            DeviceClient client = getClient();
-            client.api().publishDeviceEventOverHTTP(eventId, event, ContentType.json);
+            APIClient api = getClient().api();
+            if (!api.publishDeviceEventOverHTTP(eventId, event, ContentType.json)) {
+              logger.error("HTTP publish event failed for eventId {}", eventId);
+            }
         } catch (Exception e) {
             // throw new RuntimeException(e);
             // If the publish throws, a RuntimeException will cause
             // everything to unwind and the app/topology can terminate.
             // See the commentary/impl of MqttPublisher.accept().
             // See EDGENT-382
-            logger.error("Unable to publish tuple for event " + eventId, e);
+            logger.error("Unable to publish event for eventId {}", eventId, e);
         }
     }
 
