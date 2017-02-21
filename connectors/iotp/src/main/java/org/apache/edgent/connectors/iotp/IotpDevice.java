@@ -31,6 +31,8 @@ import org.apache.edgent.connectors.iotp.runtime.IotpConnector;
 import org.apache.edgent.connectors.iotp.runtime.IotpDeviceCommands;
 import org.apache.edgent.connectors.iotp.runtime.IotpDeviceEventsFixed;
 import org.apache.edgent.connectors.iotp.runtime.IotpDeviceEventsFunction;
+import org.apache.edgent.connectors.iotp.runtime.IotpDeviceHttpEventsFixed;
+import org.apache.edgent.connectors.iotp.runtime.IotpDeviceHttpEventsFunction;
 import org.apache.edgent.function.Function;
 import org.apache.edgent.function.UnaryOperator;
 import org.apache.edgent.topology.TSink;
@@ -249,6 +251,43 @@ public class IotpDevice implements IotDevice {
      */
     public TSink<JsonObject> events(TStream<JsonObject> stream, String eventId, int qos) {
         return stream.sink(new IotpDeviceEventsFixed(connector, eventId, qos));
+    }
+
+    /**
+     * Publish a stream's tuples as device events using the WIoTP HTTP protocol.
+     * <p>
+     * Each tuple is published as a device event with the supplied functions
+     * providing the event identifier and payload from the tuple.
+     * The event identifier and payload can be generated based upon the tuple.
+     * The event is published with the equivalent of {@link QoS#AT_MOST_ONCE}.
+     * 
+     * @param stream
+     *            Stream to be published.
+     * @param eventId
+     *            function to supply the event identifier.
+     * @param payload
+     *            function to supply the event's payload.
+     * @return TSink sink element representing termination of this stream.
+     */
+    public TSink<JsonObject> httpEvents(TStream<JsonObject> stream, Function<JsonObject, String> eventId,
+        UnaryOperator<JsonObject> payload) {
+      return stream.sink(new IotpDeviceHttpEventsFunction(connector, eventId, payload));
+    }
+    
+    /**
+     * Publish a stream's tuples as device events using the WIoTP HTTP protocol.
+     * <p>
+     * Each tuple is published as a device event with the fixed event identifier.
+     * The event is published with the equivalent of {@link QoS#AT_MOST_ONCE}.
+     * 
+     * @param stream
+     *            Stream to be published.
+     * @param eventId
+     *            Event identifier.
+     * @return TSink sink element representing termination of this stream.
+     */
+    public TSink<JsonObject> httpEvents(TStream<JsonObject> stream, String eventId) {
+      return stream.sink(new IotpDeviceHttpEventsFixed(connector, eventId));
     }
 
     /**
