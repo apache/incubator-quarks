@@ -30,7 +30,7 @@ edgent=../../..
 # IBM Watson IoT Platform and a sample is in this directory
 # (omitting values for the authorization tokens).
 
-#export CLASSPATH=${edgent}/samples/lib/edgent.samples.connectors.jar
+export CLASSPATH=${edgent}/samples/lib/edgent.samples.connectors.jar
 
 # https://github.com/ibm-watson-iot/iot-java/tree/master#migration-from-release-015-to-021
 # Uncomment the following to use the pre-0.2.1 WIoTP client behavior.
