@@ -1,22 +1,52 @@
 Apache Edgent (incubating) 1.1.0
 ==================
 
-This release includes a number of minor bugfixes and enhancements listed below.
+The release includes a number of minor bugfixes and enhancements listed below.
 
 See EDGENT-379 below for important information related to the 
 Edgent connector for the IBM Watson IoT Platform.
 See EDGENT-380 below for information about the MQTT connector.
 
+The release has new external jar dependencies for building Edgent. 
+An Eclipse based Edgent runtime build environment will encounter failures
+until you rerun "./gradlew setupExternalJars" and refresh and rebuild your
+workspace. See DEVELOPMENT.md for information about building Edgent.
+
 New Features
 --------------------
-TODO
+EDGENT-376  Support an edge device using both the Edgent API and WIoTP "Managed Device" APIs
+EDGENT-375  Support publishing WIoTP device events using HTTP
+EDGENT-370  Add static IotProvider.getPreferences()
+EDGENT-367  Add autoSubmit capability to IotProvider
 
-Incompatible changes
---------------------
-TODO
+Incompatible API changes
+------------------------
+None
+    
+Known Issues
+--------
+None yet
+
+Bug Fixes
+---------
+EDGENT-374  IotProvider edgentControl commands are silent no-ops under some failure conditions
+EDGENT-373  IotProvider needs to log more info upon edgentControl command request failures
+EDGENT-366  Tolerate trailing spaces in serverURLs in MqttConfig properties file
+EDGENT-333  FileStreamsTextFileWriterTest mishandling string to byte
+EDGENT-332  WebSocketTest test*Byte() mishandling string to byte
+EDGENT-331  HttpConnector put/post mishandling string to byte
+EDGENT-319  CommandStreamsTest* tests fail on MS Windows
+EDGENT-318  Javadoc overview mentions wrong jar name for slf4j jdk impl
+EDGENT-316  Fix warnings from aggregateJavadoc build task
+EDGENT-310  KafkaStreamsTestManual.testSimple() fails with no local zk of kafka servers
+EDGENT-234  Console: broken doc links
+EDGENT-200  Console: stream hovers in oplet kind lack layout tuple counts
 
 Miscellaneous changes
 ---------------------
+EDGENT-383  Update RELEASE_NOTES and CONTRIBUTORS for 1.1.0
+EDGENT-381  Update NOTICES for 2017
+EDGENT-380  Upgrade the MQTT connector to use paho-mqtt 1.1.0
 EDGENT-379  Upgrade to the WIoTP 0.2.2 Java client API
    Upgrade the Edgent connector for the IBM Watson IoT Platform to use
    the WIoTP 0.2.2 Java client API.
@@ -26,15 +56,16 @@ EDGENT-379  Upgrade to the WIoTP 0.2.2 Java client API
    for details including how to revert the behavior if needed.
    See https://github.com/ibm-watson-iot/iot-java/releases
    for general release information about the WIoTP Java client API.
-EDGENT-380  Upgrade the MQTT connector to use paho-mqtt 1.1.0
-    
-Known Issues
---------
-None yet
+EDGENT-365  IotProvider device commands table has bad information
+EDGENT-363  Clarify / disallow null topology names
+EDGENT-362  Fix javadoc for PlumbingStreams.gate
+EDGENT-361  Add a periodic usage example for FileStreams.textFileReader
+EDGENT-329  Add Apache rat task to builds
+EDGENT-328  Make writing-a-connector info easier to locate
+EDGENT-325  Improve doc for jdbc, kafka, and java7 tests
+EDGENT-321  Add full collection of release management buildTools
+EDGENT-308  Is it possible to use poll() with FileStreams together
 
-Bug Fixes
----------
-TODO
 
 Apache Edgent (incubating) 1.0.0
 ==================
