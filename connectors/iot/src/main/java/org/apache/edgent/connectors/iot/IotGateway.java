@@ -49,7 +49,7 @@ import com.google.gson.JsonObject;
  * <p>
  * Events can be published that are from a connected device's deviceId and commands can be 
  * received for that are targeted for it using
- * {@link #eventsForDevice(String, TStream, String, JsonObject, int) eventsForDevice()}
+ * {@link #eventsForDevice(String, TStream, String, int) eventsForDevice()}
  * and {@link #commandsForDevice(Set, String...) commandsForDevice()}. 
  * 
  * @see <a href="{@docRoot}/org/apache/edgent/connectors/iot/package-summary.html">Edgent generic IoT device model</a>

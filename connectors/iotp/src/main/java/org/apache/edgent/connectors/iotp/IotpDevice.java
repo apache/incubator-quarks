@@ -125,12 +125,13 @@ public class IotpDevice implements IotDevice {
      * Connecting to the server occurs when the topology is submitted for
      * execution.
      * </p>
+     * <p>
+     * See the IBM Watson IoT Platform documentation for additional properties.
+     * </p>
      *
      * @param options control options
      * @param topology
      *            the connector's associated {@code Topology}.
-     *            
-     * @see the IBM Watson IoT Platform documentation for additional properties.
      */
     public IotpDevice(Topology topology, Properties options) {
         this.topology = topology;
@@ -166,10 +167,11 @@ public class IotpDevice implements IotDevice {
      * Connecting to the server occurs when the topology is submitted for
      * execution.
      * </p>
+     * <p>
+     * See the IBM Watson IoT Platform documentation for additional properties.
+     * </p>
      * @param topology the connector's associated {@code Topology}.
      * @param optionsFile File containing connection information.
-     * 
-     * @see the IBM Watson IoT Platform documentation for additional properties.
      */
     public IotpDevice(Topology topology, File optionsFile) {
         this.topology = topology;

@@ -76,12 +76,13 @@ public class IotpGateway implements IotGateway {
    * Connecting to the server occurs when the topology is submitted for
    * execution.
    * </p>
+   * <p>
+   * See the IBM Watson IoT Platform documentation for additional properties.
+   * </p>
    *
    * @param options control options
    * @param topology
    *            the connector's associated {@code Topology}.
-   *            
-   * @see the IBM Watson IoT Platform documentation for additional properties.
    */
   public IotpGateway(Topology topology, Properties options) {
       this.topology = topology;
@@ -117,10 +118,11 @@ public class IotpGateway implements IotGateway {
    * Connecting to the server occurs when the topology is submitted for
    * execution.
    * </p>
+   * <p>
+   * See the IBM Watson IoT Platform documentation for additional properties.
+   * </p>
    * @param topology the connector's associated {@code Topology}.
    * @param optionsFile File containing connection information.
-   * 
-   * @see the IBM Watson IoT Platform documentation for additional properties.
    */
   public IotpGateway(Topology topology, File optionsFile) {
       this.topology = topology;
@@ -180,7 +182,7 @@ public class IotpGateway implements IotGateway {
    * 
    * @see #getIotDevice(Map)
    */
-  public static String ATTR_DEVICE_TYPE = "deviceType";
+  public static final String ATTR_DEVICE_TYPE = "deviceType";
 
   /**
    * WIoTP Device Id identifier key.
@@ -188,7 +190,7 @@ public class IotpGateway implements IotGateway {
    * 
    * @see #getIotDevice(Map)
    */
-  public static String ATTR_DEVICE_ID = "deviceId";
+  public static final String ATTR_DEVICE_ID = "deviceId";
 
   /**
    * {@inheritDoc}
