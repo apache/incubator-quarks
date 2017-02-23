@@ -55,17 +55,15 @@ public interface IotDevice extends TopologyElement {
     
     /**
      * Get the device's opaque device type identifier.
-     * TODO remove the "default" - avoids compilation errors while discussing this.
      * @return the device's type
      */
-    public default String getDeviceType() { return "a-device-type-id"; }
+    String getDeviceType();
     
     /**
      * Get the device's unique opaque device identifier.
-     * TODO remove the "default" - avoids compilation errors while discussing this.
      * @return the device's id
      */
-    public default String getDeviceId() { return "a-device-id"; }
+    String getDeviceId();
 
     /**
      * Publish a stream's tuples as device events.

@@ -121,4 +121,16 @@ class PubSubIotDevice implements IotDevice {
         return commandsStream;
     }
 
+    @Override
+    public String getDeviceType() {
+      // TODO Auto-generated method stub
+      return null;
+    }
+
+    @Override
+    public String getDeviceId() {
+      // TODO Auto-generated method stub
+      return null;
+    }
+
 }

@@ -20,32 +20,34 @@ under the License.
 package org.apache.edgent.connectors.iotp.runtime;
 
 import org.apache.edgent.function.Consumer;
-import org.apache.edgent.topology.Topology;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.edgent.function.Function;
+import org.apache.edgent.function.UnaryOperator;
 
-import com.ibm.iotf.client.device.Command;
+import com.google.gson.JsonObject;
 
 /**
- * An event setup adapter for {@link Topology#events(Consumer) topology.events()}
- * that submits received WIoTP device commands as stream tuples.
+ * Consumer that publishes stream tuples as IoTf GW device events with a fixed
+ * event identifier and qos.
+ *
  */
-public class IotpDeviceCommands implements Consumer<Consumer<Command>> {
+public class IotpGWEventsFunction implements Consumer<JsonObject> {
     private static final long serialVersionUID = 1L;
-    private final IotpConnector connector;
-    private static final Logger logger = LoggerFactory.getLogger(IotpDeviceCommands.class);
+    private final IotpGWConnector connector;
+    private final Function<JsonObject, String> eventId;
+    private UnaryOperator<JsonObject> payload;
+    private final Function<JsonObject, Integer> qos;
 
-    public IotpDeviceCommands(IotpConnector connector) {
+    public IotpGWEventsFunction(IotpGWConnector connector, Function<JsonObject, String> eventId,
+            UnaryOperator<JsonObject> payload,
+            Function<JsonObject, Integer> qos) {
         this.connector = connector;
+        this.payload = payload;
+        this.eventId = eventId;
+        this.qos = qos;
     }
 
     @Override
-    public void accept(Consumer<Command> commandSubmitter) {
-        
-        try {
-            connector.subscribeCommands(commandSubmitter);
-        } catch (Exception e) {
-            logger.error("Exception caught while subscribing commands", e);
-        }
+    public void accept(JsonObject event) {
+        connector.publishGWEvent(eventId.apply(event), payload.apply(event), qos.apply(event));
     }
 }

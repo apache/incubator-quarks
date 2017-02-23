@@ -323,9 +323,10 @@ public class IotpDevice implements IotDevice {
 
         return all.map(cmd -> {
             JsonObject full = new JsonObject();
-            full.addProperty("command", cmd.getCommand());
-            full.addProperty("tsms", System.currentTimeMillis());
-            full.addProperty("format", cmd.getFormat());
+            full.addProperty(IotDevice.CMD_DEVICE, getDeviceId());
+            full.addProperty(IotDevice.CMD_ID, cmd.getCommand());
+            full.addProperty(IotDevice.CMD_TS, System.currentTimeMillis());
+            full.addProperty(IotDevice.CMD_FORMAT, cmd.getFormat());
             if ("json".equalsIgnoreCase(cmd.getFormat())) {
                 JsonParser parser = new JsonParser();
                 // iot-java 0.2.2 bug https://github.com/ibm-watson-iot/iot-java/issues/81
@@ -346,9 +347,9 @@ public class IotpDevice implements IotDevice {
                 } else {
                     cmdData = jsonPayload;
                 }
-                full.add("payload", cmdData);
+                full.add(IotDevice.CMD_PAYLOAD, cmdData);
             } else {
-                full.addProperty("payload", cmd.getData().toString());
+                full.addProperty(IotDevice.CMD_PAYLOAD, cmd.getData().toString());
             }
             return full;
             
@@ -364,5 +365,20 @@ public class IotpDevice implements IotDevice {
     @Override
     public Topology topology() {
         return topology;
+    }
+
+    @Override
+    public String getDeviceType() {
+      return connector.getDeviceType();
+    }
+
+    @Override
+    public String getDeviceId() {
+      return connector.getFqDeviceId();
+    }
+    
+    @Override
+    public String toString() {
+      return String.format("IotpDevice %s", getDeviceId()); 
     }
 }

@@ -32,6 +32,8 @@ import com.google.gson.JsonObject;
 /**
  * A generic IoT gateway device IoT hub connector.
  * <p>
+ * <b>This interface is incubating and is subject to change.</b>
+ * <p>
  * An IoT gateway device is a conduit for a collection of IoT devices 
  * that lack direct connection to the enterprise IoT hub.
  * <p>
@@ -45,7 +47,7 @@ import com.google.gson.JsonObject;
  * The name/value pairs in the map are IotGateway implementation defined values.
  * Refer to the IotGateway implementation for details.
  * <p>
- * Events can be published that are from a deviceId and commands can be 
+ * Events can be published that are from a connected device's deviceId and commands can be 
  * received for that are targeted for it using
  * {@link #eventsForDevice(String, TStream, String, JsonObject, int) eventsForDevice()}
  * and {@link #commandsForDevice(Set, String...) commandsForDevice()}. 
@@ -111,7 +113,7 @@ public interface IotGateway extends IotDevice {
   /**
    * Publish a stream's tuples as device events.
    * Each tuple is published as a device event with the supplied
-   * device identifier, event identifier, payload and QoS.
+   * device identifier, event identifier and QoS.
    * <p>
    * Events for a particular device can also be published via its 
    * {@link IotDevice#events(TStream, String, int) IotDevice.event()}.
@@ -122,29 +124,27 @@ public interface IotGateway extends IotDevice {
    *            Stream to be published.
    * @param eventId
    *            Event identifier.
-   * @param payload
-   *            Event's payload.
    * @param qos
    *            Event's delivery Quality of Service.
    * @return TSink sink element representing termination of this stream.
    */
   TSink<JsonObject> eventsForDevice(String deviceId,
-      TStream<JsonObject> stream, String eventId, JsonObject payload, int qos) ;
+      TStream<JsonObject> stream, String eventId, int qos) ;
 
   /**
    * Create a stream of device commands as JSON objects.
-   * Each command sent to one of the specified devices matching {@code commands} will
+   * Each command sent to one of the specified {@code deviceIds} matching {@code commands} will
    * result in a tuple on the stream. The JSON object has these keys:
    * <UL>
-   * <LI>{@link IotDevice#CMD_DEVICE device} - Command's target device's opaque id String.
-   * <LI>{@link IotDevice#CMD_ID command} - Command identifier as a String</LI>
-   * <LI>{@link IotDevice#CMD_TS tsms} - Timestamp of the command in milliseconds since the 1970/1/1 epoch.</LI>
-   * <LI>{@link IotDevice#CMD_FORMAT format} - Format of the command as a String</LI>
-   * <LI>{@link IotDevice#CMD_PAYLOAD payload} - Payload of the command
-   * <UL>
-   * <LI>If {@code format} is {@code json} then {@code payload} is JSON</LI>
-   * <LI>Otherwise {@code payload} is String</LI>
-   * </UL>
+   * <LI>{@link #CMD_DEVICE device} - Command's opaque target device's id String.
+   * <LI>{@link #CMD_ID command} - Command identifier as a String</LI>
+   * <LI>{@link #CMD_TS tsms} - Timestamp of the command in milliseconds since the 1970/1/1 epoch.</LI>
+   * <LI>{@link #CMD_FORMAT format} - Format of the command as a String</LI>
+   * <LI>{@link #CMD_PAYLOAD payload} - Payload of the command
+   *   <UL>
+   *   <LI>If {@code format} is {@code json} then {@code payload} is JSON</LI>
+   *   <LI>Otherwise {@code payload} is String</LI>
+   *   </UL>
    * </LI>
    * </UL>
    * 
@@ -162,7 +162,7 @@ public interface IotGateway extends IotDevice {
 
   /**
    * Create a stream of device commands as JSON objects.
-   * Each command sent to the specified device matching {@code commands} will
+   * Each command sent to the specified {@code deviceId} matching {@code commands} will
    * result in a tuple on the stream. The JSON object has these keys:
    * <UL>
    * <LI>{@link IotDevice#CMD_DEVICE device} - Command's target device's opaque id String.

@@ -24,18 +24,18 @@ import org.apache.edgent.topology.Topology;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.iotf.client.device.Command;
+import com.ibm.iotf.client.gateway.Command;
 
 /**
  * An event setup adapter for {@link Topology#events(Consumer) topology.events()}
  * that submits received WIoTP device commands as stream tuples.
  */
-public class IotpDeviceCommands implements Consumer<Consumer<Command>> {
+public class IotpGWCommands implements Consumer<Consumer<Command>> {
     private static final long serialVersionUID = 1L;
-    private final IotpConnector connector;
-    private static final Logger logger = LoggerFactory.getLogger(IotpDeviceCommands.class);
+    private final IotpGWConnector connector;
+    private static final Logger logger = LoggerFactory.getLogger(IotpGWCommands.class);
 
-    public IotpDeviceCommands(IotpConnector connector) {
+    public IotpGWCommands(IotpGWConnector connector) {
         this.connector = connector;
     }
 

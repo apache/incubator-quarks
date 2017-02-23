@@ -114,5 +114,17 @@ public class EchoIotDevice implements IotDevice {
         Set<String> cmds = new HashSet<>(Arrays.asList(commands));
         return echoCmds.filter(cmd -> cmds.contains(cmd.getAsJsonPrimitive(CMD_ID).getAsString()));
     }
+
+    @Override
+    public String getDeviceType() {
+      // TODO Auto-generated method stub
+      return null;
+    }
+
+    @Override
+    public String getDeviceId() {
+      // TODO Auto-generated method stub
+      return null;
+    }
 }
 

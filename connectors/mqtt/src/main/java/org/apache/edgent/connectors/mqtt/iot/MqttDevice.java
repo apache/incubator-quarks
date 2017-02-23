@@ -276,4 +276,16 @@ public class MqttDevice implements IotDevice {
     public Topology topology() {
         return topology;
     }
+
+    @Override
+    public String getDeviceType() {
+      // TODO Auto-generated method stub
+      return null;
+    }
+
+    @Override
+    public String getDeviceId() {
+      // TODO Auto-generated method stub
+      return null;
+    }
 }

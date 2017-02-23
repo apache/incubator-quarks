@@ -44,6 +44,8 @@ public class IotpConnector implements Serializable, AutoCloseable {
     private File optionsFile;
     private transient DeviceClient client;
     private boolean disconnectOnClose = true;
+    private String deviceType;
+    private String fqDeviceId;
 
     /**
      * Create a new connector to the specified MQTT server.
@@ -52,15 +54,28 @@ public class IotpConnector implements Serializable, AutoCloseable {
      */
     public IotpConnector(Properties options) {
         this.options = options;
+        init();
     }
 
     public IotpConnector(File optionsFile) {
         this.optionsFile = optionsFile;
+        init();
     }
 
     public IotpConnector(DeviceClient iotpDeviceClient) {
         this.client = iotpDeviceClient;
         this.disconnectOnClose = false;
+        init();
+    }
+    
+    private void init() {
+      try {
+        DeviceClient client = getClient();
+        this.deviceType = client.getDeviceType();
+        this.fqDeviceId = IotpGWConnector.toFqDeviceId(deviceType, client.getDeviceId());
+      } catch (Exception e) {
+        throw new IllegalArgumentException("Unable to create DeviceClient", e);
+      }
     }
 
     synchronized DeviceClient connect() {
@@ -132,5 +147,13 @@ public class IotpConnector implements Serializable, AutoCloseable {
         if (disconnectOnClose)
           client.disconnect();
         client = null;
+    }
+
+    public String getDeviceType() {
+      return deviceType;
+    }
+
+    public String getFqDeviceId() {
+      return fqDeviceId;
     }
 }
