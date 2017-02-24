@@ -44,6 +44,9 @@ import com.google.gson.JsonObject;
 public class EchoIotDevice implements IotDevice {
     
     public static final String EVENT_CMD_ID = "cmdId";
+    public static final String MY_DEVICE_TYPE = "echoDeviceType";
+    public static final String MY_FQDEVICE_ID = MY_DEVICE_TYPE+"/echoDeviceId";
+    public static final String EVENT_CMD_DEVICE = MY_FQDEVICE_ID;
 
     private final Topology topology;
     private TStream<JsonObject> echoCmds;
@@ -64,6 +67,7 @@ public class EchoIotDevice implements IotDevice {
         stream = stream.map(e -> {
             JsonObject c = new JsonObject();
             JsonObject evPayload = payload.apply(e);
+            c.addProperty(CMD_DEVICE, EVENT_CMD_DEVICE);
             c.addProperty(CMD_ID, getCommandIdFromEvent(eventId.apply(e), evPayload));
             c.add(CMD_PAYLOAD, evPayload);
             c.addProperty(CMD_FORMAT, "json");
@@ -117,14 +121,12 @@ public class EchoIotDevice implements IotDevice {
 
     @Override
     public String getDeviceType() {
-      // TODO Auto-generated method stub
-      return null;
+      return MY_DEVICE_TYPE;
     }
 
     @Override
     public String getDeviceId() {
-      // TODO Auto-generated method stub
-      return null;
+      return MY_FQDEVICE_ID;
     }
 }
 

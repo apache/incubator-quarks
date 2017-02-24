@@ -242,6 +242,7 @@ public class MqttDevice implements IotDevice {
             commandStream = connector.subscribe(topicFilter, commandQoS,
                     (topic, payload) -> {
                         JsonObject jo = new JsonObject();
+                        jo.addProperty(CMD_DEVICE, deviceId);
                         jo.addProperty(CMD_ID, extractCmd(topic));
                         jo.addProperty(CMD_TS, System.currentTimeMillis());
                         String fmt = extractCmdFmt(topic);
@@ -277,15 +278,20 @@ public class MqttDevice implements IotDevice {
         return topology;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p> 
+     * This connector does not support the notion of a device-type
+     * as part of its device id model.  An empty string is returned.
+     */
     @Override
     public String getDeviceType() {
-      // TODO Auto-generated method stub
-      return null;
+      // not part of this connector's device identifier model
+      return "";
     }
 
     @Override
     public String getDeviceId() {
-      // TODO Auto-generated method stub
-      return null;
+      return deviceId;
     }
 }
