@@ -16,6 +16,7 @@ import org.apache.edgent.connectors.iotp.runtime.IotpGWDeviceEventsFixed;
 import org.apache.edgent.connectors.iotp.runtime.IotpGWDeviceEventsFunction;
 import org.apache.edgent.connectors.iotp.runtime.IotpGWEventsFixed;
 import org.apache.edgent.connectors.iotp.runtime.IotpGWEventsFunction;
+import org.apache.edgent.connectors.pubsub.service.PublishSubscribeService;
 import org.apache.edgent.function.Function;
 import org.apache.edgent.function.UnaryOperator;
 import org.apache.edgent.topology.TSink;
@@ -40,6 +41,15 @@ import com.ibm.iotf.client.gateway.GatewayClient;
  * An application can use 
  * {@link #setExternalCallbackHandler(GatewayCallback) setExternalCallbackHandler}
  * to also receive and process callbacks.
+ * <p>
+ * Limitations:
+ * <ul>
+ * <li>{@link IotProvider} and {@link PublishSubscribeService} do not yet support
+ * the gateway model.  An IotProvider may be initialized with an IotpGateway
+ * but the PublishSubscribeService mechanism will only publish events and receive
+ * commands for the gateway device, not any of its connected devices.
+ * </li>
+ * </ul>
  */
 public class IotpGateway implements IotGateway {
 

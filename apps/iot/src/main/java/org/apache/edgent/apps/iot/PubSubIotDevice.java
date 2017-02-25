@@ -121,16 +121,26 @@ class PubSubIotDevice implements IotDevice {
         return commandsStream;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * <b>Not yet implemented.  
+     * Returns a canned string instead of the backing IotDevice's info.</b> 
+     */
     @Override
     public String getDeviceType() {
-      // TODO Auto-generated method stub
-      return null;
+      return "NYI_PubSubIotDevice_DEVICE_TYPE";
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * <b>Not yet implemented.  
+     * Returns a canned string instead of the backing IotDevice's info.</b> 
+     */
     @Override
     public String getDeviceId() {
-      // TODO Auto-generated method stub
-      return null;
+      return "NYI_PubSubIotDevice_DEVICE_ID";
     }
 
 }

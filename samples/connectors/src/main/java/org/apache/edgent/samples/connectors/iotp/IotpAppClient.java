@@ -58,12 +58,12 @@ public class IotpAppClient {
     Properties cfgProps = new Properties();
     cfgProps.load(new FileReader(new File(deviceCfgPath)));
     
-    String iotpOrg = cfgProps.getProperty("org");
-    String iotpAppId = cfgProps.getProperty("id");
-    String iotpAppKey = cfgProps.getProperty("auth-key");
-    System.out.println("org:  " + iotpOrg);
-    System.out.println("id:   " + iotpAppId);
-    System.out.println("key:  " + iotpAppKey);
+    String iotpOrg = getProperty(cfgProps, "Organization-ID", "org");
+    String iotpAppId = getProperty(cfgProps, "id");
+    String iotpApiKey = getProperty(cfgProps, "API-Key", "auth-key");
+    System.out.println("org:     " + iotpOrg);
+    System.out.println("id:      " + iotpAppId);
+    System.out.println("ApiKey:  " + iotpApiKey);
 
     String iotpDevType = cfgProps.getProperty("deviceType");
     String iotpDevId = cfgProps.getProperty("deviceId");
@@ -131,6 +131,15 @@ public class IotpAppClient {
     boolean ok = client.publishCommand(iotpDevType, iotpDevId, command, data);
     
     System.out.println("Sent: " + (ok ? "OK" : "NOT-OK"));
+  }
+  
+  private static String getProperty(Properties props, String... keys) {
+    for (String key : keys) {
+      String val = props.getProperty(key);
+      if (val != null)
+        return val;
+    }
+    return null;
   }
 
 }

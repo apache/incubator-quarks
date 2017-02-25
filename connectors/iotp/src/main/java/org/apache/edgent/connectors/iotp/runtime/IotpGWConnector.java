@@ -207,6 +207,7 @@ public class IotpGWConnector implements Serializable, AutoCloseable {
         }
     }
 
+// See https://github.com/ibm-watson-iot/iot-java/issues/83
 //    void publishHttpDeviceEvent(String eventId, JsonObject event) {
 //        try {
 //            APIClient api = getClient().api();
