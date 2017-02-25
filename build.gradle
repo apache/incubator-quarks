@@ -80,7 +80,7 @@ rat {
     'licenses/binary-release/mqttv3-1.1.0.EDL-1.0',  // OK, EDL-1.0
     'licenses/binary-release/watson-iot-0.2.2.EPL-1.0',  // OK, only binary form content
     'samples/**/*.properties',
-    'samples/**/device.cfg',
+    'samples/**/*.cfg',
     'scripts/**/*.properties',
     'scripts/**/device.cfg',
     'scripts/connectors/jdbc/persondata.txt',
