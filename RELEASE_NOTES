@@ -14,6 +14,7 @@ workspace. See DEVELOPMENT.md for information about building Edgent.
 
 New Features
 --------------------
+EDGENT-377  Add IotGateway and IotpGateway
 EDGENT-376  Support an edge device using both the Edgent API and WIoTP "Managed Device" APIs
 EDGENT-375  Support publishing WIoTP device events using HTTP
 EDGENT-370  Add static IotProvider.getPreferences()
