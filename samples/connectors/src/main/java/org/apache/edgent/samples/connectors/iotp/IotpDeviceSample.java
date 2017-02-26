@@ -39,11 +39,10 @@ import com.ibm.iotf.devicemgmt.device.ManagedDevice;
 
 /**
  * Similar to IotpQuickstart2 but for a real/non-quickstart WIoTP account
- * for a registered device
- * AND it subscribes to/prints device cmds.
+ * for a registered device AND it subscribes to/prints device cmds.
  * <P>
- * Use IotpAppClient or any other technique to generate cmds. 
- * e.g., mosquitto_{pub,sub} cmds are printed below.
+ * Use IotpAppClient to print published events and generate a command
+ * (start this app before running IotpAppClient). 
  * <P>
  * This sample demonstrates:
  * <UL>
@@ -85,12 +84,8 @@ public class IotpDeviceSample {
         System.out.println("DeviceType: " + iotpDevType);
         System.out.println("DeviceId:   " + iotpDevId);
         
-        System.out.println("device clientId:  " + "d:"+iotpOrg+":"+iotpDevType+":"+iotpDevId);
-        System.out.println("WIoTP host: " + iotpOrg+".messaging.internetofthings.ibmcloud.com");
-        System.out.println("evt topic: " + "iot-2/type/"+iotpDevType+"/id/"+iotpDevId+"/evt/+/fmt/json");
-        System.out.println("cmd topic: " + "iot-2/type/"+iotpDevType+"/id/"+iotpDevId+"/cmd/+/fmt/json");
-        System.out.println("mosquitto_pub -u <api-auth-key> -P <api-quth-token> -h "+iotpOrg+".messaging.internetofthings.ibmcloud.com -p 1883 -i a:"+iotpOrg+":appId1 -t iot-2/type/"+iotpDevType+"/id/"+iotpDevId+"/cmd/cmd-1/fmt/json -m '{}'");
-        System.out.println("mosquitto_sub -d -u <api-auth-key> -P <api-quth-token> -h "+iotpOrg+".messaging.internetofthings.ibmcloud.com -p 1883 -i a:"+iotpOrg+":appId2 -t iot-2/type/+/id/+/evt/+/fmt/+");
+        // System.out.println("mosquitto_pub -u <api-auth-key> -P <api-quth-token> -h "+iotpOrg+".messaging.internetofthings.ibmcloud.com -p 1883 -i a:"+iotpOrg+":appId1 -t iot-2/type/"+iotpDevType+"/id/"+iotpDevId+"/cmd/cmd-1/fmt/json -m '{}'");
+        // System.out.println("mosquitto_sub -d -u <api-auth-key> -P <api-quth-token> -h "+iotpOrg+".messaging.internetofthings.ibmcloud.com -p 1883 -i a:"+iotpOrg+":appId2 -t iot-2/type/+/id/+/evt/+/fmt/+");
         
         IotpDevice device;
         if (useInternalDeviceClient) {
@@ -136,6 +131,7 @@ public class IotpDeviceSample {
           device.httpEvents(json, "sensors");
         }
         
+        // subscribe to / report device cmds 
         device.commands().sink(jo -> System.out.println("Received cmd: " + jo));
 
         tp.submit(topology);

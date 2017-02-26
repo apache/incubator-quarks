@@ -126,7 +126,7 @@ public class IotpAppClient {
     jo.addProperty("num", 12345);
     JsonObject data = jo;
     
-    System.out.println("Sending "+iotpDevType+"/"+iotpDevId+" command: "+command+" data("+data.getClass().getName()+")="+data);
+    System.out.println("Sending "+iotpDevType+"/"+iotpDevId+" command: "+command+" data: "+data);
     
     boolean ok = client.publishCommand(iotpDevType, iotpDevId, command, data);
     

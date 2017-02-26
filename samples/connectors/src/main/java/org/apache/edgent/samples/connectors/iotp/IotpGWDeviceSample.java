@@ -44,10 +44,10 @@ import com.ibm.iotf.devicemgmt.gateway.ManagedGateway;
 /**
  * Similar to IotpQuickstart2 but for a real/non-quickstart WIoTP account
  * and a registered IoT Gateway device with connected devices
- * AND it subscribes to/prints device cmds.
+ * AND it subscribes to and prints received device cmds.
  * <P>
- * Use IotpAppClient or any other technique to generate cmds. 
- * e.g., mosquitto_{pub,sub} cmds are printed below.
+ * Use IotpAppClient to print published events and generate a command
+ * (start this app before running IotpAppClient with the "useGW" option). 
  * <P>
  * This sample demonstrates:
  * <UL>
@@ -87,23 +87,18 @@ public class IotpGWDeviceSample {
         String iotpOrg = getProperty(cfgProps, "Organization-ID", "org");
         String iotpGWDevType = getProperty(cfgProps, "Gateway-Type", "Device-Type", "type");
         String iotpGWDevId = getProperty(cfgProps, "Gateway-ID", "Device-ID", "id");
+        String iotpCnDev1Type = cfgProps.getProperty("cn-dev1-type");
+        String iotpCnDev1Id = cfgProps.getProperty("cn-dev1-id");
+        
         System.out.println("orgId:  " + iotpOrg);
         System.out.println("GWDeviceType: " + iotpGWDevType);
         System.out.println("GWDeviceId:   " + iotpGWDevId);
+        System.out.println("cn-dev1 DeviceType: " + iotpCnDev1Type);
+        System.out.println("cn-dev1 DeviceId:   " + iotpCnDev1Id);
         
-        System.out.println("GW device clientId:  " + "g:"+iotpOrg+":"+iotpGWDevType+":"+iotpGWDevId);
-        System.out.println("WIoTP host: " + iotpOrg+".messaging.internetofthings.ibmcloud.com");
-        System.out.println("GW evt topic: " + "iot-2/type/"+iotpGWDevType+"/id/"+iotpGWDevId+"/evt/+/fmt/json");
-        System.out.println("GW cmd topic: " + "iot-2/type/"+iotpGWDevType+"/id/"+iotpGWDevId+"/cmd/+/fmt/json");
-        System.out.println("GW mosquitto_pub -u <api-auth-key> -P <api-auth-token> -h "+iotpOrg+".messaging.internetofthings.ibmcloud.com -p 1883 -i a:"+iotpOrg+":appId1 -t iot-2/type/"+iotpGWDevType+"/id/"+iotpGWDevId+"/cmd/cmd-1/fmt/json -m '{}'");
-        System.out.println("GW mosquitto_sub -d -u <api-auth-key> -P <api-auth-token> -h "+iotpOrg+".messaging.internetofthings.ibmcloud.com -p 1883 -i a:"+iotpOrg+":appId2 -t iot-2/type/+/id/+/evt/+/fmt/+");
-
-        String iotpCnDev1Type = cfgProps.getProperty("cn-dev1-type");
-        String iotpCnDev1Id = cfgProps.getProperty("cn-dev1-id");
-        System.out.println("cn-dev1 clientId:  " + "d:"+iotpOrg+":"+iotpCnDev1Type+":"+iotpCnDev1Id);
-        System.out.println("cn-dev1 evt topic: " + "iot-2/type/"+iotpCnDev1Type+"/id/"+iotpCnDev1Id+"/evt/+/fmt/json");
-        System.out.println("cn-dev1 cmd topic: " + "iot-2/type/"+iotpCnDev1Type+"/id/"+iotpCnDev1Id+"/cmd/+/fmt/json");
-        System.out.println("cn-dev1 mosquitto_pub -u <api-auth-key> -P <api-quth-token> -h "+iotpOrg+".messaging.internetofthings.ibmcloud.com -p 1883 -i a:"+iotpOrg+":appId1 -t iot-2/type/"+iotpCnDev1Type+"/id/"+iotpCnDev1Id+"/cmd/cmd-1/fmt/json -m '{}'");
+        // System.out.println("GW mosquitto_pub -u <api-auth-key> -P <api-auth-token> -h "+iotpOrg+".messaging.internetofthings.ibmcloud.com -p 1883 -i a:"+iotpOrg+":appId1 -t iot-2/type/"+iotpGWDevType+"/id/"+iotpGWDevId+"/cmd/cmd-1/fmt/json -m '{}'");
+        // System.out.println("GW mosquitto_sub -d -u <api-auth-key> -P <api-auth-token> -h "+iotpOrg+".messaging.internetofthings.ibmcloud.com -p 1883 -i a:"+iotpOrg+":appId2 -t iot-2/type/+/id/+/evt/+/fmt/+");
+        // System.out.println("cn-dev1 mosquitto_pub -u <api-auth-key> -P <api-quth-token> -h "+iotpOrg+".messaging.internetofthings.ibmcloud.com -p 1883 -i a:"+iotpOrg+":appId1 -t iot-2/type/"+iotpCnDev1Type+"/id/"+iotpCnDev1Id+"/cmd/cmd-1/fmt/json -m '{}'");
 
         IotpGateway gwDevice;
         if (useInternalGatewayClient) {
@@ -121,16 +116,17 @@ public class IotpGWDeviceSample {
         }
         else
           throw new IllegalStateException("woops");
-        
-        
-        System.out.println("GW fqDeviceId: " + gwDevice.getDeviceId());
 
         Map<String,String> devAttrMap = new HashMap<>();
         devAttrMap.put(IotpGateway.ATTR_DEVICE_TYPE, iotpCnDev1Type);
         devAttrMap.put(IotpGateway.ATTR_DEVICE_ID, iotpCnDev1Id);
+        
         String cnDev1FqDeviceId = gwDevice.getIotDeviceId(devAttrMap);
         IotDevice cnDev1Device = gwDevice.getIotDevice(cnDev1FqDeviceId);
+        
+        System.out.println("GW fqDeviceId: " + gwDevice.getDeviceId());
         System.out.println("cn-dev1 fqDeviceId:  " + cnDev1FqDeviceId);
+        System.out.println("IotDevice cn-dev1 fqDeviceId:  " + cnDev1Device.getDeviceId());
              
         Random r = new Random();
         TStream<double[]> raw = topology.poll(() -> {
@@ -167,20 +163,21 @@ public class IotpGWDeviceSample {
         else {
           System.out.println("Publishing events using HTTP");
           throw new IllegalStateException("GW httpEvents is NYI");
-          // device.httpEvents(json, "sensors");
+          // gwDevice.httpEvents(json, "sensors");
+          // gwDevice.httpEventsForDevice(cnDev1FqDeviceId, cnDev1Json, "gw-events-for-cnDev1");
         }
 
-        // should report cmds for ALL devices - gw+dev
+        // subscribe to / report cmds for the GW and all its connected devices
         gwDevice.commandsForDevice(Collections.emptySet()).sink(jo -> System.out.println("Received all-cmds cmd: " + jo));
         
-        // just GW device cmds
+        // subscribe to / report just GW device cmds
         gwDevice.commands().sink(jo -> System.out.println("Received gwDevice cmd: " + jo));
         
-        // just cnDev1 device cmds
+        // subscribe to / report just cnDev1 device cmds
         gwDevice.commandsForDevice(cnDev1FqDeviceId).sink(jo -> System.out.println("Received gwDevice-for-cnDev1 cmd: " + jo));
         cnDev1Device.commands().sink(jo -> System.out.println("Received cnDev1 cmd: " + jo));
         
-        // just cmds for a specific device type
+        // subscribe to / report just cmds for a specific device type
         gwDevice.commandsForType(iotpGWDevType).sink(jo -> System.out.println("Received for-type-gwDeviceType cmd: " + jo));
         gwDevice.commandsForType(iotpCnDev1Type).sink(jo -> System.out.println("Received for-type-cnDev1DeviceType cmd: " + jo));
 
