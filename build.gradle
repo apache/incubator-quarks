@@ -82,7 +82,7 @@ rat {
     'samples/**/*.properties',
     'samples/**/*.cfg',
     'scripts/**/*.properties',
-    'scripts/**/device.cfg',
+    'scripts/**/*.cfg',
     'scripts/connectors/jdbc/persondata.txt',
     'scripts/connectors/kafka/README-kafka',
     'test/**/*.properties',
