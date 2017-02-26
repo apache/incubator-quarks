@@ -15,7 +15,7 @@ IotpQuickstart2 - ./runquickstart2.sh [useHttp]
 # IotpSensors connects to your IBM Watson IoT Platform service
 # as the device defined in your device config file.
 #
-# A sample config file for your WIoTP registered device information 
+# A prototype config file for your WIoTP registered device information 
 # is provided in device.cfg.
 
 IotpSensors     - ./runiotsensors.sh device-cfg-path
@@ -27,7 +27,7 @@ IotpSensors     - ./runiotsensors.sh device-cfg-path
 # Use IotpAppClient to print out the generated device events and
 # to generate the device commands.
 #
-# Sample config files for your WIoTP registered device, gateway,
+# Prototype config files for your WIoTP registered device, gateway,
 # and application client information are provided in
 # iotp-device-sample.cfg, iotp-gwdevice-sample.cfg and iotp-app-client.cfg
 

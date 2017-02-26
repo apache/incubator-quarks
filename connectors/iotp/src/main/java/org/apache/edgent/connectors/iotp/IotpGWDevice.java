@@ -31,7 +31,15 @@ import org.apache.edgent.topology.Topology;
 
 import com.google.gson.JsonObject;
 
-class IotpGWDevice implements IotDevice {  // TODO implements IotpDevice ??? does GW allow for http?
+/**
+ * An IotDevice connected to WIoTP via a Gateway device.
+ * <P>
+ * This is a non-public part of the IotpGateway implementation.
+ * 
+ * @see IotpGateway#getIotDevice(java.util.Map)
+ * @see IotpGateway#getIotDevice(java.util.Map)
+ */
+class IotpGWDevice implements IotDevice {
   
   private final IotpGateway gateway;
   private final IotpGWConnector connector;
