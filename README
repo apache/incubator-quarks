@@ -1,15 +1,5 @@
 Building Edgent from a Source Distribution
 
-Apache Edgent is an effort undergoing incubation at The Apache Software Foundation (ASF),
-sponsored by the Incubator PMC. Incubation is required of all newly accepted
-projects until a further review indicates that the infrastructure, communications,
-and decision making process have stabilized in a manner consistent with other
-successful ASF projects. While incubation status is not necessarily a reflection
-of the completeness or stability of the code, it does indicate that the project
-has yet to be fully endorsed by the ASF.
-
-Apache Edgent is released under the Apache License Version 2.0.
-
 Apache Edgent is supported on several Java target platforms.
 For more information see JAVA_SUPPORT.md in the source tree
 or in the ASF git repository https://git-wip-us.apache.org/repos/asf/incubator-edgent.git
@@ -37,3 +27,13 @@ For more information about the Edgent sources, testing, and
 contributing to Edgent runtime development see DEVELOPMENT.md in the source tree
 or in the ASF git repository https://git-wip-us.apache.org/repos/asf/incubator-edgent.git
 or in the repository mirror at github https://github.com/apache/incubator-edgent.
+
+Apache Edgent is released under the Apache License Version 2.0.
+
+Apache Edgent is an effort undergoing incubation at The Apache Software Foundation (ASF),
+sponsored by the Incubator PMC. Incubation is required of all newly accepted
+projects until a further review indicates that the infrastructure, communications,
+and decision making process have stabilized in a manner consistent with other
+successful ASF projects. While incubation status is not necessarily a reflection
+of the completeness or stability of the code, it does indicate that the project
+has yet to be fully endorsed by the ASF.
