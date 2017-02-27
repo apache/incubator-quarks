@@ -52,6 +52,10 @@ import com.ibm.iotf.client.gateway.GatewayClient;
  * <p>
  * <b>This class is incubating and is subject to change.</b>
  * <p>
+ * This connector is a thin wrapper over the WIoTP {@code GatewayClient} Java API.
+ * The constructor {@code Properties} and {@code optionsFile} contents are those
+ * demanded by {@code GatewayClient}.
+ * <p>
  * See {@link IotpDevice} for common WIoTP documentation references.
  * <p>
  * {@code IotpGateway} establishes its own WIoTP {@link GatewayCallback}

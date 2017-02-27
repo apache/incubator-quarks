@@ -42,11 +42,9 @@ import com.ibm.iotf.devicemgmt.DeviceData;
 import com.ibm.iotf.devicemgmt.gateway.ManagedGateway;
 
 /**
- * Similar to IotpQuickstart2 but for a real/non-quickstart WIoTP account
- * and a registered IoT Gateway device with connected devices
- * AND it subscribes to and prints received device cmds.
+ * Similar to IotpDeviceSample but behaving as a registered IoT Gateway device.
  * <P>
- * Use IotpAppClient to print published events and generate a command
+ * Use {@link IotpAppClient} to print published events and generate a command
  * (start this app before running IotpAppClient with the "useGW" option). 
  * <P>
  * This sample demonstrates:
@@ -60,9 +58,9 @@ import com.ibm.iotf.devicemgmt.gateway.ManagedGateway;
  * This connects to your IBM Watson IoT Platform service
  * as the Gateway defined in a gateway config file.
  * The file format is the standard one for IBM Watson IoT Platform.
- * <p>
- * Note, the config file also contains some additional information for this application.
- * A sample iot-gwdevice-sample.cfg is in the scripts/connectors/iotp directory.
+ *
+ * <p>See {@code scripts/connectors/iotp/README} for information about a
+ * prototype gateway device configuration file and running the sample.
  */
 public class IotpGWDeviceSample {
   

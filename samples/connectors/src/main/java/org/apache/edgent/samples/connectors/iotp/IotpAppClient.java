@@ -31,9 +31,9 @@ import com.ibm.iotf.client.app.Event;
 import com.ibm.iotf.client.app.EventCallback;
 
 /**
- * A WIoTP ApplicationClient that publishes cmds 
- * and subscribes to events for the
- * IotpDeviceSample and IotpGWDeviceSample device samples.
+ * An IBM Watson IoT Platform ApplicationClient that publishes device cmds 
+ * and subscribes to device events for
+ * {@link IotpDeviceSample} and {@link IotpGWDeviceSample}.
  * <p>
  * Usage: {@code [useGw] <app-cfg-path> # see scripts/connectors/iotp/iotp-app-client.cfg}
  * <p>
@@ -42,7 +42,9 @@ import com.ibm.iotf.client.app.EventCallback;
  * The file format is the standard one for IBM Watson IoT Platform.
  * <p>
  * Note, the config file also contains some additional information for this application.
- * A sample iot-app-client.cfg is in the scripts/connectors/iotp directory.
+ *
+ * <p>See {@code scripts/connectors/iotp/README} for information about a
+ * prototype application configuration file and running the application.
  */
 public class IotpAppClient {
   

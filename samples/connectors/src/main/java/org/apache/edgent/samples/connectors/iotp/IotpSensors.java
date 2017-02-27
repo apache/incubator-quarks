@@ -44,13 +44,14 @@ import com.google.gson.JsonObject;
  * is made immediately rather than waiting for a bursty sensor to become
  * active.
  * <P>
- * This sample requires an IBM Watson IoT Platform service and a device configuration.
- * The device configuration is read from the file {@code device.cfg} in the
- * current directory. <BR>
+ * This sample requires an IBM Watson IoT Platform service and a device configuration.<BR>
  * In order to see commands send from IBM Watson IoT Platform
  * there must be an analytic application
  * that sends commands with the identifier {@code display}.
  * </P>
+ *
+ * <p>See {@code scripts/connectors/iotp/README} for information about a
+ * prototype device configuration file and running the sample.
  */
 public class IotpSensors {
 

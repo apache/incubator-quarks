@@ -51,6 +51,8 @@ import com.ibm.iotf.devicemgmt.device.ManagedDevice;
  * <P>
  * This sample demonstrates using the WIoTP API to initialize the IotpDevice
  * connector as well as the ability to publish events using the WIoTP HTTP protocol.
+ *
+ * <p>See {@code scripts/connectors/iotp/README} for information about running the sample.
  */
 public class IotpQuickstart2 {
 
