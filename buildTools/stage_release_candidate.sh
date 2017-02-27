@@ -109,10 +109,14 @@ cp RELEASE_NOTES ${SVN_RC_DIR}
 cp ${BUNDLE_DIR}/*-src.* ${SVN_RC_DIR}
 
 mkdir -p ${SVN_RC_DIR}/binaries
-cp LICENSE ${SVN_RC_DIR}/binaries
+cp binary-release/LICENSE ${SVN_RC_DIR}/binaries
 cp ${BUNDLE_DIR}/*-bin.* ${SVN_RC_DIR}/binaries
 
-(set -x; svn add ${SVN_RC_DIR})
+if [ ! `svn info --show-item url ${SVN_VER_DIR} 2>/dev/null` ]; then
+  (set -x; svn add ${SVN_VER_DIR})
+else
+  (set -x; svn add ${SVN_RC_DIR})
+fi
 
 echo
 (set -x; svn status ${SVN_DEV_EDGENT})
@@ -121,7 +125,7 @@ echo
 echo "If you choose not to proceed, you can later run the following to commit the changes:"
 echo "    (cd ${SVN_DEV_EDGENT}; svn commit -m \"Add Apache Edgent ${VER}-incubating/rc${RC_NUM}\")"
 confirm "Proceed to commit the changes?" || exit
-(set -x; cd ${SVN_DEV_EDGENT}; svn commit -m \"Add Apache Edgent ${VER}-incubating/rc${RC_NUM}\")
+(set -x; cd ${SVN_DEV_EDGENT}; svn commit -m "Add Apache Edgent ${VER}-incubating/rc${RC_NUM}")
 
 echo
 echo "The KEYS and ${RC_TAG} have been staged to ${EDGENT_ASF_SVN_RC_URL}"
