@@ -18,7 +18,22 @@ under the License.
 */
 
 /**
- * Samples showing device events and commands with IBM Watson IoT Platform.
+ * Samples showing use of the IBM Watson IoT Platform connector
+ * to publish device events and subscribe to device
+ * commands.
+ * 
+ * <p>The "Quickstart" samples connect to the IBM Watson IoT Platform
+ * using its Quickstart feature that does not require device registration.
+ * When the samples are run they print out a URL which allows a browser
+ * to see the data being sent from this sample.
+ * 
+ * <p>The other samples connect to your IBM Watson IoT Platform service instance
+ * using device and application registrations that you have created with your
+ * service instance.
+ * 
+ * <p>See each sample's Javadoc for more information.
+ * 
+ * <p>See {@code scripts/connectors/iotp/README} for information about running the samples.
  */
 package org.apache.edgent.samples.connectors.iotp;
 

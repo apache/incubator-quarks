@@ -38,10 +38,10 @@ import com.ibm.iotf.devicemgmt.DeviceData;
 import com.ibm.iotf.devicemgmt.device.ManagedDevice;
 
 /**
- * Similar to IotpQuickstart2 but for a real/non-quickstart WIoTP account
- * for a registered device AND it subscribes to/prints device cmds.
+ * Send device events and subscribe to device commands as a registered IoT device
+ * using a standard IBM Watson IoT Platform service instance.
  * <P>
- * Use IotpAppClient to print published events and generate a command
+ * Use {@link IotpAppClient} to print published events and generate a command
  * (start this app before running IotpAppClient). 
  * <P>
  * This sample demonstrates:
@@ -54,9 +54,9 @@ import com.ibm.iotf.devicemgmt.device.ManagedDevice;
  * This connects to your IBM Watson IoT Platform service
  * as the Device defined in a device config file.
  * The file format is the standard one for IBM Watson IoT Platform.
- * <p>
- * Note, the config file also contains some additional information for this application.
- * A sample iot-device-sample.cfg is in the scripts/connectors/iotp directory.
+ *
+ * <p>See {@code scripts/connectors/iotp/README} for information about a
+ * prototype device configuration file and running the sample.
  */
 public class IotpDeviceSample {
     private static final String usage = "[useDeviceClient|useManagedDevice] [useHttp] <device-cfg-path>";

@@ -43,6 +43,8 @@ import com.google.gson.JsonObject;
  * </P>
  * A URL is also printed that allows viewing of the data
  * as it received by the Quickstart service.
+ *
+ * <p>See {@code scripts/connectors/iotp/README} for information about running the sample.
  */
 public class IotpQuickstart {
 
