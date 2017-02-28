@@ -20,7 +20,7 @@ edgent=../../..
 
 # Runs IBM Watson IoT Platform IotpAppClient sample.
 #
-# run-iotp-app-client.sh [useGw] <app-cfg-path>  # see iotp-app-client.cfg
+# run-iotp-app-client.sh [useGW] <app-cfg-path>  # see iotp-app-client.cfg
 #
 # Connects to WIoTP and sends device commands to the 
 # IotpDeviceSample or IotpGWDeviceSample device samples.

@@ -35,7 +35,7 @@ import com.ibm.iotf.client.app.EventCallback;
  * and subscribes to device events for
  * {@link IotpDeviceSample} and {@link IotpGWDeviceSample}.
  * <p>
- * Usage: {@code [useGw] <app-cfg-path> # see scripts/connectors/iotp/iotp-app-client.cfg}
+ * Usage: {@code [useGW] <app-cfg-path> # see scripts/connectors/iotp/iotp-app-client.cfg}
  * <p>
  * This connects to your IBM Watson IoT Platform service
  * as the Application defined in a application config file.
@@ -48,7 +48,7 @@ import com.ibm.iotf.client.app.EventCallback;
  */
 public class IotpAppClient {
   
-  private static final String usage = "[useGw] <app-cfg-path> # see scripts/connectors/iotp/iotp-app-client.cfg";
+  private static final String usage = "[useGW] <app-cfg-path> # see scripts/connectors/iotp/iotp-app-client.cfg";
   
   public static void main(String[] args) throws Exception {
     if (args.length == 0)
