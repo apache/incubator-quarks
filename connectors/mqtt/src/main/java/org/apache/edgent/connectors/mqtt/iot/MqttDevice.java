@@ -46,8 +46,10 @@ import com.google.gson.JsonObject;
  * Device MQTT "event" and "command" topics though default
  * patterns are provided.
  * <p>
- * The MQTT message content for device events and device messages must be JSON,
- * but the contents of the JSON are under the control of the collaborating MQTT clients.
+ * The MQTT message content for device events and device commands must be JSON.
+ * The contents of the JSON are under the control of the collaborating MQTT clients.
+ * Typically a device to defines its event and command schemas
+ * and the other clients to adapt accordingly.
  * See {@link #commands(String...)} and {@link #events(TStream, String, int) events()}
  * for a description of how MQTT messages are converted to and from stream tuples.
  * <p>
