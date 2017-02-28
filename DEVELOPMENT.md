@@ -226,6 +226,10 @@ See [JAVA_SUPPORT](JAVA_SUPPORT.md) for information about what
 Edgent features are supported in the different environments.
 
 ``` sh
+ # pave the way for useful report generation at the end
+$ ./gradlew cleanTest
+$ ./gradlew reports
+
  # run with JAVA_HOME/PATH set for Java8
 $ ./gradlew test7Compile  # compile the Edgent tests to operate in a Java7 environment
 
