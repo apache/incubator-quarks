@@ -28,6 +28,10 @@ under the License.
  * to be registered by name. Once registered an application can be started (and stopped) remotely
  * through the control service using a device command.
  * 
+ * <p>A jar may be registered remotely through a control service device command.  
+ * Applications in the jar are registered with the ApplicationService and may then be started and stopped
+ * remotely. 
+ * 
  * <H3>Supported device commands</H3>
  * This provider supports a number of system level device commands to control the applications
  * running within it.
@@ -36,11 +40,10 @@ under the License.
  * are sent to the provider's control service, an instance of {@link org.apache.edgent.runtime.jsoncontrol.JsonControlService JsonControlService}.
  * This allows invocation of an operation against a control mbean registered with the
  * control service, either by an application or the provider itself.
- * <BR>
+ * <P>
  * The command's data (JSON) uniquely identifies a control MBean through its type and
  * alias, and indicates the operation to call on the MBean and the arguments to
  * pass to the operation.
- * <BR>
  * Thus any control operation can be remotely invoked through a {@code edgentControl} device command,
  * including arbitrary control mbeans registered by applications.
  * 
@@ -67,6 +70,21 @@ under the License.
  * <tr></tr>
  * 
  * <tr>
+ *    <td rowspan="2" headers="operation"><strong>Register an applications Jar</strong></td>
+ *    <td headers="cmdIdentifier">{@code edgentControl}</td>
+ *    <td headers="type">{@code appService}</td>
+ *    <td headers="alias">{@code edgent}</td>
+ *    <td headers="op">{@link org.apache.edgent.topology.mbeans.ApplicationServiceMXBean#registerJar(String, String) registerJar}</td>
+ *    <td headers="args"><em>{@code [jarURL, configJSONObject]}</em></td>
+ *    <td headers="controlMbean">{@link org.apache.edgent.topology.mbeans.ApplicationServiceMXBean ApplicationServiceMXBean}</td>
+ * </tr>
+ * <tr>
+ *    <td headers="cmdIdentifier"><strong>Sample command data</strong></td>
+ *    <td colspan=5 headers="type alias op args controlMbean">{@code {"type":"appService","alias":"edgent","op":"registerJar","args":["https://myHost/path/to/myApp.jar",{}]}}</td>
+ * </tr>
+ * <tr></tr>
+ * 
+ * <tr>
  *    <td rowspan="2" headers="operation"><strong>Close (stop) a running registered application</strong></td>
  *    <td headers="cmdIdentifier">{@code edgentControl}</td>
  *    <td headers="type">{@code job}</td>
@@ -78,6 +96,21 @@ under the License.
  * <tr>
  *    <td headers="cmdIdentifier"><strong>Sample command data</strong></td>
  *    <td colspan=5 headers="type alias op args controlMbean">{@code {"type":"job","alias":"Heartbeat","op":"stateChange","args":["CLOSE"]}}</td>
+ * </tr>
+ * <tr></tr>
+ * 
+ * <tr>
+ *    <td rowspan="2" headers="operation"><strong>Change a period control</strong></td>
+ *    <td headers="cmdIdentifier">{@code edgentControl}</td>
+ *    <td headers="type"><em>{@code varies}</em></td>
+ *    <td headers="alias"><em>{@code varies}</em></td>
+ *    <td headers="op">{@link org.apache.edgent.execution.mbeans.PeriodMXBean#setPeriod(long, java.util.concurrent.TimeUnit) setPeriod}</td>
+ *    <td headers="args"><em>{@code [period, timeUnit]}</em></td>
+ *    <td headers="controlMbean">{@link org.apache.edgent.execution.mbeans.PeriodMXBean PeriodMXBean}</td>
+ * </tr>
+ * <tr>
+ *    <td headers="cmdIdentifier"><strong>Sample command data (TStream.poll())</strong></td>
+ *    <td colspan=5 headers="type alias op args controlMbean">{@code {"type":"stream","alias":"myStreamAlias","op":"setPeriod","args":[10, "SECONDS"]}}</td>
  * </tr>
  * <tr></tr>
  * </table>
