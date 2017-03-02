@@ -43,8 +43,15 @@ import com.google.gson.JsonObject;
  * the {@link MqttStreams} connector.
  * <p>
  * The connector doesn't presume a particular pattern for 
- * Device MQTT "event" topic and "command" topics though default
+ * Device MQTT "event" and "command" topics though default
  * patterns are provided.
+ * <p>
+ * The MQTT message content for device events and device commands must be JSON.
+ * The contents of the JSON are under the control of the collaborating MQTT clients.
+ * Typically a device to defines its event and command schemas
+ * and the other clients to adapt accordingly.
+ * See {@link #commands(String...)} and {@link #events(TStream, String, int) events()}
+ * for a description of how MQTT messages are converted to and from stream tuples.
  * <p>
  * Connector configuration Properties fall into two categories:
  * <ul>
@@ -207,6 +214,15 @@ public class MqttDevice implements IotDevice {
         return mqttConfig;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * <p>The event is published to the configured MQTT {@code mqttDevice.event.topic.pattern},
+     * as described in the above class documentation, substituting the value returned
+     * by the {@code eventId} function for "{EVENTID}" in the pattern.
+     * The MQTT message's payload is the JSON representation
+     * of the JsonObject stream tuple.
+     */
     @Override
     public TSink<JsonObject> events(TStream<JsonObject> stream, Function<JsonObject, String> eventId,
             UnaryOperator<JsonObject> payload, Function<JsonObject, Integer> qos) {
@@ -218,11 +234,30 @@ public class MqttDevice implements IotDevice {
         return connector.publish(stream, topic, payloadFn, qos, jo -> retainEvents);
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * <p>The event is published to the configured MQTT {@code mqttDevice.event.topic.pattern},
+     * as described in the above class documentation, substituting the {@code eventId} for 
+     * "{EVENTID}" in the pattern.
+     * The MQTT message's payload is the JSON representation
+     * of the JsonObject stream tuple.
+     */
     @Override
     public TSink<JsonObject> events(TStream<JsonObject> stream, String eventId, int qos) {
         return events(stream, jo -> eventId, jo -> jo, jo -> qos);
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * <p>
+     * Subscribes to the configured MQTT {@code mqttDevice.command.topic.pattern}
+     * as described in the above class documentation.
+     * The received MQTT message's payload is required to be JSON.  
+     * The message's JSON payload is converted to a JsonObject and
+     * set as the {@code payload} key's value in the stream tuple JsonObject.
+     */
     @Override
     public TStream<JsonObject> commands(String... commands) {
         TStream<JsonObject> all = allCommands();
