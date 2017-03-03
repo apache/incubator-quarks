@@ -20,24 +20,16 @@ package org.apache.edgent.apps.runtime;
 
 import static org.apache.edgent.topology.services.ApplicationService.SYSTEM_APP_PREFIX;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-
-import org.apache.edgent.execution.DirectSubmitter;
 import org.apache.edgent.execution.Job;
-import org.apache.edgent.execution.Job.Action;
-import org.apache.edgent.execution.mbeans.JobMXBean;
 import org.apache.edgent.execution.services.ControlService;
-import org.apache.edgent.execution.services.Controls;
-import org.apache.edgent.execution.services.JobRegistryService;
 import org.apache.edgent.execution.services.RuntimeServices;
+import org.apache.edgent.execution.services.ServiceContainer;
 import org.apache.edgent.function.Consumer;
 import org.apache.edgent.function.Supplier;
 import org.apache.edgent.runtime.jobregistry.JobEvents;
+import org.apache.edgent.runtime.utils.TopologyMgmt;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.Topology;
-import org.apache.edgent.topology.TopologyProvider;
-import org.apache.edgent.topology.mbeans.ApplicationServiceMXBean;
 import org.apache.edgent.topology.services.ApplicationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,147 +57,39 @@ import com.google.gson.JsonObject;
  * restarting failed applications.</li>
  * <li>JobRegistryService - generates job monitoring events. </li>
  * </ul>
+ * 
+ * @see JobEvents#source(Topology, org.apache.edgent.function.BiFunction)
  */
 public class JobMonitorApp {
-    /**
-     * Job monitoring application name.
-     */
-    public static final String APP_NAME = SYSTEM_APP_PREFIX + "JobMonitorApp";
-
-    
-    private final TopologyProvider provider;
-    private final DirectSubmitter<Topology, Job> submitter;
-    private final Topology topology;
     private static final Logger logger = LoggerFactory.getLogger(JobMonitorApp.class);
-
+  
+    /** Job monitoring application name.  {@value} */
+    public static final String APP_NAME = SYSTEM_APP_PREFIX + "JobMonitorApp";
+    
     /**
-     * Constructs a {@code JobMonitorApp} with the specified name in the 
-     * context of the specified provider.
+     * Create and registers a {@link JobMonitorApp2} with the ApplicationService
+     * registered in the given service container.
      * 
-     * @param provider the topology provider
-     * @param submitter a {@code DirectSubmitter} which provides required 
-     *      services and submits the application
-     * @param name the application name
-     * 
-     * @throws IllegalArgumentException if the submitter does not provide 
-     *      access to the required services
+     * @param services provides access to service registrations
+     * @return service instance.
      */
-    public JobMonitorApp(TopologyProvider provider, 
-            DirectSubmitter<Topology, Job> submitter, String name) {
-
-        this.provider = provider;
-        this.submitter = submitter;
-        validateSubmitter();
-        this.topology = declareTopology(name);
+    public static void createAndRegister(ServiceContainer services) {
+      JobMonitorApp jm = new JobMonitorApp();
+      ApplicationService appSvc = services.getService(ApplicationService.class);
+      appSvc.registerTopology(JobMonitorApp2.APP_NAME, (top,cfg) -> jm.buildTopology(top, cfg)); 
+    }
+    
+    private JobMonitorApp() {
     }
     
     /**
-     * Submits the application topology.
-     * 
-     * @return the job.
-     * @throws InterruptedException if the operation was interrupted
-     * @throws ExecutionException on task execution exception 
-     */
-    public Job submit() throws InterruptedException, ExecutionException {
-        Future<Job> f = submitter.submit(topology);
-        return f.get();
-    }
-
-    /**
-     * Submits an application using an {@code ApplicationServiceMXBean} control 
-     * registered with the specified {@code ControlService}.
-     * 
-     * @param applicationName the name of the application to submit
-     * @param controlService the control service
-     */
-    public static void submitApplication(String applicationName, ControlService controlService) {
-        try {
-            ApplicationServiceMXBean control =
-                    controlService.getControl(
-                            ApplicationServiceMXBean.TYPE,
-                            ApplicationService.ALIAS,
-                            ApplicationServiceMXBean.class);
-            if (control == null) {
-                throw new IllegalStateException(
-                        "Could not find a registered control with the following interface: " + 
-                        ApplicationServiceMXBean.class.getName());                
-            }
-// TODO add ability to submit with the initial application configuration
-            logger.info("Restarting monitored application {}", applicationName);
-            control.submit(applicationName, null);
-        }
-        catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-    
-    /**
-     * Closes a job using a {@code JobMXBean} control registered with the 
-     * specified {@code ControlService}.
-     * 
-     * @param jobName the name of the job
-     * @param controlService the control service
-     */
-    public static void closeJob(String jobName, ControlService controlService) {
-        try {
-            JobMXBean jobMbean = controlService.getControl(JobMXBean.TYPE, jobName, JobMXBean.class);
-            if (jobMbean == null) {
-                throw new IllegalStateException(
-                        "Could not find a registered control for job " + jobName + 
-                        " with the following interface: " + JobMXBean.class.getName());                
-            }
-            jobMbean.stateChange(Action.CLOSE);
-            logger.debug("Closing job {}", jobName);
-            
-            // Wait for the job to complete
-            long startWaiting = System.currentTimeMillis();
-            for (long waitForMillis = Controls.JOB_HOLD_AFTER_CLOSE_SECS * 1000;
-                    waitForMillis < 0;
-                    waitForMillis -= 100) {
-                if (jobMbean.getCurrentState() == Job.State.CLOSED)
-                    break;
-                else
-                    Thread.sleep(100);
-            }
-            if (jobMbean.getCurrentState() != Job.State.CLOSED) {
-                throw new IllegalStateException(
-                        "The unhealthy job " + jobName + " did not close after " + 
-                        Controls.JOB_HOLD_AFTER_CLOSE_SECS + " seconds");                
-            }
-            logger.debug("Job {} state is CLOSED after waiting for {} milliseconds",
-                    jobName, System.currentTimeMillis() - startWaiting);
-        }
-        catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Declares the following topology:
-     * <pre>
-     * JobEvents source --&gt; Filter (health == unhealthy) --&gt; Restart application
-     * </pre>
-     * 
-     * @param name the topology name
-     * @return the application topology
-     */
-    protected Topology declareTopology(String name) {
-        Topology t = provider.newTopology(name);
-        
-        declareTopology(t);
-        
-        return t;
-    }
-    
-    /**
-     * Populates the following topology:
+     * Populates the topology with:
      * <pre>
      * JobEvents source --&gt; Filter (health == unhealthy) --&gt; Restart application
      * </pre>
      * @param t Topology
-     *
      */
-    public static void declareTopology(Topology t) {
+    private void buildTopology(Topology t, JsonObject cfg) {
         TStream<JsonObject> jobEvents = JobEvents.source(
                 t, 
                 (evType, job) -> { return JobMonitorAppEvent.toJsonObject(evType, job); }
@@ -240,7 +124,7 @@ public class JobMonitorApp {
 
     /**
      * A {@code Consumer} which restarts the application specified by a 
-     * JSON object passed to its {@code accept} function. 
+     * JSON object passed to its {@code accept} function.
      */
     private static class JobRestarter implements Consumer<JsonObject> {
         private static final long serialVersionUID = 1L;
@@ -256,27 +140,9 @@ public class JobMonitorApp {
             JsonObject job = JobMonitorAppEvent.getJob(value);
             String applicationName = JobMonitorAppEvent.getJobName(job);
 
-            logger.trace("close and restart: {}", value);
-            
-            closeJob(applicationName, controlService);
-            submitApplication(applicationName, controlService);
-        }
-    }
-
-    private void validateSubmitter() {
-        ControlService controlService = submitter.getServices().getService(ControlService.class);
-        if (controlService == null) {
-            throw new IllegalArgumentException("Could not access service " + ControlService.class.getName());
-        }
-
-        ApplicationService appService = submitter.getServices().getService(ApplicationService.class);
-        if (appService == null) {
-            throw new IllegalArgumentException("Could not access service " + ApplicationService.class.getName());
-        }
-
-        JobRegistryService jobRegistryService = submitter.getServices().getService(JobRegistryService.class);
-        if (jobRegistryService == null) {
-            throw new IllegalArgumentException("Could not access service " + JobRegistryService.class.getName());
+// TODO EDGENT-??? restart with its prior submission config
+            TopologyMgmt.closeJob(applicationName, controlService);
+            TopologyMgmt.submitApplication(applicationName, null, controlService);
         }
     }
 }

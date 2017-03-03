@@ -44,10 +44,10 @@ import org.apache.edgent.function.Function;
 import org.apache.edgent.providers.direct.DirectProvider;
 import org.apache.edgent.runtime.appservice.AppService;
 import org.apache.edgent.runtime.jsoncontrol.JsonControlService;
+import org.apache.edgent.runtime.utils.TopologyMgmt;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.TopologyProvider;
-import org.apache.edgent.topology.mbeans.ApplicationServiceMXBean;
 import org.apache.edgent.topology.services.ApplicationService;
 import org.slf4j.LoggerFactory;
 
@@ -233,6 +233,12 @@ public class IotProvider implements TopologyProvider,
     }
 
     protected void registerControlService() {
+        // N.B. this overwrites the submitter's control service (if any)
+        // e.g., DirectProvider.  Turns out that's OK for DirectProvider,
+        // or at least IotProvider's instantiated one, because DP doesn't
+        // directly use the CS it creates... so there isn't anything in it yet.
+        // Who knows if other submitters/providers that may have been passed
+        // in will be as accomodating.
         getServices().addService(ControlService.class, getControlService());
     }
 
@@ -294,8 +300,7 @@ public class IotProvider implements TopologyProvider,
      */
     protected void createJobMonitorApp() {
         
-        getApplicationService().registerTopology(JobMonitorApp.APP_NAME,
-                (topology, config) -> JobMonitorApp.declareTopology(topology));
+        JobMonitorApp.createAndRegister(getServices());
 
         systemApps.add(JobMonitorApp.APP_NAME);
     }
@@ -334,15 +339,13 @@ public class IotProvider implements TopologyProvider,
      * @throws Exception on failure starting applications.
      */
     public void start() throws Exception {
-        ApplicationServiceMXBean bean = getControlService().getControl(ApplicationServiceMXBean.TYPE,
-                ApplicationService.ALIAS, ApplicationServiceMXBean.class);
         
         for (String systemAppName : systemApps) {
-            bean.submit(systemAppName, null /* no config */);
+            TopologyMgmt.submitApplication(systemAppName, null /* no config */, getServices());
         }
         
         for (Entry<String,JsonObject> e : autoSubmitApps.entrySet()) {
-          submitApplication(e.getKey(), e.getValue());
+          TopologyMgmt.submitApplication(e.getKey(), e.getValue(), getServices());
         }
     }
 
@@ -415,22 +418,5 @@ public class IotProvider implements TopologyProvider,
         if (autoSubmit) {
           autoSubmitApps.put(applicationName, config);
         }
-    }
-
-    /**
-     * Submit the specified application previously registered
-     * via {@link #registerTopology(String, BiConsumer) registerTopology}.
-     * @param appName name of registered application
-     * @param config See {@link #submit(Topology, JsonObject) submit}. May be null.
-     * 
-     * @throws Exception on failure starting applications.
-     */
-    private void submitApplication(String appName, JsonObject config) throws Exception {
-      if (systemApps.contains(appName)) {
-        throw new IllegalArgumentException("appName");
-      }
-      ApplicationServiceMXBean bean = getControlService().getControl(ApplicationServiceMXBean.TYPE,
-          ApplicationService.ALIAS, ApplicationServiceMXBean.class);
-      bean.submit(appName, config==null ? null : config.toString());
     }
 }

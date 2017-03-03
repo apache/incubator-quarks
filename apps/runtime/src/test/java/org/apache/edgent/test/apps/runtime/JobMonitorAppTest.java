@@ -26,7 +26,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.edgent.apps.runtime.JobMonitorApp;
+import org.apache.edgent.apps.runtime.JobMonitorApp2;
 import org.apache.edgent.execution.DirectSubmitter;
 import org.apache.edgent.execution.Job;
 import org.apache.edgent.execution.services.ControlService;
@@ -35,6 +35,7 @@ import org.apache.edgent.providers.direct.DirectProvider;
 import org.apache.edgent.runtime.appservice.AppService;
 import org.apache.edgent.runtime.jmxcontrol.JMXControlService;
 import org.apache.edgent.runtime.jobregistry.JobRegistry;
+import org.apache.edgent.runtime.utils.TopologyMgmt;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.services.ApplicationService;
@@ -50,9 +51,10 @@ public class JobMonitorAppTest {
         DirectProvider provider = new DirectProvider();
         startProvider(provider);
 
+        JobMonitorApp2.createAndRegister(provider.getServices());
+        
         // Start monitor app
-        JobMonitorApp app = new JobMonitorApp(provider, provider, JobMonitorApp.APP_NAME);
-        Job monitor = app.submit();
+        Job monitor = TopologyMgmt.submitApplication(JobMonitorApp2.APP_NAME, null, provider.getServices());
 
         // Declare and register user apps which need monitoring
         AtomicInteger appOneBuildCnt = new AtomicInteger();
@@ -166,7 +168,9 @@ public class JobMonitorAppTest {
 
         // Submit all applications registered with the ApplicationService
         for (String name: appService.getApplicationNames()) {
-            JobMonitorApp.submitApplication(name, controlService);
+          if (name.equals(JobMonitorApp2.APP_NAME))
+            continue;
+          TopologyMgmt.submitApplication(name, null, controlService);
         }
     }
 }

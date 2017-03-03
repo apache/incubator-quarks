@@ -20,8 +20,8 @@ package org.apache.edgent.runtime.jobregistry;
 
 import org.apache.edgent.execution.Job;
 import org.apache.edgent.execution.services.JobRegistryService;
-import org.apache.edgent.execution.services.RuntimeServices;
 import org.apache.edgent.execution.services.JobRegistryService.EventType;
+import org.apache.edgent.execution.services.RuntimeServices;
 import org.apache.edgent.function.BiConsumer;
 import org.apache.edgent.function.BiFunction;
 import org.apache.edgent.function.Consumer;
@@ -49,7 +49,7 @@ public class JobEvents {
      * and submits the tuple on the returned stream.</p>
      * <p>
      * When the topology's execution is terminated, 
-     * {@code JobRegistryServic#removeListener()}  in invoked to unsubscribe 
+     * {@link JobRegistryService#removeListener()}  in invoked to unsubscribe 
      * the tuple source from the job registry. 
      * </p>
      *
@@ -93,18 +93,14 @@ public class JobEvents {
         @Override
         public void accept(Consumer<T> submitter) {
             JobRegistryService jobRegistry = rts.get().getService(JobRegistryService.class);
-            if (jobRegistry != null) {
-                listener.setSubmitter(submitter);
-                jobRegistry.addListener(listener);
-            }
+            listener.setSubmitter(submitter);
+            jobRegistry.addListener(listener);
         }
 
         @Override
         public void close() throws Exception {
             JobRegistryService jobRegistry = rts.get().getService(JobRegistryService.class);
-            if (jobRegistry != null) {
-                jobRegistry.removeListener(listener);
-            }
+            jobRegistry.removeListener(listener);
         }
         
         /**
