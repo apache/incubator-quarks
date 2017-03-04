@@ -71,12 +71,11 @@ public class JobMonitorApp {
      * registered in the given service container.
      * 
      * @param services provides access to service registrations
-     * @return service instance.
      */
     public static void createAndRegister(ServiceContainer services) {
       JobMonitorApp jm = new JobMonitorApp();
       ApplicationService appSvc = services.getService(ApplicationService.class);
-      appSvc.registerTopology(JobMonitorApp2.APP_NAME, (top,cfg) -> jm.buildTopology(top, cfg)); 
+      appSvc.registerTopology(JobMonitorApp.APP_NAME, (top,cfg) -> jm.buildTopology(top, cfg)); 
     }
     
     private JobMonitorApp() {

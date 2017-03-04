@@ -49,7 +49,7 @@ public class JobEvents {
      * and submits the tuple on the returned stream.</p>
      * <p>
      * When the topology's execution is terminated, 
-     * {@link JobRegistryService#removeListener()}  in invoked to unsubscribe 
+     * {@link JobRegistryService#removeListener(BiConsumer)}  in invoked to unsubscribe 
      * the tuple source from the job registry. 
      * </p>
      *

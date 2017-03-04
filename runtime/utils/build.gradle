@@ -17,12 +17,10 @@ specific language governing permissions and limitations
 under the License.
 */
 dependencies {
+  addTargetDirProjectJarDependency 'compile', ':api:execution'
+  addTargetDirProjectJarDependency 'compile', ':api:function'
   addTargetDirProjectJarDependency 'compile', ':api:topology'
-  addTargetDirProjectJarDependency 'compile', ':runtime:jobregistry'
-  addTargetDirProjectJarDependency 'compile', ':runtime:appservice'
-  addTargetDirProjectJarDependency 'compile', ':runtime:utils'
-  
-  addTargetDirProjectJarDependency 'testCompile', ':providers:direct'
-  addTargetDirProjectJarDependency 'testCompile', ':runtime:jmxcontrol'
+  addTargetDirCoreExtJarDependencies 'compile'
+
   // N.B. root project adds test common dependencies
 }
