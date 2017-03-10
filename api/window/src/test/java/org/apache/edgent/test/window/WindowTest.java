@@ -417,6 +417,11 @@ public class WindowTest {
 
         Thread.sleep(11000);
         sf.cancel(true);
+        try {
+          sf.get();
+        } catch (Exception e) {
+          // expected
+        }
         double tolerance = .12;
         
         for(Integer key : numBatches.keySet()){
