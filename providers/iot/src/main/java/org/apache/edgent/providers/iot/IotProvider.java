@@ -66,21 +66,25 @@ import com.google.gson.JsonObject;
  * <LI>{@link ControlService control} - An instance of {@link JsonControlService}.</LI>
  * <LI>{@link ApplicationService application} - An instance of {@link AppService}.</LI>
  * <LI>{@link PublishSubscribeService publish-subscribe} - An instance of {@link ProviderPubSub}</LI>
- * <LI>preferences (optional) - An instance of {@code java.util.pref.Preferences} to store application
+ * <LI>{@code preferences} (optional) - An instance of {@code java.util.prefs.Preferences} to store application
  * and service preferences. A {@code Preferences} node is created if the provider is created with
  * a name that is not {@code null}. If the preferences implementation supports persistence
  * then any preferences will be maintained across provider and JVM restarts when creating a
  * provider with the same name. The {@code Preferences} node is a user node.
  * </UL>
- * System applications provide this functionality:
+ * <P>
+ * System applications provide:
  * <UL>
  * <LI>Single connection to the message hub using an {@code IotDevice}
  * using {@link IotDevicePubSub}.
  * Applications using this provider that want to connect
  * to the message hub for device events and commands must create an instance of
- * {@code IotDevice} using {@link IotDevicePubSub#addIotDevice(org.apache.edgent.topology.TopologyElement)}</LI>
+ * {@code IotDevice} using {@link IotDevicePubSub#addIotDevice(org.apache.edgent.topology.TopologyElement) addIotDevice()}</LI>
  * <LI>Access to the control service through device commands from the message hub using command
  * identifier {@link Commands#CONTROL_SERVICE edgentControl}.
+ * See the
+ * <a href="{@docRoot}/org/apache/edgent/providers/iot/package-summary.html">package documentation</a>
+ * for more information.
  * </UL>
  * <P>
  * An {@code IotProvider} is created with a provider and submitter that it delegates
