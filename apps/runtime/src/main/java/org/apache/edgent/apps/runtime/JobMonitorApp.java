@@ -24,10 +24,10 @@ import org.apache.edgent.execution.Job;
 import org.apache.edgent.execution.services.ControlService;
 import org.apache.edgent.execution.services.RuntimeServices;
 import org.apache.edgent.execution.services.ServiceContainer;
+import org.apache.edgent.execution.utils.ExecutionMgmt;
 import org.apache.edgent.function.Consumer;
 import org.apache.edgent.function.Supplier;
 import org.apache.edgent.runtime.jobregistry.JobEvents;
-import org.apache.edgent.runtime.utils.TopologyMgmt;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.services.ApplicationService;
@@ -139,9 +139,9 @@ public class JobMonitorApp {
             JsonObject job = JobMonitorAppEvent.getJob(value);
             String applicationName = JobMonitorAppEvent.getJobName(job);
 
-// TODO EDGENT-??? restart with its prior submission config
-            TopologyMgmt.closeJob(applicationName, controlService);
-            TopologyMgmt.submitApplication(applicationName, null, controlService);
+						// TODO EDGENT-395 restart with its prior submission config
+            ExecutionMgmt.closeJob(applicationName, controlService);
+            ExecutionMgmt.submitApplication(applicationName, null, controlService);
         }
     }
 }

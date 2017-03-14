@@ -16,7 +16,7 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 */
-package org.apache.edgent.runtime.utils;
+package org.apache.edgent.execution.utils;
 
 import org.apache.edgent.execution.Job;
 import org.apache.edgent.execution.Job.Action;
@@ -33,14 +33,14 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.JsonObject;
 
 /**
- * Perhaps a not so well named class... but ApplicationAndJobMgmt seemed worse :-)
+ * Utilities for managing topology execution.
  * 
  * <p>These utility methods tend to depend on a combination of related but semi-independent
  * items such as {@link ApplicationService} and {@link JobRegistryService} services
  * and {@link ApplicationServiceMXBean} and {@link JobMXBean} control beans.
  */
-public class TopologyMgmt {
-  private static final Logger logger = LoggerFactory.getLogger(TopologyMgmt.class);
+public class ExecutionMgmt {
+  private static final Logger logger = LoggerFactory.getLogger(ExecutionMgmt.class);
 
   /**
    * Submits an application previously registered with the {@link ApplicationService}.

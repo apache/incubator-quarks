@@ -31,11 +31,11 @@ import org.apache.edgent.execution.DirectSubmitter;
 import org.apache.edgent.execution.Job;
 import org.apache.edgent.execution.services.ControlService;
 import org.apache.edgent.execution.services.ServiceContainer;
+import org.apache.edgent.execution.utils.ExecutionMgmt;
 import org.apache.edgent.providers.direct.DirectProvider;
 import org.apache.edgent.runtime.appservice.AppService;
 import org.apache.edgent.runtime.jmxcontrol.JMXControlService;
 import org.apache.edgent.runtime.jobregistry.JobRegistry;
-import org.apache.edgent.runtime.utils.TopologyMgmt;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.services.ApplicationService;
@@ -54,7 +54,7 @@ public class JobMonitorAppTest {
         JobMonitorApp.createAndRegister(provider.getServices());
         
         // Start monitor app
-        Job monitor = TopologyMgmt.submitApplication(JobMonitorApp.APP_NAME, null, provider.getServices());
+        Job monitor = ExecutionMgmt.submitApplication(JobMonitorApp.APP_NAME, null, provider.getServices());
 
         // Declare and register user apps which need monitoring
         AtomicInteger appOneBuildCnt = new AtomicInteger();
@@ -170,7 +170,7 @@ public class JobMonitorAppTest {
         for (String name: appService.getApplicationNames()) {
           if (name.equals(JobMonitorApp.APP_NAME))
             continue;
-          TopologyMgmt.submitApplication(name, null, controlService);
+          ExecutionMgmt.submitApplication(name, null, controlService);
         }
     }
 }

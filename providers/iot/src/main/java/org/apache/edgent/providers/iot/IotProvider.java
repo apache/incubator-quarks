@@ -39,12 +39,12 @@ import org.apache.edgent.execution.DirectSubmitter;
 import org.apache.edgent.execution.Job;
 import org.apache.edgent.execution.services.ControlService;
 import org.apache.edgent.execution.services.ServiceContainer;
+import org.apache.edgent.execution.utils.ExecutionMgmt;
 import org.apache.edgent.function.BiConsumer;
 import org.apache.edgent.function.Function;
 import org.apache.edgent.providers.direct.DirectProvider;
 import org.apache.edgent.runtime.appservice.AppService;
 import org.apache.edgent.runtime.jsoncontrol.JsonControlService;
-import org.apache.edgent.runtime.utils.TopologyMgmt;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.TopologyProvider;
@@ -341,11 +341,11 @@ public class IotProvider implements TopologyProvider,
     public void start() throws Exception {
         
         for (String systemAppName : systemApps) {
-            TopologyMgmt.submitApplication(systemAppName, null /* no config */, getServices());
+            ExecutionMgmt.submitApplication(systemAppName, null /* no config */, getServices());
         }
         
         for (Entry<String,JsonObject> e : autoSubmitApps.entrySet()) {
-          TopologyMgmt.submitApplication(e.getKey(), e.getValue(), getServices());
+          ExecutionMgmt.submitApplication(e.getKey(), e.getValue(), getServices());
         }
     }
 
