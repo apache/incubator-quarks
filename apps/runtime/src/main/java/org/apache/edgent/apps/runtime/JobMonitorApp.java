@@ -216,9 +216,19 @@ public class JobMonitorApp {
                     logger.trace("Filter: {}", value);
 
                     try {
+                        // Only trigger on the initial unhealthy event:
+                        //     state:RUNNING nextState:RUNNING UNHEALTHY
+                        // Closing the UNHEALTHY job then results in additional UNHEALTHY events
+                        // that we need to ignore:
+                        //     RUNNING, CLOSED, UNHEALTHY
+                        //     CLOSED, CLOSED, UNHEALTHY
                         JsonObject job = JobMonitorAppEvent.getJob(value);
                         return (Job.Health.UNHEALTHY.name().equals(
-                                JobMonitorAppEvent.getJobHealth(job)));
+                                JobMonitorAppEvent.getJobHealth(job))
+                            && Job.State.RUNNING.name().equals(
+                                JobMonitorAppEvent.getProperty(job, "state"))
+                            && Job.State.RUNNING.name().equals(
+                                JobMonitorAppEvent.getProperty(job, "nextState")));
                     } catch (IllegalArgumentException e) {
                         logger.info("Invalid event filtered out, cause: {}", e.getMessage());
                         return false;
@@ -246,6 +256,8 @@ public class JobMonitorApp {
             JsonObject job = JobMonitorAppEvent.getJob(value);
             String applicationName = JobMonitorAppEvent.getJobName(job);
 
+            logger.trace("close and restart: {}", value);
+            
             closeJob(applicationName, controlService);
             submitApplication(applicationName, controlService);
         }

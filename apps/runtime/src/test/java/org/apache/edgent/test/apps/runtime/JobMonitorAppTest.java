@@ -55,8 +55,12 @@ public class JobMonitorAppTest {
         Job monitor = app.submit();
 
         // Declare and register user apps which need monitoring
-        registerMonitoredApplicationOne(provider);
-        registerMonitoredApplicationTwo(provider);
+        AtomicInteger appOneBuildCnt = new AtomicInteger();
+        AtomicInteger appOneInjectedErrorCnt = new AtomicInteger();
+        AtomicInteger appTwoBuildCnt = new AtomicInteger();
+        AtomicInteger appTwoInjectedErrorCnt = new AtomicInteger();
+        registerMonitoredApplicationOne(provider, appOneBuildCnt, appOneInjectedErrorCnt);
+        registerMonitoredApplicationTwo(provider, appTwoBuildCnt, appTwoInjectedErrorCnt);
 
         // Start monitored apps
         startMonitoredApplications(provider);
@@ -67,6 +71,31 @@ public class JobMonitorAppTest {
                 Job.State.RUNNING.equals(monitor.getCurrentState()) &&
                 Job.State.RUNNING.equals(monitor.getNextState()) &&
                 Job.Health.HEALTHY.equals(monitor.getHealth()));
+        
+        // Verify app restarts.
+        // Ideally, each app should be started (rebuilt) exactly 
+        // once initially + once for each injected failure.
+        // Given the timing vagueness of this test allow for
+        // a little wiggle room - allow one fewer than expected.
+        
+        int appOneExpectedBuildCnt = 1 + appOneInjectedErrorCnt.get();
+        int appTwoExpectedBuildCnt = 1 + appTwoInjectedErrorCnt.get();
+        
+        int appOneActBuildCnt = appOneBuildCnt.get();
+        int appTwoActBuildCnt = appTwoBuildCnt.get();
+
+        System.out.println("appOne: actBuildCnt: " + appOneActBuildCnt + " expBuildCnt: "+ appOneExpectedBuildCnt);
+        System.out.println("appTwo: actBuildCnt: " + appTwoActBuildCnt + " expBuildCnt: "+ appTwoExpectedBuildCnt);
+        
+        assertTrue("appOne", 
+            appOneActBuildCnt > 1
+            && appOneActBuildCnt >= appOneExpectedBuildCnt - 1
+            && appOneActBuildCnt <= appOneExpectedBuildCnt);
+        
+        assertTrue("appTwo", 
+            appTwoActBuildCnt > 1
+            && appTwoActBuildCnt >= appTwoExpectedBuildCnt - 1
+            && appTwoActBuildCnt <= appTwoExpectedBuildCnt);
     }
 
     static void startProvider(DirectProvider provider) 
@@ -81,9 +110,11 @@ public class JobMonitorAppTest {
     /**
      * Fails every 2 seconds (20 tuples * 100 millis)
      */
-    static void registerMonitoredApplicationOne(DirectSubmitter<Topology, Job> submitter) {
+    static void registerMonitoredApplicationOne(DirectSubmitter<Topology, Job> submitter, AtomicInteger topoBuiltCnt, AtomicInteger injectedErrorCnt) {
         ApplicationService appService = submitter.getServices().getService(ApplicationService.class);
         appService.registerTopology(MONITORED_APP_NAME_1, (topology, config) -> {
+          
+                topoBuiltCnt.incrementAndGet();
                 
                 Random r = new Random();
                 TStream<Double> d  = topology.poll(() -> r.nextGaussian(), 100, TimeUnit.MILLISECONDS);
@@ -92,7 +123,8 @@ public class JobMonitorAppTest {
                 d = d.filter(tuple -> {
                     int tupleCount = count.incrementAndGet();
                     if (tupleCount == 20) {
-                        throw new IllegalStateException("Injected error");
+                        injectedErrorCnt.incrementAndGet();
+                        throw new IllegalStateException(MONITORED_APP_NAME_1 + " Injected error " + injectedErrorCnt.get());
                     }
                     return true; 
                 });
@@ -104,9 +136,11 @@ public class JobMonitorAppTest {
     /**
      * Fails every 1.5 seconds (10 tuples * 150 millis)
      */
-    static void registerMonitoredApplicationTwo(DirectSubmitter<Topology, Job> submitter) {
+    static void registerMonitoredApplicationTwo(DirectSubmitter<Topology, Job> submitter, AtomicInteger topoBuiltCnt, AtomicInteger injectedErrorCnt) {
         ApplicationService appService = submitter.getServices().getService(ApplicationService.class);
         appService.registerTopology(MONITORED_APP_NAME_2, (topology, config) -> {
+          
+                topoBuiltCnt.incrementAndGet();
                 
                 Random r = new Random();
                 TStream<Double> d  = topology.poll(() -> r.nextGaussian(), 150, TimeUnit.MILLISECONDS);
@@ -115,7 +149,8 @@ public class JobMonitorAppTest {
                 d = d.filter(tuple -> {
                     int tupleCount = count.incrementAndGet();
                     if (tupleCount == 10) {
-                        throw new IllegalStateException("Injected error");
+                        injectedErrorCnt.incrementAndGet();
+                        throw new IllegalStateException(MONITORED_APP_NAME_2 + " Injected error " + injectedErrorCnt.get());
                     }
                     return true; 
                 });
