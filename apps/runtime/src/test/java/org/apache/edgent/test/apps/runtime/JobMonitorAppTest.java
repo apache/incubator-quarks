@@ -31,7 +31,6 @@ import org.apache.edgent.execution.DirectSubmitter;
 import org.apache.edgent.execution.Job;
 import org.apache.edgent.execution.services.ControlService;
 import org.apache.edgent.execution.services.ServiceContainer;
-import org.apache.edgent.execution.utils.ExecutionMgmt;
 import org.apache.edgent.providers.direct.DirectProvider;
 import org.apache.edgent.runtime.appservice.AppService;
 import org.apache.edgent.runtime.jmxcontrol.JMXControlService;
@@ -39,6 +38,7 @@ import org.apache.edgent.runtime.jobregistry.JobRegistry;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.services.ApplicationService;
+import org.apache.edgent.utils.ExecutionMgmt;
 import org.junit.Test;
 
 public class JobMonitorAppTest {

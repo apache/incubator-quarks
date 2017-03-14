@@ -24,13 +24,13 @@ import org.apache.edgent.execution.Job;
 import org.apache.edgent.execution.services.ControlService;
 import org.apache.edgent.execution.services.RuntimeServices;
 import org.apache.edgent.execution.services.ServiceContainer;
-import org.apache.edgent.execution.utils.ExecutionMgmt;
 import org.apache.edgent.function.Consumer;
 import org.apache.edgent.function.Supplier;
 import org.apache.edgent.runtime.jobregistry.JobEvents;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.services.ApplicationService;
+import org.apache.edgent.utils.ExecutionMgmt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,8 +67,8 @@ public class JobMonitorApp {
     public static final String APP_NAME = SYSTEM_APP_PREFIX + "JobMonitorApp";
     
     /**
-     * Create and registers a {@link JobMonitorApp2} with the ApplicationService
-     * registered in the given service container.
+     * Create and register a {@link JobMonitorApp} with the ApplicationService
+     * registered in the given services container.
      * 
      * @param services provides access to service registrations
      */
@@ -139,7 +139,7 @@ public class JobMonitorApp {
             JsonObject job = JobMonitorAppEvent.getJob(value);
             String applicationName = JobMonitorAppEvent.getJobName(job);
 
-						// TODO EDGENT-395 restart with its prior submission config
+            // TODO EDGENT-395 restart with its prior submission config
             ExecutionMgmt.closeJob(applicationName, controlService);
             ExecutionMgmt.submitApplication(applicationName, null, controlService);
         }

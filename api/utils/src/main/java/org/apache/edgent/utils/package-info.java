@@ -19,4 +19,4 @@ under the License.
 /**
  * Topology execution related utilities.
  */
-package org.apache.edgent.execution.utils;
+package org.apache.edgent.utils;

@@ -39,7 +39,6 @@ import org.apache.edgent.execution.DirectSubmitter;
 import org.apache.edgent.execution.Job;
 import org.apache.edgent.execution.services.ControlService;
 import org.apache.edgent.execution.services.ServiceContainer;
-import org.apache.edgent.execution.utils.ExecutionMgmt;
 import org.apache.edgent.function.BiConsumer;
 import org.apache.edgent.function.Function;
 import org.apache.edgent.providers.direct.DirectProvider;
@@ -49,6 +48,7 @@ import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.TopologyProvider;
 import org.apache.edgent.topology.services.ApplicationService;
+import org.apache.edgent.utils.ExecutionMgmt;
 import org.slf4j.LoggerFactory;
 
 import com.google.gson.JsonObject;
@@ -235,7 +235,7 @@ public class IotProvider implements TopologyProvider,
     protected void registerControlService() {
         // N.B. this overwrites the submitter's control service (if any)
         // e.g., DirectProvider.  Turns out that's OK for DirectProvider,
-        // or at least IotProvider's instantiated one, because DP doesn't
+        // or at least the IotProvider's instantiated one, because DP doesn't
         // directly use the CS it creates... so there isn't anything in it yet.
         // Who knows if other submitters/providers that may have been passed
         // in will be as accomodating.

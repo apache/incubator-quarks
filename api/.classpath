@@ -12,6 +12,7 @@
 	<classpathentry kind="src" path="topology/src/test/java"/>
 	<classpathentry kind="src" path="window/src/main/java"/>
 	<classpathentry kind="src" path="window/src/test/java"/>
+	<classpathentry kind="src" path="utils/src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ext"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>

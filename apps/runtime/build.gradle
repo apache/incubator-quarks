@@ -18,9 +18,9 @@ under the License.
 */
 dependencies {
   addTargetDirProjectJarDependency 'compile', ':api:topology'
+  addTargetDirProjectJarDependency 'compile', ':api:utils'
   addTargetDirProjectJarDependency 'compile', ':runtime:jobregistry'
   addTargetDirProjectJarDependency 'compile', ':runtime:appservice'
-  addTargetDirProjectJarDependency 'compile', ':runtime:utils'
   
   addTargetDirProjectJarDependency 'testCompile', ':providers:direct'
   addTargetDirProjectJarDependency 'testCompile', ':runtime:jmxcontrol'

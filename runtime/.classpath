@@ -9,7 +9,6 @@
 	<classpathentry kind="src" path="jmxcontrol/src/test/java"/>
 	<classpathentry kind="src" path="jsoncontrol/src/main/java"/>
 	<classpathentry kind="src" path="jsoncontrol/src/test/java"/>
-	<classpathentry kind="src" path="utils/src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/api"/>

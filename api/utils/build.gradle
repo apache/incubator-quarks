@@ -18,7 +18,6 @@ under the License.
 */
 dependencies {
   addTargetDirProjectJarDependency 'compile', ':api:execution'
-  addTargetDirProjectJarDependency 'compile', ':api:function'
   addTargetDirProjectJarDependency 'compile', ':api:topology'
   addTargetDirCoreExtJarDependencies 'compile'
 
