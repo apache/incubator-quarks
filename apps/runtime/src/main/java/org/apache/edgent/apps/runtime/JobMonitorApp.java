@@ -70,6 +70,7 @@ public class JobMonitorApp {
     /**
      * Create and register a {@link JobMonitorApp} with the ApplicationService
      * registered in the given services container.
+     * It is registered with the name {@link #APP_NAME}.
      * 
      * @param services provides access to service registrations
      */
