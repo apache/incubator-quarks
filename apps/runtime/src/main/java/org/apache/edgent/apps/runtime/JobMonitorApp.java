@@ -22,6 +22,7 @@ import static org.apache.edgent.topology.services.ApplicationService.SYSTEM_APP_
 
 import org.apache.edgent.execution.Job;
 import org.apache.edgent.execution.services.ControlService;
+import org.apache.edgent.execution.services.JobRegistryService;
 import org.apache.edgent.execution.services.RuntimeServices;
 import org.apache.edgent.execution.services.ServiceContainer;
 import org.apache.edgent.function.Consumer;
@@ -73,12 +74,22 @@ public class JobMonitorApp {
      * @param services provides access to service registrations
      */
     public static void createAndRegister(ServiceContainer services) {
-      JobMonitorApp jm = new JobMonitorApp();
+      JobMonitorApp jm = new JobMonitorApp(services);
       ApplicationService appSvc = services.getService(ApplicationService.class);
       appSvc.registerTopology(JobMonitorApp.APP_NAME, (top,cfg) -> jm.buildTopology(top, cfg)); 
     }
     
-    private JobMonitorApp() {
+    private JobMonitorApp(ServiceContainer services) {
+      // avoid subtle / delayed failures if the usage requirements aren't met
+      if (null == services.getService(ApplicationService.class)) {
+        throw new IllegalStateException("ApplicationService service isn't registered");
+      }
+      if (null == services.getService(ControlService.class)) {
+        throw new IllegalStateException("ControlService service isn't registered");
+      }
+      if (null == services.getService(JobRegistryService.class)) {
+        throw new IllegalStateException("JobRegistryService service isn't registered");
+      }
     }
     
     /**

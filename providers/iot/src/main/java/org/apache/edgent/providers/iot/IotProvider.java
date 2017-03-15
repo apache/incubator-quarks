@@ -174,7 +174,16 @@ public class IotProvider implements TopologyProvider,
         
         createIotDeviceApp();
         createIotCommandToControlApp();
-        createJobMonitorApp();
+        /*
+         * The app was effectively a no-op in the absence
+         * of the required JobRegistryService and IotProvider
+         * didn't document that it added.
+         * Things now ultimately blow up if JobMonitorApp
+         * is added and a JobRegistryService isn't present
+         * so don't add it.  
+         * See EDGENT-397 for adding it.
+         */
+        //createJobMonitorApp();
     }
     
     /**
@@ -341,11 +350,11 @@ public class IotProvider implements TopologyProvider,
     public void start() throws Exception {
         
         for (String systemAppName : systemApps) {
-            ExecutionMgmt.submitApplication(systemAppName, null /* no config */, getServices());
+            ExecutionMgmt.submitApplication(systemAppName, null /* no config */, getControlService());
         }
         
         for (Entry<String,JsonObject> e : autoSubmitApps.entrySet()) {
-          ExecutionMgmt.submitApplication(e.getKey(), e.getValue(), getServices());
+          ExecutionMgmt.submitApplication(e.getKey(), e.getValue(), getControlService());
         }
     }
 
