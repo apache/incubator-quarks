@@ -21,7 +21,7 @@
 
 set -e
 
-# Copy the (approved) release candidate artifacts and KEYS from the 
+# Move/Copy the (approved) release candidate artifacts and KEYS from the 
 # ASF subversion Edgent Release Candidate repository to the
 # ASF subversion Edgent Release repository.
 # Prompts before taking actions.
@@ -57,7 +57,7 @@ COMMIT_MSG="Release Apache Edgent ${RELEASE_TAG} from ${RC_TAG}"
 confirm "Proceed to publish release ${RELEASE_TAG} from candidate ${RC_TAG}?" || exit
 
 echo
-confirm "Proceed to update the KEYS?" || exit
+confirm "Proceed to update the dev and release KEYS?" || exit
 (set -x; svn update ${SVN_DEV_EDGENT}/KEYS)
 SVN_PARENT_DIR=`dirname ${SVN_REL_EDGENT}`
 (set -x; mkdir -p ${SVN_PARENT_DIR})
@@ -70,13 +70,13 @@ SVN_PARENT_DIR=`dirname ${SVN_REL_EDGENT}`
 echo
 confirm "Proceed to move the ${RC_TAG} artifacts?" || exit
 (set -x; svn move \
-  ${EDGENT_ASF_SVN_DEV_URL}/${VER_DIRNAME}/${RC_DIRNAME} \
+  ${EDGENT_ASF_SVN_RC_URL}/${VER_DIRNAME}/${RC_DIRNAME} \
   ${EDGENT_ASF_SVN_RELEASE_URL}/${VER_DIRNAME} \
   -m "${COMMIT_MSG}")
 
 echo
 echo "The ASF dev and release repositories have been updated:"
-echo "    ${EDGENT_ASF_SVN_DEV_URL}"
+echo "    ${EDGENT_ASF_SVN_RC_URL}"
 echo "    ${EDGENT_ASF_SVN_RELEASE_URL}"
 echo "    ${EDGENT_ASF_DIST_URL}"
 echo "    ${EDGENT_ASF_DIST_DYN_URL}"
