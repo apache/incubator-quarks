@@ -34,7 +34,7 @@ public interface ApplicationServiceMXBean {
      * Submit an application registered with the application service.
      * 
      * @param applicationName Name of the application.
-     * @param jsonConfig JSON configuration serialized as a String.
+     * @param jsonConfig JsonObject configuration serialized as a JSON String.
      * Null or an empty String is equivalent to an empty JSON object.
      * 
      * @throws Exception Error submitting application.
@@ -49,7 +49,8 @@ public interface ApplicationServiceMXBean {
      * be registered as applications.
      * 
      * @param jarURL URL for the jar file.
-     * @param jsonConfig JSON configuration serialized as a String (currently unused).
+     * @param jsonConfig JsonObject configuration serialized as a JSON String (currently unused).
+     * Null or an empty String is equivalent to an empty JSON object.
      * @throws Exception Error registering jar.
      * 
      * @see ApplicationService
