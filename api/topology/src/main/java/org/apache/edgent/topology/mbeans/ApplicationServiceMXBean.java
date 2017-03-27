@@ -18,6 +18,7 @@ under the License.
 */
 package org.apache.edgent.topology.mbeans;
 
+import org.apache.edgent.execution.Job;
 import org.apache.edgent.topology.services.ApplicationService;
 import org.apache.edgent.topology.services.TopologyBuilder;
 
@@ -36,11 +37,12 @@ public interface ApplicationServiceMXBean {
      * @param applicationName Name of the application.
      * @param jsonConfig JsonObject configuration serialized as a JSON String.
      * Null or an empty String is equivalent to an empty JSON object.
+     * @return the Job's id - from {@link Job#getId()}
      * 
      * @throws Exception Error submitting application.
      * @see ApplicationService
      */
-    void submit(String applicationName, String jsonConfig) throws Exception;
+    String submit(String applicationName, String jsonConfig) throws Exception;
     
     /**
      * Register a jar file containing applications with

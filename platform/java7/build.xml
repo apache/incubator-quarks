@@ -122,6 +122,7 @@
 		<retro7 qjar="edgent.api.window.jar" />
 		<retro7 qjar="edgent.api.oplet.jar" />
 		<retro7 qjar="edgent.api.topology.jar" />
+        <retro7 qjar="edgent.api.utils.jar" />
 		<retro7 qjar="edgent.spi.graph.jar" />
 		<retro7 qjar="edgent.spi.topology.jar" />
 		<retro7 qjar="edgent.runtime.etiao.jar" />
@@ -275,6 +276,7 @@
 		<retro7.test.setup tdir="api/window" />
 		<retro7.test.setup tdir="api/oplet" />
 		<retro7.test.setup tdir="api/topology" />
+        <retro7.test.setup tdir="api/utils" />
 		<retro7.test.setup tdir="spi/graph" />
 		<retro7.test.setup tdir="spi/topology" />
         <retro7.test.setup tdir="runtime/appservice" />
@@ -308,6 +310,7 @@
 		<retro7.test.run tdir="api/window" />
 		<retro7.test.run tdir="api/oplet" />
 		<retro7.test.run tdir="api/topology" />
+        <!-- <retro7.test.run tdir="api/utils" /> lacks its own tests --> 
 		<retro7.test.run tdir="spi/graph" />
 		<retro7.test.run tdir="spi/topology" />
         <retro7.test.run tdir="runtime/appservice" />

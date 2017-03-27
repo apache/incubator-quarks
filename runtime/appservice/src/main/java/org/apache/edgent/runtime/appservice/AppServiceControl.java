@@ -24,8 +24,6 @@ import org.apache.edgent.execution.Configs;
 import org.apache.edgent.function.BiConsumer;
 import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.mbeans.ApplicationServiceMXBean;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -33,18 +31,17 @@ import com.google.gson.JsonParser;
 public class AppServiceControl implements ApplicationServiceMXBean {
     
     private final AppService service;
-    private static final Logger logger = LoggerFactory.getLogger(AppServiceControl.class);
     
     AppServiceControl(AppService service) {
         this.service = service;
     }
 
     @Override
-    public void submit(String applicationName, String jsonConfig) throws Exception {
+    public String submit(String applicationName, String jsonConfig) throws Exception {
         
         BiConsumer<Topology, JsonObject> builder = service.getBuilder(applicationName);
         if (builder == null)
-            return;
+          throw new IllegalStateException("No builder registered in the ApplicationService for \""+applicationName+"\"");
         
         JsonObject config;
         
@@ -62,9 +59,7 @@ public class AppServiceControl implements ApplicationServiceMXBean {
             config.addProperty(Configs.JOB_NAME, applicationName);
         
         try {
-            service.getSubmitter().submit(topology, config).get();
-        } catch (InterruptedException e) {
-            logger.error("Exception caught while waiting for submitted executable", e);
+            return service.getSubmitter().submit(topology, config).get().getId();
         } catch (ExecutionException e) {
             Throwable t = e.getCause();
             if (t instanceof Error)

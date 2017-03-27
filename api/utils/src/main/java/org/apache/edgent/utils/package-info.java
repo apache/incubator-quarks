@@ -16,13 +16,7 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 */
-dependencies {
-  addTargetDirProjectJarDependency 'compile', ':api:topology'
-  addTargetDirProjectJarDependency 'compile', ':api:utils'
-  addTargetDirProjectJarDependency 'compile', ':runtime:jobregistry'
-  addTargetDirProjectJarDependency 'compile', ':runtime:appservice'
-  
-  addTargetDirProjectJarDependency 'testCompile', ':providers:direct'
-  addTargetDirProjectJarDependency 'testCompile', ':runtime:jmxcontrol'
-  // N.B. root project adds test common dependencies
-}
+/**
+ * Topology execution related utilities.
+ */
+package org.apache.edgent.utils;

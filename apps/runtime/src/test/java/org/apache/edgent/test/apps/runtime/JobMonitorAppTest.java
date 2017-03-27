@@ -38,6 +38,7 @@ import org.apache.edgent.runtime.jobregistry.JobRegistry;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.services.ApplicationService;
+import org.apache.edgent.utils.ExecutionMgmt;
 import org.junit.Test;
 
 public class JobMonitorAppTest {
@@ -50,9 +51,10 @@ public class JobMonitorAppTest {
         DirectProvider provider = new DirectProvider();
         startProvider(provider);
 
+        JobMonitorApp.createAndRegister(provider.getServices());
+        
         // Start monitor app
-        JobMonitorApp app = new JobMonitorApp(provider, provider, JobMonitorApp.APP_NAME);
-        Job monitor = app.submit();
+        Job monitor = ExecutionMgmt.submitApplication(JobMonitorApp.APP_NAME, null, provider.getServices());
 
         // Declare and register user apps which need monitoring
         AtomicInteger appOneBuildCnt = new AtomicInteger();
@@ -166,7 +168,9 @@ public class JobMonitorAppTest {
 
         // Submit all applications registered with the ApplicationService
         for (String name: appService.getApplicationNames()) {
-            JobMonitorApp.submitApplication(name, controlService);
+          if (name.equals(JobMonitorApp.APP_NAME))
+            continue;
+          ExecutionMgmt.submitApplication(name, null, controlService);
         }
     }
 }
