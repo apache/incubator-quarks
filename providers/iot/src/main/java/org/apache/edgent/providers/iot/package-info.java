@@ -38,14 +38,14 @@ under the License.
  * <H4>Control service</H4>
  * Device commands with the command identifier '{@link org.apache.edgent.connectors.iot.Commands#CONTROL_SERVICE edgentControl}'
  * are sent to the provider's control service, an instance of {@link org.apache.edgent.runtime.jsoncontrol.JsonControlService JsonControlService}.
- * This allows invocation of an operation against a control mbean registered with the
+ * This allows invocation of an operation against a control MBean registered with the
  * control service, either by an application or the provider itself.
  * <P>
  * The command's data (JSON) uniquely identifies a control MBean through its type and
  * alias, and indicates the operation to call on the MBean and the arguments to
  * pass to the operation.
  * Thus any control operation can be remotely invoked through a {@code edgentControl} device command,
- * including arbitrary control mbeans registered by applications.
+ * including arbitrary control MBeans registered by applications.
  * 
  * <H4 id="providerOps">Provider operations</H4>
  * <table border="1" summary="Provider operations">

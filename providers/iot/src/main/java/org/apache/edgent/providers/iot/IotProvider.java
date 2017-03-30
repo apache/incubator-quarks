@@ -37,6 +37,7 @@ import org.apache.edgent.connectors.pubsub.service.ProviderPubSub;
 import org.apache.edgent.connectors.pubsub.service.PublishSubscribeService;
 import org.apache.edgent.execution.DirectSubmitter;
 import org.apache.edgent.execution.Job;
+import org.apache.edgent.execution.mbeans.JobMXBean;
 import org.apache.edgent.execution.services.ControlService;
 import org.apache.edgent.execution.services.ServiceContainer;
 import org.apache.edgent.function.BiConsumer;
@@ -49,19 +50,51 @@ import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.TopologyProvider;
 import org.apache.edgent.topology.mbeans.ApplicationServiceMXBean;
 import org.apache.edgent.topology.services.ApplicationService;
+import org.apache.edgent.topology.services.TopologyBuilder;
 import org.slf4j.LoggerFactory;
 
 import com.google.gson.JsonObject;
 
 /**
- * IoT provider supporting multiple topologies with a single connection to a
- * message hub. A provider that uses a single {@link IotDevice} to communicate
- * with an IoT scale message hub.
- * {@link org.apache.edgent.connectors.pubsub.PublishSubscribe Publish-subscribe} is
- * used to allow multiple topologies to communicate through the single
- * connection.
- * <P>
- * This provider registers these services:
+ * A provider that supports sharing of a single connection to an IoT message hub and
+ * access to control MBeans via IoT device commands.
+ * 
+ * <pre><code>
+ * // sample use
+ * class MyApp {
+ *   ...
+ *   public void run(String[] args) throws Exception {
+ *      IotProvider provider = new IotProvider((top) -> new IotpDevice(top, myDeviceConfig));
+ *      provider.registerTopology("app1", (iotDevice, cfg) -> buildApp1(iotDevice, cfg));
+ *      provider.start();
+ *   }
+ *   private void buildApp1(IotDevice iotDevice, JsonConfig cfg) {
+ *      Topology top = iotDevice.getTopology();
+ *      ... build the topology
+ *   }
+ * }
+ * </code></pre>
+ * 
+ * <p>The registered builders are subsequently invoked from
+ * {@link ApplicationServiceMXBean#submit(String, String) ApplicationServiceMXBean.submit()}.  
+ * Each builder invocation is given a virtual {@code IotDevice} for the topology's use.
+ * Jobs can be stopped using their {@link JobMXBean} control.
+ * 
+ * <p>Applications may also be registered via 
+ * {@link ApplicationServiceMXBean#registerJar(String, String) registerJar()}.
+ * See the note below regarding the {@code TopologyBuilder} for such applications.
+ * 
+ * <p>Constructed topologies may also be submitted via 
+ * {@link #submit(Topology, JsonObject) submit()} and are controllable
+ * via their {@code JobMXBean}.  
+ * The {@code ApplicationService} is unaware of these topologies.
+ * 
+ * <p>See the
+ * <a href="{@docRoot}/org/apache/edgent/providers/iot/package-summary.html">package documentation</a>
+ * for details of using {@link Commands#CONTROL_SERVICE edgentControl} IoT device commands
+ * to invoke methods on MBeans registered with the {@code ControlService}.
+ * 
+ * <p>This provider registers these services:
  * <UL>
  * <LI>{@link ControlService control} - An instance of {@link JsonControlService}.</LI>
  * <LI>{@link ApplicationService application} - An instance of {@link AppService}.</LI>
@@ -72,25 +105,41 @@ import com.google.gson.JsonObject;
  * then any preferences will be maintained across provider and JVM restarts when creating a
  * provider with the same name. The {@code Preferences} node is a user node.
  * </UL>
- * <P>
- * System applications provide:
+ * 
+ * <p>System applications provide:
  * <UL>
  * <LI>Single connection to the message hub using an {@code IotDevice}
  * using {@link IotDevicePubSub}.
  * Applications using this provider that want to connect
  * to the message hub for device events and commands must create an instance of
- * {@code IotDevice} using {@link IotDevicePubSub#addIotDevice(org.apache.edgent.topology.TopologyElement) addIotDevice()}</LI>
- * <LI>Access to the control service through device commands from the message hub using command
- * identifier {@link Commands#CONTROL_SERVICE edgentControl}.
- * See the
- * <a href="{@docRoot}/org/apache/edgent/providers/iot/package-summary.html">package documentation</a>
- * for more information.
+ * {@code IotDevice} using {@link IotDevicePubSub#addIotDevice(org.apache.edgent.topology.TopologyElement) addIotDevice()}.
+ * See below for more information.
+ * </LI>
+ * <LI>Access to the control service through device commands from the message hub.</LI>
  * </UL>
- * <P>
- * An {@code IotProvider} is created with a provider and submitter that it delegates
- * the creation and submission of topologies to.
- * </P>
  * 
+ * <p>If topology builders are registered with the ApplicationService using
+ * something other than this provider's {@code registerTopology()},
+ * that code is responsible for creating the virtual IotDevice as described
+ * above on each builder invocation.
+ *  
+ * <p>For example, an application loaded and registered via
+ * {@link ApplicationService#registerJar(String, String) ApplicationService.registerJar()}
+ * would create the {@code IotDevice} for its builder in its
+ * {@link TopologyBuilder#getBuilder()} implementation:
+ * <pre><code>
+ * class MyApp implements TopologyBuilder {  // be loadable by registerJar()
+ *   &#64;Override
+ *   public BiConsumer&lt;Topology t, JsonConfig c&gt; getBuilder() {
+ *     return (t, c) -> buildTopology(IotDevicePubSub.addIotDevice(t), c);
+ *   }
+ *   private void buildTopology(IotDevice iotDevice, JsonConfig c) {
+ *     Topology t = iotDevice.getTopology();
+ *     ... build your topology
+ *   }
+ * }
+ * </code></pre>
+ *
  * @see IotDevice
  * @see IotDevicePubSub
  */
