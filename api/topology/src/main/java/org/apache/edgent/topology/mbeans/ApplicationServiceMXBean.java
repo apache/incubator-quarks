@@ -44,12 +44,13 @@ public interface ApplicationServiceMXBean {
     
     /**
      * Register a jar file containing applications with
-     * the application service. Any service providers
-     * in the jar of type {@link TopologyBuilder} will
-     * be registered as applications.
+     * the application service.
+     * 
+     * <p>See {@link ApplicationService#registerJar(String, String) ApplicationService.registerJar()}
+     * for further semantics and requirements on the jar.
      * 
      * @param jarURL URL for the jar file.
-     * @param jsonConfig JsonObject configuration serialized as a JSON String (currently unused).
+     * @param jsonConfig JsonObject configuration serialized as a JSON String.
      * Null or an empty String is equivalent to an empty JSON object.
      * @throws Exception Error registering jar.
      * 

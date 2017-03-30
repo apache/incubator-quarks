@@ -28,7 +28,6 @@ import org.apache.edgent.topology.mbeans.ApplicationServiceMXBean;
 import com.google.gson.JsonObject;
 
 /**
- * Application registration service.
  * A service that allows registration of applications and
  * the ability to submit them through a control MBean.
  *
@@ -78,9 +77,10 @@ public interface ApplicationService {
     
     /**
      * Register a jar file containing new applications.
-     * Any service provider within the jar of type {@link TopologyBuilder}
-     * will be {@link #registerTopology(String, BiConsumer) registered} as
-     * a topology.
+     * 
+     * <p>Any {@link java.util.ServiceLoader service provider} 
+     * within the jar of type {@link TopologyBuilder}
+     * will be {@link #registerTopology(String, BiConsumer) registered}.
      * 
      * The jar cannot have any new dependencies, its classpath will
      * be the classpath of this service.
@@ -88,6 +88,8 @@ public interface ApplicationService {
      * @param jarURL URL of Jar containing new applications.
      * @param jsonConfig JSON configuration serialized as a String (currently unused).
      * @throws Exception if failure
+     * 
+     * @see java.util.ServiceLoader
      */
     void registerJar(String jarURL, String jsonConfig) throws Exception;
     
