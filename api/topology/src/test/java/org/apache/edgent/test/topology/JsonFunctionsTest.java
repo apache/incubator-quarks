@@ -25,6 +25,7 @@ import org.apache.edgent.topology.json.JsonFunctions;
 import org.junit.Test;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
@@ -74,5 +75,50 @@ public class JsonFunctionsTest {
         JsonObject jo2 = fromBytes.apply(b1);
         
         assertEquals(jo2, jo1);
+    }
+    
+    @Test
+    public void testUnpartitioned() {
+        Function<JsonObject,JsonElement> unpartitionedFn = JsonFunctions.unpartitioned();
+        assertEquals(0, unpartitionedFn.apply(new JsonObject()).getAsInt());
+    }
+    
+    @Test
+    public void testValueOfNumber() {
+      JsonObject joShort = JsonFunctions.valueOfNumber("propName").apply(Short.MAX_VALUE);
+      assertEquals(Short.MAX_VALUE, joShort.get("propName").getAsShort());
+      
+      JsonObject joInt = JsonFunctions.valueOfNumber("propName").apply(Integer.MAX_VALUE);
+      assertEquals(Integer.MAX_VALUE, joInt.get("propName").getAsInt());
+      
+      JsonObject joLong = JsonFunctions.valueOfNumber("propName").apply(Long.MAX_VALUE);
+      assertEquals(Long.MAX_VALUE, joLong.get("propName").getAsLong());
+      
+      JsonObject joFloat = JsonFunctions.valueOfNumber("propName").apply(Float.MAX_VALUE);
+      assertEquals(Float.MAX_VALUE, joFloat.get("propName").getAsFloat(), 0.0f);
+      
+      JsonObject joDouble = JsonFunctions.valueOfNumber("propName").apply(Double.MAX_VALUE);
+      assertEquals(Double.MAX_VALUE, joDouble.get("propName").getAsDouble(), 0.0d);
+    }
+    
+    @Test
+    public void testValueOfBoolean() {
+      JsonObject joTrue = JsonFunctions.valueOfBoolean("propName").apply(true);
+      assertEquals(true, joTrue.get("propName").getAsBoolean());
+
+      JsonObject joFalse = JsonFunctions.valueOfBoolean("propName").apply(false);
+      assertEquals(false, joFalse.get("propName").getAsBoolean());
+    }
+    
+    @Test
+    public void testValueOfString() {
+      JsonObject jo = JsonFunctions.valueOfString("propName").apply("str1");
+      assertEquals("str1", jo.get("propName").getAsString());
+    }
+    
+    @Test
+    public void testValueOfCharacter() {
+      JsonObject jo = JsonFunctions.valueOfCharacter("propName").apply('c');
+      assertEquals('c', jo.get("propName").getAsCharacter());
     }
 }
