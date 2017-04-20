@@ -60,11 +60,11 @@ import com.google.gson.JsonObject;
  * 
  * <p>Example: compute multiple aggregations on multiple variables in a tuple T,
  * capturing the results in a {@link MvResultMap}:
- * <pre>{@code
+ * <pre><code>
  *class SensorReading { 
- *  double getTemp() {...&#125;;
- *  double getPressure() {...&#125;;
- *  ... &#125;;
+ *  double getTemp() {...};
+ *  double getPressure() {...};
+ *  ... };
  *TStream&lt;SensorReading> readings = ...
  *TWindow&lt;SensorReading,Integer> window = sensorReadings.last(5, Functions.unpartitioned());
  *TStream&lt;MvResultMap> aggregations = window.batch(
@@ -75,8 +75,8 @@ import com.google.gson.JsonObject;
  *        results.put("pressure", pressureResults);
  *        results.put("temp", tempResults);
  *        return results;
- *      &#125;);
- * }</pre>
+ *      });
+ * </code></pre>
  *
  * <p>Example: convert a {@code TStream<ResultMap>} or {@code TStream<MvResultMap>} to a JsonObject:
  * 
