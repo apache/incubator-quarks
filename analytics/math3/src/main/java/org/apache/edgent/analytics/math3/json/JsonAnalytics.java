@@ -21,6 +21,7 @@ package org.apache.edgent.analytics.math3.json;
 import java.util.List;
 
 import org.apache.commons.math3.util.Pair;
+import org.apache.edgent.analytics.math3.Aggregations;
 import org.apache.edgent.function.BiFunction;
 import org.apache.edgent.function.ToDoubleFunction;
 import org.apache.edgent.topology.TStream;
@@ -32,6 +33,7 @@ import com.google.gson.JsonObject;
 /**
  * Apache Common Math analytics for streams with JSON tuples.
  *
+ * @see Aggregations
  */
 public class JsonAnalytics {
     
