@@ -25,6 +25,11 @@ package org.apache.edgent.analytics.math3;
  */
 public interface UnivariateAggregator {
   
+    /**
+     * Get the {@code UnivariateAggregate} this
+     * aggregator is associated with.
+     * @return the aggregate
+     */
     UnivariateAggregate getAggregate();
     
     /**
