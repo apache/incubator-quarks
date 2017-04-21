@@ -77,7 +77,7 @@ import org.apache.edgent.topology.TWindow;
  * 
  * <pre>{@code
  *   TStream<ResultMap> resultMap = ...
- * TStream<JsonObject> joResultMap = resultMap.map(Aggregations.newResultsToJsonFn());
+ * TStream<JsonObject> joResultMap = resultMap.map(ResultMap.toJsonObject());
  * }</pre>
  * 
  * 
