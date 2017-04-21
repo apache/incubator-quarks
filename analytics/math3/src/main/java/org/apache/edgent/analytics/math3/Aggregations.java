@@ -19,7 +19,6 @@ under the License.
 package org.apache.edgent.analytics.math3;
 
 import java.util.Collection;
-import java.util.HashMap;
 
 import org.apache.edgent.analytics.math3.json.JsonAnalytics;
 import org.apache.edgent.analytics.math3.stat.Regression2;
@@ -160,19 +159,6 @@ public class Aggregations {
       sum += v.longValue();
     return sum;
   }
-  
-  /**
-   * Aggregation results for a single aggregated variable.
-   */
-  public static class ResultMap extends HashMap<UnivariateAggregate,Double> {
-    private static final long serialVersionUID = 1L;
-  }
-  
-  /**
-   * Create a new empty {@link ResultMap}.
-   * @return the ResultMap.
-   */
-  public static ResultMap newResults() { return new ResultMap(); }
 
   /**
    * Create a {@link Function} whose {@code apply(ResultMap)} converts the value
@@ -186,20 +172,6 @@ public class Aggregations {
     Gson gson = new Gson();
     return (ResultMap resultMap) -> gson.toJsonTree(resultMap).getAsJsonObject();
   }
-
-  /**
-   * Aggregation results for a multiple aggregated variables.
-   * <p>The name of the aggregated variable is typically the key for the variable's {@link ResultMap}.
-   */
-  public static class MvResultMap extends HashMap<String,ResultMap> {
-    private static final long serialVersionUID = 1L;
-  };
-  
-  /**
-   * Create a new empty {@link MvResultMap}.
-   * @return the MvResultMap.
-   */
-  public static MvResultMap newMvResults() { return new MvResultMap(); }
 
   /**
    * Create a {@link Function} whose {@code apply(MvResultMap)} converts the value
@@ -281,7 +253,7 @@ public class Aggregations {
   public static <T> ResultMap aggregateN(Collection<T> c, ToDoubleFunction<T> getter, UnivariateAggregate... aggregates) {
 
     final int n = c.size();
-    final ResultMap result = newResults();
+    final ResultMap result = new ResultMap();
     
     if (n != 0) {
       // get new UnivariateAggregate instances for this aggregation

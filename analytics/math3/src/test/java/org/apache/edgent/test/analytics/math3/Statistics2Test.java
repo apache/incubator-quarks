@@ -29,8 +29,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.edgent.analytics.math3.Aggregations;
-import org.apache.edgent.analytics.math3.Aggregations.MvResultMap;
-import org.apache.edgent.analytics.math3.Aggregations.ResultMap;
+import org.apache.edgent.analytics.math3.MvResultMap;
+import org.apache.edgent.analytics.math3.ResultMap;
 import org.apache.edgent.analytics.math3.UnivariateAggregate;
 import org.apache.edgent.analytics.math3.stat.Regression2;
 import org.apache.edgent.analytics.math3.stat.Statistic2;
@@ -325,7 +325,7 @@ public class Statistics2Test  extends TopologyAbstractTest implements DirectTest
   /* test Aggregations.newResultToJson() */
   @Test
   public void testNewResultsToJson() throws Exception {
-    ResultMap result = Aggregations.newResults();
+    ResultMap result = new ResultMap();
     result.put(Statistic2.MIN, 2.5);
     result.put(Statistic2.MAX, 4.5);
     
@@ -340,14 +340,14 @@ public class Statistics2Test  extends TopologyAbstractTest implements DirectTest
   /* test Aggregations.newMvResultToJson() */
   @Test
   public void testNewMvResultsToJson() throws Exception {
-    ResultMap var1result = Aggregations.newResults();
+    ResultMap var1result = new ResultMap();
     var1result.put(Statistic2.MIN, 2.5);
     var1result.put(Statistic2.MAX, 4.5);
     
-    ResultMap var2result = Aggregations.newResults();
+    ResultMap var2result = new ResultMap();
     var2result.put(Statistic2.SUM, 27.1);
 
-    MvResultMap result = Aggregations.newMvResults();
+    MvResultMap result = new MvResultMap();
     result.put("var1", var1result);
     result.put("var2", var2result);
 
@@ -422,7 +422,7 @@ public class Statistics2Test  extends TopologyAbstractTest implements DirectTest
     TStream<MvResultMap> aggregate = window.aggregate( (list,partition) -> {
         ResultMap var1result = Aggregations.aggregateN(list, sr -> sr.var1, stats);
         ResultMap var2result = Aggregations.aggregateN(list, sr -> sr.var2, stats);
-        MvResultMap result = Aggregations.newMvResults();
+        MvResultMap result = new MvResultMap();
         result.put("var1", var1result);
         result.put("var2", var2result);
         return result;
