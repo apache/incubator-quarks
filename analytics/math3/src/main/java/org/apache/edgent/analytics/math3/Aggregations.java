@@ -23,12 +23,8 @@ import java.util.Collection;
 import org.apache.edgent.analytics.math3.json.JsonAnalytics;
 import org.apache.edgent.analytics.math3.stat.Regression2;
 import org.apache.edgent.analytics.math3.stat.Statistic2;
-import org.apache.edgent.function.Function;
 import org.apache.edgent.function.ToDoubleFunction;
 import org.apache.edgent.topology.TWindow;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 /**
  * Apache Common Math analytics for Collections.
@@ -158,34 +154,6 @@ public class Aggregations {
     for (Number v : list) 
       sum += v.longValue();
     return sum;
-  }
-
-  /**
-   * Create a {@link Function} whose {@code apply(ResultMap)} converts the value
-   * to a {@code JsonObject}.  The ResultMap's key's names are the JsonObject property
-   * names and the property value is the key's value.
-   * 
-   * <p>An example resulting JsonObject would be <pre>{ "MEAN":3.75, "MIN":2.0 }</pre>.
-   * @return the JsonObject
-   */
-  public static Function<ResultMap,JsonObject> newResultsToJson() {
-    Gson gson = new Gson();
-    return (ResultMap resultMap) -> gson.toJsonTree(resultMap).getAsJsonObject();
-  }
-
-  /**
-   * Create a {@link Function} whose {@code apply(MvResultMap)} converts the value
-   * to a {@code JsonObject}.  The MvResultMap's key's names are the JsonObject property
-   * names and the property value is the JsonObject for the key's ResultMap value.
-   * 
-   * <p>An example resulting JsonObject would be 
-   * <pre>{ "temperature":{"MEAN":123.75, "MAX":180.5}, "pressure":{"MAX":13.0} }</pre>.
-   * 
-   * @return the JsonObject
-   */
-  public static Function<MvResultMap,JsonObject> newMvResultsToJson() {
-    Gson gson = new Gson();
-    return (MvResultMap mvResultMap) -> gson.toJsonTree(mvResultMap).getAsJsonObject();
   }
 
   /**

@@ -329,7 +329,7 @@ public class Statistics2Test  extends TopologyAbstractTest implements DirectTest
     result.put(Statistic2.MIN, 2.5);
     result.put(Statistic2.MAX, 4.5);
     
-    JsonObject jo = Aggregations.newResultsToJson().apply(result);
+    JsonObject jo = ResultMap.toJsonObject().apply(result);
     
     assertTrue(jo.get(Statistic2.MIN.name()) != null);
     assertEquals(jo.get(Statistic2.MIN.name()).getAsDouble(), 2.5, 0.01);
@@ -351,7 +351,7 @@ public class Statistics2Test  extends TopologyAbstractTest implements DirectTest
     result.put("var1", var1result);
     result.put("var2", var2result);
 
-    JsonObject jo = Aggregations.newMvResultsToJson().apply(result);
+    JsonObject jo = MvResultMap.toJsonObject().apply(result);
 
     assertTrue(jo.get("var1") != null);
     JsonObject joVar1 = jo.get("var1").getAsJsonObject();
