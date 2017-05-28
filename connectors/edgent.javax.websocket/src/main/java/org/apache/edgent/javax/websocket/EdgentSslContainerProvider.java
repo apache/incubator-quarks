@@ -64,7 +64,7 @@ public abstract class EdgentSslContainerProvider {
         throw new RuntimeException("Unable to find an implementation of EdgentSslContainerProvider");
     }
 
-    /**
+    /**^
      * Create a WebSocketContainer setup for SSL.
      * To be implemented by a javax.websocket client provider.
      * @param config  SSL configuration info. 

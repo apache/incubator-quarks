@@ -20,6 +20,8 @@ package org.apache.edgent.test.providers.dev.topology;
 
 import org.apache.edgent.test.providers.dev.DevelopmentTestSetup;
 import org.apache.edgent.test.topology.TopologyTest;
+import org.junit.Ignore;
 
+@Ignore
 public class DevelopmentTopologyTest extends TopologyTest implements DevelopmentTestSetup {
 }

@@ -31,10 +31,12 @@ import org.apache.edgent.streamscope.mbeans.StreamScopeRegistryMXBean;
 import org.apache.edgent.test.providers.dev.DevelopmentTestSetup;
 import org.apache.edgent.test.streamscope.StreamScopeTest;
 import org.apache.edgent.topology.Topology;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.gson.Gson;
 
+@Ignore
 public class DevelopmentStreamScopeTest extends StreamScopeTest implements DevelopmentTestSetup {
   
   @Test

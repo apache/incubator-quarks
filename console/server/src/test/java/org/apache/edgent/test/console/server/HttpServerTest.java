@@ -46,7 +46,7 @@ public class HttpServerTest {
         		assertEquals("", "");
         	}
         } finally {
-        	if (warNotFoundExceptionThrown == false) {
+        	if (!warNotFoundExceptionThrown) {
         		assertNotNull("HttpServer getInstance is null", myHttpServer);
         	} else {
         		assertNull("HttpServer getInstance is null because console.war could not be found", myHttpServer);
@@ -67,14 +67,13 @@ public class HttpServerTest {
         		assertEquals("", "");
         	}
         } finally {
-        	if (warNotFoundExceptionThrown == false) {
+        	if ((!warNotFoundExceptionThrown) && (myHttpServer != null)){
                 myHttpServer.startServer();
                 assertTrue(myHttpServer.isServerStarted());
         	} else {
         		assertNull("HttpServer getInstance is null because console.war could not be found", myHttpServer);
         	}
         }
-
     }
 
     @Test
@@ -90,7 +89,7 @@ public class HttpServerTest {
         		assertEquals("", "");
         	}
         } finally {
-        	if (warNotFoundExceptionThrown == false) {
+			if ((!warNotFoundExceptionThrown) && (myHttpServer != null)){
                 myHttpServer.startServer();
                 assertFalse(myHttpServer.isServerStopped());
         	} else {
@@ -112,7 +111,7 @@ public class HttpServerTest {
         		assertEquals("", "");
         	}
         } finally {
-        	if (warNotFoundExceptionThrown == false) {
+			if ((!warNotFoundExceptionThrown) && (myHttpServer != null)){
         		assertEquals("/console", myHttpServer.getConsoleContextPath());
         	} else {
         		assertNull("HttpServer getInstance is null because console.war could not be found", myHttpServer);
@@ -135,7 +134,7 @@ public class HttpServerTest {
         		assertEquals("", "");
         	}
         } finally {
-        	if (warNotFoundExceptionThrown == false) {
+			if ((!warNotFoundExceptionThrown) && (myHttpServer != null)){
                 myHttpServer.startServer();
                 int portNum = myHttpServer.getConsolePortNumber();
                 String context = myHttpServer.getConsoleContextPath();
@@ -159,7 +158,7 @@ public class HttpServerTest {
         		assertEquals("", "");
         	}
         } finally {
-        	if (warNotFoundExceptionThrown == false) {
+			if ((!warNotFoundExceptionThrown) && (myHttpServer != null)){
                 myHttpServer.startServer();
                 int portNum = myHttpServer.getConsolePortNumber();
                 assertTrue("the port number is not in integer range: " + Integer.toString(portNum),

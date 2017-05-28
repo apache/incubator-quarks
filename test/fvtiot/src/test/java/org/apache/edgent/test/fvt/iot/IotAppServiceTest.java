@@ -30,6 +30,7 @@ import org.apache.edgent.runtime.appservice.AppService;
 import org.apache.edgent.runtime.jsoncontrol.JsonControlService;
 import org.apache.edgent.topology.mbeans.ApplicationServiceMXBean;
 import org.apache.edgent.topology.services.ApplicationService;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.gson.JsonArray;
@@ -61,6 +62,7 @@ public class IotAppServiceTest {
     }
     
     @Test
+    @Ignore("This test relies on an existing war in a given location ... need to refactor this")
     public void testAppServiceJar() throws Exception {
         
         DirectProvider provider = new DirectProvider();
