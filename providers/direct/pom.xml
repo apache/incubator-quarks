@@ -46,6 +46,48 @@
           </execution>
         </executions>
       </plugin>
+
+      <!--
+          Make the dependency information available as maven properties
+          (Used to pass the dependency to the server.jar to surefire)
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.0.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>properties</goal>
+            </goals>
+          </execution>
+        </executions>
+        <!--
+            Adding this dependency here in order to make maven download the resource,
+            if missing, but to exclude it from the classpath.
+            TODO: In general the way this is done shoud be cleaned up.
+        -->
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.edgent.api</groupId>
+            <artifactId>topology</artifactId>
+            <version>1.2.0-SNAPSHOT</version>
+            <classifier>test-server</classifier>
+          </dependency>
+        </dependencies>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.20</version>
+        <configuration>
+          <systemPropertyVariables>
+            <server.jar>${org.apache.edgent.api:topology:jar}</server.jar>
+          </systemPropertyVariables>
+          <useSystemClassLoader>false</useSystemClassLoader>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
@@ -88,15 +130,15 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.api</groupId>
-      <artifactId>topology</artifactId>
+      <groupId>org.apache.edgent.utils</groupId>
+      <artifactId>metrics</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
       <type>test-jar</type>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.utils</groupId>
-      <artifactId>metrics</artifactId>
+      <groupId>org.apache.edgent.api</groupId>
+      <artifactId>topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
       <type>test-jar</type>

@@ -24,11 +24,11 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.net.URL;
+import java.net.URLClassLoader;
 
 import org.apache.edgent.providers.direct.DirectProvider;
 import org.apache.edgent.runtime.appservice.AppService;
 import org.apache.edgent.topology.services.ApplicationService;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class AppServiceTest {
@@ -67,25 +67,55 @@ public class AppServiceTest {
         appService.registerTopology("", (t,c) -> t.strings("a"));      
     }
 
-    // TODO: Fix this
     @Test
-    @Ignore("This test requires a test-jar to be pre-built.")
     public void testRegisterJar() throws Exception {
         DirectProvider direct = new DirectProvider();
         ApplicationService appService = AppService.createAndRegister(direct, direct);
-        
+
+        // Make sure the applications haven't been available before registering the jar.
+        assertEquals(0, appService.getApplicationNames().size());
+
         String qd = System.getProperty("edgent.test.root.dir");
         assertNotNull("System property 'edgent.test.root.dir' should be set", qd);
-        File testAppsJar = new File(qd, "api/topology/build/lib/test/edgent.api.topology.APPS.TEST.jar");
+        File testAppsJar = getServerJar();
+        assertNotNull(testAppsJar);
         assertTrue(testAppsJar.exists());
-        
+        System.out.println("Using server jar at: " + testAppsJar.toString());
+
         URL testAppsJarURL = testAppsJar.toURI().toURL();
 
         appService.registerJar(testAppsJarURL.toExternalForm(), null);
-        
+
+        System.out.println(appService.getApplicationNames());
         assertEquals(3, appService.getApplicationNames().size());
         assertTrue(appService.getApplicationNames().contains("FirstJarApp"));
         assertTrue(appService.getApplicationNames().contains("SecondJarApp"));
         assertTrue(appService.getApplicationNames().contains("ThirdJarApp"));  
+    }
+
+    private File getServerJar() {
+        // This case will be executed when running with maven.
+        if(System.getProperty("server.jar", null) != null) {
+            // NOTE: the dependency plugin seems to be having problems making artifacts with
+            // classifiers available as properties. As we know the test-server jar is located
+            // in the same directory as the jar, we simply adjust the file-name.
+            String path = System.getProperty("server.jar", "");
+            return new File(path.substring(0, path.lastIndexOf(".")) +
+                    "-test-server" + path.substring(path.lastIndexOf(".")));
+        }
+        // This case will be executed when running inside the IDE.
+        else {
+            ClassLoader cl = getClass().getClassLoader();
+            while (cl != null) {
+                URL[] classPath = ((URLClassLoader) cl).getURLs();
+                for (URL classPathEntry : classPath) {
+                    if (classPathEntry.getPath().endsWith("api/topology/target/test-classes/")) {
+                        return new File(classPathEntry.getPath());
+                    }
+                }
+                cl = cl.getParent();
+            }
+        }
+        return null;
     }
 }
