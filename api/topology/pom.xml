@@ -39,10 +39,39 @@
         <artifactId>maven-jar-plugin</artifactId>
         <version>3.0.2</version>
         <executions>
+          <!--
+              Make the default test-jar exclude the service descriptor
+              Or some tests would succeed where they should fail.
+          -->
           <execution>
+            <id>default</id>
             <goals>
               <goal>test-jar</goal>
             </goals>
+            <configuration>
+              <excludes>
+                <exclude>META-INF/services/**</exclude>
+              </excludes>
+            </configuration>
+          </execution>
+          <!--
+              Create a second test-jar that contains only the dummy
+              Server and the service descriptor for that. This is used
+              by other modules unit-tests.
+          -->
+          <execution>
+            <id>dummy-server-jar</id>
+            <phase>package</phase>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+            <configuration>
+              <classifier>test-server</classifier>
+              <includes>
+                <include>**/services/**</include>
+                <include>META-INF/services/**</include>
+              </includes>
+            </configuration>
           </execution>
         </executions>
       </plugin>
