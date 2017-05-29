@@ -23,7 +23,7 @@ import org.junit.Ignore;
 /**
  * WebSocketClient connector globalization tests.
  */
-@Ignore("There seem to be issues with SSL related tests")
+//@Ignore("There seem to be issues with SSL related tests")
 public class WebSocketClientGlobalTest extends WebSocketClientTest {
     private final static String globalStr1 = "一";
     private final static String globalStr2 = "二";
