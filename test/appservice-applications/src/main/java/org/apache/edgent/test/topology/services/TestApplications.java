@@ -18,11 +18,10 @@ under the License.
 */
 package org.apache.edgent.test.topology.services;
 
+import com.google.gson.JsonObject;
 import org.apache.edgent.function.BiConsumer;
 import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.services.TopologyBuilder;
-
-import com.google.gson.JsonObject;
 
 /**
  * Some dummy test applications that will be part of this

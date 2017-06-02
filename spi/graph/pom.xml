@@ -27,19 +27,19 @@
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>graph</artifactId>
+  <artifactId>spi-graph</artifactId>
 
   <name>Apache Edgent: SPI: Graph</name>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>execution</artifactId>
+      <artifactId>api-execution</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>graph</artifactId>
+      <artifactId>api-graph</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
   </dependencies>

@@ -27,19 +27,19 @@
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>jsoncontrol</artifactId>
+  <artifactId>runtimes-jsoncontrol</artifactId>
 
   <name>Apache Edgent: Runtimes: JSONControl</name>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>execution</artifactId>
+      <artifactId>api-execution</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>function</artifactId>
+      <artifactId>api-function</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
   </dependencies>

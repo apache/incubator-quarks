@@ -27,14 +27,14 @@
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>http</artifactId>
+  <artifactId>connectors-http</artifactId>
 
   <name>Apache Edgent: Connectors: HTTP</name>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>topology</artifactId>
+      <artifactId>api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
@@ -50,13 +50,13 @@
 
     <dependency>
       <groupId>org.apache.edgent.providers</groupId>
-      <artifactId>direct</artifactId>
+      <artifactId>providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.providers</groupId>
-      <artifactId>direct</artifactId>
+      <artifactId>providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
       <type>test-jar</type>

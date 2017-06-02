@@ -22,37 +22,19 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.apache.edgent.api</groupId>
-    <artifactId>api</artifactId>
+    <groupId>org.apache.edgent.test</groupId>
+    <artifactId>test</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>api-graph</artifactId>
+  <artifactId>test-appservice-applications</artifactId>
 
-  <name>Apache Edgent: API: Graph</name>
-
-  <build>
-    <plugins>
-      <!-- TODO: We shouldn't need to require test-jars -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.0.2</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>test-jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
+  <name>Apache Edgent: Test: AppService Applications</name>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>api-oplet</artifactId>
+      <artifactId>api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
   </dependencies>

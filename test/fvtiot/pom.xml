@@ -27,45 +27,74 @@
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>fvtiot</artifactId>
+  <artifactId>test-fvtiot</artifactId>
 
   <name>Apache Edgent: Test: fvtiot</name>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.0.1</version>
+        <executions>
+          <execution>
+            <id>copy</id>
+            <phase>generate-test-resources</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.apache.edgent.test</groupId>
+                  <artifactId>test-appservice-applications</artifactId>
+                  <version>1.2.0-SNAPSHOT</version>
+                  <outputDirectory>${project.build.directory}/test-resources</outputDirectory>
+                  <destFileName>test-appservice-applications.jar</destFileName>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.connectors</groupId>
-      <artifactId>pubsub</artifactId>
+      <artifactId>connectors-pubsub</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.runtimes</groupId>
-      <artifactId>jsoncontrol</artifactId>
+      <artifactId>runtimes-jsoncontrol</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.providers</groupId>
-      <artifactId>direct</artifactId>
+      <artifactId>providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.apps</groupId>
-      <artifactId>iot</artifactId>
+      <artifactId>apps-iot</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.apps</groupId>
-      <artifactId>iot</artifactId>
+      <artifactId>apps-iot</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
       <type>test-jar</type>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.providers</groupId>
-      <artifactId>iot</artifactId>
+      <artifactId>providers-iot</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>

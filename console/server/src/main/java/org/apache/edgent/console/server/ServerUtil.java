@@ -64,25 +64,8 @@ public class ServerUtil {
      * Returns the File object representing the "webapps" directory
      * @return a File object or null if the "webapps" directory is not found
      */
-    private File getWarFilePath() {
-        List<File> foundFiles = new ArrayList<>();
-        try {
-            Files.walkFileTree(getTopDirFilePath().toPath(), new SimpleFileVisitor<Path>() {
-                @Override
-                public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-                    if (dir.endsWith("webapps")) {
-                      foundFiles.add(dir.toFile());
-                    }
-                    return FileVisitResult.CONTINUE;
-                }
-            });
-        } catch (IOException e) {
-          // end of file searching
-        }
-        if (foundFiles.size() != 0) {
-            return foundFiles.get(0);
-        }
-        return null;
+    public File getWarFilePath() {
+        return new File("target/war-resources/servlets.war");
     }
     
     /**

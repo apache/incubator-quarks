@@ -34,6 +34,7 @@
   <name>Apache Edgent: Test</name>
 
   <modules>
+    <module>appservice-applications</module>
     <module>fvtiot</module>
     <module>svt</module>
   </modules>

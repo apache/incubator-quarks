@@ -75,8 +75,6 @@ public class AppServiceTest {
         // Make sure the applications haven't been available before registering the jar.
         assertEquals(0, appService.getApplicationNames().size());
 
-        String qd = System.getProperty("edgent.test.root.dir");
-        assertNotNull("System property 'edgent.test.root.dir' should be set", qd);
         File testAppsJar = getServerJar();
         assertNotNull(testAppsJar);
         assertTrue(testAppsJar.exists());
@@ -94,28 +92,7 @@ public class AppServiceTest {
     }
 
     private File getServerJar() {
-        // This case will be executed when running with maven.
-        if(System.getProperty("server.jar", null) != null) {
-            // NOTE: the dependency plugin seems to be having problems making artifacts with
-            // classifiers available as properties. As we know the test-server jar is located
-            // in the same directory as the jar, we simply adjust the file-name.
-            String path = System.getProperty("server.jar", "");
-            return new File(path.substring(0, path.lastIndexOf(".")) +
-                    "-test-server" + path.substring(path.lastIndexOf(".")));
-        }
-        // This case will be executed when running inside the IDE.
-        else {
-            ClassLoader cl = getClass().getClassLoader();
-            while (cl != null) {
-                URL[] classPath = ((URLClassLoader) cl).getURLs();
-                for (URL classPathEntry : classPath) {
-                    if (classPathEntry.getPath().endsWith("api/topology/target/test-classes/")) {
-                        return new File(classPathEntry.getPath());
-                    }
-                }
-                cl = cl.getParent();
-            }
-        }
-        return null;
+        return new File("target/test-resources/test-appservice-applications.jar");
     }
+
 }

@@ -27,20 +27,20 @@
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>pubsub</artifactId>
+  <artifactId>connectors-pubsub</artifactId>
 
   <name>Apache Edgent: Connectors: PubSub</name>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>topology</artifactId>
+      <artifactId>api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.edgent.providers</groupId>
-      <artifactId>direct</artifactId>
+      <artifactId>providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>

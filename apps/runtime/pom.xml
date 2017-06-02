@@ -27,31 +27,31 @@
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>runtime</artifactId>
+  <artifactId>apps-runtime</artifactId>
 
   <name>Apache Edgent: Apps: Runtime</name>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>topology</artifactId>
+      <artifactId>api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.runtimes</groupId>
-      <artifactId>jobregistry</artifactId>
+      <artifactId>runtimes-jobregistry</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.edgent.providers</groupId>
-      <artifactId>direct</artifactId>
+      <artifactId>providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.runtimes</groupId>
-      <artifactId>jmxcontrol</artifactId>
+      <artifactId>runtimes-jmxcontrol</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>

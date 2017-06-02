@@ -27,14 +27,14 @@
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>wsclient</artifactId>
+  <artifactId>connectors-wsclient</artifactId>
 
   <name>Apache Edgent: Connectors: WSClient</name>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>topology</artifactId>
+      <artifactId>api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
   </dependencies>

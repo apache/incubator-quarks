@@ -30,7 +30,6 @@ import org.apache.edgent.runtime.appservice.AppService;
 import org.apache.edgent.runtime.jsoncontrol.JsonControlService;
 import org.apache.edgent.topology.mbeans.ApplicationServiceMXBean;
 import org.apache.edgent.topology.services.ApplicationService;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.gson.JsonArray;
@@ -62,7 +61,7 @@ public class IotAppServiceTest {
     }
     
     @Test
-    @Ignore("This test relies on an existing war in a given location ... need to refactor this")
+    //@Ignore("This test relies on an existing war in a given location ... need to refactor this")
     public void testAppServiceJar() throws Exception {
         
         DirectProvider provider = new DirectProvider();
@@ -70,11 +69,12 @@ public class IotAppServiceTest {
         JsonControlService control = new JsonControlService();
         provider.getServices().addService(ControlService.class, control);        
         AppService.createAndRegister(provider, provider);
-        String qd = System.getProperty("edgent.test.root.dir");
-        assertNotNull(qd);
-        File testAppsJar = new File(qd, "api/topology/build/lib/test/edgent.api.topology.APPS.TEST.jar");
+
+        File testAppsJar = getServerJar();
+        assertNotNull(testAppsJar);
         assertTrue(testAppsJar.exists());
-        
+        System.out.println("Using server jar at: " + testAppsJar.toString());
+
         URL testAppsJarURL = testAppsJar.toURI().toURL();
         JsonObject registerJar = newRegisterJarRequest(testAppsJarURL.toExternalForm());       
         JsonElement crr = control.controlRequest(registerJar);    
@@ -101,6 +101,7 @@ public class IotAppServiceTest {
         
         return submitApp;
     }
+
     public static JsonObject newRegisterJarRequest(String jarURL) {
         JsonObject submitApp = new JsonObject();   
         submitApp.addProperty(JsonControlService.TYPE_KEY, ApplicationServiceMXBean.TYPE);
@@ -113,6 +114,9 @@ public class IotAppServiceTest {
         
         return submitApp;
     }
-    
+
+    private File getServerJar() {
+        return new File("target/test-resources/test-appservice-applications.jar");
+    }
 
 }

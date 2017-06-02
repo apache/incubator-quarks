@@ -27,44 +27,44 @@
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>apps</artifactId>
+  <artifactId>samples-apps</artifactId>
 
   <name>Apache Edgent: Samples: Apps</name>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.providers</groupId>
-      <artifactId>direct</artifactId>
+      <artifactId>providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.analytics</groupId>
-      <artifactId>sensors</artifactId>
+      <artifactId>analytics-sensors</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.connectors</groupId>
-      <artifactId>file</artifactId>
+      <artifactId>connectors-file</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.analytics</groupId>
-      <artifactId>math3</artifactId>
+      <artifactId>analytics-math3</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.connectors</groupId>
-      <artifactId>iot</artifactId>
+      <artifactId>connectors-iot</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.connectors</groupId>
-      <artifactId>mqtt</artifactId>
+      <artifactId>connectors-mqtt</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.samples</groupId>
-      <artifactId>utils</artifactId>
+      <artifactId>samples-utils</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
   </dependencies>

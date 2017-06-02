@@ -27,44 +27,44 @@
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>iot</artifactId>
+  <artifactId>providers-iot</artifactId>
 
   <name>Apache Edgent: Providers: IoT</name>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.providers</groupId>
-      <artifactId>direct</artifactId>
+      <artifactId>providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.runtimes</groupId>
-      <artifactId>jsoncontrol</artifactId>
+      <artifactId>runtimes-jsoncontrol</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.runtimes</groupId>
-      <artifactId>appservice</artifactId>
+      <artifactId>runtimes-appservice</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.connectors</groupId>
-      <artifactId>iot</artifactId>
+      <artifactId>connectors-iot</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.connectors</groupId>
-      <artifactId>pubsub</artifactId>
+      <artifactId>connectors-pubsub</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.apps</groupId>
-      <artifactId>iot</artifactId>
+      <artifactId>apps-iot</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.apps</groupId>
-      <artifactId>runtime</artifactId>
+      <artifactId>apps-runtime</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
   </dependencies>

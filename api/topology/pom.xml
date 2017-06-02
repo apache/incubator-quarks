@@ -27,7 +27,7 @@
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>topology</artifactId>
+  <artifactId>api-topology</artifactId>
 
   <name>Apache Edgent: API: Topology</name>
 
@@ -81,22 +81,22 @@
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>execution</artifactId>
+      <artifactId>api-execution</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>function</artifactId>
+      <artifactId>api-function</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>graph</artifactId>
+      <artifactId>api-graph</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>oplet</artifactId>
+      <artifactId>api-oplet</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
   </dependencies>

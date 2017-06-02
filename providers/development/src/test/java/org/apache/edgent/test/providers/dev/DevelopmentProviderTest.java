@@ -32,10 +32,8 @@ import org.apache.edgent.test.topology.TopologyAbstractTest;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.tester.Condition;
-import org.junit.Ignore;
 import org.junit.Test;
 
-@Ignore
 public class DevelopmentProviderTest extends TopologyAbstractTest implements DevelopmentTestSetup {
 
     // DevelopmentProvider inserts CounterOp metric oplets into the graph

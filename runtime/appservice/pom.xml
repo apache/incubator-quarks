@@ -27,20 +27,28 @@
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>appservice</artifactId>
+  <artifactId>runtimes-appservice</artifactId>
 
   <name>Apache Edgent: Runtimes: AppService</name>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>execution</artifactId>
+      <artifactId>api-execution</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>topology</artifactId>
+      <artifactId>api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
+    </dependency>
+
+    <!-- Just needed to make sure it is scheduled before this module in the reactor -->
+    <dependency>
+      <groupId>org.apache.edgent.test</groupId>
+      <artifactId>test-appservice-applications</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 

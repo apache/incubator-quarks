@@ -27,9 +27,39 @@
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>server</artifactId>
+  <artifactId>console-server</artifactId>
 
   <name>Apache Edgent: Console: Server</name>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.0.1</version>
+        <executions>
+          <execution>
+            <id>copy</id>
+            <phase>generate-test-resources</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.apache.edgent.console</groupId>
+                  <artifactId>console-servlets</artifactId>
+                  <version>1.2.0-SNAPSHOT</version>
+                  <type>war</type>
+                  <outputDirectory>${project.build.directory}/war-resources</outputDirectory>
+                  <destFileName>servlets.war</destFileName>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
   <dependencies>
     <dependency>
@@ -71,6 +101,11 @@
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-xml</artifactId>
       <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.12</version>
     </dependency>
   </dependencies>
 

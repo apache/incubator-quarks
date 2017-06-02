@@ -19,8 +19,6 @@ under the License.
 
 package org.apache.edgent.console.server;
 
-import java.security.ProtectionDomain;
-
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
@@ -28,6 +26,8 @@ import org.eclipse.jetty.server.handler.AllowSymLinkAliasChecker;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.webapp.WebAppContext;
+
+import java.io.File;
 
 public class HttpServer {
 
@@ -71,24 +71,12 @@ public class HttpServer {
             ServletContextHandler contextMetrics = new ServletContextHandler(ServletContextHandler.SESSIONS);
             contextMetrics.setContextPath("/metrics");
             ServerUtil sUtil = new ServerUtil();
-            String commandWarFilePath = sUtil.getAbsoluteWarFilePath("console.war");
-            if (commandWarFilePath.equals("")){
-            	// check if we are on Eclipse, if Eclipse can't find it, it probably does not exist
-            	// running on Eclipse, look for the eclipse war file path
-            	ProtectionDomain protectionDomain = HttpServer.class.getProtectionDomain();
-            	String eclipseWarFilePath = sUtil.getEclipseWarFilePath(protectionDomain, "console.war");
-            	if (!eclipseWarFilePath.equals("")) {            	
-            		HttpServerHolder.WEBAPP.setWar(eclipseWarFilePath);
-            	} else {
-            		throw new Exception(HttpServerHolder.consoleWarNotFoundMessage);
-            	}
-            } else {
-            	HttpServerHolder.WEBAPP.setWar(commandWarFilePath);
+            File servletsJarFile = sUtil.getWarFilePath();
+            if (servletsJarFile.exists()){
+            	HttpServerHolder.WEBAPP.setWar(servletsJarFile.getAbsolutePath());
             }
 
-
-            
-            HttpServerHolder.WEBAPP.addAliasCheck(new AllowSymLinkAliasChecker()); 
+            HttpServerHolder.WEBAPP.addAliasCheck(new AllowSymLinkAliasChecker());
             ContextHandlerCollection contexts = new ContextHandlerCollection();
             contexts.setHandlers(new Handler[] { contextJobs, contextMetrics, HttpServerHolder.WEBAPP });
             HttpServerHolder.JETTYSERVER.setHandler(contexts);

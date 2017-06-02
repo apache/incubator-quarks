@@ -27,34 +27,34 @@
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>topology</artifactId>
+  <artifactId>samples-topology</artifactId>
 
   <name>Apache Edgent: Samples: Topology</name>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.console</groupId>
-      <artifactId>server</artifactId>
+      <artifactId>console-server</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.providers</groupId>
-      <artifactId>development</artifactId>
+      <artifactId>providers-development</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.samples</groupId>
-      <artifactId>utils</artifactId>
+      <artifactId>samples-utils</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.analytics</groupId>
-      <artifactId>math3</artifactId>
+      <artifactId>analytics-math3</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.runtimes</groupId>
-      <artifactId>jobregistry</artifactId>
+      <artifactId>runtimes-jobregistry</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
   </dependencies>

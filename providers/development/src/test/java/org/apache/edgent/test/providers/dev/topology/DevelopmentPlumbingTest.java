@@ -20,8 +20,6 @@ package org.apache.edgent.test.providers.dev.topology;
 
 import org.apache.edgent.test.providers.dev.DevelopmentTestSetup;
 import org.apache.edgent.test.topology.PlumbingTest;
-import org.junit.Ignore;
 
-@Ignore
 public class DevelopmentPlumbingTest extends PlumbingTest implements DevelopmentTestSetup {
 }
