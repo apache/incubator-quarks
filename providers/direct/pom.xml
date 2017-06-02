@@ -62,7 +62,7 @@
                 <artifactItem>
                   <groupId>org.apache.edgent.test</groupId>
                   <artifactId>test-appservice-applications</artifactId>
-                  <version>1.2.0-SNAPSHOT</version>
+                  <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/test-resources</outputDirectory>
                   <destFileName>test-appservice-applications.jar</destFileName>
                 </artifactItem>
