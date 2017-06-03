@@ -24,4 +24,4 @@ install: true
 
 script:
     - jdk_switcher use oraclejdk8
-    - mvn clean install
+    - mvn clean install site:site
