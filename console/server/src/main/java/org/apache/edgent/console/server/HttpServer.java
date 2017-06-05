@@ -46,8 +46,6 @@ public class HttpServer {
         private static final WebAppContext WEBAPP = new WebAppContext();
         private static final HttpServer INSTANCE = new HttpServer();
         private static boolean INITIALIZED = false;
-        private static final String consoleWarNotFoundMessage =  
-    			"console.war not found.  Run 'ant' from the top level edgent directory, or 'ant' from 'console/servlets' to create console.war under the webapps directory.";
     }
 
     /**
