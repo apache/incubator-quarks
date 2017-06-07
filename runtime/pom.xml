@@ -28,7 +28,7 @@
   </parent>
 
   <groupId>org.apache.edgent.runtimes</groupId>
-  <artifactId>runtimes</artifactId>
+  <artifactId>edgent-runtimes</artifactId>
   <packaging>pom</packaging>
 
   <name>Apache Edgent: Runtimes</name>

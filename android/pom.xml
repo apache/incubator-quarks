@@ -28,7 +28,7 @@
   </parent>
 
   <groupId>org.apache.edgent.android</groupId>
-  <artifactId>android</artifactId>
+  <artifactId>edgent-android</artifactId>
   <packaging>pom</packaging>
 
   <name>Apache Edgent: Android</name>

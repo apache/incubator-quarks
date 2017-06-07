@@ -23,18 +23,18 @@
 
   <parent>
     <groupId>org.apache.edgent.connectors</groupId>
-    <artifactId>connectors</artifactId>
+    <artifactId>edgent-connectors</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>connectors-websocket-server</artifactId>
+  <artifactId>edgent-connectors-websocket-server</artifactId>
 
   <name>Apache Edgent: Connectors: Websocket Server</name>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.connectors</groupId>
-      <artifactId>connectors-websocket-client</artifactId>
+      <artifactId>edgent-connectors-websocket-client</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>

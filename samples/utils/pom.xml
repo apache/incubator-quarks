@@ -23,33 +23,33 @@
 
   <parent>
     <groupId>org.apache.edgent.samples</groupId>
-    <artifactId>samples</artifactId>
+    <artifactId>edgent-samples</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>samples-utils</artifactId>
+  <artifactId>edgent-samples-utils</artifactId>
 
   <name>Apache Edgent: Samples: Utils</name>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.console</groupId>
-      <artifactId>console-server</artifactId>
+      <artifactId>edgent-console-server</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.utils</groupId>
-      <artifactId>utils-metrics</artifactId>
+      <artifactId>edgent-utils-metrics</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.providers</groupId>
-      <artifactId>providers-development</artifactId>
+      <artifactId>edgent-providers-development</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.analytics</groupId>
-      <artifactId>analytics-sensors</artifactId>
+      <artifactId>edgent-analytics-sensors</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>

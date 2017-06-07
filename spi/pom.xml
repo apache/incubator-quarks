@@ -28,7 +28,7 @@
   </parent>
 
   <groupId>org.apache.edgent.spi</groupId>
-  <artifactId>spi</artifactId>
+  <artifactId>edgent-spi</artifactId>
   <packaging>pom</packaging>
 
   <name>Apache Edgent: SPI</name>

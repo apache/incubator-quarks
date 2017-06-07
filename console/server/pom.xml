@@ -23,11 +23,11 @@
 
   <parent>
     <groupId>org.apache.edgent.console</groupId>
-    <artifactId>console</artifactId>
+    <artifactId>edgent-console</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>console-server</artifactId>
+  <artifactId>edgent-console-server</artifactId>
 
   <name>Apache Edgent: Console: Server</name>
 
@@ -47,7 +47,7 @@
               <artifactItems>
                 <artifactItem>
                   <groupId>org.apache.edgent.console</groupId>
-                  <artifactId>console-servlets</artifactId>
+                  <artifactId>edgent-console-servlets</artifactId>
                   <version>${project.version}</version>
                   <type>war</type>
                   <outputDirectory>${project.build.directory}/war-resources</outputDirectory>
@@ -111,7 +111,7 @@
     <!-- Just needed to ensure the console-servlets module is built before this module -->
     <dependency>
       <groupId>org.apache.edgent.console</groupId>
-      <artifactId>console-servlets</artifactId>
+      <artifactId>edgent-console-servlets</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <type>war</type>
       <scope>test</scope>

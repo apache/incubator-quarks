@@ -23,11 +23,11 @@
 
   <parent>
     <groupId>org.apache.edgent.api</groupId>
-    <artifactId>api</artifactId>
+    <artifactId>edgent-api</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>api-topology</artifactId>
+  <artifactId>edgent-api-topology</artifactId>
 
   <name>Apache Edgent: API: Topology</name>
 
@@ -81,22 +81,22 @@
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>api-execution</artifactId>
+      <artifactId>edgent-api-execution</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>api-function</artifactId>
+      <artifactId>edgent-api-function</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>api-graph</artifactId>
+      <artifactId>edgent-api-graph</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>api-oplet</artifactId>
+      <artifactId>edgent-api-oplet</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
   </dependencies>

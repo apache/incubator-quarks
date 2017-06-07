@@ -28,7 +28,7 @@
   </parent>
 
   <groupId>org.apache.edgent.utils</groupId>
-  <artifactId>utils</artifactId>
+  <artifactId>edgent-utils</artifactId>
   <packaging>pom</packaging>
 
   <name>Apache Edgent: Utils</name>

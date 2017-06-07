@@ -28,7 +28,7 @@
   </parent>
 
   <groupId>org.apache.edgent.console</groupId>
-  <artifactId>console</artifactId>
+  <artifactId>edgent-console</artifactId>
   <packaging>pom</packaging>
 
   <name>Apache Edgent: Console</name>

@@ -28,7 +28,7 @@
   </parent>
 
   <groupId>org.apache.edgent.connectors</groupId>
-  <artifactId>connectors</artifactId>
+  <artifactId>edgent-connectors</artifactId>
   <packaging>pom</packaging>
 
   <name>Apache Edgent: Connectors</name>

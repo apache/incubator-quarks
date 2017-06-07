@@ -23,28 +23,28 @@
 
   <parent>
     <groupId>org.apache.edgent.samples</groupId>
-    <artifactId>samples</artifactId>
+    <artifactId>edgent-samples</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>samples-szenarios</artifactId>
+  <artifactId>edgent-samples-szenarios</artifactId>
 
   <name>Apache Edgent: Samples: Szenarios</name>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.connectors</groupId>
-      <artifactId>connectors-iotp</artifactId>
+      <artifactId>edgent-connectors-iotp</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.providers</groupId>
-      <artifactId>providers-iot</artifactId>
+      <artifactId>edgent-providers-iot</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.samples</groupId>
-      <artifactId>samples-connectors</artifactId>
+      <artifactId>edgent-samples-connectors</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>

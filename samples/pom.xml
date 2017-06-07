@@ -28,7 +28,7 @@
   </parent>
 
   <groupId>org.apache.edgent.samples</groupId>
-  <artifactId>samples</artifactId>
+  <artifactId>edgent-samples</artifactId>
   <packaging>pom</packaging>
 
   <name>Apache Edgent: Samples</name>

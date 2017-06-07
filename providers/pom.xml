@@ -28,7 +28,7 @@
   </parent>
 
   <groupId>org.apache.edgent.providers</groupId>
-  <artifactId>providers</artifactId>
+  <artifactId>edgent-providers</artifactId>
   <packaging>pom</packaging>
 
   <name>Apache Edgent: Providers</name>

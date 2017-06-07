@@ -23,35 +23,35 @@
 
   <parent>
     <groupId>org.apache.edgent.apps</groupId>
-    <artifactId>apps</artifactId>
+    <artifactId>edgent-apps</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>apps-runtime</artifactId>
+  <artifactId>edgent-apps-runtime</artifactId>
 
   <name>Apache Edgent: Apps: Runtime</name>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>api-topology</artifactId>
+      <artifactId>edgent-api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.runtimes</groupId>
-      <artifactId>runtimes-jobregistry</artifactId>
+      <artifactId>edgent-runtimes-jobregistry</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.edgent.providers</groupId>
-      <artifactId>providers-direct</artifactId>
+      <artifactId>edgent-providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.runtimes</groupId>
-      <artifactId>runtimes-jmxcontrol</artifactId>
+      <artifactId>edgent-runtimes-jmxcontrol</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>

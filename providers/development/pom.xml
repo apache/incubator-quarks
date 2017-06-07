@@ -23,51 +23,51 @@
 
   <parent>
     <groupId>org.apache.edgent.providers</groupId>
-    <artifactId>providers</artifactId>
+    <artifactId>edgent-providers</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>providers-development</artifactId>
+  <artifactId>edgent-providers-development</artifactId>
 
   <name>Apache Edgent: Providers: Development</name>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.providers</groupId>
-      <artifactId>providers-direct</artifactId>
+      <artifactId>edgent-providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.console</groupId>
-      <artifactId>console-server</artifactId>
+      <artifactId>edgent-console-server</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.utils</groupId>
-      <artifactId>utils-metrics</artifactId>
+      <artifactId>edgent-utils-metrics</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.utils</groupId>
-      <artifactId>utils-streamscope</artifactId>
+      <artifactId>edgent-utils-streamscope</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.runtimes</groupId>
-      <artifactId>runtimes-jmxcontrol</artifactId>
+      <artifactId>edgent-runtimes-jmxcontrol</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>api-topology</artifactId>
+      <artifactId>edgent-api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
       <type>test-jar</type>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.utils</groupId>
-      <artifactId>utils-streamscope</artifactId>
+      <artifactId>edgent-utils-streamscope</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
       <type>test-jar</type>

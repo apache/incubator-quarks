@@ -23,28 +23,28 @@
 
   <parent>
     <groupId>org.apache.edgent.api</groupId>
-    <artifactId>api</artifactId>
+    <artifactId>edgent-api</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>api-oplet</artifactId>
+  <artifactId>edgent-api-oplet</artifactId>
 
   <name>Apache Edgent: API: Oplet</name>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>api-function</artifactId>
+      <artifactId>edgent-api-function</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>api-execution</artifactId>
+      <artifactId>edgent-api-execution</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>api-window</artifactId>
+      <artifactId>edgent-api-window</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
   </dependencies>

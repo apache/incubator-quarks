@@ -23,11 +23,11 @@
 
   <parent>
     <groupId>org.apache.edgent.providers</groupId>
-    <artifactId>providers</artifactId>
+    <artifactId>edgent-providers</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>providers-direct</artifactId>
+  <artifactId>edgent-providers-direct</artifactId>
 
   <name>Apache Edgent: Providers: Direct</name>
 
@@ -61,7 +61,7 @@
               <artifactItems>
                 <artifactItem>
                   <groupId>org.apache.edgent.test</groupId>
-                  <artifactId>test-appservice-applications</artifactId>
+                  <artifactId>edgent-test-appservice-applications</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/test-resources</outputDirectory>
                   <destFileName>test-appservice-applications.jar</destFileName>
@@ -77,51 +77,51 @@
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>api-topology</artifactId>
+      <artifactId>edgent-api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.spi</groupId>
-      <artifactId>spi-topology</artifactId>
+      <artifactId>edgent-spi-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.spi</groupId>
-      <artifactId>spi-graph</artifactId>
+      <artifactId>edgent-spi-graph</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.runtimes</groupId>
-      <artifactId>runtimes-appservice</artifactId>
+      <artifactId>edgent-runtimes-appservice</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.runtimes</groupId>
-      <artifactId>runtimes-etiao</artifactId>
+      <artifactId>edgent-runtimes-etiao</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.runtimes</groupId>
-      <artifactId>runtimes-jsoncontrol</artifactId>
+      <artifactId>edgent-runtimes-jsoncontrol</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.edgent.utils</groupId>
-      <artifactId>utils-metrics</artifactId>
+      <artifactId>edgent-utils-metrics</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.utils</groupId>
-      <artifactId>utils-metrics</artifactId>
+      <artifactId>edgent-utils-metrics</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
       <type>test-jar</type>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>api-topology</artifactId>
+      <artifactId>edgent-api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
       <type>test-jar</type>

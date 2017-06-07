@@ -23,68 +23,68 @@
 
   <parent>
     <groupId>org.apache.edgent.samples</groupId>
-    <artifactId>samples</artifactId>
+    <artifactId>edgent-samples</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>samples-connectors</artifactId>
+  <artifactId>edgent-samples-connectors</artifactId>
 
   <name>Apache Edgent: Samples: Connectors</name>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>api-execution</artifactId>
+      <artifactId>edgent-api-execution</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.connectors</groupId>
-      <artifactId>connectors-mqtt</artifactId>
+      <artifactId>edgent-connectors-mqtt</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.console</groupId>
-      <artifactId>console-server</artifactId>
+      <artifactId>edgent-console-server</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.providers</groupId>
-      <artifactId>providers-development</artifactId>
+      <artifactId>edgent-providers-development</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.connectors</groupId>
-      <artifactId>connectors-kafka</artifactId>
+      <artifactId>edgent-connectors-kafka</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.connectors</groupId>
-      <artifactId>connectors-jdbc</artifactId>
+      <artifactId>edgent-connectors-jdbc</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.connectors</groupId>
-      <artifactId>connectors-serial</artifactId>
+      <artifactId>edgent-connectors-serial</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.connectors</groupId>
-      <artifactId>connectors-file</artifactId>
+      <artifactId>edgent-connectors-file</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.connectors</groupId>
-      <artifactId>connectors-iotp</artifactId>
+      <artifactId>edgent-connectors-iotp</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.analytics</groupId>
-      <artifactId>analytics-math3</artifactId>
+      <artifactId>edgent-analytics-math3</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.samples</groupId>
-      <artifactId>samples-topology</artifactId>
+      <artifactId>edgent-samples-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
   </dependencies>

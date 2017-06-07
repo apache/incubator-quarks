@@ -28,7 +28,7 @@
   </parent>
 
   <groupId>org.apache.edgent.analytics</groupId>
-  <artifactId>analytics</artifactId>
+  <artifactId>edgent-analytics</artifactId>
   <packaging>pom</packaging>
 
   <name>Apache Edgent: Analytics</name>

@@ -23,23 +23,23 @@
 
   <parent>
     <groupId>org.apache.edgent.android</groupId>
-    <artifactId>android</artifactId>
+    <artifactId>edgent-android</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>android-topology</artifactId>
+  <artifactId>edgent-android-topology</artifactId>
 
   <name>Apache Edgent: Android: Topology</name>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>api-topology</artifactId>
+      <artifactId>edgent-api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
-      <artifactId>api-oplet</artifactId>
+      <artifactId>edgent-api-oplet</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
