@@ -28,6 +28,7 @@
   </parent>
 
   <artifactId>edgent-connectors-websocket</artifactId>
+  <version>${edgent.version}</version>
 
   <name>Apache Edgent: Connectors: Websocket</name>
 

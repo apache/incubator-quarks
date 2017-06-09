@@ -25,6 +25,7 @@ import org.apache.edgent.test.topology.TopologyTestSetup;
 import org.apache.edgent.topology.Topology;
 
 public interface DirectTestSetup extends TopologyTestSetup {
+
     @Override
     default DirectProvider createTopologyProvider() {
         return new DirectProvider();

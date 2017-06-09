@@ -28,6 +28,7 @@
   </parent>
 
   <artifactId>edgent-console-servlets</artifactId>
+  <version>${edgent.version}</version>
   <packaging>war</packaging>
 
   <name>Apache Edgent: Console: Servlets</name>
@@ -36,7 +37,7 @@
     <dependency>
       <groupId>org.apache.edgent.utils</groupId>
       <artifactId>edgent-utils-streamscope</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>

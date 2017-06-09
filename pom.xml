@@ -50,7 +50,10 @@
   </scm>
 
   <properties>
+    <edgent.version>1.2.0-SNAPSHOT</edgent.version>
+
     <java.version>1.8</java.version>
+    <java.signature.name>java18</java.signature.name>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputencoding>UTF-8</project.reporting.outputencoding>
     <maven.version>3.3.1</maven.version>
@@ -116,6 +119,8 @@
           <configuration>
             <source>${java.version}</source>
             <target>${java.version}</target>
+            <testSource>${java.version}</testSource>
+            <testTarget>${java.version}</testTarget>
           </configuration>
         </plugin>
 
@@ -393,6 +398,29 @@
           </execution>
         </executions>
       </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>animal-sniffer-maven-plugin</artifactId>
+        <version>1.15</version>
+        <executions>
+          <execution>
+            <id>check-jdk-signatures</id>
+            <phase>test</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <skip>true</skip>
+          <signature>
+            <groupId>org.codehaus.mojo.signature</groupId>
+            <artifactId>${java.signature.name}</artifactId>
+            <version>1.0</version>
+          </signature>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
@@ -479,6 +507,39 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <profiles>
+    <profile>
+      <id>java7</id>
+
+      <properties>
+        <edgent.version>1.2.0.java7-SNAPSHOT</edgent.version>
+
+        <java.signature.name>java17</java.signature.name>
+      </properties>
+
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>net.orfjackal.retrolambda</groupId>
+            <artifactId>retrolambda-maven-plugin</artifactId>
+            <version>2.5.1</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>process-main</goal>
+                  <goal>process-test</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <defaultMethods>true</defaultMethods>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
   <repositories>
     <repository>

@@ -24,7 +24,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.net.URL;
-import java.net.URLClassLoader;
 
 import org.apache.edgent.providers.direct.DirectProvider;
 import org.apache.edgent.runtime.appservice.AppService;

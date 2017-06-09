@@ -28,6 +28,7 @@
   </parent>
 
   <artifactId>edgent-providers-development</artifactId>
+  <version>${edgent.version}</version>
 
   <name>Apache Edgent: Providers: Development</name>
 
@@ -35,42 +36,42 @@
     <dependency>
       <groupId>org.apache.edgent.providers</groupId>
       <artifactId>edgent-providers-direct</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.console</groupId>
       <artifactId>edgent-console-server</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.utils</groupId>
       <artifactId>edgent-utils-metrics</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.utils</groupId>
       <artifactId>edgent-utils-streamscope</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.runtimes</groupId>
       <artifactId>edgent-runtimes-jmxcontrol</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
       <artifactId>edgent-api-topology</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-      <scope>test</scope>
+      <version>${edgent.version}</version>
       <type>test-jar</type>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.utils</groupId>
       <artifactId>edgent-utils-streamscope</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-      <scope>test</scope>
+      <version>${edgent.version}</version>
       <type>test-jar</type>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 

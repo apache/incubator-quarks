@@ -28,6 +28,7 @@
   </parent>
 
   <artifactId>edgent-api-function</artifactId>
+  <version>${edgent.version}</version>
 
   <name>Apache Edgent: API: Function</name>
 

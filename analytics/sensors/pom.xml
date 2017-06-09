@@ -28,6 +28,7 @@
   </parent>
 
   <artifactId>edgent-analytics-sensors</artifactId>
+  <version>${edgent.version}</version>
 
   <name>Apache Edgent: Analytics: Sensors</name>
 
@@ -35,28 +36,28 @@
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
       <artifactId>edgent-api-topology</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.edgent.providers</groupId>
       <artifactId>edgent-providers-direct</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.providers</groupId>
       <artifactId>edgent-providers-direct</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-      <scope>test</scope>
+      <version>${edgent.version}</version>
       <type>test-jar</type>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
       <artifactId>edgent-api-topology</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-      <scope>test</scope>
+      <version>${edgent.version}</version>
       <type>test-jar</type>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 

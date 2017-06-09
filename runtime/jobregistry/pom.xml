@@ -28,6 +28,7 @@
   </parent>
 
   <artifactId>edgent-runtimes-jobregistry</artifactId>
+  <version>${edgent.version}</version>
 
   <name>Apache Edgent: Runtimes: JobRegistry</name>
 
@@ -35,12 +36,12 @@
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
       <artifactId>edgent-api-execution</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
       <artifactId>edgent-api-topology</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency>
   </dependencies>
 

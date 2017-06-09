@@ -28,6 +28,7 @@
   </parent>
 
   <artifactId>edgent-runtimes-etiao</artifactId>
+  <version>${edgent.version}</version>
 
   <name>Apache Edgent: Runtimes: Etiao</name>
 
@@ -35,25 +36,25 @@
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
       <artifactId>edgent-api-execution</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
       <artifactId>edgent-api-graph</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.spi</groupId>
       <artifactId>edgent-spi-graph</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
       <artifactId>edgent-api-graph</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-      <scope>test</scope>
+      <version>${edgent.version}</version>
       <type>test-jar</type>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
