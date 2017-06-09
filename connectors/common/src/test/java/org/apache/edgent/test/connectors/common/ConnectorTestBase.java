@@ -24,12 +24,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.edgent.test.providers.direct.DirectTestSetup;
-import org.apache.edgent.test.topology.TopologyAbstractTest;
+import org.apache.edgent.test.providers.direct.DirectTopologyTestBase;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.Topology;
 
-public class ConnectorTestBase extends TopologyAbstractTest implements DirectTestSetup {
+public class ConnectorTestBase extends DirectTopologyTestBase {
     
     public static List<String> createMsgs(MsgGenerator mgen, String topic, String msg1, String msg2) {
         List<String> msgs = new ArrayList<>();

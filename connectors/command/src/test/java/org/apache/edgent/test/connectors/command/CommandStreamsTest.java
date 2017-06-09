@@ -34,8 +34,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.edgent.connectors.command.CommandStreams;
 import org.apache.edgent.test.connectors.common.FileUtil;
 import org.apache.edgent.test.connectors.common.TestRepoPath;
-import org.apache.edgent.test.providers.direct.DirectTestSetup;
-import org.apache.edgent.test.topology.TopologyAbstractTest;
+import org.apache.edgent.test.providers.direct.DirectTopologyTestBase;
 import org.apache.edgent.topology.TSink;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.Topology;
@@ -44,7 +43,7 @@ import org.junit.Test;
 
 import com.google.gson.JsonObject;
 
-public class CommandStreamsTest extends TopologyAbstractTest implements DirectTestSetup {
+public class CommandStreamsTest extends DirectTopologyTestBase {
     
     private String[] stdLines = new String[] {
             "Line 1",

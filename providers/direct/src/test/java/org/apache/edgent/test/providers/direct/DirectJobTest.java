@@ -44,7 +44,7 @@ import org.junit.Test;
 
 import com.google.gson.JsonObject;
 
-public class DirectJobTest extends TopologyAbstractTest implements DirectTestSetup {
+public class DirectJobTest extends DirectTopologyTestBase {
     @Test
     public void jobName0() throws Exception {
         String[] data = new String[] {};

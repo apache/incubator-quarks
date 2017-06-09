@@ -23,10 +23,13 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
 
+import org.apache.edgent.execution.Job;
+import org.apache.edgent.execution.Submitter;
 import org.apache.edgent.graph.Graph;
 import org.apache.edgent.graph.Vertex;
 import org.apache.edgent.metrics.oplets.CounterOp;
 import org.apache.edgent.oplet.Oplet;
+import org.apache.edgent.providers.development.DevelopmentProvider;
 import org.apache.edgent.streamscope.oplets.StreamScope;
 import org.apache.edgent.test.topology.TopologyAbstractTest;
 import org.apache.edgent.topology.TStream;
@@ -34,7 +37,22 @@ import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.tester.Condition;
 import org.junit.Test;
 
-public class DevelopmentProviderTest extends TopologyAbstractTest implements DevelopmentTestSetup {
+public class DevelopmentProviderTest extends TopologyAbstractTest {
+
+    @Override
+    public DevelopmentProvider createTopologyProvider() {
+        try {
+            return new DevelopmentProvider();
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+  
+    @Override
+    public Submitter<Topology, Job> createSubmitter() {
+        return (DevelopmentProvider) getTopologyProvider();
+    }
 
     // DevelopmentProvider inserts CounterOp metric oplets into the graph
     @Test
