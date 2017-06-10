@@ -75,15 +75,21 @@
     </dependency>
 
     <dependency>
-      <groupId>org.apache.edgent.connectors</groupId>
-      <artifactId>edgent-connectors-common</artifactId>
+      <groupId>org.apache.edgent.providers</groupId>
+      <artifactId>edgent-providers-direct</artifactId>
       <version>${edgent.version}</version>
-      <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.providers</groupId>
       <artifactId>edgent-providers-direct</artifactId>
+      <version>${edgent.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.edgent.connectors</groupId>
+      <artifactId>edgent-connectors-common</artifactId>
       <version>${edgent.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
