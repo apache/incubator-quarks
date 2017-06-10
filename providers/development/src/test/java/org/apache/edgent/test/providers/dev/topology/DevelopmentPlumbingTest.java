@@ -18,8 +18,27 @@ under the License.
 */
 package org.apache.edgent.test.providers.dev.topology;
 
-import org.apache.edgent.test.providers.dev.DevelopmentTestSetup;
+import org.apache.edgent.execution.Job;
+import org.apache.edgent.execution.Submitter;
+import org.apache.edgent.providers.development.DevelopmentProvider;
 import org.apache.edgent.test.topology.PlumbingTest;
+import org.apache.edgent.topology.Topology;
 
-public class DevelopmentPlumbingTest extends PlumbingTest implements DevelopmentTestSetup {
+public class DevelopmentPlumbingTest extends PlumbingTest {
+
+  @Override
+  public DevelopmentProvider createTopologyProvider() {
+      try {
+          return new DevelopmentProvider();
+      }
+      catch (Exception e) {
+          throw new RuntimeException(e);
+      }
+  }
+
+  @Override
+  public Submitter<Topology, Job> createSubmitter() {
+      return (DevelopmentProvider) getTopologyProvider();
+  }
+
 }

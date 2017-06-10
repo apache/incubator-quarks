@@ -55,8 +55,7 @@ import org.apache.edgent.connectors.file.FileWriterPolicy;
 import org.apache.edgent.connectors.file.FileWriterRetentionConfig;
 import org.apache.edgent.connectors.file.runtime.IFileWriterPolicy;
 import org.apache.edgent.function.Predicate;
-import org.apache.edgent.test.providers.direct.DirectTestSetup;
-import org.apache.edgent.test.topology.TopologyAbstractTest;
+import org.apache.edgent.test.providers.direct.DirectTopologyTestBase;
 import org.apache.edgent.topology.TSink;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.Topology;
@@ -64,7 +63,7 @@ import org.apache.edgent.topology.plumbing.PlumbingStreams;
 import org.apache.edgent.topology.tester.Condition;
 import org.junit.Test;
 
-public class FileStreamsTextFileWriterTest extends TopologyAbstractTest implements DirectTestSetup {
+public class FileStreamsTextFileWriterTest extends DirectTopologyTestBase {
     
     String str = "123456789";
     String[] stdLines = new String[] {

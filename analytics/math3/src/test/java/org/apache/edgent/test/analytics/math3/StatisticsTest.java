@@ -30,8 +30,7 @@ import org.apache.edgent.analytics.math3.json.JsonAnalytics;
 import org.apache.edgent.analytics.math3.json.JsonUnivariateAggregate;
 import org.apache.edgent.analytics.math3.stat.Regression;
 import org.apache.edgent.analytics.math3.stat.Statistic;
-import org.apache.edgent.test.providers.direct.DirectTestSetup;
-import org.apache.edgent.test.topology.TopologyAbstractTest;
+import org.apache.edgent.test.providers.direct.DirectTopologyTestBase;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.TWindow;
 import org.apache.edgent.topology.Topology;
@@ -41,7 +40,7 @@ import org.junit.Test;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-public class StatisticsTest  extends TopologyAbstractTest implements DirectTestSetup {
+public class StatisticsTest  extends DirectTopologyTestBase {
 	@Test
 	public void testMin() throws Exception {
 	    Topology topology = newTopology("testMin");

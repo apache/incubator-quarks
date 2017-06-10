@@ -25,13 +25,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.edgent.connectors.csv.Csv;
-import org.apache.edgent.test.providers.direct.DirectTestSetup;
-import org.apache.edgent.test.topology.TopologyAbstractTest;
+import org.apache.edgent.test.providers.direct.DirectTopologyTestBase;
 import org.junit.Test;
 
 import com.google.gson.JsonObject;
 
-public class CsvTest extends TopologyAbstractTest implements DirectTestSetup {
+public class CsvTest extends DirectTopologyTestBase {
 
   @Test
   public void testParse() {

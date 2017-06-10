@@ -22,20 +22,37 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 
+import org.apache.edgent.execution.Job;
+import org.apache.edgent.execution.Submitter;
 import org.apache.edgent.execution.services.ControlService;
+import org.apache.edgent.providers.development.DevelopmentProvider;
 import org.apache.edgent.streamscope.StreamScope;
-import org.apache.edgent.streamscope.StreamScopeRegistry;
 import org.apache.edgent.streamscope.StreamScope.Sample;
+import org.apache.edgent.streamscope.StreamScopeRegistry;
 import org.apache.edgent.streamscope.mbeans.StreamScopeMXBean;
 import org.apache.edgent.streamscope.mbeans.StreamScopeRegistryMXBean;
-import org.apache.edgent.test.providers.dev.DevelopmentTestSetup;
 import org.apache.edgent.test.streamscope.StreamScopeTest;
 import org.apache.edgent.topology.Topology;
 import org.junit.Test;
 
 import com.google.gson.Gson;
 
-public class DevelopmentStreamScopeTest extends StreamScopeTest implements DevelopmentTestSetup {
+public class DevelopmentStreamScopeTest extends StreamScopeTest {
+
+  @Override
+  public DevelopmentProvider createTopologyProvider() {
+      try {
+          return new DevelopmentProvider();
+      }
+      catch (Exception e) {
+          throw new RuntimeException(e);
+      }
+  }
+
+  @Override
+  public Submitter<Topology, Job> createSubmitter() {
+      return (DevelopmentProvider) getTopologyProvider();
+  }
   
   @Test
   public void testServiceRegistered() throws Exception {

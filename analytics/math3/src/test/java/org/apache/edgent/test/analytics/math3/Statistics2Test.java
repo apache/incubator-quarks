@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.math3.util.Pair;
 import org.apache.edgent.analytics.math3.Aggregations;
 import org.apache.edgent.analytics.math3.MvResultMap;
 import org.apache.edgent.analytics.math3.ResultMap;
@@ -35,8 +36,7 @@ import org.apache.edgent.analytics.math3.UnivariateAggregate;
 import org.apache.edgent.analytics.math3.stat.Regression2;
 import org.apache.edgent.analytics.math3.stat.Statistic2;
 import org.apache.edgent.function.Functions;
-import org.apache.edgent.test.providers.direct.DirectTestSetup;
-import org.apache.edgent.test.topology.TopologyAbstractTest;
+import org.apache.edgent.test.providers.direct.DirectTopologyTestBase;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.TWindow;
 import org.apache.edgent.topology.Topology;
@@ -46,7 +46,7 @@ import org.junit.Test;
 import com.google.gson.JsonObject;
 
 /** test Aggregations, Statistics2 and Regression2 */
-public class Statistics2Test  extends TopologyAbstractTest implements DirectTestSetup {
+public class Statistics2Test  extends DirectTopologyTestBase {
   
   // Expected results for **continuous last-2** aggregations of (1, 4, 102, 0) for the various stats.
   protected static Map<UnivariateAggregate,Double[]> STAT_RESULTS = new HashMap<>();

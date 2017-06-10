@@ -18,8 +18,21 @@ under the License.
 */
 package org.apache.edgent.test.providers.direct.topology;
 
-import org.apache.edgent.test.providers.direct.DirectTestSetup;
+import org.apache.edgent.execution.Job;
+import org.apache.edgent.execution.Submitter;
+import org.apache.edgent.providers.direct.DirectProvider;
 import org.apache.edgent.test.topology.PlumbingTest;
+import org.apache.edgent.topology.Topology;
 
-public class DirectPlumbingTest extends PlumbingTest implements DirectTestSetup {
+public class DirectPlumbingTest extends PlumbingTest {
+
+  @Override
+  public DirectProvider createTopologyProvider() {
+      return new DirectProvider();
+  }
+
+  @Override
+  public Submitter<Topology, Job> createSubmitter() {
+      return (DirectProvider) getTopologyProvider();
+  }
 }

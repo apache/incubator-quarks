@@ -38,14 +38,13 @@ import org.apache.edgent.connectors.file.FileStreams;
 import org.apache.edgent.function.BiFunction;
 import org.apache.edgent.function.Function;
 import org.apache.edgent.test.connectors.common.FileUtil;
-import org.apache.edgent.test.providers.direct.DirectTestSetup;
-import org.apache.edgent.test.topology.TopologyAbstractTest;
+import org.apache.edgent.test.providers.direct.DirectTopologyTestBase;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.plumbing.PlumbingStreams;
 import org.junit.Test;
 
-public class FileStreamsTest extends TopologyAbstractTest implements DirectTestSetup {
+public class FileStreamsTest extends DirectTopologyTestBase {
     
     String[] stdLines = new String[] {
             "If you can keep your head when all about you",
