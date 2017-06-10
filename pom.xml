@@ -110,6 +110,7 @@
   </modules>
 
   <build>
+    <directory>target/${java.signature.name}</directory>
     <pluginManagement>
       <plugins>
         <plugin>
@@ -136,6 +137,12 @@
               <version>3.3</version>
             </dependency>
           </dependencies>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.5.2</version>
         </plugin>
 
         <plugin>
@@ -310,6 +317,15 @@
         </executions>
         <configuration>
           <argLine>${failsafeArgLine}</argLine>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <inherited>false</inherited>
+        <configuration>
+          <localRepositoryPath>target/localRepo</localRepositoryPath>
         </configuration>
       </plugin>
 
