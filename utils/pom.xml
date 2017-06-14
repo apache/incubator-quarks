@@ -35,7 +35,21 @@
 
   <modules>
     <module>metrics</module>
-    <module>streamscope</module>
   </modules>
+
+  <profiles>
+    <profile>
+      <id>java8</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>streamscope</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>java7</id>
+    </profile>
+  </profiles>
 
 </project>

@@ -39,4 +39,30 @@
     <module>svt</module>
   </modules>
 
+  <!-- TODO: Add the license headers or remove the files -->
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.rat</groupId>
+        <artifactId>apache-rat-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>license-check</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <excludes combine.children="append">
+            <exclude>consoleUrl.txt</exclude>
+            <exclude>GpsObdAnalyticsApplication.properties</exclude>
+            <exclude>iotfUrl.txt</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
 </project>

@@ -36,12 +36,6 @@
   <name>Apache Edgent</name>
   <description>The Apache Edgent Project</description>
 
-  <!--
-        This build builds only the framework libraries per default.
-        - In order to build the examples, activate the "build-examples" profile
-        - In order to assemble a distribution, activate the "build-distribution" profile.
-  -->
-
   <scm>
     <connection>scm:git:https://git-wip-us.apache.org/repos/asf/incubator-edgent.git</connection>
     <developerConnection>scm:git:https://git-wip-us.apache.org/repos/asf/incubator-edgent.git</developerConnection>
@@ -50,10 +44,10 @@
   </scm>
 
   <properties>
+    <!-- Up here and not in the java8 profile, so hopefully the maven-release-plugin will find it -->
     <edgent.version>1.2.0-SNAPSHOT</edgent.version>
 
     <java.version>1.8</java.version>
-    <java.signature.name>java18</java.signature.name>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputencoding>UTF-8</project.reporting.outputencoding>
     <maven.version>3.3.1</maven.version>
@@ -110,7 +104,7 @@
   </modules>
 
   <build>
-    <directory>target/${java.signature.name}</directory>
+    <directory>target/${build.profile}</directory>
     <pluginManagement>
       <plugins>
         <plugin>
@@ -143,6 +137,25 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-install-plugin</artifactId>
           <version>2.5.2</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.rat</groupId>
+          <artifactId>apache-rat-plugin</artifactId>
+          <version>0.12</version>
+          <dependencies>
+            <dependency>
+              <groupId>org.apache.maven.doxia</groupId>
+              <artifactId>doxia-core</artifactId>
+              <version>1.6</version>
+              <exclusions>
+                <exclusion>
+                  <groupId>xerces</groupId>
+                  <artifactId>xercesImpl</artifactId>
+                </exclusion>
+              </exclusions>
+            </dependency>
+          </dependencies>
         </plugin>
 
         <plugin>
@@ -179,10 +192,9 @@
 
     <plugins>
       <!-- Check if all source files have the required apache license headers -->
-      <!--plugin>
+      <plugin>
         <groupId>org.apache.rat</groupId>
         <artifactId>apache-rat-plugin</artifactId>
-        <version>0.12</version>
         <executions>
           <execution>
             <id>license-check</id>
@@ -194,22 +206,52 @@
         </executions>
         <configuration>
           <excludes>
+            <!-- Git related files -->
+            <exclude>**/.git/**</exclude>
+            <exclude>**/.gitignore</exclude>
+
+            <!-- Maven related files -->
+            <exclude>**/target/**</exclude>
+
+            <!-- Eclipse related files -->
+            <exclude>**/.project</exclude>
+            <exclude>**/.settings/**</exclude>
+            <exclude>**/.classpath</exclude>
+
+            <!-- IntelliJ related files -->
+            <exclude>**/.idea/**</exclude>
+            <exclude>**/*.iml</exclude>
+
+            <!-- Documentation related files -->
+            <exclude>.mailmap</exclude>
+
+            <!-- Other files
+                TODO: Should be examined
+            -->
+            <exclude>*.patch</exclude>
+            <exclude>**/.cache/**</exclude>
+            <exclude>binary-release/apache-notice</exclude>
+            <exclude>binary-release/ibm-contrib-notice</exclude>
+            <exclude>licenses/d3-sankey.BSD</exclude>
+            <exclude>licenses/d3.BSD</exclude>
+            <exclude>licenses/binary-release/javax.servlet-api-3.1.0.CDDL-1.0</exclude>
+            <exclude>licenses/binary-release/javax.websocket-api-1.0.CDDL-1.1</exclude>
+            <exclude>licenses/binary-release/mqttv3-1.1.0.EDL-1.0</exclude>
+            <exclude>licenses/binary-release/watson-iot-0.2.2.EPL-1.0</exclude>
+            <exclude>scripts/**/*.properties</exclude>
+            <exclude>scripts/**/*.cfg</exclude>
+            <exclude>scripts/connectors/jdbc/persondata.txt</exclude>
+            <exclude>scripts/connectors/kafka/README-kafka</exclude>
+
+            <!-- TODO: Remove this after finishing the maven migration -->
+            <exclude>gradlew</exclude>
+            <exclude>gradlew.bat</exclude>
+            <exclude>**/build/**</exclude>
+            <exclude>**/.gradle/**</exclude>
+            <exclude>.gradle-wrapper/**</exclude>
           </excludes>
         </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.apache.maven.doxia</groupId>
-            <artifactId>doxia-core</artifactId>
-            <version>1.6</version>
-            <exclusions>
-              <exclusion>
-                <groupId>xerces</groupId>
-                <artifactId>xercesImpl</artifactId>
-              </exclusion>
-            </exclusions>
-          </dependency>
-        </dependencies>
-      </plugin-->
+      </plugin>
 
       <plugin>
         <groupId>org.jacoco</groupId>
@@ -298,7 +340,14 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.20</version>
         <configuration>
+          <!--
+                If IntelliJ complains about this line, ignore it ... the property
+                is set by the jacoco-maven-plugin during the build.
+          -->
           <argLine>${surefireArgLine}</argLine>
+          <systemPropertyVariables>
+            <build.profile>${build.profile}</build.profile>
+          </systemPropertyVariables>
         </configuration>
       </plugin>
 
@@ -316,7 +365,14 @@
           </execution>
         </executions>
         <configuration>
+          <!--
+                If IntelliJ complains about this line, ignore it ... the property
+                is set by the jacoco-maven-plugin during the build.
+          -->
           <argLine>${failsafeArgLine}</argLine>
+          <systemPropertyVariables>
+            <build.profile>${build.profile}</build.profile>
+          </systemPropertyVariables>
         </configuration>
       </plugin>
 
@@ -539,15 +595,29 @@
   </dependencies>
 
   <profiles>
+    <!--
+          Profile for building for Java 8 (default)
+    -->
+    <profile>
+      <id>java8</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <build.profile>java8</build.profile>
+        <java.signature.name>java18</java.signature.name>
+      </properties>
+    </profile>
+    <!--
+          Profile for building for Java 7
+    -->
     <profile>
       <id>java7</id>
-
       <properties>
+        <build.profile>java7</build.profile>
         <edgent.version>1.2.0.java7-SNAPSHOT</edgent.version>
-
         <java.signature.name>java17</java.signature.name>
       </properties>
-
       <build>
         <plugins>
           <plugin>
@@ -563,7 +633,14 @@
               </execution>
             </executions>
             <configuration>
-              <defaultMethods>true</defaultMethods>
+              <!--
+                    It seems that in-place rewriting doesn't work.
+                    I can't really explain, why the build works with these settings,
+                    I'm just happy that it seems to be working. Hopefully some day
+                    I will find out or someone will explain it to me.
+              -->
+              <mainOutputDir>${project.basedir}/target/${build.profile}/classes-processed</mainOutputDir>
+              <testOutputDir>${project.basedir}/target/${build.profile}/test-classes-processed</testOutputDir>
             </configuration>
           </plugin>
         </plugins>

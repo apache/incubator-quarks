@@ -34,8 +34,22 @@
   <name>Apache Edgent: Analytics</name>
 
   <modules>
-    <module>math3</module>
     <module>sensors</module>
   </modules>
+
+  <profiles>
+    <profile>
+      <id>java8</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>math3</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>java7</id>
+    </profile>
+  </profiles>
 
 </project>

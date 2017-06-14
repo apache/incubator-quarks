@@ -34,7 +34,7 @@
 
   <build>
     <plugins>
-    <!-- TODO: We shouldn't need to require test-jars -->
+      <!-- TODO: We shouldn't need to require test-jars -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
