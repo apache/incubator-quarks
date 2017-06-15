@@ -41,6 +41,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -735,10 +736,12 @@ public class FileStreamsTextFileWriterTest extends TopologyAbstractTest implemen
         System.out.println("########## "+t.getName());
         
         // Write the files
-        // add delay so watcher starts first
+        // add delay so watcher starts first and gets to "see" file additions
         int throttleSec = 2;
-        TStream<String> contents = PlumbingStreams.blockingThrottle(
-                t.strings(lines), throttleSec, TimeUnit.SECONDS);
+        TStream<String> contents = PlumbingStreams.blockingOneShotDelay(
+                t.strings(lines), 2, TimeUnit.SECONDS);
+        contents = PlumbingStreams.blockingThrottle(
+                contents, throttleSec, TimeUnit.SECONDS);
         
         IFileWriterPolicy<String> policy = new FileWriterPolicy<String>(
                 FileWriterFlushConfig.newImplicitConfig(),
@@ -749,16 +752,16 @@ public class FileStreamsTextFileWriterTest extends TopologyAbstractTest implemen
         
         // Watch and read contents
         TStream<String> pathnames = FileStreams.directoryWatcher(t,
-                () -> dir.toAbsolutePath().toString());
-        pathnames.sink(tuple -> System.out.println("watcher added "+tuple));
-        pathnames.peek(tuple -> { if (new File(tuple).getName().startsWith("."))
+                () -> dir.toAbsolutePath().toString())
+          .peek(tuple -> System.out.println(new Date() + " watcher added "+tuple))
+          .peek(tuple -> { if (new File(tuple).getName().startsWith("."))
             throw new RuntimeException("Not filtering active/hidden files "+tuple); });
         TStream<String> readContents = FileStreams.textFileReader(pathnames);
 
         boolean dump = true;
         try {
             completeAndValidate("", t, readContents,
-                    (lines.length*throttleSec)+TMO_SEC, lines);
+                    (lines.length*throttleSec)+TMO_SEC+3/*on-the-edge*/, lines);
             dump = false;
         }
         finally {
