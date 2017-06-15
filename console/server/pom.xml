@@ -34,6 +34,10 @@
 
   <build>
     <plugins>
+      <!--
+            TODO: This only works for the unit- / integration-tests ...
+            for a usable "server", we need to fine-tune this a little.
+      -->
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
         <version>3.0.1</version>
