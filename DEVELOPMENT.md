@@ -5,12 +5,16 @@
 See [README.md](README.md) for high-level information about Apache Edgent.
 
 This document describes development of Apache Edgent itself, not how to develop Edgent applications.
+
  * See http://edgent.incubator.apache.org/docs/edgent-getting-started for getting started using Edgent
 
 The Edgent community welcomes contributions, please *Get Involved*!
+
  * http://edgent.incubator.apache.org/docs/community
  
-If you are interested in developing a new connector see [Writing Connectors for Edgent Applications](https://cwiki.apache.org/confluence/display/EDGENT/Writing+Connectors+For+Edgent+Applications) 
+If you are interested in developing a new connector see [Writing Connectors for Edgent Applications](https://cwiki.apache.org/confluence/display/EDGENT/Writing+Connectors+For+Edgent+Applications)
+
+See the [Edgent Wiki](https://cwiki.apache.org/confluence/display/EDGENT) for additional information including Internal and Design notes. 
 
 ## Switched from Ant to Gradle
 
@@ -24,6 +28,7 @@ reusing current ant-based Edgent workspaces.
 Apache Edgent is the new name and the conversion is complete.
 
 Code changes:
+
   * Package names have the prefix "org.apache.edgent"
   * JAR names have the prefix "edgent"
 
@@ -75,6 +80,7 @@ $ ./gradlew clean build
 ```
 
 The Gradle tooling:
+
 - Creates release images under `<edgent>/build/release-edgent`
 - Creates build artifacts under `<edgent>/build/distributions` and `<edgent>/<project>/build`
 
@@ -115,6 +121,7 @@ The latest build status for the project's branches can be seen at: https://travi
 
 The build setup is contained in `.travis.yml` in the project root directory.
 It includes:
+
 * Building the project
 * Testing on Java 8 and Java 7
   - Not all tests may be run, some tests are skipped due to timing issues or if excessive setup is required.
@@ -139,6 +146,7 @@ Java 7 and Android target platforms are supported through use of
 retrolambda to convert Edgent Java8 JARs to Java7 JARs.
 
 Building a release (`./gradlew release`) produces three sets of JARs under
+
 * build/distributions/java8 - Java 8 SE
 * build/distributions/java7 - Java 7 SE
 * build/distributions/android - Android
@@ -151,6 +159,7 @@ for each environment.
 The Gradle tooling uses some Ant tooling to create the Java 7 and Android platform JARs.
 
 Java 7 Edgent runtime JARs are created using `platform/java7/build.xml`. Adding a JAR just requires:
+
 * Adding it to target `retro7.edgent` - Copy entry for an existing JAR.
 * Adding any tests for it to targets `test7.setup` and `test7.run` - Copy entry for an existing JAR.
 
@@ -159,6 +168,7 @@ Any Java 7 JAR is automatically included in Android unless it is explictly exclu
 ## Test reports
 
 Running the `reports` target produces two reports:
+
 * `builds/distributions/reports/tests/index.html` - JUnit test report
 * `builds/distributions/reports/coverage/index.html` - Code coverage report.
 
@@ -293,6 +303,7 @@ such as an MQTT broker, Apache Kafka, a cloud based IoT service, etc.
 Placeholder: see [EDGENT-23](https://issues.apache.org/jira/browse/EDGENT-23)
 
 A couple of key items in the mean time:
+
 * Use spaces not hard tabs, indent is 4 spaces
 * Don't use wildcard imports
 * Don't deliver code with warnings (e.g., unused imports)
@@ -315,6 +326,7 @@ since Edgent's primary API is a functional one.
 code. Lambdas are translated into Java 7 compatible classes using retrolambda.
 
 Thus:
+
 * For core code that needs to run on Android:
    * The only Java 8 feature that can be used is lambda expressions
    * JMX functionality cannot be used.
@@ -324,6 +336,7 @@ Thus:
    * Java 8 new classes and methods cannot be used
 
 In general, most code is expected to work on Android (but might not yet) with the exception:
+
 * Functionality aimed at the developer environment, such as console and development provider
 * Any JMX related code
 
@@ -347,6 +360,7 @@ For a description of the GitHub workflow, see:
     https://guides.github.com/activities/hello-world/
 
 In summary:
+
 * Fork the incubator-edgent GitHub repository
 * Clone your fork, use lightweight per-task branches, and commit / push changes to your fork
   * Descriptive branch names are good. You can also include a reference
@@ -365,6 +379,7 @@ into the repo at the ASF. One way is described here:
 * http://mail-archives.apache.org/mod_mbox/incubator-quarks-dev/201603.mbox/%3C1633289677.553519.1457733763078.JavaMail.yahoo%40mail.yahoo.com%3E
 
 Notes with the above PR merge directions:
+
   * Use an HTTPS URL unless you have a SSH key setup at GitHub:
     - `$ git remote add mirror https://github.com/apache/incubator-edgent.git`
 

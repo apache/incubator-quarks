@@ -81,12 +81,14 @@ medical device.
   * Data from other devices
 
 Edgent communicates with your back-end systems through the following message hubs:
+
 * MQTT – The messaging standard for IoT
 * IBM Watson IoT Platform – A cloud-based services that provides a device model on top of MQTT
 * Apache Kafka – An enterprise-level message bus
 * Custom message hubs
 
 Your back-end systems can also use analytics to interact with and control edge devices. For example:
+
 * A traffic alert system can send an alert to vehicles that are heading towards an area where an accident occurred
 * A vehicle monitoring system can reduce the maximum engine revs to reduce the chance of failure before the next scheduled service if it detects patterns that indicate a potential problem
 
@@ -94,7 +96,7 @@ Your back-end systems can also use analytics to interact with and control edge d
 Edgent has a language binding for Java. See [JAVA SUPPORT](JAVA_SUPPORT.md) for information about the supported Java environments.
 
 ## Getting Started
-See [Edgent](http://edgent.incubator.apache.org/) for more information on all
+See the [Edgent website](http://edgent.incubator.apache.org/) for more information on all
 aspects of Edgent including Getting Started.
 
 For details about the Edgent sources and contributing to 
