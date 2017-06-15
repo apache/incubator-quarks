@@ -58,7 +58,7 @@ import com.google.gson.JsonPrimitive;
 /**
  * Test IotProvider using the EchoIotDevice.
  */
-public class IotProviderTest {
+public class IotProviderIT {
     
     /**
      * Basic test we can start applications
@@ -77,7 +77,7 @@ public class IotProviderTest {
         IotTestApps.registerApplications(provider);
 
         // Create a Submit AppOne request
-        JsonObject submitAppOne = IotAppServiceTest.newSubmitRequest("AppOne");
+        JsonObject submitAppOne = IotAppServiceIT.newSubmitRequest("AppOne");
         
         // Create a test application that listens for the
         // output of AppOne (as a published topic).
@@ -125,7 +125,7 @@ public class IotProviderTest {
         IotTestApps.registerApplications(provider);
 
         // Create a Submit AppOne request
-        JsonObject submitAppOne = IotAppServiceTest.newSubmitRequest("AppOne");
+        JsonObject submitAppOne = IotAppServiceIT.newSubmitRequest("AppOne");
         
         // Create an application that sends a device event
         // with the submit job command, and this will be echoed

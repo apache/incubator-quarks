@@ -30,7 +30,7 @@ import org.apache.edgent.runtime.appservice.AppService;
 import org.apache.edgent.topology.services.ApplicationService;
 import org.junit.Test;
 
-public class AppServiceTest {
+public class AppServiceIT {
     
     
     @Test

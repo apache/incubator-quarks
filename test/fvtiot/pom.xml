@@ -40,7 +40,7 @@
         <executions>
           <execution>
             <id>copy</id>
-            <phase>generate-test-resources</phase>
+            <phase>pre-integration-test</phase>
             <goals>
               <goal>copy</goal>
             </goals>
