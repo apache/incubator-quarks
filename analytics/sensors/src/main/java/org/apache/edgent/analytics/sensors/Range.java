@@ -457,14 +457,34 @@ public final class Range<T extends Comparable<?>> implements Predicate<T>, Seria
     
     private static <T> String toUnsignedString(T v) {
         if (v instanceof Byte)
-            return Integer.toUnsignedString(Byte.toUnsignedInt((Byte)v));
+            return intToUnsignedString(byteToUnsignedInt((Byte)v));
         else if (v instanceof Short)
-            return Integer.toUnsignedString(Short.toUnsignedInt((Short)v));
+            return intToUnsignedString(shortToUnsignedInt((Short)v));
         else if (v instanceof Integer)
-            return Integer.toUnsignedString((Integer)v);
+            return intToUnsignedString((Integer)v);
         else if (v instanceof Long)
-            return Long.toUnsignedString((Long)v);
+            return longToUnsignedString((Long)v);
         throw new IllegalArgumentException("Not Range of Byte,Short,Integer, or Long"+v.getClass());
     }
-    
+
+    private static String longToUnsignedString(long i) {
+        return Long.toString(i);
+    }
+
+    private static String intToUnsignedString(int i) {
+        return Long.toString(intToUnsignedLong(i));
+    }
+
+    private static long intToUnsignedLong(int x) {
+        return ((long) x) & 0xffffffffL;
+    }
+
+    private static int byteToUnsignedInt(byte x) {
+        return ((int) x) & 0xff;
+    }
+
+    private static int shortToUnsignedInt(short x) {
+        return ((int) x) & 0xffff;
+    }
+
 }

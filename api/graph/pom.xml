@@ -28,32 +28,15 @@
   </parent>
 
   <artifactId>edgent-api-graph</artifactId>
-  <version>${edgent.version}</version>
+  <version>1.2.0-SNAPSHOT</version>
 
   <name>Apache Edgent: API: Graph</name>
-
-  <build>
-    <plugins>
-      <!-- TODO: We shouldn't need to require test-jars -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>test-jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
       <artifactId>edgent-api-oplet</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
 

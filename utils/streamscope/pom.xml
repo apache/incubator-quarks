@@ -28,39 +28,22 @@
   </parent>
 
   <artifactId>edgent-utils-streamscope</artifactId>
-  <version>${edgent.version}</version>
+  <version>1.2.0-SNAPSHOT</version>
 
   <name>Apache Edgent: Utils: Streamscope</name>
-
-  <build>
-    <plugins>
-      <!-- TODO: We shouldn't need to require test-jars -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>test-jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
       <artifactId>edgent-api-topology</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
 
     <!-- TODO: This is only required because of a dependency to TopologyAbstractTest -> Would suggest to move test-util stutt into a dedicated test-utils artifact -->
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
       <artifactId>edgent-api-topology</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>

@@ -28,25 +28,12 @@
   </parent>
 
   <artifactId>edgent-providers-direct</artifactId>
-  <version>${edgent.version}</version>
+  <version>1.2.0-SNAPSHOT</version>
 
   <name>Apache Edgent: Providers: Direct</name>
 
   <build>
     <plugins>
-      <!-- TODO: We shouldn't need to require test-jars -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>test-jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
         <version>3.0.1</version>
@@ -78,51 +65,51 @@
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
       <artifactId>edgent-api-topology</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.spi</groupId>
       <artifactId>edgent-spi-topology</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.spi</groupId>
       <artifactId>edgent-spi-graph</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.runtimes</groupId>
       <artifactId>edgent-runtimes-appservice</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.runtimes</groupId>
       <artifactId>edgent-runtimes-etiao</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.runtimes</groupId>
       <artifactId>edgent-runtimes-jsoncontrol</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.edgent.utils</groupId>
       <artifactId>edgent-utils-metrics</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.utils</groupId>
       <artifactId>edgent-utils-metrics</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
       <artifactId>edgent-api-topology</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>

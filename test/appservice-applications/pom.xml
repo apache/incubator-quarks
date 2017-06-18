@@ -28,7 +28,7 @@
   </parent>
 
   <artifactId>edgent-test-appservice-applications</artifactId>
-  <version>${edgent.version}</version>
+  <version>1.2.0-SNAPSHOT</version>
 
   <name>Apache Edgent: Test: AppService Applications</name>
 
@@ -36,7 +36,7 @@
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
       <artifactId>edgent-api-topology</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
 

@@ -28,7 +28,7 @@
   </parent>
 
   <artifactId>edgent-samples-utils</artifactId>
-  <version>${edgent.version}</version>
+  <version>1.2.0-SNAPSHOT</version>
 
   <name>Apache Edgent: Samples: Utils</name>
 
@@ -36,22 +36,22 @@
     <dependency>
       <groupId>org.apache.edgent.console</groupId>
       <artifactId>edgent-console-server</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.utils</groupId>
       <artifactId>edgent-utils-metrics</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.providers</groupId>
       <artifactId>edgent-providers-development</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.analytics</groupId>
       <artifactId>edgent-analytics-sensors</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>

@@ -28,76 +28,30 @@
   </parent>
 
   <artifactId>edgent-api-topology</artifactId>
-  <version>${edgent.version}</version>
+  <version>1.2.0-SNAPSHOT</version>
 
   <name>Apache Edgent: API: Topology</name>
-
-  <build>
-    <plugins>
-      <!-- TODO: We shouldn't need to require test-jars -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <executions>
-          <!--
-              Make the default test-jar exclude the service descriptor
-              Or some tests would succeed where they should fail.
-          -->
-          <execution>
-            <id>default</id>
-            <goals>
-              <goal>test-jar</goal>
-            </goals>
-            <configuration>
-              <excludes>
-                <exclude>META-INF/services/**</exclude>
-              </excludes>
-            </configuration>
-          </execution>
-          <!--
-              Create a second test-jar that contains only the dummy
-              Server and the service descriptor for that. This is used
-              by other modules unit-tests.
-          -->
-          <execution>
-            <id>dummy-server-jar</id>
-            <phase>package</phase>
-            <goals>
-              <goal>test-jar</goal>
-            </goals>
-            <configuration>
-              <classifier>test-server</classifier>
-              <includes>
-                <include>**/services/**</include>
-                <include>META-INF/services/**</include>
-              </includes>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
       <artifactId>edgent-api-execution</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
       <artifactId>edgent-api-function</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
       <artifactId>edgent-api-graph</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
       <artifactId>edgent-api-oplet</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
 

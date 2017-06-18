@@ -28,7 +28,7 @@
   </parent>
 
   <artifactId>edgent-samples-szenarios</artifactId>
-  <version>${edgent.version}</version>
+  <version>1.2.0-SNAPSHOT</version>
 
   <name>Apache Edgent: Samples: Szenarios</name>
 
@@ -59,17 +59,17 @@
     <dependency>
       <groupId>org.apache.edgent.connectors</groupId>
       <artifactId>edgent-connectors-iotp</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.providers</groupId>
       <artifactId>edgent-providers-iot</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.samples</groupId>
       <artifactId>edgent-samples-connectors</artifactId>
-      <version>${edgent.version}</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.pi4j</groupId>

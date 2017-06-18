@@ -1,5 +1,8 @@
 *.class
 
+# Local developers toolchain
+/toolchains-local.xml
+
 # More generated artifacts
 target/
 /test/svt/lib

@@ -34,23 +34,9 @@
   <name>Apache Edgent: Providers</name>
 
   <modules>
+    <module>development</module>
     <module>direct</module>
     <module>iot</module>
   </modules>
-
-  <profiles>
-    <profile>
-      <id>java8</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <modules>
-        <module>development</module>
-      </modules>
-    </profile>
-    <profile>
-      <id>java7</id>
-    </profile>
-  </profiles>
 
 </project>
