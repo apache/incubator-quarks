@@ -71,7 +71,7 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>org.apache.edgent.test</groupId>
+                  <groupId>org.apache.edgent.java7.test</groupId>
                   <artifactId>edgent-test-appservice-applications</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/test-resources</outputDirectory>
