@@ -144,7 +144,7 @@ public class WebSocketServerEcho {
     }
     
     private String getStorePath(String storeLeaf) {
-        return TestRepoPath.getPath("connectors", "wsclient-javax.websocket", "src", "test", "keystores", storeLeaf);
+        return TestRepoPath.getPath("keystores/" + storeLeaf);
     }
     
     public int getPort() {

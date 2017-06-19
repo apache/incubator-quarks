@@ -144,7 +144,7 @@ public class WebSocketClientTest extends ConnectorTestBase {
     }
     
     private String getStorePath(String storeLeaf) {
-        return TestRepoPath.getPath("connectors", "wsclient-javax.websocket", "src", "test", "keystores", storeLeaf);
+        return TestRepoPath.getPath("keystores/" + storeLeaf);
     }
 
     @Test

@@ -25,6 +25,8 @@ import java.util.Objects;
 import org.apache.edgent.function.Function;
 import org.apache.edgent.function.Predicate;
 
+import static org.apache.edgent.analytics.sensors.utils.Java7Helper.*;
+
 /**
  * A generic immutable range of values and a way to 
  * check a value for containment in the range.
@@ -261,7 +263,7 @@ public final class Range<T extends Comparable<?>> implements Predicate<T>, Seria
      * <pre>
      * Comparator&lt;Byte&gt; unsignedByteComparator = new Comparator&lt;Byte&gt;() {
      *     public int compare(Byte b1, Byte b2) {
-     *         return Integer.compareUnsigned(Byte.toUnsignedInt(b1), Byte.toUnsignedInt(b2));
+     *         return intCompareUnsigned(byteToUnsignedInt(b1), byteToUnsignedInt(b2));
      *     }
      *     public boolean equals(Object o2) { return o2==this; }
      *     };
@@ -329,7 +331,7 @@ public final class Range<T extends Comparable<?>> implements Predicate<T>, Seria
     /**
      * Parse a String from {@link #toString()}
      * 
-     * @param str the String
+     * @param s the String
      * @return Four element array with the range's component Strings
      * @throws IllegalArgumentException
      */
@@ -465,26 +467,6 @@ public final class Range<T extends Comparable<?>> implements Predicate<T>, Seria
         else if (v instanceof Long)
             return longToUnsignedString((Long)v);
         throw new IllegalArgumentException("Not Range of Byte,Short,Integer, or Long"+v.getClass());
-    }
-
-    private static String longToUnsignedString(long i) {
-        return Long.toString(i);
-    }
-
-    private static String intToUnsignedString(int i) {
-        return Long.toString(intToUnsignedLong(i));
-    }
-
-    private static long intToUnsignedLong(int x) {
-        return ((long) x) & 0xffffffffL;
-    }
-
-    private static int byteToUnsignedInt(byte x) {
-        return ((int) x) & 0xff;
-    }
-
-    private static int shortToUnsignedInt(short x) {
-        return ((int) x) & 0xffff;
     }
 
 }

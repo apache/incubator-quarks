@@ -540,7 +540,7 @@
         <executions>
           <execution>
             <id>check-jdk-signatures</id>
-            <phase>veri</phase>
+            <phase>process-test-classes</phase>
             <goals>
               <goal>check</goal>
             </goals>

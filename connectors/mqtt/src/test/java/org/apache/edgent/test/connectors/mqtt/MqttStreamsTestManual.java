@@ -112,7 +112,7 @@ public class MqttStreamsTestManual extends ConnectorTestBase {
     }
     
     protected String getKeystorePath(String storeLeaf) {
-        return TestRepoPath.getPath("connectors", "mqtt", "src", "test", "keystores", storeLeaf);
+        return TestRepoPath.getPath("keystores/" + storeLeaf);
     }
     
     private MqttConfig newConfig(String serverURL, String clientId) {

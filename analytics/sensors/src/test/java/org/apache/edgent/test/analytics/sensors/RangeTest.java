@@ -8,7 +8,7 @@ to you under the Apache License, Version 2.0 (the
 with the License.  You may obtain a copy of the License at
 
   http://www.apache.org/licenses/LICENSE-2.0
-  
+
 Unless required by applicable law or agreed to in writing,
 software distributed under the License is distributed on an
 "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -22,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
+import static org.apache.edgent.analytics.sensors.utils.Java7Helper.*;
 
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
@@ -31,7 +32,6 @@ import java.util.Comparator;
 import org.apache.edgent.analytics.sensors.Range;
 import org.apache.edgent.analytics.sensors.Ranges;
 import org.apache.edgent.function.Function;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.gson.Gson;
@@ -373,15 +373,13 @@ public class RangeTest {
      * Test unsigned handling.
      * toUnsignedString() and compare(T, Comparator<T>)
      */
-
     @Test
-    @Ignore("I had to refactor Range to make it Java7 compatible, this seems to have broken this test")
     public void testToUnsignedString() {
         testToStringUnsigned(Ranges.open((byte)0,(byte)255), "(0..255)");
         testToStringUnsigned(Ranges.closed((byte)0,(byte)255), "[0..255]");
         testToStringUnsigned(Ranges.open((short)0,(short)0xFFFF), "(0..65535)");
-        testToStringUnsigned(Ranges.open(0,0xFFFFFFFF), "(0.."+Integer.toUnsignedString(0xFFFFFFFF)+")");
-        testToStringUnsigned(Ranges.open(0L,0xFFFFFFFFFFFFFFFFL), "(0.."+Long.toUnsignedString(0xFFFFFFFFFFFFFFFFL)+")");
+        testToStringUnsigned(Ranges.open(0,0xFFFFFFFF), "(0.."+ intToUnsignedString(0xFFFFFFFF)+")");
+        testToStringUnsigned(Ranges.open(0L,0xFFFFFFFFFFFFFFFFL), "(0.."+longToUnsignedString(0xFFFFFFFFFFFFFFFFL)+")");
     }
 
     @Test
@@ -389,7 +387,7 @@ public class RangeTest {
         // Unsigned Byte ======================
         Comparator<Byte> unsignedByteComparator = new Comparator<Byte>() {
             public int compare(Byte v1, Byte v2) {
-                return Integer.compareUnsigned(Byte.toUnsignedInt(v1), Byte.toUnsignedInt(v2));
+                return intCompareUnsigned(byteToUnsignedInt(v1), byteToUnsignedInt(v2));
             }
             public boolean equals(Object o2) { return o2==this; }
             };
@@ -403,7 +401,7 @@ public class RangeTest {
         // Unsigned Short ======================
         Comparator<Short> unsignedShortComparator = new Comparator<Short>() {
             public int compare(Short v1, Short v2) {
-                return Integer.compareUnsigned(Short.toUnsignedInt(v1), Short.toUnsignedInt(v2));
+                return intCompareUnsigned(shortToUnsignedInt(v1), shortToUnsignedInt(v2));
             }
             public boolean equals(Object o2) { return o2==this; }
             };
@@ -416,7 +414,7 @@ public class RangeTest {
         // Unsigned Integer ======================
         Comparator<Integer> unsignedIntegerComparator = new Comparator<Integer>() {
             public int compare(Integer v1, Integer v2) {
-                return Integer.compareUnsigned(v1, v2);
+                return intCompareUnsigned(v1, v2);
             }
             public boolean equals(Object o2) { return o2==this; }
             };
@@ -429,7 +427,7 @@ public class RangeTest {
         // Unsigned Long ======================
         Comparator<Long> unsignedLongComparator = new Comparator<Long>() {
             public int compare(Long v1, Long v2) {
-                return Long.compareUnsigned(v1, v2);
+                return longCompareUnsigned(v1, v2);
             }
             public boolean equals(Object o2) { return o2==this; }
             };

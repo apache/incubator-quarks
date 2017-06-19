@@ -22,92 +22,88 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.apache.edgent.connectors</groupId>
-    <artifactId>edgent-connectors</artifactId>
+    <groupId>org.apache.edgent.java7.analytics</groupId>
+    <artifactId>edgent-analytics</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>edgent-connectors-mqtt</artifactId>
+  <artifactId>edgent-analytics-math3</artifactId>
   <version>1.2.0-SNAPSHOT</version>
 
-  <name>Apache Edgent: Connectors: MQTT</name>
+  <name>Apache Edgent (Java 7): Analytics: Math3</name>
 
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.rat</groupId>
-        <artifactId>apache-rat-plugin</artifactId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.0.1</version>
         <executions>
           <execution>
-            <id>license-check</id>
-            <phase>verify</phase>
+            <id>copy</id>
+            <phase>compile</phase>
             <goals>
-              <goal>check</goal>
+              <goal>unpack</goal>
             </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.apache.edgent.analytics</groupId>
+                  <artifactId>edgent-analytics-math3</artifactId>
+                  <version>${project.version}</version>
+                  <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.apache.edgent.analytics</groupId>
+                  <artifactId>edgent-analytics-math3</artifactId>
+                  <version>${project.version}</version>
+                  <classifier>tests</classifier>
+                  <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
           </execution>
         </executions>
-        <configuration>
-          <excludes combine.children="append">
-            <exclude>src/test/resources/keystores/*.crt</exclude>
-            <exclude>src/test/resources/keystores/*.key</exclude>
-            <exclude>src/test/resources/keystores/*.srl</exclude>
-            <exclude>src/test/resources/keystores/*.csr</exclude>
-            <exclude>src/test/resources/keystores/mosquitto-SSL.conf.template</exclude>
-            <exclude>src/test/resources/keystores/mosquitto.org.crt</exclude>
-          </excludes>
-        </configuration>
       </plugin>
     </plugins>
   </build>
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.edgent.api</groupId>
+      <groupId>org.apache.edgent.java7.api</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.connectors</groupId>
-      <artifactId>edgent-connectors-iot</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-math3</artifactId>
+      <version>3.4.1</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.connectors</groupId>
-      <artifactId>edgent-connectors-common</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.paho</groupId>
-      <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
-      <version>1.1.0</version>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>22.0</version>
     </dependency>
 
     <dependency>
-      <groupId>org.apache.edgent.connectors</groupId>
-      <artifactId>edgent-connectors-common</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.providers</groupId>
+      <groupId>org.apache.edgent.java7.providers</groupId>
       <artifactId>edgent-providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.providers</groupId>
+      <groupId>org.apache.edgent.java7.providers</groupId>
       <artifactId>edgent-providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.api</groupId>
+      <groupId>org.apache.edgent.java7.api</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
   </dependencies>
+
 </project>

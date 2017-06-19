@@ -242,7 +242,7 @@ public class CommandStreamsTest extends DirectTopologyTestBase {
     }
     
     private String getCmdPath(String cmd) {
-      return TestRepoPath.getPath("connectors", "command", "src", "test", "scripts", cmd);
+      return TestRepoPath.getPath(cmd);
     }
 
 }

@@ -23,6 +23,7 @@ import java.util.Collection;
 import org.apache.edgent.analytics.math3.json.JsonAnalytics;
 import org.apache.edgent.analytics.math3.stat.Regression2;
 import org.apache.edgent.analytics.math3.stat.Statistic2;
+import org.apache.edgent.analytics.math3.utils.Java7Helper;
 import org.apache.edgent.function.ToDoubleFunction;
 import org.apache.edgent.topology.TWindow;
 
@@ -242,8 +243,8 @@ public class Aggregations {
           // do as JsonAnalytics did and omit Nan/Inf results from the map.
           double rv = agg.getResult();
           
-          if (Double.isFinite(rv))
-              result.put(agg.getAggregate(), Double.valueOf(rv));
+          if (Java7Helper.doubleIsFinite(rv))
+              result.put(agg.getAggregate(), rv);
       }
     }
 

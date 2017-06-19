@@ -19,8 +19,8 @@ under the License.
 package org.apache.edgent.test.connectors.common;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 /**
  * Utility for tests to get the path to something in the local git repository.
@@ -33,29 +33,17 @@ public class TestRepoPath {
      * Deals with implications of the different execution contexts:
      * eclipse/junit and ant/junit.
      * 
-     * @param testProject the project (e.g., "connectors") that the
-     *        test belongs to.
-     * @param more more components
+     * @param classpathPath the absolute path of the resource in the applications classpath.
      * @return absolute path in the repository
      */
-    public static String getPath(String testProject, String... more) {
-        String pathStr = System.getProperty("user.dir");
-        // Under eclipse/junit: path to project in repo: <repo>/<testProject>
-        // Under ant/junit: <repo>/<testProject>/<project>/unittests/testrunxxxxxxx
-        // Get the path to the <repo>
-        Path path = new File(pathStr).toPath();
-        do {
-            if (path.endsWith(testProject)) {
-                path = path.getParent();
-                break;
-            }
-            path = path.getParent();
-        } while (path != null);
-        // add the components to the repo-path
-        path = path.resolve(Paths.get(testProject, more));
-        if (!path.toFile().exists())
-            throw new IllegalArgumentException("File does not exist: "+path);
-        return path.toString();
+    public static String getPath(String classpathPath) {
+        try {
+            URL resourceUrl = ClassLoader.getSystemResource(classpathPath);
+            File resource = new File(resourceUrl.toURI());
+            return resource.getAbsolutePath();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException("Could not get path of resource; " + classpathPath, e);
+        }
     }
 
 }

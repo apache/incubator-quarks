@@ -34,11 +34,13 @@
   <name>Apache Edgent (Java 7): Samples</name>
 
   <modules>
-    <!--module>apps</module-->
+    <module>apps</module>
+    <!-- Makes quite a lot of usage of Files.newBufferedReader and classes in the java.util.stream package -->
     <!--module>connectors</module-->
     <module>console</module>
+    <!-- Requires connectors sample -->
     <!--module>scenarios</module-->
-    <!--module>topology</module-->
+    <module>topology</module>
     <module>utils</module>
   </modules>
 

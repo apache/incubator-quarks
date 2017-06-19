@@ -33,6 +33,11 @@
 
   <name>Apache Edgent: Platforms: Java7</name>
 
+  <properties>
+    <!-- The 9.2 version is the last to support Java7 -->
+    <jetty.version>9.2.21.v20170120</jetty.version>
+  </properties>
+
   <modules>
     <module>analytics</module>
     <module>android</module>
@@ -103,6 +108,10 @@
         </configuration>
       </plugin>
       <!-- Check artifacts against Java7 signatures -->
+      <!--
+          Let the plugin run in the process-test-classes so we immediately know if
+          test run problems could be related to using APIs unavailable to Java7.
+      -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>animal-sniffer-maven-plugin</artifactId>
@@ -110,7 +119,7 @@
         <executions>
           <execution>
             <id>check-jdk-signatures</id>
-            <phase>verify</phase>
+            <phase>process-test-classes</phase>
             <goals>
               <goal>check</goal>
             </goals>
