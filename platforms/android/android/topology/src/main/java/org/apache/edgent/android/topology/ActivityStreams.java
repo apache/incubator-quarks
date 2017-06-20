@@ -43,10 +43,10 @@ public class ActivityStreams {
     * @param stream Stream to be sinked.
     * @param sinker Function that will be executed on the UI thread.
     *
-    * @see org.apache.edgent.topology.TStream#sink(edgent.function.Consumer)
+    * @see org.apache.edgent.topology.TStream#sink(org.apache.edgent.function.Consumer)
     */
     public static <T> TSink sinkOnUIThread(Activity activity, TStream<T> stream, Consumer<T> sinker) { 
-        return stream.pipe(new RunOnUIThread<>(activity)).sink(sinker);
+        return stream.pipe(new RunOnUIThread<T>(activity)).sink(sinker);
     }
     
     /**
@@ -67,12 +67,12 @@ public class ActivityStreams {
     * @param ordered True if tuple ordering must be maintained after the
     * execution on the UI thread. False if ordering is not required.
     *
-    * @see org.apache.edgent.topology.TStream#map(edgent.function.Function)
+    * @see org.apache.edgent.topology.TStream#map(org.apache.edgent.function.Function)
     */
     public static <T,U> TStream<U> mapOnUIThread(Activity activity, TStream<T> stream, Function<T,U> mapper, boolean ordered) {  
         
         // Switch to the UI thread
-        stream = stream.pipe(new RunOnUIThread<>(activity));
+        stream = stream.pipe(new RunOnUIThread<T>(activity));
         
         // execute the map on the UI thread
         TStream<U> resultStream = stream.map(mapper);

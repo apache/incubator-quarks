@@ -1,7 +1,0 @@
-/classes/
-**/test.classes/
-**/classes/
-**/unittests/
-/bin/
-jdbc/derby.log
-jdbc/JdbcStreamsTestDb

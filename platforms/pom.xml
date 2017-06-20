@@ -35,16 +35,22 @@
 
   <profiles>
     <profile>
-      <id>platform-android</id>
-      <modules>
-        <module>android</module>
-      </modules>
-    </profile>
-    <profile>
       <id>platform-java7</id>
       <modules>
         <module>java7</module>
       </modules>
+      <properties>
+        <platform.java7>true</platform.java7>
+      </properties>
+    </profile>
+    <profile>
+      <id>platform-android</id>
+      <modules>
+        <module>android</module>
+      </modules>
+      <properties>
+        <platform.android>true</platform.android>
+      </properties>
     </profile>
   </profiles>
 

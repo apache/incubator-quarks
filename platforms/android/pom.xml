@@ -27,12 +27,107 @@
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
+  <groupId>org.apache.edgent.android</groupId>
   <artifactId>edgent-platforms-android</artifactId>
   <packaging>pom</packaging>
 
   <name>Apache Edgent: Platforms: Android</name>
 
+  <properties>
+    <java.version>1.7</java.version>
+  </properties>
+
   <modules>
+    <module>android</module>
   </modules>
-  
+
+  <build>
+    <plugins>
+      <!-- Switch all default plugins to use Java7 instead of Java8 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-toolchains-plugin</artifactId>
+        <version>1.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>toolchain</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <toolchains>
+            <jdk>
+              <version>1.7</version>
+              <vendor>oracle</vendor>
+            </jdk>
+          </toolchains>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.6.1</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+          <testSource>${java.version}</testSource>
+          <testTarget>${java.version}</testTarget>
+        </configuration>
+      </plugin>
+      <!-- Check artifacts against Java7 signatures -->
+      <!--
+          Let the plugin run in the process-test-classes so we immediately know if
+          test run problems could be related to using APIs unavailable to Java7.
+      -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>animal-sniffer-maven-plugin</artifactId>
+        <version>1.15</version>
+        <executions>
+          <execution>
+            <id>check-jdk-signatures</id>
+            <phase>process-test-classes</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <signature>
+            <groupId>org.codehaus.mojo.signature</groupId>
+            <artifactId>java17</artifactId>
+            <version>1.0</version>
+          </signature>
+        </configuration>
+      </plugin>
+      <!--
+          The android platform depends on the modules of the java7 platform,
+          so we have to make sure that profile is activated too.
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>1.4.1</version>
+        <executions>
+          <execution>
+            <id>enforce-java7-profile-is-activated</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireProperty>
+                  <property>platform.java7</property>
+                  <message>the 'platform-java7' profile must be activated!</message>
+                </requireProperty>
+              </rules>
+              <fail>true</fail>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
 </project>

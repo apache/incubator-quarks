@@ -40,7 +40,6 @@
 
   <modules>
     <module>analytics</module>
-    <module>android</module>
     <module>api</module>
     <module>apps</module>
     <module>connectors</module>
