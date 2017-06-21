@@ -32,12 +32,7 @@ public class RunOnUIThread<T> extends Pipe<T,T> {
 
     @Override
     public void accept(final T value) {
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                getDestination().accept(value);
-            }
-        });
+        activity.runOnUiThread(() -> getDestination().accept(value));
     }
 
     @Override
