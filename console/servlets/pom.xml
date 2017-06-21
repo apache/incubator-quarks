@@ -49,7 +49,19 @@
         </executions>
         <configuration>
           <excludes combine.children="append">
-            <!-- TODO: Is this correct? I'd suggest to auto-download jquery and include that to the output as part of the build -->
+            <!-- TODO: Is this correct? I'd suggest to auto-download jquery and jquery-ui and include that to the output as part of the build -->
+            <!--
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>jquery-ui</artifactId>
+                <version>1.11.4</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>jquery</artifactId>
+                <version>1.11.2</version>
+            </dependency>
+            -->
             <exclude>src/main/webapp/js/ext/**</exclude>
           </excludes>
         </configuration>
