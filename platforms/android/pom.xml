@@ -34,30 +34,22 @@
   <name>Apache Edgent: Platforms: Android</name>
 
   <modules>
+    <!-- Real modules -->
     <module>android</module>
+
+    <!-- Repacked modules -->
+    <module>analytics</module>
+    <module>api</module>
+    <module>apps</module>
+    <module>connectors</module>
+    <module>providers</module>
+    <module>runtimes</module>
+    <module>spi</module>
+    <module>utils</module>
   </modules>
 
   <build>
     <plugins>
-      <!-- Convert the Java8 classes to Java7 classes -->
-      <plugin>
-        <groupId>net.orfjackal.retrolambda</groupId>
-        <artifactId>retrolambda-maven-plugin</artifactId>
-        <version>2.5.1</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>process-main</goal>
-              <goal>process-test</goal>
-            </goals>
-            <configuration>
-              <!-- I was getting random failures if not running retrolambda in a separate process -->
-              <fork>true</fork>
-              <java8home>${java8.home}</java8home>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
       <!-- Check artifacts against Java7 signatures -->
       <!--
           Let the plugin run in the process-test-classes so we immediately know if
@@ -83,6 +75,22 @@
             <version>1.0</version>
           </signature>
         </configuration>
+      </plugin>
+      <!-- We don't do testing on Android ;-) -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>default</id>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <!--
           The android platform depends on the modules of the java7 platform,

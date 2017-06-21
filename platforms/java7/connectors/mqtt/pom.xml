@@ -51,6 +51,7 @@
                   <artifactId>edgent-connectors-mqtt</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                  <excludes>META-INF/**</excludes>
                 </artifactItem>
                 <!-- TODO: Makes use of the List.stream in MqttStreamsTestManual, excluding test execution -->
                 <!--artifactItem>
@@ -59,6 +60,7 @@
                   <version>${project.version}</version>
                   <classifier>tests</classifier>
                   <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
+                  <excludes>META-INF/**</excludes>
                 </artifactItem-->
               </artifactItems>
             </configuration>

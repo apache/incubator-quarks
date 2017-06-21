@@ -38,4 +38,28 @@
     <module>topology</module>
   </modules>
 
+  <build>
+    <plugins>
+      <!-- Convert the Java8 classes to Java7 classes -->
+      <plugin>
+        <groupId>net.orfjackal.retrolambda</groupId>
+        <artifactId>retrolambda-maven-plugin</artifactId>
+        <version>2.5.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>process-main</goal>
+              <goal>process-test</goal>
+            </goals>
+            <configuration>
+              <!-- I was getting random failures if not running retrolambda in a separate process -->
+              <fork>true</fork>
+              <java8home>${java8.home}</java8home>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
 </project>

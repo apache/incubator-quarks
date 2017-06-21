@@ -55,6 +55,7 @@
                   <artifactId>edgent-console-server</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                  <excludes>META-INF/**</excludes>
                 </artifactItem>
                 <artifactItem>
                   <groupId>org.apache.edgent.console</groupId>
@@ -62,6 +63,7 @@
                   <version>${project.version}</version>
                   <classifier>tests</classifier>
                   <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
+                  <excludes>META-INF/**</excludes>
                 </artifactItem>
               </artifactItems>
             </configuration>

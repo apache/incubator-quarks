@@ -51,6 +51,7 @@
                   <artifactId>edgent-analytics-math3</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                  <excludes>META-INF/**</excludes>
                 </artifactItem>
                 <artifactItem>
                   <groupId>org.apache.edgent.analytics</groupId>
@@ -58,6 +59,7 @@
                   <version>${project.version}</version>
                   <classifier>tests</classifier>
                   <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
+                  <excludes>META-INF/**</excludes>
                 </artifactItem>
               </artifactItems>
             </configuration>

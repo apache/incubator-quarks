@@ -51,6 +51,7 @@
                   <artifactId>edgent-connectors-jdbc</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                  <excludes>META-INF/**</excludes>
                 </artifactItem>
                 <!-- TODO: The tests make uss of Java8 Predicates and hereby break Java7 support -->
                 <!--artifactItem>
@@ -59,6 +60,7 @@
                   <version>${project.version}</version>
                   <classifier>tests</classifier>
                   <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
+                  <excludes>META-INF/**</excludes>
                 </artifactItem-->
               </artifactItems>
             </configuration>
