@@ -101,6 +101,7 @@ public class JsonFunctions {
      * <p>Returns a Function whose {@code apply(T v)} returns a JsonObject having 
      * a single property named {@code propName} with the value of {@code v}.
      * 
+     * @param <T> type of number
      * @param propName property name
      * @return the Function
      */

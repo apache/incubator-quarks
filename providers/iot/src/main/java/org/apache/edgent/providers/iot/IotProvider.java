@@ -64,8 +64,8 @@ import com.google.gson.JsonObject;
  * class MyApp {
  *   ...
  *   public void run(String[] args) throws Exception {
- *      IotProvider provider = new IotProvider((top) -> new IotpDevice(top, myDeviceConfig));
- *      provider.registerTopology("app1", (iotDevice, cfg) -> buildApp1(iotDevice, cfg));
+ *      IotProvider provider = new IotProvider((top) -&gt; new IotpDevice(top, myDeviceConfig));
+ *      provider.registerTopology("app1", (iotDevice, cfg) -&gt; buildApp1(iotDevice, cfg));
  *      provider.start();
  *   }
  *   private void buildApp1(IotDevice iotDevice, JsonConfig cfg) {

@@ -30,8 +30,8 @@ import org.apache.edgent.function.Supplier;
 /**
  * A {@code Supplier<Iterable<String>>} for ingesting a process's output.
  * <P>
- * The iterator returned by {@link Iterable#iterator()) returns
- * {@hasNext()==true} until a read from {@link Process#getInputStream()}
+ * The iterator returned by {@link Iterable#iterator()} returns
+ * {@code hasNext()==true} until a read from {@link Process#getInputStream()}
  * returns EOF or an IOError.
  */
 class ProcessReader implements Supplier<Iterable<String>> {

@@ -51,7 +51,7 @@ import com.ibm.iotf.client.device.DeviceClient;
  * scale message hub that provides a device model on top of MQTT.
  * {@code IotpDevice} implements the generic device model {@link IotDevice}
  * and thus can be used as a connector for
- * {@link org.apache.edgent.providers.iot.IotProvider}.
+ * {@code org.apache.edgent.providers.iot.IotProvider}.
  * <BR>
  * <em>Note IBM Watson IoT Platform was previously known as
  * IBM Internet of Things Foundation.</em>
@@ -81,8 +81,9 @@ import com.ibm.iotf.client.device.DeviceClient;
  * for details of changes that occurred to device event payloads
  * and how to revert the behavior if needed.
  * <p>
- * @see <a href="{@docRoot}/org/apache/edgent/connectors/iot/package-summary.html">Edgent generic device model</a>
- * @see org.apache.edgent.samples.connectors.iotp.IotpSensors Sample application
+ * See <a href="{@docRoot}/org/apache/edgent/connectors/iot/package-summary.html">Edgent generic device model</a>
+ * <p>
+ * See {@code org.apache.edgent.samples.connectors.iotp.IotpSensors} Sample application
  */
 public class IotpDevice implements IotDevice {
     
@@ -199,7 +200,7 @@ public class IotpDevice implements IotDevice {
      * @return Connector to the Quickstart service.
      * 
      * @see <a href="https://quickstart.internetofthings.ibmcloud.com">Quickstart</a>
-     * @see org.apache.edgent.samples.connectors.iotp.IotpQuickstart Quickstart sample application
+     * See {@code org.apache.edgent.samples.connectors.iotp.IotpQuickstart Quickstart} sample application
      */
     public static IotpDevice quickstart(Topology topology, String deviceId) {
         Properties options = new Properties();

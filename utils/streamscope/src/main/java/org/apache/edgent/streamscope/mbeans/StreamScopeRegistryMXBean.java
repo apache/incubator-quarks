@@ -24,7 +24,7 @@ package org.apache.edgent.streamscope.mbeans;
  * The registry contains a collection of StreamScopeMXBean instances
  * that are registered by a stream identifier.
  * </P>
- * @see org.apache.edgent.providers.development.DevelopmentProvider DevelopmentProvider
+ * See {@code org.apache.edgent.providers.development.DevelopmentProvider}
  */
 public interface StreamScopeRegistryMXBean {
   

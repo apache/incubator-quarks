@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
  * {@link org.apache.edgent.execution.services.ControlService ControlService}.
  * </P>
  * 
- * @see org.apache.edgent.topology.Topology#poll(org.apache.edgent.function.Supplier, long, TimeUnit)
+ * See {@code org.apache.edgent.topology.Topology.poll(org.apache.edgent.function.Supplier, long, TimeUnit)}
  */
 public interface PeriodMXBean {
     

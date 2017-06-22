@@ -50,7 +50,7 @@ import org.apache.edgent.streamscope.mbeans.StreamScopeRegistryMXBean;
  * and {@link StreamScopeRegistryMXBean} runtime ControlService.
  * </P>
  * @see StreamScopeRegistry
- * @see org.apache.edgent.providers.development.DevelopmentProvider DevelopmentProvider
+ * See {@code org.apache.edgent.providers.development.DevelopmentProvider}
  * 
  * @param <T> Tuple type
  */

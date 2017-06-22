@@ -18,6 +18,10 @@ under the License.
 */
 /**
  * Controls for executing topologies.
+ * <P>
+ * The "Attribute Name" column values below correspond to {@code KEY} values defined
+ * in {@code org.apache.edgent.runtime.jsoncontrol.JsonControlService}.
+ * 
  * <h3>Application Service </h3>
  * {@linkplain org.apache.edgent.topology.services.ApplicationService Application service}
  * allows an application to be registered
@@ -39,26 +43,26 @@ under the License.
  *    <th id="desc" align=center><b>Description</b></th>
  *  </tr>
  * <tr>
- *    <td headers="attrName">{@link org.apache.edgent.runtime.jsoncontrol.JsonControlService#TYPE_KEY type}</td>
+ *    <td headers="attrName">{@code type}</td>
  *    <td headers="type">String</td>
  *    <td headers="value">{@link org.apache.edgent.topology.mbeans.ApplicationServiceMXBean#TYPE appService}</td>
  *    <td headers="desc">{@code ApplicationServiceMXBean} control MBean type.</td>
  *  </tr>
  *  <tr>
- *    <td headers="attrName">{@link org.apache.edgent.runtime.jsoncontrol.JsonControlService#OP_KEY op}</td>
+ *    <td headers="attrName">{@code op}</td>
  *    <td headers="type">String</td>
  *    <td headers="value">{@code submit}</td>
  *    <td headers="desc">Invoke {@link org.apache.edgent.topology.mbeans.ApplicationServiceMXBean#submit(String, String) submit} operation
  *    against the control MBean.</td>
  *  </tr>
  *  <tr>
- *    <td headers="attrName">{@link org.apache.edgent.runtime.jsoncontrol.JsonControlService#ALIAS_KEY alias}</td>
+ *    <td headers="attrName">{@code alias}</td>
  *    <td headers="type">String</td>
  *    <td headers="value">Alias of control MBean.</td>
  *    <td headers="desc">Default is {@link org.apache.edgent.topology.services.ApplicationService#ALIAS edgent}.</td>
  *  </tr>
  *  <tr>
- *    <td rowspan="2" headers="attrName">{@link org.apache.edgent.runtime.jsoncontrol.JsonControlService#ARGS_KEY args}</td>
+ *    <td rowspan="2" headers="attrName">{@code args}</td>
  *    <td rowspan="2" headers="type">List</td>
  *    <td headers="value">String: application name</td>
  *    <td headers="desc">Registered application to submit.</td>

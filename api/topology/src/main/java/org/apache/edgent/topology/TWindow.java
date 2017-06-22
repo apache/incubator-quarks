@@ -64,7 +64,6 @@ public interface TWindow<T, K> extends TopologyElement {
      * empty if the eviction results in an empty partition.</LI>
      * </UL>
      * A non-null {@code aggregator} result is added to the returned stream.
-     * </P>
      * <P>
      * Thus the returned stream will contain a sequence of tuples where the
      * most recent tuple represents the most up to date aggregation of a
@@ -93,7 +92,6 @@ public interface TWindow<T, K> extends TopologyElement {
      * </UL>
      * A non-null {@code batcher} result is added to the returned stream.
      * The partition's contents are cleared after a batch is processed.
-     * </P>
      * <P>
      * Thus the returned stream will contain a sequence of tuples where the
      * most recent tuple represents the most up to date aggregation of a
