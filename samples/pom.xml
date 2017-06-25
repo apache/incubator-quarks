@@ -42,4 +42,115 @@
     <module>utils</module>
   </modules>
 
+  <build>
+    <plugins>
+      <!--
+            Create an additional version of the jar containing all dependencies.
+            The file will have the suffix "uber".
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.0.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
+              <outputFile>${project.build.directory}/${project.artifactId}-${project.version}-uber.jar</outputFile>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <!--
+          In the examples we want this lib to be included,
+          so we change the scope from 'provided' to 'compile'.
+    -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+
+  <profiles>
+    <!--
+        This defines a self-activating profile which is only enabled for
+        for projects that have a src/main/java directory (effectivley excludes
+        it from the current pom module.
+    -->
+    <!--profile>
+      <id>generate-classpath</id>
+      <activation>
+        <file>
+          <exists>src/main/java</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>dump-dependency-tree</id>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>tree</goal>
+                </goals>
+                <configuration>
+                  <outputFile>${project.build.directory}/dependency-tree.graphml</outputFile>
+                  <outputType>graphml</outputType>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>xml-maven-plugin</artifactId>
+            <version>1.0.1</version>
+            <executions>
+              <execution>
+                <id>transform-dependency-tree</id>
+                <goals>
+                  <goal>transform</goal>
+                </goals>
+                <configuration>
+                  <transformationSets>
+                    <transformationSet>
+                      <file>${project.build.directory}/dependency-tree.graphml</file>
+                      <stylesheet>${project.basedir}/../src/main/xslt/classpath.xsl</stylesheet>
+                      <parameters>
+                        <parameter>
+                          <name>groupId</name>
+                          <value>${project.groupId}</value>
+                        </parameter>
+                        <parameter>
+                          <name>artifactId</name>
+                          <value>${project.artifactId}</value>
+                        </parameter>
+                        <parameter>
+                          <name>version</name>
+                          <value>${project.version}</value>
+                        </parameter>
+                      </parameters>
+                    </transformationSet>
+                  </transformationSets>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile-->
+  </profiles>
+
 </project>
