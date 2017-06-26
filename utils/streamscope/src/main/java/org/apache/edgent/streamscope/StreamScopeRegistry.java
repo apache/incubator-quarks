@@ -37,7 +37,7 @@ import java.util.Set;
  * Static methods are provided for composing these names and extracting
  * the alias/identifier from generated names.
  * </P>
- * @see org.apache.edgent.providers.development.DevelopmentProvider DevelopmentProvider
+ * See {@code org.apache.edgent.providers.development.DevelopmentProvider}
  */
 public class StreamScopeRegistry {
   private final Map<String, StreamScope<?>> byNameMap = new HashMap<>();

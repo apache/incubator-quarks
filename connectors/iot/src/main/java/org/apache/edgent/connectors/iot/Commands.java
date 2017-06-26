@@ -30,12 +30,12 @@ public interface Commands {
      * <BR>
      * The command payload is used to invoke operations
      * against control MBeans using an instance of
-     * {@link org.apache.edgent.runtime.jsoncontrol.JsonControlService}.
+     * {@code org.apache.edgent.runtime.jsoncontrol.JsonControlService}.
      * <BR>
      * Value is {@value}.
      * 
      * @see org.apache.edgent.execution.services.ControlService
-     * @see org.apache.edgent.providers.iot.IotProvider
+     * See {@code org.apache.edgent.providers.iot.IotProvider}
      */
     String CONTROL_SERVICE = IotDevice.RESERVED_ID_PREFIX + "Control";
 

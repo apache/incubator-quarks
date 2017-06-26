@@ -253,7 +253,7 @@ public class JsonAnalytics {
      * @param resultPartitionKeyProperty name of the partition key property in the result
      * @param resultProperty name of the aggregation results property in the result
      * @param aggregateSpecs see {@link #mkAggregationSpec(String, JsonUnivariateAggregate...) mkAggregationSpec()}
-     * @return TStream<JsonObject> with aggregation results
+     * @return TStream&lt;JsonObject&gt; with aggregation results
      * 
      * @see #mvAggregateList(String, String, List) mvAggregateList()
      * @see #mkAggregationSpec(String, JsonUnivariateAggregate...) mkAggregationSpec()

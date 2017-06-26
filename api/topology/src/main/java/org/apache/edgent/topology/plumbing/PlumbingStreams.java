@@ -557,7 +557,7 @@ public class PlumbingStreams {
      * }</pre>
      * <P>
      * Note, this implementation requires that the splitter is used from
-     * only a single JVM.  The {@link org.apache.edgent.providers.direct.DirectProvider DirectProvider}
+     * only a single JVM.  The {@code org.apache.edgent.providers.direct.DirectProvider}
      * provider meets this requirement.
      * </P>
      * 

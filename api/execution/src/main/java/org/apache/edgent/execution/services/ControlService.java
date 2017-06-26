@@ -30,7 +30,7 @@ package org.apache.edgent.execution.services;
  * <P>
  * Different implementations of the control service provide the mechanism
  * to execute methods of the control interfaces. For example
- * {@link org.apache.edgent.runtime.jmxcontrol.JMXControlService JMXControlService}
+ * {@code JMXControlService}
  * registers the MBeans in the JMX platform MBean server.
  * <BR>
  * The control service is intended to allow remote execution of a control interface

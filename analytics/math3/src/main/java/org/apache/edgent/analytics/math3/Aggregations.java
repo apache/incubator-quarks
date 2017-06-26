@@ -61,12 +61,12 @@ import org.apache.edgent.topology.TWindow;
  *  double getTemp() {...};
  *  double getPressure() {...};
  *  ... };
- *TStream&lt;SensorReading> readings = ...
- *TWindow&lt;SensorReading,Integer> window = sensorReadings.last(5, Functions.unpartitioned());
- *TStream&lt;MvResultMap> aggregations = window.batch(
- *      (list, partition) -> {
- *        ResultMap pressureResults = Aggregations.aggregateN(list, t -> t.getPressure(), Statistic2.MEAN, Regression2.SLOPE));
- *        ResultMap tempResults = Aggregations.aggregateN(list, t -> t.getTemp(), Statistic2.MAX));
+ *TStream&lt;SensorReading&gt; readings = ...
+ *TWindow&lt;SensorReading,Integer&gt; window = sensorReadings.last(5, Functions.unpartitioned());
+ *TStream&lt;MvResultMap&gt; aggregations = window.batch(
+ *      (list, partition) -&gt; {
+ *        ResultMap pressureResults = Aggregations.aggregateN(list, t -&gt; t.getPressure(), Statistic2.MEAN, Regression2.SLOPE));
+ *        ResultMap tempResults = Aggregations.aggregateN(list, t -&gt; t.getTemp(), Statistic2.MAX));
  *        MvResultMap results = Aggregations.newMvResults();
  *        results.put("pressure", pressureResults);
  *        results.put("temp", tempResults);
@@ -99,7 +99,7 @@ import org.apache.edgent.topology.TWindow;
  * <p>As a result, using JsonAnalytics for simple cases can be a bit unintuitive and cumbersome.  
  * 
  * <p>For example, to JsonAnalytics for a simple case of a continuous aggregation
- * of {@code TStream<Double>} => {@code TStream<Double>} of MEAN values:
+ * of {@code TStream<Double>} =&gt; {@code TStream<Double>} of MEAN values:
  * 
  * <pre>{@code
  *  TStream<Double> pressureReadings = ...
