@@ -42,32 +42,6 @@
     <module>utils</module>
   </modules>
 
-  <build>
-    <plugins>
-      <!--
-            Create an additional version of the jar containing all dependencies.
-            The file will have the suffix "uber".
-      -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>3.0.0</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <createDependencyReducedPom>false</createDependencyReducedPom>
-              <outputFile>${project.build.directory}/${project.artifactId}-${project.version}-uber.jar</outputFile>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
-
   <dependencies>
     <!--
           In the examples we want this lib to be included,
