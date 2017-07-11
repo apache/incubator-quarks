@@ -37,14 +37,11 @@
     <module>command</module>
     <module>common</module>
     <module>csv</module>
-    <module>edgent.javax.websocket</module>
     <!-- This makes use of Stream in the tests, excluding some tests. -->
     <module>file</module>
     <module>http</module>
     <module>iot</module>
     <module>iotp</module>
-    <module>javax.websocket-client</module>
-    <module>javax.websocket-server</module>
     <!-- This makes use of Predicates in the tests, excluding tests. -->
     <module>jdbc</module>
     <module>kafka</module>
@@ -52,9 +49,12 @@
     <module>mqtt</module>
     <module>pubsub</module>
     <module>serial</module>
-    <module>wsclient</module>
+    <module>websocket</module>
+    <module>websocket-base</module>
     <!-- Downgraded the jetty version to 9.2.21.v20170120 to support Java7 -->
-    <module>wsclient-javax.websocket</module>
+    <module>websocket-jetty</module>
+    <module>websocket-misc</module>
+    <module>websocket-server</module>
   </modules>
 
 </project>

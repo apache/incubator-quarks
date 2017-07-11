@@ -91,11 +91,7 @@ public class AppServiceIT {
     }
 
     private File getServerJar() {
-        String profile = System.getProperty("build.profile", null);
-        if(profile == null) {
-            throw new RuntimeException("Please specify a 'build.profile' system property to run this test.");
-        }
-        return new File("target/" + profile + "/test-resources/test-appservice-applications.jar");
+        return new File("target/test-resources/test-appservice-applications.jar");
     }
 
 }

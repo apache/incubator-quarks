@@ -22,35 +22,27 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.apache.edgent</groupId>
-    <artifactId>edgent-parent</artifactId>
+    <groupId>org.apache.edgent.connectors</groupId>
+    <artifactId>edgent-connectors</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.apache.edgent.connectors</groupId>
-  <artifactId>edgent-connectors</artifactId>
-  <packaging>pom</packaging>
+  <artifactId>edgent-connectors-websocket-jetty</artifactId>
+  <version>1.2.0-SNAPSHOT</version>
 
-  <name>Apache Edgent: Connectors</name>
+  <name>Apache Edgent: Connectors: Websocket: Jetty</name>
 
-  <modules>
-    <module>command</module>
-    <module>common</module>
-    <module>csv</module>
-    <module>file</module>
-    <module>http</module>
-    <module>iot</module>
-    <module>iotp</module>
-    <module>jdbc</module>
-    <module>kafka</module>
-    <module>mqtt</module>
-    <module>pubsub</module>
-    <module>serial</module>
-    <module>websocket</module>
-    <module>websocket-base</module>
-    <module>websocket-jetty</module>
-    <module>websocket-misc</module>
-    <module>websocket-server</module>
-  </modules>
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.edgent.connectors</groupId>
+      <artifactId>edgent-connectors-websocket-misc</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty.websocket</groupId>
+      <artifactId>javax-websocket-client-impl</artifactId>
+      <version>9.3.6.v20151106</version>
+    </dependency>
+  </dependencies>
 
 </project>

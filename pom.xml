@@ -380,9 +380,6 @@
                 is set by the jacoco-maven-plugin during the build.
           -->
           <argLine>${surefireArgLine}</argLine>
-          <systemPropertyVariables>
-            <build.profile>${build.profile}</build.profile>
-          </systemPropertyVariables>
         </configuration>
       </plugin>
 
@@ -407,9 +404,6 @@
                 is set by the jacoco-maven-plugin during the build.
           -->
           <argLine>${failsafeArgLine}</argLine>
-          <systemPropertyVariables>
-            <build.profile>${build.profile}</build.profile>
-          </systemPropertyVariables>
         </configuration>
       </plugin>
 

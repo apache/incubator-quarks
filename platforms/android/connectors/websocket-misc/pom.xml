@@ -22,15 +22,15 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.apache.edgent.java7.test</groupId>
-    <artifactId>edgent-test</artifactId>
+    <groupId>org.apache.edgent.android.connectors</groupId>
+    <artifactId>edgent-connectors</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>edgent-test-appservice-applications</artifactId>
+  <artifactId>edgent-connectors-websocket-misc</artifactId>
   <version>1.2.0-SNAPSHOT</version>
 
-  <name>Apache Edgent (Java 7): Test: AppService Applications</name>
+  <name>Apache Edgent (Android): Connectors: Websocket: Misc</name>
 
   <build>
     <plugins>
@@ -47,18 +47,10 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>org.apache.edgent.test</groupId>
-                  <artifactId>edgent-test-appservice-applications</artifactId>
+                  <groupId>org.apache.edgent.java7.connectors</groupId>
+                  <artifactId>edgent-connectors-websocket-misc</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
-                  <excludes>META-INF/*,META-INF/maven/**</excludes>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>org.apache.edgent.test</groupId>
-                  <artifactId>edgent-test-appservice-applications</artifactId>
-                  <version>${project.version}</version>
-                  <classifier>tests</classifier>
-                  <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
                   <excludes>META-INF/**</excludes>
                 </artifactItem>
               </artifactItems>
@@ -66,25 +58,14 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
-          <classesDirectory>${project.build.directory}/classes</classesDirectory>
-          <includes>
-            <include>META-INF/services/**</include>
-            <include>org/apache/edgent/test/topology/services/*.class</include>
-          </includes>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.edgent.java7.api</groupId>
-      <artifactId>edgent-api-topology</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <groupId>javax.websocket</groupId>
+      <artifactId>javax.websocket-api</artifactId>
+      <version>1.0</version>
     </dependency>
   </dependencies>
-
 </project>

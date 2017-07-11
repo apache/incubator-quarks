@@ -22,35 +22,22 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.apache.edgent</groupId>
-    <artifactId>edgent-parent</artifactId>
+    <groupId>org.apache.edgent.connectors</groupId>
+    <artifactId>edgent-connectors</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.apache.edgent.connectors</groupId>
-  <artifactId>edgent-connectors</artifactId>
-  <packaging>pom</packaging>
+  <artifactId>edgent-connectors-websocket-base</artifactId>
+  <version>1.2.0-SNAPSHOT</version>
 
-  <name>Apache Edgent: Connectors</name>
+  <name>Apache Edgent: Connectors: Websocket: Base</name>
 
-  <modules>
-    <module>command</module>
-    <module>common</module>
-    <module>csv</module>
-    <module>file</module>
-    <module>http</module>
-    <module>iot</module>
-    <module>iotp</module>
-    <module>jdbc</module>
-    <module>kafka</module>
-    <module>mqtt</module>
-    <module>pubsub</module>
-    <module>serial</module>
-    <module>websocket</module>
-    <module>websocket-base</module>
-    <module>websocket-jetty</module>
-    <module>websocket-misc</module>
-    <module>websocket-server</module>
-  </modules>
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.edgent.api</groupId>
+      <artifactId>edgent-api-topology</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
 
 </project>
