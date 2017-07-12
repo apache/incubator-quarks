@@ -27,4 +27,5 @@ install: true
 
 script:
     - jdk_switcher use oraclejdk8
-    - mvn -t toolchains-travis.xml -Djava8.home=/usr/lib/jvm/java-8-oracle clean install site:site -Pdistribution,platform-java7,platform-android
+    - mvn clean install site:site -Pdistribution
+#    - mvn -t toolchains-travis.xml -Djava8.home=/usr/lib/jvm/java-8-oracle clean install site:site -Pdistribution,platform-java7,platform-android

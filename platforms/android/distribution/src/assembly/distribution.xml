@@ -66,13 +66,13 @@
     </dependencySet>
 
     <!-- All other libs are treated as external libs -->
-    <dependencySet>
+    <!--dependencySet>
       <outputDirectory>/libs/ext</outputDirectory>
       <scope>runtime</scope>
       <excludes>
         <exclude>org.apache.edgent*</exclude>
       </excludes>
-    </dependencySet>
+    </dependencySet-->
   </dependencySets>
 
 </assembly>

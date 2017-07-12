@@ -46,6 +46,7 @@
     <module>mqtt</module>
     <module>pubsub</module>
     <module>serial</module>
+    <module>websocket</module>
     <module>websocket-base</module>
     <module>websocket-jetty</module>
     <module>websocket-misc</module>

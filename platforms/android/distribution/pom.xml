@@ -197,23 +197,28 @@
     </dependency>
 
     <dependency>
-      <groupId>org.apache.edgent.android.runtimes</groupId>
-      <artifactId>edgent-runtimes-appservice</artifactId>
+      <groupId>org.apache.edgent.android.runtime</groupId>
+      <artifactId>edgent-runtime-appservice</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.android.runtimes</groupId>
-      <artifactId>edgent-runtimes-etiao</artifactId>
+      <groupId>org.apache.edgent.android.runtime</groupId>
+      <artifactId>edgent-runtime-etiao</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.android.runtimes</groupId>
-      <artifactId>edgent-runtimes-jobregistry</artifactId>
+      <groupId>org.apache.edgent.android.runtime</groupId>
+      <artifactId>edgent-runtime-jobregistry</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.android.runtimes</groupId>
-      <artifactId>edgent-runtimes-jsoncontrol</artifactId>
+      <groupId>org.apache.edgent.android.runtime</groupId>
+      <artifactId>edgent-runtime-jsoncontrol</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.edgent.android.connectors</groupId>
+      <artifactId>edgent-connectors-websocket</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
 

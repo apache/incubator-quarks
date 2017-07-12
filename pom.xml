@@ -142,6 +142,14 @@
           <groupId>org.apache.rat</groupId>
           <artifactId>apache-rat-plugin</artifactId>
           <version>0.12</version>
+          <configuration>
+            <!--
+                Make rat output the files with missing licensed directly into the
+                build output (This way we don't have to look into the rat.txt to find
+                out which ones)
+            -->
+            <consoleOutput>true</consoleOutput>
+          </configuration>
           <dependencies>
             <dependency>
               <groupId>org.apache.maven.doxia</groupId>
