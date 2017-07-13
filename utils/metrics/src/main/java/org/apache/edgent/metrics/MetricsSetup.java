@@ -18,16 +18,24 @@ under the License.
 */
 package org.apache.edgent.metrics;
 
+import java.io.File;
 import java.lang.management.ManagementFactory;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import javax.management.MBeanServer;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.edgent.execution.services.ServiceContainer;
 import org.apache.edgent.function.BiConsumer;
+import org.apache.edgent.metrics.MetricObjectNameFactory;
 
 import com.codahale.metrics.ConsoleReporter;
 import com.codahale.metrics.JmxReporter;
+import com.codahale.metrics.CsvReporter;
 import com.codahale.metrics.Metric;
 import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
@@ -41,6 +49,8 @@ import com.codahale.metrics.MetricRegistry;
 public class MetricsSetup {
     private static final TimeUnit durationsUnit = TimeUnit.MILLISECONDS;
     private static final TimeUnit ratesUnit = TimeUnit.SECONDS;
+    private static final Log LOGGING = LogFactory.getLog(MetricsSetup.class);
+    private static final String FOLDER_METRICS = "/metrics";
 
     private final MetricRegistry metricRegistry;
     private MBeanServer mBeanServer;
@@ -85,6 +95,34 @@ public class MetricsSetup {
         reporter.start();
         return this;
     }
+
+    /**
+     * Starts the metric {@code CsvReporter}. If no MBeanServer was set, use the
+     * virtual machine's platform MBeanServer.
+     * 
+     * @param pathMetrics
+     *            pathname where the metric files are stored. If the path does
+     *            not exist or is null is created in a standard directory, called metrics
+     * @return this
+     */
+    public MetricsSetup startCSVReporter(String pathMetrics) {
+
+        if (pathMetrics == null) { // pathMetrics is NULL
+            pathMetrics = createDefaultDirectory();
+        } else {
+            File directory = new File(pathMetrics);
+            if (!directory.exists() && !directory.mkdirs()) {
+                pathMetrics = createDefaultDirectory();
+            }
+        }
+
+        final CsvReporter reporter = CsvReporter.forRegistry(registry()).formatFor(Locale.US)
+                .convertRatesTo(TimeUnit.SECONDS).convertDurationsTo(TimeUnit.MILLISECONDS)
+                .build(new File(pathMetrics));
+        reporter.start(1, TimeUnit.SECONDS);
+
+        return this;
+    }
     
     /**
      * Starts the metric {@code ConsoleReporter} polling every second.
@@ -110,6 +148,18 @@ public class MetricsSetup {
             mBeanServer = ManagementFactory.getPlatformMBeanServer();
         }
         return mBeanServer;
+    }
+
+    private String createDefaultDirectory() {
+        Path currentRelativePath = Paths.get("");
+        String pathMetrics = currentRelativePath.toAbsolutePath().toString() + FOLDER_METRICS;
+        File directory = new File(pathMetrics);
+        if (!directory.mkdirs())
+            LOGGING.error("Could not create the directory log");
+        else
+            LOGGING.error("The directory was created successfully: " + directory.getAbsolutePath());
+
+        return pathMetrics;
     }
     
     private class MetricOpletCleaner implements BiConsumer<String, String> {
