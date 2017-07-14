@@ -151,11 +151,6 @@ public class MetricsSetup {
         Path currentRelativePath = Paths.get("");
         String pathMetrics = currentRelativePath.toAbsolutePath().toString() + FOLDER_METRICS;
         File directory = new File(pathMetrics);
-        if (!directory.mkdirs())
-            //LOG: "Could not create the directory log"
-        else
-            //LOG: "The directory was created successfully"
-
         return pathMetrics;
     }
     
