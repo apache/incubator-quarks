@@ -27,8 +27,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.management.MBeanServer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.edgent.execution.services.ServiceContainer;
 import org.apache.edgent.function.BiConsumer;
 import org.apache.edgent.metrics.MetricObjectNameFactory;
@@ -49,7 +47,6 @@ import com.codahale.metrics.MetricRegistry;
 public class MetricsSetup {
     private static final TimeUnit durationsUnit = TimeUnit.MILLISECONDS;
     private static final TimeUnit ratesUnit = TimeUnit.SECONDS;
-    private static final Log LOGGING = LogFactory.getLog(MetricsSetup.class);
     private static final String FOLDER_METRICS = "/metrics";
 
     private final MetricRegistry metricRegistry;
@@ -155,9 +152,9 @@ public class MetricsSetup {
         String pathMetrics = currentRelativePath.toAbsolutePath().toString() + FOLDER_METRICS;
         File directory = new File(pathMetrics);
         if (!directory.mkdirs())
-            LOGGING.error("Could not create the directory log");
+            //LOG: "Could not create the directory log"
         else
-            LOGGING.error("The directory was created successfully: " + directory.getAbsolutePath());
+            //LOG: "The directory was created successfully"
 
         return pathMetrics;
     }
