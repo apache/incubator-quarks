@@ -151,8 +151,7 @@ label.refreshLabel {
 
 .ui-widget-overlay {
 	opacity: 0.2;
-	background-color: steelblue;
-	background-image: none;
+	background: steelblue none;
 }
 
 #metrics {

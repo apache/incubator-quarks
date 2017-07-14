@@ -16,13 +16,13 @@
  -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us">
+<html xml:lang="en-us">
 <head>
 <title>Apache Edgent Console</title>
 
-<link rel="stylesheet" type="text/css" href="js/ext/jquery-ui-1.11.4.custom/jquery-ui.min.css">
-<link rel="stylesheet" type="text/css" href="js/ext/jquery-ui-1.11.4.custom/jquery-ui.theme.min.css">
-<link rel="stylesheet" type="text/css" href="js/ext/jquery-ui-1.11.4.custom/jquery-ui.structure.min.css">
+<link rel="stylesheet" type="text/css" href="js/ext/jquery-ui/1.11.4/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="js/ext/jquery-ui/1.11.4/jquery-ui.theme.min.css">
+<link rel="stylesheet" type="text/css" href="js/ext/jquery-ui/1.11.4/jquery-ui.structure.min.css">
 <link rel="stylesheet" type="text/css" href="resources/css/main.css">
 <link rel="stylesheet" type="text/css" href="resources/css/metrics.css">
 <link rel="shortcut icon" href="resources/images/favicon.png" />
@@ -68,7 +68,7 @@
 </div>
 </div>
 <div class="topControls">
-<label class="refreshLabel" tabindex=0>Refresh interval:</span>
+<label class="refreshLabel" tabindex=0>Refresh interval:</label>
 <input aria-label='Refresh interval' name='refreshInterval' id="refreshInterval" style='width: 40px;' type="number" min="3" max="20" step="1" value="5"/>
 <label title="seconds" tabindex=0 style='margin-left: 5px; margin-right: 10px;'>seconds</label>
 <button id="toggleTimer" title='Pause graph' type="button">Pause graph</button>
@@ -113,16 +113,16 @@
 <div id="metricsChart" style="clear:left;"></div>
 </div>
 </div>
-<script src="js/ext/d3.min.js" charset="utf-8"></script>
-<script src="js/ext/jquery-ui-1.11.4.custom/external/jquery/jquery.js"></script>
-<script src="js/ext/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
-<script src="js/ext/sankey_edgent.js"></script>
-<script src="js/streamtags.js"></script>
-<script src="js/ext/d3.legend.js"></script>
-<script src="js/graph.js"></script>
-<script src="js/metrics.js"></script>
+<script src="js/ext/d3/3.3.9/d3.min.js" charset="utf-8" type="application/javascript"></script>
+<script src="js/ext/d3-plugins-sankey/1.1.0/sankey.js" type="application/javascript"></script>
+<script src="js/ext/jquery/1.11.2/jquery.min.js" type="application/javascript"></script>
+<script src="js/ext/jquery-ui/1.11.4/jquery-ui.min.js" type="application/javascript"></script>
+<script src="js/ext/d3.legend.js" type="application/javascript"></script>
+<script src="js/streamtags.js" type="application/javascript"></script>
+<script src="js/graph.js" type="application/javascript"></script>
+<script src="js/metrics.js" type="application/javascript"></script>
 
-<script src="js/index.js"></script>
+<script src="js/index.js" type="application/javascript"></script>
 
 </body>
 </html>

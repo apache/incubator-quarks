@@ -18,38 +18,45 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+
   <servlet>
     <display-name>Console Application</display-name>
     <servlet-name>ConsoleServlet</servlet-name>
     <servlet-class>org.apache.edgent.console.servlets.ConsoleServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
+
   <servlet-mapping>
     <servlet-name>ConsoleServlet</servlet-name>
     <url-pattern>/console</url-pattern>
   </servlet-mapping>
+
   <servlet>
     <display-name>Job Listing Service</display-name>
     <servlet-name>ConsoleJobServlet</servlet-name>
     <servlet-class>org.apache.edgent.console.servlets.ConsoleJobServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
+
   <servlet-mapping>
     <servlet-name>ConsoleJobServlet</servlet-name>
     <url-pattern>/jobs</url-pattern>
   </servlet-mapping>
+
   <servlet>
     <display-name>Metrics Listing Service</display-name>
     <servlet-name>ConsoleMetricsServlet</servlet-name>
     <servlet-class>org.apache.edgent.console.servlets.ConsoleMetricsServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
+
   <servlet-mapping>
     <servlet-name>ConsoleMetricsServlet</servlet-name>
     <url-pattern>/metrics</url-pattern>
   </servlet-mapping>
+
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
   </welcome-file-list>
+
 </web-app>
