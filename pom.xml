@@ -223,6 +223,15 @@
             </lifecycleMappingMetadata>
           </configuration>
         </plugin>
+
+        <!-- Inject the "incubating" into the output filename -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <configuration>
+            <finalName>edgent-incubating-${project.version}</finalName>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
 
