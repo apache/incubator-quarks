@@ -17,9 +17,7 @@
 
 -->
 
-1) Usage of test-jars --> Bad practice --> Move code to separate test-util jar module
-2) test/svt requires samples project
-3) Rename console/servlets to console/webapp
-4) servlets module contains checked in jquery code
-5) org.apache.edgent.test.providers.direct.topology.DirectWindowTest seems to be failing randomly
+1) test/svt requires samples project
+2) Rename console/servlets to console/webapp
+3) org.apache.edgent.test.providers.direct.topology.DirectWindowTest seems to be failing randomly
 
