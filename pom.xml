@@ -230,6 +230,10 @@
           <artifactId>maven-assembly-plugin</artifactId>
           <configuration>
             <finalName>apache-edgent-incubating-${project.version}</finalName>
+            <formats>
+              <format>zip</format>
+              <format>tar.gz</format>
+            </formats>
           </configuration>
         </plugin>
       </plugins>
