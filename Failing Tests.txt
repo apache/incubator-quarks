@@ -17,11 +17,5 @@
 
 -->
 
-
-
-
-connectors/file:
-    FileStreamsTextFileWriterTest.testWriterWatcherReader
-
 connectors/mqtt:
     MqttStreamsTestManual.testConnectRetryPub
