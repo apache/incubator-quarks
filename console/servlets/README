@@ -6,16 +6,3 @@ The origin of the content is as follows:
 
 servlets/webapp_content/js/ext/d3.legend.js: 
 Obtained from: https://github.com/jieter/d3-legend/blob/master/d3.legend.js
-
-servlets/webapp_content/js/ext/d3.min.js: 
-Obtained from: https://github.com/d3/d3/releases/tag/v3.5.9
-
-servlets/webapp_content/js/ext/sankey_edgent.js: 
-Originally obtained sankey.js from: https://github.com/d3/d3-sankey
-Modified it and renamed it to sankey_edgent.js
-
-servlets/webapp_content/js/ext/jquery-ui-1.11.4.custom:
-Obtained from: http://jqueryui.com (select 'Custom Download')
-
-servlets/webapp_content/js/ext/jquery-ui-1.11.4.custom/external/jquery/jquery.js:
-Obtained from: https://code.jquery.com/jquery/

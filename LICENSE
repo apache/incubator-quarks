@@ -211,19 +211,4 @@ conditions of the following licenses.
 This product bundles d3-legend which is available under a MIT license.
 For details, see licenses/d3-legend.MIT
 
-This product bundles portions of d3 which is available under a BSD license.
-For details, see licenses/d3.BSD
-
-This product bundles portions of d3-sankey which is available under a BSD license.
-For details, see licenses/d3-sankey.BSD
- 
-This product bundles portions of jquery-ui which is available under a MIT license.
-For details, see licenses/jquery-ui.MIT
- 
-The bundled jquery-ui bundles jquery which is available under a MIT license.
-For details, see licenses/jquery.MIT
-
-The bundled jquery bundles Sizzle which is available under a MIT license.
-For details, see licenses/sizzle.MIT
-
 ======================================
