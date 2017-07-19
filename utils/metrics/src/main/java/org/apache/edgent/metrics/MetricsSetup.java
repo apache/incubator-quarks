@@ -31,6 +31,7 @@ import org.apache.edgent.execution.services.ServiceContainer;
 import org.apache.edgent.function.BiConsumer;
 
 import com.codahale.metrics.ConsoleReporter;
+import com.codahale.metrics.CsvReporter;
 import com.codahale.metrics.JmxReporter;
 import com.codahale.metrics.Metric;
 import com.codahale.metrics.MetricFilter;
