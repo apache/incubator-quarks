@@ -103,11 +103,11 @@ public class MetricsSetup {
      */
     public MetricsSetup startCSVReporter(String pathMetrics) {
 
-        final CsvReporter reporter = CsvReporter.forRegistry(registry()).formatFor(Locale.US)
-                .convertRatesTo(TimeUnit.SECONDS).convertDurationsTo(TimeUnit.MILLISECONDS)
-                .build(new File(pathMetrics));
-        reporter.start(1, TimeUnit.SECONDS);
-
+    if (pathMetrics != null) {
+            final CsvReporter reporter = CsvReporter.forRegistry(metricRegistry).formatFor(Locale.US)
+                    .convertRatesTo(ratesUnit).convertDurationsTo(durationsUnit).build(new File(pathMetrics));
+            reporter.start(1, TimeUnit.SECONDS);
+        }
         return this;
     }
     
@@ -116,7 +116,7 @@ public class MetricsSetup {
      * @return this
      */
     public MetricsSetup startConsoleReporter() {
-        ConsoleReporter reporter = ConsoleReporter.forRegistry(registry()).convertRatesTo(ratesUnit)
+        ConsoleReporter reporter = ConsoleReporter.forRegistry(metricRegistry.convertRatesTo(ratesUnit)
                 .convertDurationsTo(durationsUnit).build();
         reporter.start(1, TimeUnit.SECONDS);
         return this;
