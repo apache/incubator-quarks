@@ -98,8 +98,7 @@ public class MetricsSetup {
      * virtual machine's platform MBeanServer.
      * 
      * @param pathMetrics
-     *            pathname where the metric files are stored. If the path does
-     *            not exist or is null is created in a standard directory, called metrics
+     *            pathname where the metric files are stored.
      * @return this
      */
     public MetricsSetup startCSVReporter(String pathMetrics) {
