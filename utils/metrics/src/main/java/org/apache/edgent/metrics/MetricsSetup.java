@@ -93,21 +93,30 @@ public class MetricsSetup {
         return this;
     }
 
-    /**
+/**
      * Starts the metric {@code CsvReporter}. If no MBeanServer was set, use the
      * virtual machine's platform MBeanServer.
      * 
      * @param pathMetrics
-     *            pathname where the metric files are stored.
+     *            pathname where the metric files are stored. If the path does
+     *            not exist or is null is created in a standard directory,
+     *            called metrics
      * @return this
      */
     public MetricsSetup startCSVReporter(String pathMetrics) {
 
-    if (pathMetrics != null) {
-            final CsvReporter reporter = CsvReporter.forRegistry(registry()).formatFor(Locale.US)
-                    .convertRatesTo(ratesUnit).convertDurationsTo(durationsUnit).build(new File(pathMetrics));
-            reporter.start(1, TimeUnit.SECONDS);
+        if (pathMetrics == null) { // pathMetrics is NULL
+            pathMetrics = createDefaultDirectory();
+        } else {
+            File directory = new File(pathMetrics);
+            if (!directory.exists() && !directory.mkdirs()) {
+                pathMetrics = createDefaultDirectory();
+            }
         }
+
+        final CsvReporter reporter = CsvReporter.forRegistry(registry()).formatFor(Locale.US).convertRatesTo(ratesUnit)
+                .convertDurationsTo(durationsUnit).build(new File(pathMetrics));
+        reporter.start(1, TimeUnit.SECONDS);
         return this;
     }
     
@@ -135,6 +144,25 @@ public class MetricsSetup {
             mBeanServer = ManagementFactory.getPlatformMBeanServer();
         }
         return mBeanServer;
+    }
+
+/**
+     * Creates a default directory for metrics.
+     * 
+     * @return directory.getPath()
+     */
+    private String createDefaultDirectory() {
+        Path currentRelativePath = Paths.get("");
+        String pathMetrics = currentRelativePath.toAbsolutePath().toString() + FOLDER_METRICS;
+        File directory = new File(pathMetrics);
+        
+        if (!directory.mkdirs()) {
+            // Log: "Could not create the directory log"
+        } else {
+            // Log: "The directory was created successfully: "
+        }
+
+        return directory.getPath();
     }
     
     private class MetricOpletCleaner implements BiConsumer<String, String> {
