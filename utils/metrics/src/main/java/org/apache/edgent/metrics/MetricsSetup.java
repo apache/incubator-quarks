@@ -104,15 +104,6 @@ public class MetricsSetup {
      */
     public MetricsSetup startCSVReporter(String pathMetrics) {
 
-        if (pathMetrics == null) { // pathMetrics is NULL
-            pathMetrics = createDefaultDirectory();
-        } else {
-            File directory = new File(pathMetrics);
-            if (!directory.exists() && !directory.mkdirs()) {
-                pathMetrics = createDefaultDirectory();
-            }
-        }
-
         final CsvReporter reporter = CsvReporter.forRegistry(registry()).formatFor(Locale.US)
                 .convertRatesTo(TimeUnit.SECONDS).convertDurationsTo(TimeUnit.MILLISECONDS)
                 .build(new File(pathMetrics));
@@ -145,13 +136,6 @@ public class MetricsSetup {
             mBeanServer = ManagementFactory.getPlatformMBeanServer();
         }
         return mBeanServer;
-    }
-
-    private String createDefaultDirectory() {
-        Path currentRelativePath = Paths.get("");
-        String pathMetrics = currentRelativePath.toAbsolutePath().toString() + FOLDER_METRICS;
-        File directory = new File(pathMetrics);
-        return pathMetrics;
     }
     
     private class MetricOpletCleaner implements BiConsumer<String, String> {
