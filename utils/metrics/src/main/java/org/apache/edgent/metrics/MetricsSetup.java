@@ -116,7 +116,7 @@ public class MetricsSetup {
      * @return this
      */
     public MetricsSetup startConsoleReporter() {
-        ConsoleReporter reporter = ConsoleReporter.forRegistry(registry().convertRatesTo(ratesUnit)
+        ConsoleReporter reporter = ConsoleReporter.forRegistry(registry()).convertRatesTo(ratesUnit)
                 .convertDurationsTo(durationsUnit).build();
         reporter.start(1, TimeUnit.SECONDS);
         return this;
