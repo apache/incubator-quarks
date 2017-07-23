@@ -3,6 +3,9 @@
 # Local developers toolchain
 /toolchains-local.xml
 
+# Exclude the maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.jar
+
 # More generated artifacts
 target/
 /test/svt/lib

@@ -17,5 +17,10 @@
 
 -->
 
+List of tests I have observed to fail every now and then ... could use
+some investigation on why they are failing.
+
 connectors/mqtt:
     MqttStreamsTestManual.testConnectRetryPub
+connectors/websocket
+    WebSocketClientTest.testSslPublicServer
