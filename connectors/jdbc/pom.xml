@@ -32,6 +32,30 @@
 
   <name>Apache Edgent: Connectors: JDBC</name>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.rat</groupId>
+        <artifactId>apache-rat-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>license-check</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <excludes combine.children="append">
+            <exclude>**/derby.log</exclude> <!-- test generated swill -->
+            <exclude>**/JdbcStreamsTestDb/**</exclude> <!-- test generated swill -->
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>

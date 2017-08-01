@@ -291,8 +291,6 @@
             <exclude>scripts/**/*.cfg</exclude>
             <exclude>scripts/connectors/jdbc/persondata.txt</exclude>
             <exclude>scripts/connectors/kafka/README-kafka</exclude>
-            <exclude>**/JdbcStreamsTestDb/**</exclude> <!-- jdbc test swill. exclude connectors/jdbc/JdbcStreamsTestDb/** didn't work -->
-            <exclude>**/derby.log</exclude> <!-- jdbc test swill. exclude connectors/jdbc/derby.log didn't work -->
 
             <!-- TODO: Remove this after finishing the maven migration -->
             <exclude>gradlew</exclude>
