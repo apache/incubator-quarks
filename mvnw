@@ -218,7 +218,7 @@ else
 
     if command -v wget > /dev/null; then
         echo "Found wget ... using wget"
-        wget ‐O "$BASE_DIR/.mvn/wrapper/maven-wrapper.jar" "$jarUrl"
+        wget -O "$BASE_DIR/.mvn/wrapper/maven-wrapper.jar" "$jarUrl"
     elif command -v curl > /dev/null; then
         echo "Found curl ... using curl"
         curl -o "$BASE_DIR/.mvn/wrapper/maven-wrapper.jar" "$jarUrl"
