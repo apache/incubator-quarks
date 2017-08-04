@@ -255,6 +255,20 @@ $ ./gradlew test7Reports  # generate the JUnit and coverage reports
 
 ## Publish to Maven Repository
 
+### Pushing Snapshots
+
+Snapshots may be published to the ASF's internal Nexus instance for developer testing.  To publish these, ensure that you have
+a `~/.gradle/gradle.properties` with the values for `asfNexusUsername` and `asfNexusPassword` filled in.
+
+```
+asfNexusUsername: mrapache
+asfNexusPassword: apache4life
+```
+
+Then you can simply run `gradlew publish` to build and publish your changes.
+
+### Pushing Releases
+
 Initial support for publishing to a local Maven repository has been added.
 Use the following to do the publish.
 

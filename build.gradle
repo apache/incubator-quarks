@@ -19,10 +19,6 @@ under the License.
  
 apply from: 'gradle/wrapper.gradle'
 apply from: 'gradle/other.gradle'
-
-import org.gradle.plugins.signing.Sign
-import java.io.Console
- 
 /* Configure root project */
 allprojects {
   apply plugin: 'idea'
@@ -31,7 +27,7 @@ allprojects {
   repositories {
     mavenCentral()
   }
-  
+
   project.version = build_version
 }
 
@@ -114,10 +110,15 @@ ext {
   COPYRIGHT_YEAR = String.format('%tY', now)
   
   snapshotId = "-SNAPSHOT-${DSTAMP}-${TSTAMP}"
+  publish_url = release_pub_url
   if (System.properties['edgent.snapshotId'] != null) {
     snapshotId = System.properties['edgent.snapshotId']
   }
-                   
+
+  if (System.properties['snapshot'] != null || System.properties['edgent.snapshotId'] != null) {
+    publish_url = snapshot_pub_url
+  }
+
   external_jars_dir = "$rootProject.projectDir/externalJars/java8"
   
   target_dir = "$distsDir"
@@ -693,8 +694,13 @@ subprojects {
       publications {
         mavenJava(MavenPublication) {
           // specify dependencies like: org.apache.edgent:edgent.api.topology:0.4.0
-          groupId = build_group
-          artifactId = "${project.group}.${project.name}" 
+          maven_version = build_version
+          if(System.properties['snapshot'] != null && !build_version.endsWith("-SNAPSHOT")) {
+            maven_version += "-SNAPSHOT"
+          }
+          groupId build_group
+          artifactId "${project.group}.${project.name}"
+          version maven_version
           artifact sourceJar
           if (project.pluginManager.hasPlugin('war')) {
             from components.web
@@ -702,6 +708,15 @@ subprojects {
           else {
             from components.java
           }
+        }
+      }
+      repositories {
+        maven {
+          credentials {
+            username asfNexusUsername ?: ""
+            password asfNexusPassword ?: ""
+          }
+          url publish_url
         }
       }
     }
@@ -821,7 +836,7 @@ task srcReleaseTarGz(type: Tar) {
 gradle.taskGraph.whenReady { taskGraph ->
     if (ext."signing.password"==null && taskGraph.allTasks.any { it instanceof Sign }) {
         // Use Java console to read from the console (no good for a CI environment)
-        def Console console = System.console()
+        def java.io.Console console = System.console()
         console.printf "\n\n#####################################" +
                        "\nWe have to sign some things in this build." +
                        "\nPlease enter your signing details.\n\n"
