@@ -33,19 +33,16 @@
   <name>Apache Edgent: Samples: Console</name>
 
   <dependencies>
+    <!-- parent pom has Edgent provider and SLF4J dependencies -->
+
     <dependency>
-      <groupId>org.apache.edgent.console</groupId>
+      <groupId>${edgent.base.groupId}.console</groupId>
       <artifactId>edgent-console-server</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.utils</groupId>
+      <groupId>${edgent.base.groupId}.utils</groupId>
       <artifactId>edgent-utils-metrics</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.providers</groupId>
-      <artifactId>edgent-providers-development</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
   </dependencies>

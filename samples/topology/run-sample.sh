@@ -16,5 +16,44 @@
 # limitations under the License.
 #
 
-java -cp target/edgent-samples-topology-1.2.0-SNAPSHOT-uber.jar org.apache.edgent.samples.topology.HelloEdgent
+USAGE="usage: `basename $0` [--list] simple-main-class-name [sample-args]"
+
+#UBER_JAR=target/edgent-samples-topology-1.2.0-SNAPSHOT-uber.jar
+UBER_JAR=target/edgent-samples-topology-*-uber.jar
+
+SAMPLE_PACKAGE=org.apache.edgent.samples.topology
+SAMPLES=`cat <<EOF 
+CombiningStreamsProcessingResults
+DevelopmentMetricsSample
+DevelopentSample
+DevelopmentSampleJobMXBean
+HelloEdgent
+JobEventsSample
+JobExecution
+PeriodicSource
+SensorsAggregates
+SimpleFilterTransform
+SplitWithEnumSample
+TerminateAfterNTuples
+EOF
+`
+
+if [ "$1" = "" ] ; then
+  echo $USAGE
+  exit 1
+fi
+if [ "$1" = "--list" ] ; then
+  echo ${SAMPLES}
+  exit 0
+fi
+
+SAMPLE_NAME=$1
+shift
+
+if [ $# != 0 ] ; then
+  echo $USAGE
+  exit 1
+fi
+
+java -cp ${UBER_JAR} "${SAMPLE_PACKAGE}.${SAMPLE_NAME}" "$*"
 

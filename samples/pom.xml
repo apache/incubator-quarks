@@ -22,16 +22,33 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.apache.edgent</groupId>
-    <artifactId>edgent-parent</artifactId>
-    <version>1.2.0-SNAPSHOT</version>
+    <groupId>org.apache</groupId>
+    <artifactId>apache</artifactId>
+    <version>18</version>
   </parent>
 
   <groupId>org.apache.edgent.samples</groupId>
   <artifactId>edgent-samples</artifactId>
+  <version>1.2.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Apache Edgent: Samples</name>
+
+  <properties>
+    <edgent.platform></edgent.platform>
+    <edgent.base.groupId>org.apache.edgent${edgent.platform}</edgent.base.groupId>
+    <edgent.version>1.2.0-SNAPSHOT</edgent.version>
+
+    <java.version>1.8</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputencoding>UTF-8</project.reporting.outputencoding>
+    <maven.version>3.3.1</maven.version>
+
+    <jetty.version>9.3.6.v20151106</jetty.version>
+    <gson.version>2.2.4</gson.version>
+    <slf4j.version>1.7.12</slf4j.version>
+    <retrolambda.version>2.5.1</retrolambda.version>
+  </properties>
 
   <modules>
     <module>apps</module>
@@ -53,6 +70,32 @@
       <version>${slf4j.version}</version>
       <scope>compile</scope>
     </dependency>
+
+    <!-- an SLF4J runtime implementation to use -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-jdk14</artifactId>
+      <version>${slf4j.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- the Edgent provider(s) being used -->
+    <dependency>
+      <groupId>${edgent.base.groupId}.providers</groupId>
+      <artifactId>edgent-providers-direct</artifactId>
+      <version>${edgent.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${edgent.base.groupId}.providers</groupId>
+      <artifactId>edgent-providers-development</artifactId>
+      <version>${edgent.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${edgent.base.groupId}.providers</groupId>
+      <artifactId>edgent-providers-iot</artifactId>
+      <version>${edgent.version}</version>
+    </dependency>
+    <!-- each sample module declares its own connector dependencies, etc -->
   </dependencies>
 
   <profiles>
@@ -125,6 +168,123 @@
         </plugins>
       </build>
     </profile-->
+
+    <profile>
+      <id>platform-java7</id>
+      <properties>
+        <platform.java7>true</platform.java7>
+        <edgent.platform>.java7</edgent.platform>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>net.orfjackal.retrolambda</groupId>
+            <artifactId>retrolambda-maven-plugin</artifactId>
+            <version>${retrolambda.version}</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>process-main</goal>
+                  <goal>process-test</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>platform-android</id>
+      <properties>
+        <platform.android>true</platform.android>
+        <edgent.platform>.android</edgent.platform>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>net.orfjackal.retrolambda</groupId>
+            <artifactId>retrolambda-maven-plugin</artifactId>
+            <version>${retrolambda.version}</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>process-main</goal>
+                  <goal>process-test</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.6.1</version>
+          <configuration>
+            <source>${java.version}</source>
+            <target>${java.version}</target>
+            <testSource>${java.version}</testSource>
+            <testTarget>${java.version}</testTarget>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>3.0.1</version>
+          <executions>
+            <execution>
+              <id>attach-sources</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>jar-no-fork</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <!-- Inject the "incubating" into the output filename -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <configuration>
+            <finalName>apache-edgent-incubating-samples-${project.version}</finalName>
+            <formats>
+              <format>zip</format>
+              <format>tar.gz</format>
+            </formats>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <!-- build an uber JAR -->
+        <groupId>org.apache.maven.plugins</groupId>
+         <artifactId>maven-shade-plugin</artifactId>
+         <version>3.0.0</version>
+         <executions>
+           <execution>
+             <phase>package</phase>
+             <goals>
+               <goal>shade</goal>
+             </goals>
+             <configuration>
+               <!-- <minimizeJar>true</minimizeJar> -->
+               <shadedArtifactAttached>true</shadedArtifactAttached>
+               <shadedClassifierName>uber</shadedClassifierName>
+             </configuration>
+           </execution>
+         </executions>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

@@ -33,23 +33,15 @@
   <name>Apache Edgent: Samples: Utils</name>
 
   <dependencies>
+    <!-- parent pom has Edgent provider and SLF4J dependencies -->
+
     <dependency>
-      <groupId>org.apache.edgent.console</groupId>
-      <artifactId>edgent-console-server</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.utils</groupId>
+      <groupId>${edgent.base.groupId}.utils</groupId>
       <artifactId>edgent-utils-metrics</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.providers</groupId>
-      <artifactId>edgent-providers-development</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.analytics</groupId>
+      <groupId>${edgent.base.groupId}.analytics</groupId>
       <artifactId>edgent-analytics-sensors</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
@@ -57,6 +49,11 @@
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-math3</artifactId>
       <version>3.4.1</version>
+    </dependency>
+    <dependency>
+      <groupId>${edgent.base.groupId}.console</groupId>
+      <artifactId>edgent-console-server</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
 
