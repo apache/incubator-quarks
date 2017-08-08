@@ -1,0 +1,37 @@
+Sample MQTT Publisher and Subscriber topology applications.
+
+By default, the following MQTT broker configuration is assumed:
+- the broker's connection URL is tcp://localhost:1883
+- the broker is configured for no authentication
+
+See http://mqtt.org for the code and setup information for
+a mqtt broker.
+
+The source code for the samples is in the <edgent-release>/samples directory.
+
+Running the simple sample
+-------------------------
+
+Modify the mqtt.properties file if required.
+
+# run the simple sample subscriber
+# the subscriber runs forever printing out each received message
+$ ./runmqttsample.sh sub
+
+# run the simple sample publisher
+# the publisher runs forever printing out each published message
+$ ./runmqttsample.sh pub
+
+Running the fully configurable clients
+--------------------------------------
+
+# To see how to specify different values:
+$ ./runmqttclient.sh -h
+
+# run the subscriber client
+# the subscriber runs forever printing out each received message
+$ ./runmqttclient.sh sub
+
+# run the publisher client
+# the publisher runs forever printing out each published message
+$ ./runmqttclient.sh pub

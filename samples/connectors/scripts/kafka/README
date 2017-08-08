@@ -1,0 +1,39 @@
+Sample Kafka Publisher and Subscriber topology applications.
+
+By default the samples require the following kafka broker configuration:
+- bootstrap.servers="localhost:9092"
+- zookeeper.connect="localhost:2181"
+- kafka topic "kafkaSampleTopic" exists
+- no authentication
+
+See README-kafka for information about setting up a kafka server
+and creating the topic.
+
+The source code for the samples is in the <edgent-release>/samples directory.
+
+Running the simple sample
+-------------------------
+
+Modify the kafka.properties file if required.
+
+# run the simple sample subscriber
+# the subscriber runs forever printing out each received message
+$ ./runkafkasample.sh sub
+
+# run the simple sample publisher
+# the publisher runs forever printing out each published message
+$ ./runkafkasample.sh pub
+
+Running the fully configurable clients
+--------------------------------------
+
+# To see how to specify different values:
+$ ./runkafkaclient.sh -h
+
+# run the sample subscriber
+# the subscriber runs forever printing out each received message
+$ ./runkafkaclient.sh sub
+
+# run the sample producer
+# the producer runs forever printing out each published message
+$ ./runkafkaclient.sh pub

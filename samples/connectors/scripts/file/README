@@ -1,0 +1,21 @@
+Sample File Streams connector topology applications.
+
+The file writer application writes a stream's tuples to files.
+
+The file reader application watches a directory for files and reads their
+contents into a stream of tuples.
+
+The source code for the samples is in the <edgent-release>/samples directory.
+
+Use:
+
+# create a new directory for the sample to use
+$ mkdir /tmp/fileSample
+
+# run the sample file watcher / reader
+# the reader runs forever printing out content from files read
+$ ./runfilesample.sh reader /tmp/fileSample
+
+# run the sample file writer
+# the writer runs forever printing out each generated tuple
+$ ./runfilesample.sh writer /tmp/fileSample

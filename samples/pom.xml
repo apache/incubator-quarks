@@ -277,9 +277,30 @@
                <goal>shade</goal>
              </goals>
              <configuration>
+               <!-- avoid things like the following when running the uber:
+                   java.lang.NoClassDefFoundError: org.eclipse.paho.client.mqttv3.logging.JSR47Logger
+                   e.g., connectors.iotp uses watson-iot which uses
+                   paho.mqtt.  Apparently watson-iot or paho.mqtt
+                   has some behind the scenes depedency that's not
+                   captured in the uber jar when minimize is true.
+                 -->
                <!-- <minimizeJar>true</minimizeJar> -->
                <shadedArtifactAttached>true</shadedArtifactAttached>
                <shadedClassifierName>uber</shadedClassifierName>
+               <!-- avoid "Invalid signature file digest for Manifest
+                    main attributes" when running the uber jar.
+                    An included jar's signed manifest isn't valid in the uber.
+                 -->
+               <filters>
+                 <filter>
+                   <artifact>*:*</artifact>
+                   <excludes>
+                     <exclude>META-INF/*.SF</exclude>
+                     <exclude>META-INF/*.DSA</exclude>
+                     <exclude>META-INF/*.RSA</exclude>
+                   </excludes>
+                 </filter>
+               </filters>
              </configuration>
            </execution>
          </executions>

@@ -1,0 +1,27 @@
+Sensor Analytics sample application.
+
+The application demonstrates a more complete sample that includes
+some common themes.
+
+The source code for the application can be found under the 
+<edgent-release>/<target>/samples/src directory.
+
+Use:
+
+See the SensorAnalytics sample link in <edgent-release>/docs/javadoc/overview-summary.html
+for full information on configuring and running the application
+and observing its behavior.  In particular, the default configuration
+connects to MQTT server url "tcp://localhost:1883".
+
+# run the application
+# the application runs forever printing out and publishing information
+$ ./runSensorAnalytics.sh
+
+# Watch and report the device's MQTT event topics
+$ ./runDeviceComms.sh watch
+
+# Publish a command to change a sensor1 threshold
+$ ./runDeviceComms.sh send sensor1.set1hzMeanRangeThreshold "[125..127]"
+
+# Publish a command telling the device to publish each outlier event as they occur
+$ ./runDeviceComms.sh send sensor1.setPublish1hzOutsideRange true

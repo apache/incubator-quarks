@@ -1,0 +1,35 @@
+Sample JDBC connector dbms writer and reader topology applications.
+
+The following configuration is assumed:
+- Apache Derby is installed and the environment variable DERBY_HOME is set
+
+The writer is a simple JDBC connector sample demonstrating
+streaming write access of a dbms to add stream tuples to a table.
+
+The reader is a simple JDBC connector sample demonstrating
+streaming read access of a dbms table and creating stream
+tuples from the results.
+
+The source code for the samples is in the <edgent-release>/samples directory.
+
+Running the simple sample
+-------------------------
+
+Modify the jdbc.properties file if required.
+
+# run the simple sample writer
+# the writer runs briefly and prints out additions to the table
+$ ./runjdbcsample.sh writer
+Inserting into persons table: person id=1 first=John last=Doe
+Inserting into persons table: person id=2 first=Jane last=Doe
+Inserting into persons table: person id=3 first=Billy last=McDoe
+$
+
+# run the simple sample reader
+# the reader runs briefly and prints out retrieved info
+$ ./runjdbcsample.sh reader
+retrieved person: id=1 first=John last=Doe
+retrieved person: id=2 first=Jane last=Doe
+retrieved person: id=3 first=Billy last=McDoe
+Unknown person id=99999
+$
