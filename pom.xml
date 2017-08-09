@@ -310,10 +310,6 @@
             <exclude>licenses/binary-release/javax.websocket-api-1.0.CDDL-1.1</exclude>
             <exclude>licenses/binary-release/mqttv3-1.1.0.EDL-1.0</exclude>
             <exclude>licenses/binary-release/watson-iot-0.2.2.EPL-1.0</exclude>
-            <exclude>scripts/**/*.properties</exclude>
-            <exclude>scripts/**/*.cfg</exclude>
-            <exclude>scripts/connectors/jdbc/persondata.txt</exclude>
-            <exclude>scripts/connectors/kafka/README-kafka</exclude>
             <exclude>samples/**</exclude>  <!-- samples are separate -->
 
             <!-- TODO: Remove this after finishing the maven migration -->
