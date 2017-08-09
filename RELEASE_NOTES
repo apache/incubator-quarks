@@ -1,3 +1,66 @@
+Apache Edgent (incubating) 1.2.0
+==================
+
+The release includes a number of minor SDK bugfixes and enhancements listed below.
+
+The release also includes a major refactoring of the build/release tooling
+and affects the source and binary artifacts that are released and how
+the Edgent SDK and samples are consumed.
+
+The goals of the refactoring were to improve Edgent SDK and samples 
+consumability by Edgent Application Developers.  Additionally,
+Edgent runtime developers and release managers should benefit
+from tooling/process commonality with other Apache projects.
+
+The build/release tooling is now maven based.
+
+A release now includes two source bundles:
+  - Edgent SDK bundle
+  - Edgent Samples bundle
+
+A binary bundle is no longer released.  A release now publishes
+the Edgent SDK jars in the Apache Nexus repository which auto-sync's
+to Maven Central.
+
+See `samples/README.md` for information related to Edgent Application
+development and deployment as well as information on building and
+running the samples.
+
+The (`samples/get-edgent-jars.sh`) tool is provided to make it
+easy for a user to retrieve the Edgent SDK jars and their dependencies
+from a maven repository.  The retrieved jars can then be used
+with application development tooling that does not support
+maven repositories and/or they can bundled and conveyed to an 
+edge device in support of application execution.
+
+The samples sources and build tooling are now structured as an
+Edgent Application Developer, Edgent SDK consumer, might structure
+their Edgent applications.  They are no longer part of the SDK and
+an associated binary artifact is not released. A new sample/template 
+project is provided to help an Edgent Application Developer get started.
+
+
+New Features
+--------------------
+TODO
+
+Incompatible API changes
+------------------------
+TODO
+    
+Known Issues
+--------
+Open JIRAs may be found at https://issues.apache.org/jira/browse/EDGENT
+
+Bug Fixes
+---------
+TODO
+
+Miscellaneous changes
+---------------------
+TODO
+
+
 Apache Edgent (incubating) 1.1.0
 ==================
 
