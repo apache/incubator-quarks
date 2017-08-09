@@ -22,10 +22,17 @@ A binary bundle is no longer released.  A release now publishes
 the Edgent SDK jars in the Apache Nexus repository which auto-sync's
 to Maven Central. The names of the jars now conform to standard
 practices: "." has been replaced with "-" and the Edgent SDK
-versionId is now included.  The websocket connector jar
-names are now more sensible.  Generally, all of the Edgent SDK
-jars are now available for the Java7 and Android platforms.
-See `JAVA_SUPPORT.md`.
+versionId is now included.  
+
+The websocket connector jar names are now more sensible:
+* `edgent-connectors-websocket-<ver>.jar` was `edgent.connectors.websocket.wsclient-javax.websocket.jar`
+* `edgent-connectors-websocket-base-<ver>.jar` was  `edgent.connectors.wsclient.jar`
+* `edgent-connectors-websocket-misc-<ver>.jar` was  `edgent.javax.websocket.jar`
+* `edgent-connectors-websocket-jetty-<ver>.jar` was  `javax.websocket-client.jar`
+
+Almost all of the Edgent SDK jars are now available for the Java7 and Android platforms.
+
+See `JAVA_SUPPORT.md` for information about the coordinates, jar names, etc.
 
 See `samples/README.md` for information related to Edgent Application
 development and deployment as well as information on building and
