@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.apache</groupId>
+    <artifactId>apache</artifactId>
+    <version>18</version>
+  </parent>
+
+  <groupId>org.apache.edgent.samples</groupId>
+  <artifactId>edgent-samples-template</artifactId>
+  <version>1.2.0-SNAPSHOT</version>
+
+  <name>Apache Edgent: Samples: Template</name>
+
+  <properties>
+    <edgent.platform></edgent.platform>
+    <edgent.base.groupId>org.apache.edgent${edgent.platform}</edgent.base.groupId>
+    <edgent.version>1.2.0-SNAPSHOT</edgent.version>
+
+    <java.version>1.8</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputencoding>UTF-8</project.reporting.outputencoding>
+    <maven.version>3.3.1</maven.version>
+
+    <jetty.version>9.3.6.v20151106</jetty.version>
+    <gson.version>2.2.4</gson.version>
+    <slf4j.version>1.7.12</slf4j.version>
+    <retrolambda.version>2.5.1</retrolambda.version>
+  </properties>
+
+  <dependencies>
+    <!-- the SLF4J API -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <!-- an SLF4J runtime implementation to use -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-jdk14</artifactId>
+      <version>${slf4j.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- declare the Edgent provider(s) being used -->
+    <dependency>
+      <groupId>${edgent.base.groupId}.providers</groupId>
+      <artifactId>edgent-providers-direct</artifactId>
+      <version>${edgent.version}</version>
+    </dependency>
+    <!--dependency>
+      <groupId>${edgent.base.groupId}.providers</groupId>
+      <artifactId>edgent-providers-development</artifactId>
+      <version>${edgent.version}</version>
+    </dependency-->
+    <!--dependency>
+      <groupId>${edgent.base.groupId}.providers</groupId>
+      <artifactId>edgent-providers-iot</artifactId>
+      <version>${edgent.version}</version>
+    </dependency-->
+
+    <!-- declare Edgent analytics dependencies
+    -->
+    <!--dependency>
+      <groupId>${edgent.base.groupId}.analytics</groupId>
+      <artifactId>edgent-analytics-math3</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
+    </dependency-->
+    <!--dependency>
+      <groupId>${edgent.base.groupId}.analytics</groupId>
+      <artifactId>edgent-analytics-sensors</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
+    </dependency-->
+
+    <!-- declare Edgent utils dependencies
+    -->
+    <!--dependency>
+      <groupId>${edgent.base.groupId}.utils</groupId>
+      <artifactId>edgent-utils-metrics</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
+    </dependency-->
+
+    <!-- declare Edgent connector dependencies
+    -->
+    <!--dependency>
+      <groupId>${edgent.base.groupId}.connectors</groupId>
+      <artifactId>edgent-connectors-file</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
+    </dependency-->
+    <!--dependency>
+      <groupId>${edgent.base.groupId}.connectors</groupId>
+      <artifactId>edgent-connectors-iot</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
+    </dependency-->
+    <!--dependency>
+      <groupId>${edgent.base.groupId}.connectors</groupId>
+      <artifactId>edgent-connectors-iotp</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
+    </dependency-->
+    <!--dependency>
+      <groupId>${edgent.base.groupId}.connectors</groupId>
+      <artifactId>edgent-connectors-jdbc</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
+    </dependency-->
+    <!--dependency>
+      <groupId>${edgent.base.groupId}.connectors</groupId>
+      <artifactId>edgent-connectors-kafka</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
+    </dependency-->
+    <!--dependency>
+      <groupId>${edgent.base.groupId}.connectors</groupId>
+      <artifactId>edgent-connectors-mqtt</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
+    </dependency-->
+    <!--dependency>
+      <groupId>${edgent.base.groupId}.connectors</groupId>
+      <artifactId>edgent-connectors-serial</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
+    </dependency-->
+
+  </dependencies>
+
+  <profiles>
+    <!--
+        This defines a self-activating profile which is only enabled for
+        for projects that have a src/main/java directory (effectivley excludes
+        it from the current pom module.
+    -->
+    <!--profile>
+      <id>generate-classpath</id>
+      <activation>
+        <file>
+          <exists>src/main/java</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>dump-dependency-tree</id>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>tree</goal>
+                </goals>
+                <configuration>
+                  <outputFile>${project.build.directory}/dependency-tree.graphml</outputFile>
+                  <outputType>graphml</outputType>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>xml-maven-plugin</artifactId>
+            <version>1.0.1</version>
+            <executions>
+              <execution>
+                <id>transform-dependency-tree</id>
+                <goals>
+                  <goal>transform</goal>
+                </goals>
+                <configuration>
+                  <transformationSets>
+                    <transformationSet>
+                      <file>${project.build.directory}/dependency-tree.graphml</file>
+                      <stylesheet>${project.basedir}/../src/main/xslt/classpath.xsl</stylesheet>
+                      <parameters>
+                        <parameter>
+                          <name>groupId</name>
+                          <value>${project.groupId}</value>
+                        </parameter>
+                        <parameter>
+                          <name>artifactId</name>
+                          <value>${project.artifactId}</value>
+                        </parameter>
+                        <parameter>
+                          <name>version</name>
+                          <value>${project.version}</value>
+                        </parameter>
+                      </parameters>
+                    </transformationSet>
+                  </transformationSets>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile-->
+
+    <profile>
+      <id>platform-java7</id>
+      <properties>
+        <platform.java7>true</platform.java7>
+        <edgent.platform>.java7</edgent.platform>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>net.orfjackal.retrolambda</groupId>
+            <artifactId>retrolambda-maven-plugin</artifactId>
+            <version>${retrolambda.version}</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>process-main</goal>
+                  <goal>process-test</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>platform-android</id>
+      <properties>
+        <platform.android>true</platform.android>
+        <edgent.platform>.android</edgent.platform>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>net.orfjackal.retrolambda</groupId>
+            <artifactId>retrolambda-maven-plugin</artifactId>
+            <version>${retrolambda.version}</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>process-main</goal>
+                  <goal>process-test</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.6.1</version>
+          <configuration>
+            <source>${java.version}</source>
+            <target>${java.version}</target>
+            <testSource>${java.version}</testSource>
+            <testTarget>${java.version}</testTarget>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>3.0.1</version>
+          <executions>
+            <execution>
+              <id>attach-sources</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>jar-no-fork</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <!-- Inject the "incubating" into the output filename -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <configuration>
+            <finalName>apache-edgent-incubating-samples-${project.version}</finalName>
+            <formats>
+              <format>zip</format>
+              <format>tar.gz</format>
+            </formats>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <!-- build an uber JAR -->
+        <groupId>org.apache.maven.plugins</groupId>
+         <artifactId>maven-shade-plugin</artifactId>
+         <version>3.0.0</version>
+         <executions>
+           <execution>
+             <phase>package</phase>
+             <goals>
+               <goal>shade</goal>
+             </goals>
+             <configuration>
+               <!-- avoid things like the following when running the uber:
+                   java.lang.NoClassDefFoundError: org.eclipse.paho.client.mqttv3.logging.JSR47Logger
+                   e.g., connectors.iotp uses watson-iot which uses
+                   paho.mqtt.  Apparently watson-iot or paho.mqtt
+                   has some behind the scenes depedency that's not
+                   captured in the uber jar when minimize is true.
+                 -->
+               <!-- <minimizeJar>true</minimizeJar> -->
+               <shadedArtifactAttached>true</shadedArtifactAttached>
+               <shadedClassifierName>uber</shadedClassifierName>
+               <!-- avoid "Invalid signature file digest for Manifest
+                    main attributes" when running the uber jar.
+                    An included jar's signed manifest isn't valid in the uber.
+                 -->
+               <filters>
+                 <filter>
+                   <artifact>*:*</artifact>
+                   <excludes>
+                     <exclude>META-INF/*.SF</exclude>
+                     <exclude>META-INF/*.DSA</exclude>
+                     <exclude>META-INF/*.RSA</exclude>
+                   </excludes>
+                 </filter>
+               </filters>
+             </configuration>
+           </execution>
+         </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

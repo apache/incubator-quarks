@@ -64,6 +64,8 @@ if [ $# != 0 ]; then
     exit 1
 fi
 
+TGT_REL_APP_JAR=`basename ${APP_JAR}`
+
 echo
 echo "##### get the app specific dependencies..."
 PROFILES=
@@ -82,7 +84,7 @@ set -e
 
 USAGE="usage: \`basename \$0\` [ args ... ]"
 
-CP=${APP_JAR}
+CP=${TGT_REL_APP_JAR}
 for i in dependency/\*; do
   CP=\${CP}:\${i}
 done
@@ -95,7 +97,7 @@ chmod +x target/app-run.sh
 echo
 echo "##### create target/app-pkg.tar..."
 D=`pwd`
-tar cf target/app-pkg.tar -C target app-run.sh ${APP_JAR} dependency -C ${D} ${ADD_PATHS}
+tar cf target/app-pkg.tar -C target app-run.sh ${TGT_REL_APP_JAR} dependency -C ${D} ${ADD_PATHS}
 
 echo
 echo "##### Copy target/app-pkg.tar to the destination system"
