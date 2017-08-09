@@ -17,7 +17,6 @@
 
 -->
 
-1) test/svt requires samples project
-2) Rename console/servlets to console/webapp
-3) org.apache.edgent.test.providers.direct.topology.DirectWindowTest seems to be failing randomly
+1) Rename console/servlets to console/webapp
+2) org.apache.edgent.test.providers.direct.topology.DirectWindowTest seems to be failing randomly
 
