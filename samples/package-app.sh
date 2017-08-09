@@ -64,7 +64,7 @@ if [ $# != 0 ]; then
     exit 1
 fi
 
-TGT_REL_APP_JAR=`basename ${APP_JAR}`
+TGT_REL_APP_JAR=`basename ${APP_JAR}`  # support spec like target/my.jar
 
 echo
 echo "##### get the app specific dependencies..."

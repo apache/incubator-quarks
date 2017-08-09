@@ -18,7 +18,7 @@ under the License.
 */
 
 /**
- * A project template for a simple Edgent Application
+ * A template for a simple Edgent Application project
  */
-package org.apache.edgent.samples.template;
+package com.mycompany.app;
 

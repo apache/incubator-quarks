@@ -26,4 +26,4 @@ UBER_JAR=`echo ${APP_DIR}/target/*-uber.jar`
 
 export CLASSPATH=${UBER_JAR}
 
-java org.apache.edgent.samples.template.HelloEdgentTemplate "$*"
+java com.mycompany.app.TemplateApp "$*"

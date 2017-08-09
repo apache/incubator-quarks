@@ -16,7 +16,7 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 */
-package org.apache.edgent.samples.template;
+package com.mycompany.app;
 
 import org.apache.edgent.providers.direct.DirectProvider;
 import org.apache.edgent.topology.TStream;
@@ -25,10 +25,10 @@ import org.apache.edgent.topology.Topology;
 /**
  * Edgent Application template.
  */
-public class HelloEdgentTemplate {
+public class TemplateApp {
 
     /**
-     * Print "Hello Edgent Template!" as three tuples.
+     * Print "Hello Edgent Application Template!" as four tuples.
      * @param args command arguments
      * @throws Exception on failure
      */
@@ -42,7 +42,7 @@ public class HelloEdgentTemplate {
 
         // build the topology
 
-        TStream<String> helloStream = top.strings("Hello", "Edgent", "Template!");
+        TStream<String> helloStream = top.strings("Hello", "Edgent", "Application", "Template!");
 
         helloStream.print();
 

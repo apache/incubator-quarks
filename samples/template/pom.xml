@@ -27,11 +27,12 @@
     <version>18</version>
   </parent>
 
-  <groupId>org.apache.edgent.samples</groupId>
-  <artifactId>edgent-samples-template</artifactId>
-  <version>1.2.0-SNAPSHOT</version>
+  <!-- your Edgent Application coordinates here -->
+  <groupId>com.mycompany.app</groupId>
+  <artifactId>my-app</artifactId>
+  <version>1.0-SNAPSHOT</version>
 
-  <name>Apache Edgent: Samples: Template</name>
+  <name>My Edgent Application</name>
 
   <properties>
     <edgent.platform></edgent.platform>
@@ -83,7 +84,7 @@
       <version>${edgent.version}</version>
     </dependency-->
 
-    <!-- declare Edgent analytics dependencies
+    <!-- declare Edgent Analytics dependencies
     -->
     <!--dependency>
       <groupId>${edgent.base.groupId}.analytics</groupId>
@@ -96,7 +97,7 @@
       <version>1.2.0-SNAPSHOT</version>
     </dependency-->
 
-    <!-- declare Edgent utils dependencies
+    <!-- declare Edgent Utils dependencies
     -->
     <!--dependency>
       <groupId>${edgent.base.groupId}.utils</groupId>
@@ -104,7 +105,7 @@
       <version>1.2.0-SNAPSHOT</version>
     </dependency-->
 
-    <!-- declare Edgent connector dependencies
+    <!-- declare Edgent Connector dependencies
     -->
     <!--dependency>
       <groupId>${edgent.base.groupId}.connectors</groupId>

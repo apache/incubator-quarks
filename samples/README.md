@@ -55,13 +55,13 @@ required Edgent jars from the maven repository.
 The supplied Edgent samples poms include support for building for
 a java8, java7 or android execution environent. The poms are
 configured for the generation of a standard jar as well as an
-uber jar.  The poms can be used as a reference in constructing 
-your application's pom.
+uber jar.
+
+You can clone the samples/template project as a starting point
+for your Edgent application.  See samples/template/README.md.
 
 TODO: we would like to provide a maven Edgent Application archetype
 that users can use to create an application project template.
-Or at least a very simple sample project template (simpler than
-the Edgent SDK sample's structure / poms).
 
 If you can't or don't want to use maven-repository-enabled tooling
 you will need to get a local copy of the Edgent jars and their
