@@ -16,14 +16,13 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 */
-package org.apache.edgent.test.svt.apps;
+package org.apache.edgent.samples.apps.fleetManagement;
 
 import java.util.concurrent.TimeUnit;
 
 import org.apache.edgent.connectors.iot.QoS;
-import org.apache.edgent.test.svt.utils.sensor.gps.GpsSensor;
-import org.apache.edgent.test.svt.utils.sensor.gps.SimulatedGeofence;
-import org.apache.edgent.test.svt.utils.sensor.gps.SimulatedGpsSensor;
+import org.apache.edgent.samples.utils.sensor.GpsSensor;
+import org.apache.edgent.samples.utils.sensor.SimulatedGpsSensor;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.TWindow;
 import org.apache.edgent.topology.Topology;

@@ -16,7 +16,7 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 */
-package org.apache.edgent.test.svt.utils.sensor.gps;
+package org.apache.edgent.samples.apps.fleetManagement;
 
 public class SimulatedGeofence {
     protected static double GEOFENCE_LATITUDE_MAX = 37.21;

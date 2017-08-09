@@ -16,16 +16,13 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
  */
-package org.apache.edgent.test.svt.apps.iotp;
+package org.apache.edgent.samples.apps;
 
 import java.io.PrintWriter;
 import java.util.Random;
 
 import org.apache.edgent.connectors.iot.IotDevice;
 import org.apache.edgent.connectors.iotp.IotpDevice;
-import org.apache.edgent.samples.apps.AbstractApplication;
-import org.apache.edgent.samples.apps.ApplicationUtilities;
-import org.apache.edgent.samples.apps.TopologyProviderFactory;
 import org.apache.edgent.topology.Topology;
 
 /**
