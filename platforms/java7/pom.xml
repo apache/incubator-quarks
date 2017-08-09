@@ -54,28 +54,6 @@
 
   <build>
     <plugins>
-      <!-- Switch all default plugins to use Java7 instead of Java8 -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-toolchains-plugin</artifactId>
-        <version>1.1</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>toolchain</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <toolchains>
-            <jdk>
-              <version>1.7</version>
-              <vendor>oracle</vendor>
-            </jdk>
-          </toolchains>
-        </configuration>
-      </plugin>
-
       <!-- Convert the Java8 classes to Java7 classes -->
       <plugin>
         <groupId>net.orfjackal.retrolambda</groupId>
@@ -90,7 +68,6 @@
             <configuration>
               <!-- I was getting random failures if not running retrolambda in a separate process -->
               <fork>true</fork>
-              <java8home>${java8.home}</java8home>
             </configuration>
           </execution>
         </executions>
@@ -132,44 +109,84 @@
           </signature>
         </configuration>
       </plugin>
-      <!--
-            The retrolambda plugin requires Java 8 to operate, but we set the toolchain
-            to Java 7. Therefore we need to provide a path to the Java 8 home directory.
-            This check ensures this property is set and provides an understandable error
-            message.
-      -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-enforcer-plugin</artifactId>
-        <version>1.4.1</version>
-        <executions>
-          <execution>
-            <id>enforce-property</id>
-            <goals>
-              <goal>enforce</goal>
-            </goals>
-            <configuration>
-              <rules>
-                <requireProperty>
-                  <property>java8.home</property>
-                  <message>The retrolambda-maven-plugin requires a path to Java 8. You must set a 'java8.home' property!</message>
-                </requireProperty>
-              </rules>
-              <fail>true</fail>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
   </build>
 
-  <!-- Additionally build the binary distribution package. -->
   <profiles>
+    <!-- Additionally build the binary distribution package. -->
     <profile>
       <id>distribution</id>
       <modules>
         <module>distribution</module>
       </modules>
+    </profile>
+    <!-- Switch all default plugins to use Java7 instead of Java8 -->
+    <profile>
+      <id>toolchain</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-toolchains-plugin</artifactId>
+            <version>1.1</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>toolchain</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <toolchains>
+                <jdk>
+                  <version>1.7</version>
+                  <vendor>oracle</vendor>
+                </jdk>
+              </toolchains>
+            </configuration>
+          </plugin>
+          <!--
+              The retrolambda plugin requires Java 8 to operate, but we set the toolchain
+              to Java 7. Therefore we need to provide a path to the Java 8 home directory.
+              This check ensures this property is set and provides an understandable error
+              message.
+          -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-enforcer-plugin</artifactId>
+            <version>1.4.1</version>
+            <executions>
+              <execution>
+                <id>enforce-property</id>
+                <goals>
+                  <goal>enforce</goal>
+                </goals>
+                <configuration>
+                  <rules>
+                    <requireProperty>
+                      <property>java8.home</property>
+                      <message>The retrolambda-maven-plugin requires a path to Java 8. You must set a 'java8.home' property!</message>
+                    </requireProperty>
+                  </rules>
+                  <fail>true</fail>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>net.orfjackal.retrolambda</groupId>
+            <artifactId>retrolambda-maven-plugin</artifactId>
+            <version>2.5.1</version>
+            <executions>
+              <execution>
+                <configuration>
+                  <java8home>${java8.home}</java8home>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
   </profiles>
 
