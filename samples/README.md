@@ -30,6 +30,8 @@ The artifact groupId prefix is: org.apache.edgent (for java8),
 org.apache.edgent.java7 and org.apache.edgent.android.  e.g.
     org.apache.edgent.api  org.apache.edgent.api.java7
 
+See `JAVA_SUPPORT.md` for more information on coordinates, etc.
+
 The Edgent API is most easily used by using java8 lambda expressions.
 If you only want to deploy your Edgent application to a java8 environment
 then your application may use any java8 features it chooses.  You compile

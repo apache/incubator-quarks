@@ -20,7 +20,12 @@ A release now includes two source bundles:
 
 A binary bundle is no longer released.  A release now publishes
 the Edgent SDK jars in the Apache Nexus repository which auto-sync's
-to Maven Central.
+to Maven Central. The names of the jars now conform to standard
+practices: "." has been replaced with "-" and the Edgent SDK
+versionId is now included.  The websocket connector jar
+names are now more sensible.  Generally, all of the Edgent SDK
+jars are now available for the Java7 and Android platforms.
+See `JAVA_SUPPORT.md`.
 
 See `samples/README.md` for information related to Edgent Application
 development and deployment as well as information on building and
