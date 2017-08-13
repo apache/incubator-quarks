@@ -30,6 +30,8 @@ The artifact groupId prefix is: org.apache.edgent (for java8),
 org.apache.edgent.java7 and org.apache.edgent.android.  e.g.
     org.apache.edgent.api  org.apache.edgent.api.java7
 
+See `JAVA_SUPPORT.md` for more information on coordinates, etc.
+
 The Edgent API is most easily used by using java8 lambda expressions.
 If you only want to deploy your Edgent application to a java8 environment
 then your application may use any java8 features it chooses.  You compile
@@ -55,13 +57,13 @@ required Edgent jars from the maven repository.
 The supplied Edgent samples poms include support for building for
 a java8, java7 or android execution environent. The poms are
 configured for the generation of a standard jar as well as an
-uber jar.  The poms can be used as a reference in constructing 
-your application's pom.
+uber jar.
+
+You can clone the samples/template project as a starting point
+for your Edgent application.  See samples/template/README.md.
 
 TODO: we would like to provide a maven Edgent Application archetype
 that users can use to create an application project template.
-Or at least a very simple sample project template (simpler than
-the Edgent SDK sample's structure / poms).
 
 If you can't or don't want to use maven-repository-enabled tooling
 you will need to get a local copy of the Edgent jars and their
@@ -227,34 +229,4 @@ in the sample category's target directory: `<category>/target`.
 
 ##Running the samples
 
-General information follows. See the README in each sample category
-directory for additional information.
-
-The build generated uber jar contains all of the dependent 
-Edgent jars and their transitive dependencies.
-
-The desired sample can be run using the run-sample.sh script. e.g.,
-
-```sh
-cd topology
-./run-sample.sh HelloEdgent
-```
-
-For usage information:
-
-```sh
-./run-sample.sh
-./run-sample.sh --list
-```
-
-If you want to run a sample from the standard jar there are two options:
-a) get a local copy of all of the Edgent jars and their dependencies.
-   Form a CLASSPATH to the jars and run the sample's main class.
-   The get-edgent-jars.sh script can be used to get the jars from
-   a maven repository (local or remote).
-b) create an application package bundle.  The bundle includes the
-   sample(s) jar and a copy of all of the dependent Edgent jars
-   and their dependencies.  The package-app.sh script can be
-   used to create this bundle.
-   The package-app.sh script also creates a run-app.sh script.
-   The run-app.sh script configures the CLASSPATH and runs the main class.
+See the README in each sample category directory.

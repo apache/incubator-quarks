@@ -1,4 +1,4 @@
-Building Edgent from a Source Distribution
+Building the Apache Edgent SDK from a Source Distribution
 
 Apache Edgent is supported on several Java target platforms.
 For more information see JAVA_SUPPORT.md in the source tree
@@ -7,20 +7,41 @@ or in the repository mirror at github https://github.com/apache/incubator-edgent
 
 Pre-requisites:
 - Java 8 is required to build an Edgent binary distribution
-- gradle (https://gradle.org/) only if building from a source release bundle
+- Network connectivity a maven repository such as Maven Central
+- A maven-integrated IDE will be required if you want to do
+  development using an IDE.
 
-Building from a source release bundle (lacking a ./gradlew) requires
-performing a one-time bootstrap step using an installed version of gradle:
+The source releaase includes a Maven wrapper. The wrapper removes
+the need for the user to manually install maven on their system.
 
-$ gradle          # one time gradle build bootstrap setup.
 
-Build an Edgent binary distribution:
+Building the Edgent SDK Java8 jars and installing them in the local maven repo
 
-$ ./gradlew release   # .\gradlew.bat on Windows
+$ ./mvnw clean install # add -DskipTests to save time and omit running the tests
+ 
 
-The build reports the location of the binary distribution bundle that can then
-be unpacked and used in building applications.
+Building the SDK jars for Java7 and Android too (if needed)
 
+Create a toolchains-local.xml file by cloning the toolchains-travis.xml file
+and setting the appropriate j8-jdk-home and j7-jdk-home locations on your system
+e.g., on OSX system:
+  j8 jdkHome:  /Library/Java/JavaVirtualMachines/jdk1.8.0_112.jdk/Contents/Home
+  j7 jdkHome:  /Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home
+
+$ ./mvnw -t toolchains-local.xml -Djava8.home=$JAVA_HOME clean install -Pplatform-java7,platform-android # add -DskipTests to save time and omit running the tests
+
+
+At the conclusion of the build, the Edgent SDK jars will have been 
+installed in the local maven repository and may then be used for 
+Edgent Application development.
+
+
+See samples/README.md in the Edgent Samples source bundle or git repository
+for general information on Edgent Application development and deployment, 
+and for building and running the samples.   **TODO** link to samples/README.md in the git repo
+
+**TODO** Hmm... remove this reference to Getting Started... is it / should it be present in samples/README.md?
+**TODO** need a link a new Getting Started (for new Eclipse maven dependency, 
 See Getting Started https://edgent.apache.org/docs/edgent-getting-started
 
 For more information about the Edgent sources, testing, and

@@ -18,25 +18,15 @@
 
 USAGE="usage: `basename $0` [--list] simple-main-class-name [sample-args]"
 
-CATEGORY=topology
+CATEGORY=scenarios
 
 #UBER_JAR=target/edgent-samples-topology-1.2.0-SNAPSHOT-uber.jar
 UBER_JAR=target/edgent-samples-${CATEGORY}-*-uber.jar
 
 SAMPLE_PACKAGE_BASE=org.apache.edgent.samples.${CATEGORY}
 SAMPLES_FQ=`cat <<EOF 
-${SAMPLE_PACKAGE_BASE}.CombiningStreamsProcessingResults
-${SAMPLE_PACKAGE_BASE}.DevelopmentMetricsSample
-${SAMPLE_PACKAGE_BASE}.DevelopmentSample
-${SAMPLE_PACKAGE_BASE}.DevelopmentSampleJobMXBean
-${SAMPLE_PACKAGE_BASE}.HelloEdgent
-${SAMPLE_PACKAGE_BASE}.JobEventsSample
-${SAMPLE_PACKAGE_BASE}.JobExecution
-${SAMPLE_PACKAGE_BASE}.PeriodicSource
-${SAMPLE_PACKAGE_BASE}.SensorsAggregates
-${SAMPLE_PACKAGE_BASE}.SimpleFilterTransform
-${SAMPLE_PACKAGE_BASE}.SplitWithEnumSample
-${SAMPLE_PACKAGE_BASE}.TerminateAfterNTuples
+${SAMPLE_PACKAGE_BASE}.iotp.IotpFullScenario
+${SAMPLE_PACKAGE_BASE}.iotp.range.sensor.IotpRangeSensor
 EOF
 `
 
