@@ -72,6 +72,8 @@ public class HttpServer {
             File servletsJarFile = sUtil.getWarFilePath();
             if (servletsJarFile.exists()){
             	HttpServerHolder.WEBAPP.setWar(servletsJarFile.getAbsolutePath());
+            } else {
+                throw new RuntimeException("Unable to find WAR archive in " + servletsJarFile.getAbsolutePath());
             }
 
             HttpServerHolder.WEBAPP.addAliasCheck(new AllowSymLinkAliasChecker());
