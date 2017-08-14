@@ -34,10 +34,10 @@ If you are interested in developing a new connector see [Writing Connectors for 
 
 See the [Edgent Wiki](https://cwiki.apache.org/confluence/display/EDGENT) for additional information including Internal and Design notes. 
 
-## Switched from Ant to Gradle
+## Switched from Ant and Gradle to Maven
 
 See the updated _Building_ and _Using Eclipse_ sections below.
-The Ant tooling is no longer functional.
+The Ant and Gradle tooling is no longer functional.
 
 It's recommended that developers of Edgent create a new workspace instead of
 reusing current ant-based Edgent workspaces.
@@ -59,81 +59,114 @@ reusing their Quarks workspace.
 Once you have forked the repository and created your local clone you need to download
 these additional development software tools.
 
-* Java 8 - The development setup assumes Java 8 and Linux.
-* gradle - (https://gradle.org/) only if building from a source release bundle
+* Java 8 - The development setup assumes Java 8
+* Java 7 - *(optional) only required when also building the Java 7 and Android artifacts with `toolchain` support* 
+* Maven - *(optional) (https://maven.apache.org/)*
 
-All Edgent runtime development is done using Java 8.  JARs for Java 7 and Android
-platforms are created as described below.
+Maven is used as build tool in any case. Currently there are two options however:
 
-## Building a Binary Release Bundle
+1. Using an installed version of Maven (using the `mvn` command)
+2. Using the maven-wrapper (using the `mvnw` command)
 
-Building from a source release bundle (lacking a `./gradlew`) requires
-performing a one-time bootstrap step using an installed version of gradle:
-``` sh
-$ gradle          # one time gradle build bootstrap setup.
+When using option 2 the script will automatically download and install the correct Maven version and use that. Besides this, there is no difference between using the `mvn` and `mvnw` command.
+
+Per default the build will use Java 8 to perform the build of the Java 7 and Android modules. In order to reliably test the Java 7 modules on a real Java 7 Runtime, we defined an additional profile `toolchain` which lets Maven run the tests in the Java 7 Modules with a real Java 7 Runtime.
+
+In preparation of building the Java 7 and Android modules with enabled `toolchain` support it is required to tell Maven the location of both the Java 7 and Java 8 SDKs. This is done in a file called `toolchains.xml`:
+
+``` toolchains.xml
+<?xml version="1.0" encoding="UTF8"?>
+<toolchains>
+  <toolchain>
+    <type>jdk</type>
+    <provides>
+      <version>1.8</version>
+      <vendor>oracle</vendor>
+    </provides>
+    <configuration>
+      <jdkHome>{path to the Java 8 SDK}</jdkHome>
+    </configuration>
+  </toolchain>
+  <toolchain>
+    <type>jdk</type>
+    <provides>
+      <version>1.7</version>
+      <vendor>oracle</vendor>
+    </provides>
+    <configuration>
+      <jdkHome>{path to the Java 7 SDK}</jdkHome>
+    </configuration>
+  </toolchain>
+<toolchains>
 ```
 
-Building an Edgent binary release bundle:
+This file is located or has to be created in: `~/.m2/toolchains.xml`
+
+All Edgent runtime development is done using Java 8. JARs for Java 7 and Android platforms are created by back-porting the compiled Java 8 code using a tool called `retrolambda`. More details on this below.
+
+## Building Edgent (For using Edgent)
+
+Building using a pre-installed Maven installation from a source release bundle:
 ``` sh
-$ ./gradlew release
+$ mvn package
 ```
 
-The build reports the location of the binary distribution bundle that can then
-be unpacked and used in building applications.
+Building using the maven-wrapper which automatically handles downloading the right Maven version.
+``` sh
+$ ./mvnw package
+```
 
-See [Getting Started](https://edgent.apache.org/docs/edgent-getting-started)
-for information on using the binary release bundle.
+Both will build and test all Edgent Java 8 modules using Maven.
 
-## Building for Edgent Runtime Development
+If you want to use the artifacts built by this in other projects, please 
+use `install` instead of `package` as this will additionally make the build 
+results available to other projects on the same machine in the local Maven 
+repository.
 
-The primary build process is using [Gradle](https://gradle.org/),
-any pull request is expected to maintain the build success of `clean, assemble, test`.
+For a not quite two hour introduction into Maven please feel free to watch
+this video we created for another Apache project:
+https://vimeo.com/167857327
 
-The Gradle wrapper `edgent/{gradlew,gradlew.bat}` should be used.
-The wrapper ensures the appropriate version of Gradle is used and it
+A set of Maven `profiles` have been created to control which parts
+should be built. The default profile only builds and tests the Java 8
+versions of all modules and doesn't assemble a binary distribution
+as usually Maven builds don't require such a step. It also doesn't build
+the Java 7 or Android modules either.
+
+Edgent currently comes with these profiles:
+
+- `distribution`: Builds one binary distribution for Java 8. If the java 7 and android profiles are enabled too, for each of these an additional binary distribution is created.
+- `platform-java7`: Builds Java 7 versions of all Edgent modules and runs the tests.
+- `platform-android`: Builds Android versions of all Edgent modules that are compatible with Android (See [JAVA_SUPPORT.md](JAVA_SUPPORT.md).
+- `toolchain`: Runs the tests in the Java 7 and Android modules using a Java 7 runtime instead of Java 8 version, which happens if this profile is not enabled. 
+
+As the Android modules are based on the Java 7 versions, when building the `platform-android` profile, the `platform-java7` profile is required to be enabled too, or the build will fail. 
+
+Example: Building an Edgent binary release bundle for Java 8:
+``` sh
+$ mvn package -Pdistribution
+```
+
+Each artifact built by this will be located in the default Maven location (inside each modules `target` directory)
+The distribution archive will be located in `distribution/target/apache-edgent-incubating-1.2.0-SNAPSHOT-java8-bin.zip` (and tar.gz)
+
+See [Getting Started](https://edgent.apache.org/docs/edgent-getting-started) for information on using the binary release bundle.
+
+## Building for Edgent (For Edgent development)
+
+The primary build process is using [Maven](https://maven.apache.org/),
+any pull request is expected to maintain the build success of `mvn package`.
+
+The Maven wrapper `<edgent>/{mvnw,mvnw.cmd}` should be used.
+The wrapper ensures the appropriate version of Maven is used and it
 will automatically download it if needed, e.g.:
 ``` sh
-$ ./gradlew --version
-$ ./gradlew clean build
+$ ./mvnw clean package
 ```
-
-The Gradle tooling:
-
-- Creates release images under `<edgent>/build/release-edgent`
-- Creates build artifacts under `<edgent>/build/distributions` and `<edgent>/<project>/build`
-
-
-The top-level Gradle file is `edgent/build.gradle` and it contains several
-unique tasks:
-
-* `wrapper` (default) : one-time bootstrap processing for use when building from a source release bundle 
-* `assemble` : Build all code and Javadoc into `build\distributions`. The build will fail on any code error or Javadoc warning or error.
-* `all` : Synonym for `assemble`
-* `build` : Essentially like "assemble test reports"
-* `clean` : Clean the project
-* `test` : Run the JUnit tests, if any test fails the test run stops.  Use `--continue` to not stop on the first failure.
-  * Use a project test task and optionally the `--tests` option to run a subset of the tests.  Multiple `--tests` options may be specified following each test task.
-    * `$ ./gradlew <project>:test`
-    * `$ ./gradlew <project>:test --tests '*.SomeTest'`
-    * `$ ./gradlew <project>:test --tests '*.SomeTest.someMethod'`
-  * Use the `cleanTest` task to force rerunning a previously successful test task (without forcing a rerun of all of the task's dependencies):
-    * `$ ./gradlew [<project>:]cleanTest [<project>:]test`
-* `reports` : Generate JUnit and Code Coverage reports in `build\distributions\reports`. Use after executing the `test` target.
-  * `reports\tests\overview-summary.html` - JUnit test report
-  * `reports\coverage\index.html` - Code coverage report
-* `release` : Build release bundles in `build/release-edgent`, that includes subsets of the Edgent JARs that run on Java 7 (`build/distributions/java7`) and Android (`build/distributions/android`). By default, SNAPSHOT bundles are created.  Specify `-Dedgent.snapshotId=""` to create bundles for a formal release.
-* `rat` : run the Apache Release Analysis Tool (license checking).
-* `signAll` : Sign the release bundles in `build/release-edgent` (first run `release`).  You will be promoted for your PGP code signing key's ID, the location of the keyring file, and the secret key password.  Default response values may be set with environment variables:
-  * `GPG_ID` - the code signing key's ID (e.g., D0F56CAD)
-  * `GPG_SECRING` - path to the secret key's keyring file
-
-The build process has been tested on Linux and macOS.
-
-To build on Windows probably needs some changes, please get involved and contribute them!
 
 ## Continuous Integration
 
-When a pull request is opened on the GitHub mirror site, the Travis CI service runs a full build.
+When a pull request is opened on the GitHub mirror site, the Travis CI service runs a full build of the java8 modules.
 
 The latest build status for the project's branches can be seen at: https://travis-ci.org/apache/incubator-edgent/branches
 
@@ -141,7 +174,7 @@ The build setup is contained in `.travis.yml` in the project root directory.
 It includes:
 
 * Building the project
-* Testing on Java 8 and Java 7
+* Testing on Java 8
   - Not all tests may be run, some tests are skipped due to timing issues or if excessive setup is required.
 
 If your test randomly fails because, for example, it depends on publicly available test services,
@@ -160,37 +193,86 @@ following statement:
 Closing and reopening a pull request will kick off a new build against the pull request.
 
 ## Java 7 and Android
+
 Java 7 and Android target platforms are supported through use of
-retrolambda to convert Edgent Java8 JARs to Java7 JARs.
+retrolambda to convert Edgent Java 8 JARs to Java 7 JARs. In order
+to make it easy to address easily, for each Java 8 module a matching
+Java 7 version is located inside the `<edgent>/platforms/java7`
+directory. For Android only those counterparts exist which are generally
+supported on Android.
 
-Building a release (`./gradlew release`) produces three sets of JARs under
+In general all Java 7 modules differ from the ordinary Java 8 versions 
+as these modules don't contain any source code or resources. They are
+all built by unpacking the Java 8 jars content into the current modules 
+target directory. So the output is effectively located exactly in the 
+ame location it would have when normally compiling the Java 8 version. 
+There the retrolambda plugin is executed to convert the existing class 
+files into ones compatible with Java 7.
 
-* build/distributions/java8 - Java 8 SE
-* build/distributions/java7 - Java 7 SE
-* build/distributions/android - Android
+The Android versions are even simpler, as all they do is unpack the Java 7
+versions and re-pack the content with the android groupId. All except the
+two modules which are currently only available on Android 
+(located in the `<edgent>/platforms/android/android` directory). These 
+modules are built up similar to the Java 8 versions, but they also contain
+the retrolambda plugin execution. While it would have been possible to 
+treat these modules as Java 7, for the sake of an equal coding experience
+it was decided to make it possible to write the same type of code for all
+modules.
 
-See [JAVA_SUPPORT.md](JAVA_SUPPORT.md) for which Edgent capabilities / JARs are supported
-for each environment.
+An Android module's dependency on the Java 7 version makes the requirement
+obvious, that in order to build the Android versions, the Java 7 versions
+have to be built too.
 
-### Adding Edgent Runtime JARs to Java 7 & Android
-
-The Gradle tooling uses some Ant tooling to create the Java 7 and Android platform JARs.
-
-Java 7 Edgent runtime JARs are created using `platform/java7/build.xml`. Adding a JAR just requires:
-
-* Adding it to target `retro7.edgent` - Copy entry for an existing JAR.
-* Adding any tests for it to targets `test7.setup` and `test7.run` - Copy entry for an existing JAR.
-
-Any Java 7 JAR is automatically included in Android unless it is explictly excluded in `platform/android/build.xml`.
+See [JAVA_SUPPORT.md](JAVA_SUPPORT.md) for which Edgent capabilities / JARs 
+are supported for each environment.
 
 ## Test reports
 
-Running the `reports` target produces two reports:
+The typical maven build contains two phases of unit-tests.
+The Unit-Test phase which is executed by the surefire maven plugin
+and the Integration-Test phase, which is executed by the failsafe
+maven plugin.
 
-* `builds/distributions/reports/tests/index.html` - JUnit test report
-* `builds/distributions/reports/coverage/index.html` - Code coverage report.
+When running a normal maven `package` build, only the unit-test phase is executed.
+When running `verify` or above (`install`, `deploy`, etc.) the integration
+tests are also executed.
+
+Each Maven plugin produces output to different directories:
+* `<module>/target/surefire-reports` - JUnit unit-test reports
+* `<module>/target/failsafe-reports` - JUnit integration-test reports
+
+In addition to running the unit tests, coverage data is automatically 
+collected by the `jacoco-maven-plugin`, which is configured to store
+its data in `<module>/target/coverage-reports` in files called 
+`jacoco-ut.exec` and `jacoco-it.exec`.
+
+Even if at least the surfire and failsafe output is generated in a human
+readable txt and xml form, the jacoco output is intended on being used 
+by tools. SonarQube is for example able to interpret this information 
+In order to generate nicely formatted html reports, please have a look
+at the following `Site generation` chapter.
+
+## Site generation
+
+Maven has 3 built in lifecycles:
+* clean - For cleaning up (effectively simply deleting the output forler)
+* default - For building, testing, deploying the code
+* site - For generating, documentation, reports, ...
+
+If the human readable version of all of these should be generated, all needed
+to do this, is to append a simple `site:site` at the end of the maven command.
+
+```sh
+./mvnw -Pdistribution,platform-java7,platform-android clean verify site:site
+```
+Each modules `<module>/target/site` directory will then contain the generated 
+Module documentation.
 
 ## Testing the Kafka Connector
+
+///////////////////////////////////////////////////////////
+TODO: This chapter needs some reworking
+///////////////////////////////////////////////////////////
 
 The kafka connector tests aren't run by default as the connector must
 connect to a running Kafka/Zookeeper config.
@@ -212,80 +294,6 @@ cat README
 ./runkafkasample.sh sub
 ./runkafkasample.sh pub
 ```
-
-## Testing the JDBC Connector
-
-The JDBC connector tests are written to run against Apache Derby 
-as the backing dbms and the derby jar needs to be on the classpath.
-The tests are skipped if derby can't be loaded.
-The test harness adds $DERBY_HOME/db/lib/derby.jar to the classpath.
-See [JdbcStreamsTest](connectors/jdbc/src/test/java/org/apache/edgent/test/connectors/jdbc/JdbcStreamsTest.java) 
-for more info but the following should suffice:
-
-```sh
-export DERBY_HOME=$JAVA_HOME/db
-
-#### if JAVA_HOME isn't set - e.g., on OSX...
-export DERBY_HOME=`/usr/libexec/java_home`/db
-```
-
-Once DERBY_HOME is set the tests and samples can be run as follows
-```sh
-#### run the jdbc tests
-./gradlew connectors:jdbc:test
-
-#### run the sample
-cd java8/scripts/connectors/jdbc
-cat README
-./runjdbcsample.sh writer
-./runjdbcsample.sh reader
-```
-
-## Testing Edgent with Java7
-
-All of the standard build system _tasks_ above must be run with
-`JAVA_HOME` set to use a Java8 VM.
-
-As noted above, the `release` task includes generation of Java7
-compatible versions of the Edgent JARs. After the release task has been run,
-Edgent may be tested in a Java7 context using some special _test7_ tasks.
-
-See [JAVA_SUPPORT](JAVA_SUPPORT.md) for information about what
-Edgent features are supported in the different environments.
-
-``` sh
- # pave the way for useful report generation at the end
-$ ./gradlew cleanTest
-$ ./gradlew reports
-
- # run with JAVA_HOME/PATH set for Java8
-$ ./gradlew test7Compile  # compile the Edgent tests to operate in a Java7 environment
-
-$ sh   # muck with EVs for Java7 in a subshell
-  $ export JAVA_HOME=`/usr/libexec/java_home -v 1.7`   # on OSX
-  $ export PATH=$JAVA_HOME/bin:$PATH
-  $ ./gradlew test7Run      # run the tests with a Java7 VM
-  $ exit
-
- # run with JAVA_HOME set for Java8
-$ ./gradlew test7Reports  # generate the JUnit and coverage reports
-```
-
-## Publish to Maven Repository
-
-Initial support for publishing to a local Maven repository has been added.
-Use the following to do the publish.
-
-``` sh
-$ ./gradlew publishToMavenLocal
-```
-
-The component JARs / WARs are published as well as their sources.
-The published groupId is `org.apache.edgent`. The artifactIds match the
-names of the JARs in the target-dir / release tgz.
-
-For example: `org.apache.edgent:edgent.api.topology:0.4.0`
-
 
 ## Code Layout
 
@@ -402,6 +410,10 @@ Notes with the above PR merge directions:
     - `$ git remote add mirror https://github.com/apache/incubator-edgent.git`
 
 ## Using Eclipse
+
+///////////////////////////////////////////////////////////
+TODO: This chapter needs some reworking
+///////////////////////////////////////////////////////////
 
 The Edgent Git repository contains Eclipse project definitions for the
 top-level directories that contain code, such as api, runtime, connectors.
