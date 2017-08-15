@@ -55,7 +55,7 @@
                   <artifactId>edgent-console-servlets</artifactId>
                   <version>${project.version}</version>
                   <type>war</type>
-                  <outputDirectory>${project.build.directory}/war-resources</outputDirectory>
+                  <outputDirectory>${project.build.outputDirectory}/resources</outputDirectory>
                   <destFileName>servlets.war</destFileName>
                 </artifactItem>
               </artifactItems>

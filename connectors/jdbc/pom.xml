@@ -35,22 +35,24 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.rat</groupId>
-        <artifactId>apache-rat-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>license-check</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
-          <excludes combine.children="append">
-            <exclude>**/derby.log</exclude> <!-- test generated swill -->
-            <exclude>**/JdbcStreamsTestDb/**</exclude> <!-- test generated swill -->
-          </excludes>
+          <!--
+                Set an environment variable to make sure any derby log is created
+                inside the target directory as well as pass in a location for
+                creating the database.
+          -->
+          <systemProperties>
+            <property>
+              <name>derby.home</name>
+              <value>${project.build.directory}/derby</value>
+            </property>
+            <property>
+              <name>derby.stream.error.file</name>
+              <value>${project.build.directory}/derby.log</value>
+            </property>
+          </systemProperties>
         </configuration>
       </plugin>
     </plugins>

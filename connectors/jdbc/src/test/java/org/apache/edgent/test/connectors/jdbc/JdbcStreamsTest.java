@@ -67,8 +67,9 @@ import org.junit.Test;
 public class JdbcStreamsTest  extends ConnectorTestBase {
     
     private static final int SEC_TIMEOUT = 10;
-    private final static String DB_NAME = "JdbcStreamsTestDb";
-    private final static String USERNAME = System.getProperty("user.name");
+    private final static String DB_NAME = System.getProperty("derby.home") + "/JdbcStreamsTestDb";
+    // TODO: My username contained a "." and that broke the build, so I set this to a constant.
+    private final static String USERNAME = "test";//System.getProperty("user.name");
     private final static String PW = "none";
     private static final List<Person> personList = new ArrayList<>();
     static {

@@ -19,7 +19,7 @@ under the License.
 
 package org.apache.edgent.console.server;
 
-import java.io.File;
+import java.io.*;
 
 public class ServerUtil {
 
@@ -34,7 +34,51 @@ public class ServerUtil {
      * @return a File object or null if the "webapps" directory is not found
      */
     public File getWarFilePath() {
-        return new File("target/war-resources/servlets.war");
+        File war = new File("target/war-resources/servlets.war");
+        if(!war.exists()) {
+            // Eventually create the directory for serving the war.
+            if(!war.getParentFile().exists()) {
+                if(!war.getParentFile().mkdirs()) {
+                    throw new RuntimeException("Could not create output directory at " + war.getAbsolutePath());
+                }
+            }
+
+            // Dump the servlet.war into the output directory.
+            InputStream stream = null;
+            FileOutputStream fileOutputStream = null;
+            try {
+                stream = ServerUtil.class.getResourceAsStream("/resources/servlets.war");
+                if(stream == null) {
+                    throw new RuntimeException("Could not get resource '/resources/servlets.war' from classpath.");
+                }
+
+                int readBytes;
+                byte[] buffer = new byte[4096];
+                fileOutputStream = new FileOutputStream(war);
+                while ((readBytes = stream.read(buffer)) > 0) {
+                    fileOutputStream.write(buffer, 0, readBytes);
+                }
+            } catch (IOException e) {
+                throw new RuntimeException("Could not dump resource 'resources/servlets.war' from classpath.", e);
+            } finally {
+                if(stream != null) {
+                    try {
+                        stream.close();
+                    } catch (IOException e) {
+                        // Ignore.
+                    }
+                }
+                if(fileOutputStream != null) {
+                    try {
+                        fileOutputStream.close();
+                    } catch (IOException e) {
+                        // Ignore.
+                    }
+                }
+            }
+        }
+
+        return war;
     }
-    
+
 }

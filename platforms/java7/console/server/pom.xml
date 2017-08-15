@@ -55,7 +55,7 @@
                   <artifactId>edgent-console-server</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
-                  <excludes>META-INF/**</excludes>
+                  <excludes>META-INF/**,resources/**</excludes>
                 </artifactItem>
                 <artifactItem>
                   <groupId>org.apache.edgent.console</groupId>
@@ -69,7 +69,7 @@
             </configuration>
           </execution>
           <execution>
-            <id>copy-servlets</id>
+            <id>copy-war</id>
             <phase>generate-test-resources</phase>
             <goals>
               <goal>copy</goal>
@@ -81,7 +81,7 @@
                   <artifactId>edgent-console-servlets</artifactId>
                   <version>${project.version}</version>
                   <type>war</type>
-                  <outputDirectory>${project.build.directory}/war-resources</outputDirectory>
+                  <outputDirectory>${project.build.outputDirectory}/resources</outputDirectory>
                   <destFileName>servlets.war</destFileName>
                 </artifactItem>
               </artifactItems>

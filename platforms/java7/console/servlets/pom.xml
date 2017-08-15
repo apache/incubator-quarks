@@ -95,25 +95,6 @@
           <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.rat</groupId>
-        <artifactId>apache-rat-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>license-check</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <excludes combine.children="append">
-            <!-- TODO: Is this correct? I'd suggest to auto-download jquery and include that to the output as part of the build -->
-            <exclude>src/main/webapp/js/ext/**</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
 
