@@ -37,7 +37,6 @@ import org.apache.edgent.oplet.Oplet;
 import org.apache.edgent.oplet.core.PeriodicSource;
 import org.apache.edgent.oplet.core.Pipe;
 import org.apache.edgent.providers.direct.DirectProvider;
-import org.apache.edgent.test.topology.TopologyAbstractTest;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.Topology;
 import org.junit.Test;

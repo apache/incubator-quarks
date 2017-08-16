@@ -43,7 +43,6 @@ import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.json.JsonFunctions;
 import org.apache.edgent.topology.plumbing.PlumbingStreams;
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.gson.JsonObject;

@@ -28,7 +28,6 @@
   </parent>
 
   <artifactId>edgent-console-servlets</artifactId>
-  <version>1.2.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
   <name>Apache Edgent: Console: Servlets</name>
@@ -62,6 +61,7 @@
         </configuration>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
           <execution>

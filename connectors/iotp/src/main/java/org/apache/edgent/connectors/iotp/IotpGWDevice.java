@@ -91,7 +91,7 @@ class IotpGWDevice implements IotDevice {
   @Override
   public boolean equals(Object o2) {
     return o2 == this 
-        || equals(o2 instanceof IotpGWDevice && ((IotpGWDevice)o2).fqDeviceId.equals(fqDeviceId));
+        || (o2 instanceof IotpGWDevice && ((IotpGWDevice)o2).fqDeviceId.equals(fqDeviceId));
   }
 
   @Override

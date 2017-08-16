@@ -18,8 +18,6 @@ under the License.
 */
 package org.apache.edgent.test.connectors.wsclient.javax.websocket;
 
-import org.junit.Ignore;
-
 /**
  * WebSocketClient connector globalization tests.
  */

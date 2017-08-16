@@ -96,20 +96,20 @@
     <module>console</module>
     <module>providers</module>
     <module>runtime</module>
-<!--    <module>samples</module> 
+    <!--    <module>samples</module>
 
-        TODO figure out what to do with samples.
-        On one hand we want them to be self-standing and not
-        part of the "core" edgent source bundle.
-        We want the samples to have their own released source bundle
-        and not release any sample binary jars or samples binary bundle.
-        The samples don't depend on this ~edgent-core pom.xml.
-        On the other hand, we need to understand how the overall
-        release flow will work.
-        At this moment, with this pom and the current sample poms,
-        you "cd samples; mvn clean install -Papache-release"
-        to create the samples source bundles.
- -->
+            TODO figure out what to do with samples.
+            On one hand we want them to be self-standing and not
+            part of the "core" edgent source bundle.
+            We want the samples to have their own released source bundle
+            and not release any sample binary jars or samples binary bundle.
+            The samples don't depend on this ~edgent-core pom.xml.
+            On the other hand, we need to understand how the overall
+            release flow will work.
+            At this moment, with this pom and the current sample poms,
+            you "cd samples; mvn clean install -Papache-release"
+            to create the samples source bundles.
+     -->
     <module>spi</module>
     <module>test</module>
     <module>utils</module>
@@ -232,6 +232,19 @@
                     <ignore/>
                   </action>
                 </pluginExecution>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-remote-resources-plugin</artifactId>
+                    <versionRange>[1.0.0,)</versionRange>
+                    <goals>
+                      <goal>process</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore/>
+                  </action>
+                </pluginExecution>
               </pluginExecutions>
             </lifecycleMappingMetadata>
           </configuration>
@@ -258,6 +271,36 @@
               </fileSet>
             </fileSets>
           </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>3.0.1</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.20</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>2.20</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.6</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>2.5.3</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -376,7 +419,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.20</version>
         <configuration>
           <!--
                 Notice the @ instead of the $ as prefix? That's late evaluation.
@@ -391,7 +433,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
-        <version>2.20</version>
         <executions>
           <execution>
             <goals>
@@ -428,7 +469,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
-        <version>3.6</version>
         <configuration>
           <generateReports>true</generateReports>
           <generateSitemap>true</generateSitemap>
@@ -489,7 +529,7 @@
           <dependency>
             <groupId>org.asciidoctor</groupId>
             <artifactId>asciidoctorj</artifactId>
-            <version>	1.5.5</version>
+            <version>1.5.5</version>
           </dependency>
           <dependency>
             <groupId>org.asciidoctor</groupId>
@@ -505,7 +545,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-scm-publish-plugin</artifactId>
-        <version>1.1</version>
         <executions>
           <execution>
             <id>scm-publish</id>

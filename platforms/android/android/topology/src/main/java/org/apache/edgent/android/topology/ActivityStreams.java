@@ -45,7 +45,7 @@ public class ActivityStreams {
     *
     * @see org.apache.edgent.topology.TStream#sink(org.apache.edgent.function.Consumer)
     */
-    public static <T> TSink sinkOnUIThread(Activity activity, TStream<T> stream, Consumer<T> sinker) { 
+    public static <T> TSink<T> sinkOnUIThread(Activity activity, TStream<T> stream, Consumer<T> sinker) { 
         return stream.pipe(new RunOnUIThread<T>(activity)).sink(sinker);
     }
     

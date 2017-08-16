@@ -28,7 +28,6 @@
   </parent>
 
   <artifactId>edgent-connectors-websocket-base</artifactId>
-  <version>1.2.0-SNAPSHOT</version>
 
   <name>Apache Edgent: Connectors: Websocket: Base</name>
 
