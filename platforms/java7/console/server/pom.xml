@@ -33,10 +33,6 @@
 
   <build>
     <plugins>
-      <!--
-            TODO: This only works for the unit- / integration-tests ...
-            for a usable "server", we need to fine-tune this a little.
-      -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -67,6 +63,10 @@
               </artifactItems>
             </configuration>
           </execution>
+          <!--
+           Copy the servlets.war into the build output so it is embedded as
+           resource into the jar.
+          -->
           <execution>
             <id>copy-war</id>
             <phase>generate-test-resources</phase>
@@ -90,6 +90,20 @@
       </plugin>
     </plugins>
   </build>
+
+  <reporting>
+    <plugins>
+      <!-- For some strange reason this report is causing trouble -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.7.9</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
 
   <dependencies>
     <dependency>

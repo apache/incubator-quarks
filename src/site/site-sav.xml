@@ -17,14 +17,7 @@
  limitations under the License.
  
  -->
-<project name="Maven">
-
-    <!-- Use the nicer lookinf fluido skin instead of the default -->
-    <skin>
-        <groupId>org.apache.maven.skins</groupId>
-        <artifactId>maven-fluido-skin</artifactId>
-        <version>1.6</version>
-    </skin>
+<project name="Edgent">
 
     <bannerLeft>
         <name>Apache Edgent (incubating)</name>
@@ -45,6 +38,6 @@
         <menu ref="reports" />
         <menu ref="parent" />
         <menu ref="modules" />
-
     </body>
+
 </project>

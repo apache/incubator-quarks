@@ -34,8 +34,8 @@
   <build>
     <plugins>
       <!--
-            TODO: This only works for the unit- / integration-tests ...
-            for a usable "server", we need to fine-tune this a little.
+        Copy the servlets.war into the build output so it is embedded as
+        resource into the jar.
       -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
