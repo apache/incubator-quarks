@@ -623,14 +623,6 @@
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.7.9</version>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>report</report>
-              <report>report-integration</report>
-            </reports>
-          </reportSet>
-        </reportSets>
       </plugin>
 
       <!-- Generates a report with the SonarQube analysis reports -->
