@@ -72,7 +72,7 @@ public class CommandWriter extends CommandConnector implements Consumer<String>,
             closeProcess(); // and loop/retry
           }
         }
-        else if (currentConsumer == null && canStart()) {
+        else if (canStart()) {
           logger.debug("STARTING for: {}", value);
           start();  // and loop/retry
         }
