@@ -131,7 +131,7 @@ import com.google.gson.JsonObject;
  * class MyApp implements TopologyBuilder {  // be loadable by registerJar()
  *   &#64;Override
  *   public BiConsumer&lt;Topology t, JsonConfig c&gt; getBuilder() {
- *     return (t, c) -> buildTopology(IotDevicePubSub.addIotDevice(t), c);
+ *     return (t, c) -&gt; buildTopology(IotDevicePubSub.addIotDevice(t), c);
  *   }
  *   private void buildTopology(IotDevice iotDevice, JsonConfig c) {
  *     Topology t = iotDevice.getTopology();
