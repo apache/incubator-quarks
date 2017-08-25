@@ -648,9 +648,18 @@
         <version>2.10.4</version>
         <reportSets>
           <reportSet>
+            <id>non-aggregate</id>
             <reports>
               <report>javadoc-no-fork</report>
               <report>test-javadoc-no-fork</report>
+            </reports>
+          </reportSet>
+          <!-- Generate an aggregate report only in the root -->
+          <reportSet>
+            <id>aggregate</id>
+            <inherited>false</inherited>
+            <reports>
+              <report>aggregate</report>
             </reports>
           </reportSet>
         </reportSets>
