@@ -42,7 +42,7 @@ environment, it easiest to write your application using the Edgent APIs
 with java8 lambda expressions.  You compile with java8 but constrain 
 your application to using java7 features plus java8 lambda expressions.
 The Retrolambda tool is used to convert your application's generated 
-lass files to java7.
+class files to java7.
 (the java7 and android Edgent jars were created in that manner too)
 Your application would then be run against the appropriate
 Edgent platform jars. Alternatively you can forgo the use of lambda
@@ -57,7 +57,7 @@ required Edgent jars from the maven repository.
 The supplied Edgent samples poms include support for building for
 a java8, java7 or android execution environent. The poms are
 configured for the generation of a standard jar as well as an
-uber jar.
+uber jar for a sample application.
 
 You can clone the samples/template project as a starting point
 for your Edgent application.  See samples/template/README.md.
@@ -134,7 +134,7 @@ dependencies from a local or remote maven repository.
 
 The user may then directly use the jars in CLASSPATH specifications
 for Edgent application compilation or execution.
-A `classpath.sh` script generated to assist with this.
+A `classpath.sh` script is generated to assist with this.
 
 By default the script retrieves the Edgent java8 platform jars for the
 script's default Edgent version.
