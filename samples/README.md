@@ -25,7 +25,7 @@ Java7 and Android platform class files are produced when the appropriate
 profile is specified.
 
 ```sh
-./mvnw clean install  # -Pplatform-java7 or -Pplatform-android as needed
+./mvnw clean package  # -Pplatform-java7 or -Pplatform-android as needed
 ```
 
 A standard jar and uber jar is created for each sample category
