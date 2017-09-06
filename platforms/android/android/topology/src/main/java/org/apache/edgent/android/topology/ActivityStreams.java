@@ -18,13 +18,14 @@ under the License.
 */
 package org.apache.edgent.android.topology;
 
-import android.app.Activity;
 import org.apache.edgent.android.oplet.RunOnUIThread;
 import org.apache.edgent.function.Consumer;
 import org.apache.edgent.function.Function;
 import org.apache.edgent.topology.TSink;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.plumbing.PlumbingStreams;
+
+import android.app.Activity;
 
 /**
  * Stream utilities for an Android {@code Activity}.
@@ -42,6 +43,7 @@ public class ActivityStreams {
     * @param activity Activity
     * @param stream Stream to be sinked.
     * @param sinker Function that will be executed on the UI thread.
+    * @return sink element representing termination of this stream.
     *
     * @see org.apache.edgent.topology.TStream#sink(org.apache.edgent.function.Consumer)
     */
@@ -66,6 +68,8 @@ public class ActivityStreams {
     * @param mapper Function that will be executed on the UI thread.
     * @param ordered True if tuple ordering must be maintained after the
     * execution on the UI thread. False if ordering is not required.
+    * @return Stream that will contain tuples of type {@code U} mapped from this
+    *         stream's tuples.
     *
     * @see org.apache.edgent.topology.TStream#map(org.apache.edgent.function.Function)
     */
