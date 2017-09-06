@@ -70,5 +70,5 @@ if [ "${SAMPLE_FQ}" = "" ]; then
   exit 1
 fi
 
-java -cp ${UBER_JAR} "${SAMPLE_FQ}" "$*"
+java -cp ${UBER_JAR} "${SAMPLE_FQ}" "$@"
 

@@ -20,36 +20,50 @@
 
 See the Recipe this was created for [here](https://developer.ibm.com/recipes/tutorials/apache-quarks-on-pi-to-watson-iot-foundation/).  If that link doesn't work, try [here](https://developer.ibm.com/recipes/tutorials/apache-edgent-on-pi-to-watson-iot-foundation/). 
 
+See the README.md in the samples root directory for information on building the samples.
+
+The build generated uber jar contains all of the dependent 
+Edgent jars and their transitive dependencies.
+
+The desired sample can be run using the run-sample.sh script. e.g.,
+
+```sh
+cd scenarios
+./run-sample.sh IotpRangeSensor quickstart true true  # see below
+```
+
+For usage information:
+
+```sh
+./run-sample.sh
+./run-sample.sh --list
+```
+
+If you want to run a sample from the standard jar there are two options:
+a) get a local copy of all of the Edgent jars and their dependencies.
+   Form a CLASSPATH to the jars and run the sample's main class.
+   The get-edgent-jars.sh script can be used to get the jars from
+   a maven repository (local or remote).
+b) create an application package bundle.  The bundle includes the
+   sample(s) jar and a copy of all of the dependent Edgent jars
+   and their dependencies.  The package-app.sh script can be
+   used to create this bundle.
+   The package-app.sh script also creates a run-app.sh script.
+   The run-app.sh script configures the CLASSPATH and runs the main class.
+
+
 ## Requirements: 
-* You must have Pi4J installed on the device (if you are running outside of a Raspberry Pi, you will have to download the JARs and include them in your classpath)
-* You must have Edgent downloaded and built
 * You will need to have an HC-SR04 Range sensor hooked up with your EchoPin set to pin 18 and your TripPin at pin 16 (see these instructions on hardware setup: http://www.modmypi.com/blog/hc-sr04-ultrasonic-range-sensor-on-the-raspberry-pi). To use a simulated sensor, pass in true as your second argument. 
 * You will need to have an LED hooked up to pin 12 (See these instructions to set up an LED, however use pin 12 as your control pin: https://projects.drogon.net/raspberry-pi/gpio-examples/tux-crossing/gpio-examples-1-a-single-led/). To use a simulated LED, pass in true as your third argument. 
 * You will need to have your device registered with Watson IoTF and a device.cfg file, or you can use a quickstart version by passing in "quickstart" as your first argument.
- 
-To compile, export your Edgent install and PI4J libraries (on Raspberry Pi, the default Pi4J location is `/opt/pi4j/lib`):
-
-`$ EDGENT=<edgent-root-dir>`
-
-`$ export PI4J_LIB=<Pi4J-libs>  # directory where pi4j-core.jar resides`
-
-`$ cd $EDGENT`
-
-`$ ./gradlew  # builds the range sensor sample only if the PI4J_LIB environment variable is set`
-
-To run: 
- 
-`$ CP=$EDGENT/build/distributions/java8/samples/lib/edgent.samples.scenarios.jar`
-
-`$ MAIN=org.apache.edgent.samples.scenarios.iotp.range.sensor.IotpRangeSensor`
 
 
-`$ java -cp $CP $MAIN <device cfg file> <simulatedSensor?> <simulatedLED?>`
+`./run-sample.sh IotpRangeSensor <device cfg file> <simulatedSensor?> <simulatedLED?>`
 
 To run with a device.cfg file, range sensor, and LED:
 
-`$ java -cp $CP $MAIN device.cfg false false`
+`./run-sample.sh IotpRangeSensor  device.cfg false false`
 
 To run in fully simulated mode (no sensors and using IoTF quickstart): 
 
-`$ java -cp $CP $MAIN quickstart true true`
+`./run-sample.sh IotpRangeSensor  quickstart true true`

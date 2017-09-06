@@ -6,7 +6,7 @@ Edgent jars and their transitive dependencies.
 The desired sample can be run using the run-sample.sh script. e.g.,
 
 ```sh
-cd topology
+cd utils
 ./run-sample.sh PeriodicSourceWithMetrics
 ```
 
