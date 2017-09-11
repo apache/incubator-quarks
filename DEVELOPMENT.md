@@ -192,6 +192,15 @@ following statement:
 
 Closing and reopening a pull request will kick off a new build against the pull request.
 
+## Nightly? builds (Jenkins, SonarQube)
+
+///////////////////////////////////////////////////////////
+TODO: This chapter needs work.  Setup?  How/when is run?  URLs?
+Chris: "after getting the Jenkins build working, now we have our first SonarQube analysis online:
+https://builds.apache.org/analysis/overview?id=45154"
+///////////////////////////////////////////////////////////
+
+
 ## Java 7 and Android
 
 Java 7 and Android target platforms are supported through use of
@@ -270,10 +279,6 @@ Module documentation.
 
 ## Testing the Kafka Connector
 
-///////////////////////////////////////////////////////////
-TODO: This chapter needs some reworking
-///////////////////////////////////////////////////////////
-
 The kafka connector tests aren't run by default as the connector must
 connect to a running Kafka/Zookeeper config.
 
@@ -286,10 +291,11 @@ Follow the steps in the [KafkaStreamsTestManual](connectors/kafka/src/test/java/
 Once kafka/zookeeper are running you can run the tests and samples:
 ```sh
 #### run the kafka tests
-./gradlew connectors:kafka:test --tests '*.*Manual'
+./mvnw -pl connectors/kafka test '-Dtest=**/*Manual'
 
 #### run the sample
-cd java8/scripts/connectors/kafka
+(cd samples; ./mvnw package -DskipTests)  # build if not already done
+cd samples/scripts/connectors/kafka
 cat README
 ./runkafkasample.sh sub
 ./runkafkasample.sh pub
@@ -411,46 +417,34 @@ Notes with the above PR merge directions:
 
 ## Using Eclipse
 
-///////////////////////////////////////////////////////////
-TODO: This chapter needs some reworking
-///////////////////////////////////////////////////////////
+The Edgent Git repository, or source release bundle, contains 
+Maven project definitions for the various components of Edgent
+such as api, runtime, connectors.
 
-The Edgent Git repository contains Eclipse project definitions for the
-top-level directories that contain code, such as api, runtime, connectors.
+Once you import the Maven projects into your workspace,
+builds and JUnit testing of Edgent in Eclipse use the 
+same artifacts as the Maven command line tooling. Like
+the command line tooling, the jars for dependent projects
+are automatically downloaded to the local maven repository
+and used.
 
-**The Git repository does not include the 3rd party JARs that Edgent depends on,
-and Eclipse builds of Edgent projects will fail until a Gradle task is run
-to make them available in your workspace.  See the steps below.**
-
-Using the Eclipse Git Team Provider plugin allows you to import these projects
-into your Eclipse workspace directly from your fork.
-
+If you want to use Eclipse to clone your fork, use the Eclipse Git Team Provider plugin
 1. From the *File* menu, select *Import...*
 2. From the *Git* folder, select *Projects from Git* and click *Next*
-3. In the *Select Repository Source* window, select one of the following:
-  - *Existing local repository* if you have already cloned the project to your machine. Click *Next*.
-    + Click *Add* and browse to the local Git repository directory
-    + Select the checkbox next to the repository and click *Finish*
-    + In the *Select a Git repository* window, choose *incubator-edgent* and click *Next*
-  - *Clone URI* to clone the remote repository. Click *Next*.
+3. Select *Clone URI* to clone the remote repository. Click *Next*.
     + In the *Location* section, enter the URI of your fork in the *URI* field (e.g., `git@github.com:<username>/incubator-edgent.git`). The other fields will be populated automatically. Click *Next*. If required, enter your passphrase.
     + In the *Source Git Repository* window, select the branch (usually `master`) and click *Next*
-    + Specify the directory where your local clone will be stored and click *Next*. Note: You can build and run tests using the Gradle targets in this directory.
-4. In the *Select a wizard to use for importing projects* window, choose *Import existing Eclipse projects* and click *Next*
-5. In the *Import Projects* window, ensure that the *Search for nested projects* checkbox is selected. Click *Finish* to bring in all the Edgent projects. **Expect build failures until you...**
-6. Run the following Gradle task in your clone directory to make all of the dependant 3rd party JARs available to Eclipse. When the command finishes, refresh your Eclipse workspace (*File* > *Refresh*) so that it rebuilds the projects.
-``` sh
-$ ./gradlew setupExternalJars
-```
+    + Specify the directory where your local clone will be stored and click *Next*. The repository will be cloned. Note: You can build and run tests using Maven in this directory.
+4. In the *Select a wizard to use for importing projects* window, click *Cancel*.  Then follow the steps below to import the Maven projects.
 
-The `_edgent` project exists to make the top-level artifacts such as
-`build.gradle` manageable via Eclipse.  Unfortunately, folders for the
-other projects (e.g., `api`) also show up in the `_edgent` folder, and
-are best ignored.
 
-Builds and JUnit testing of Edgent in Eclipse are independent from the artifacts
-generated by the Gradle build tooling.  Neither environment is affected by
-the other. This is not ideal, but it's where things are at at this time.
-Both sets of tooling can be, and typically are, used in the same workspace.
+Once you have cloned the Git repository to your machine or are working from an unpacked source release bundle, import the Maven projects into your workspace
+1. From the *File* menu, select *Import...*
+2. From the *Maven* folder, select *Existing Maven Projects* and click *Next*
+  + browse to the the root of the clone of source release directory and select it.  A hierarchy of projects / pom.xml files will be listed and all selected. 
+  + Verify the *Add project(s) to working set* checkbox is checked
+  + Click *Finish*.  Eclipse starts the import process and builds the workspace.  Be patient, it may take a minute or so.
 
-Note: Specifics may change depending on your version of Eclipse or the Eclipse Git Team Provider.
+Top-level artifacts such as `README.md` are available under the `edgent-parent` project.
+
+Note: Specifics may change depending on your version of Eclipse or the Eclipse Maven or Git Team Provider.
