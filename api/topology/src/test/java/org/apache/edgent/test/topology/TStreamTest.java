@@ -135,7 +135,7 @@ public abstract class TStreamTest extends TopologyAbstractTest {
     /**
      * Test Peek. This will only work with an embedded setup.
      * 
-     * @throws Exception
+     * @throws Exception on failure
      */
     @Test
     public void testPeek() throws Exception {
@@ -600,7 +600,7 @@ public abstract class TStreamTest extends TopologyAbstractTest {
     /**
      * Test Union with itself.
      * 
-     * @throws Exception
+     * @throws Exception on failure
      */
     @Test
     public void testUnionWithSelf() throws Exception {

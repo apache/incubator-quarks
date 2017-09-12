@@ -184,7 +184,7 @@ public class HttpTest {
     /**
      * Test basic authentication, first with valid user/password
      * and then with invalid (results in 401).
-     * @throws Exception
+     * @throws Exception on failure
      */
     @Test
     public void testBasicAuthentication() throws Exception {

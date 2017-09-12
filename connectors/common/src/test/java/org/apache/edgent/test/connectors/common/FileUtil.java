@@ -39,8 +39,8 @@ public class FileUtil {
 
   /**
    * Create a temp file with the specified name, extension and contents.
-   * @param name
-   * @param extension
+   * @param name filename prefix 
+   * @param extension filename extension
    * @param lines content for the file
    * @return {@code Path} to temp file
    * @throws Exception on failure

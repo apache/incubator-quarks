@@ -196,6 +196,7 @@ public class Aggregations {
    * An aggregation result may be null under other conditions,
    * e.g., a Regression2.SLOPE where the minimum number of samples has not been met.
    * 
+   * @param <T> Tuple type
    * @param c the Collection to aggregate
    * @param getter function that returns the variable to aggregate from a {@code T}
    * @param aggregate the aggregation to perform
@@ -214,6 +215,7 @@ public class Aggregations {
    * The ResultMap does not contain an entry for an aggregation with a null,
    * e.g., a Regression2.SLOPE where the minimum number of samples has not been met.
    * 
+   * @param <T> Tuple type
    * @param c the Collection to aggregate
    * @param getter function that returns the variable to aggregate from a {@code T}
    * @param aggregates the aggregations to perform
