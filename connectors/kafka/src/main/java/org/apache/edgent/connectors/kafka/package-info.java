@@ -17,7 +17,7 @@ specific language governing permissions and limitations
 under the License.
 */
 /**
- * Apache Kafka enterprise messing hub stream connector.
+ * Apache Kafka enterprise messaging hub stream connector.
  * <p>
  * The connector uses and includes components from the Kafka 0.8.2.2 release.
  * It has been successfully tested against kafka_2.11-0.10.1.0 and kafka_2.11-0.9.0.0 server as well.
