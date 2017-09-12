@@ -33,7 +33,7 @@
         <reflowSkin>
             <theme>bootswatch-cerulean</theme>
             <titleTemplate>Apache Edgent® (Incubating) - %2$s</titleTemplate>
-            <slogan position="bannerRight">ccelerating Analytics at the Edge</slogan>
+            <slogan position="bannerRight">Accelerating Analytics at the Edge</slogan>
             <toc>top</toc>
             <tocTopFlatten>true</tocTopFlatten>
             <topNav>reports|modules|parent</topNav>
