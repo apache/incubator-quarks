@@ -18,14 +18,17 @@
 See [APPLICATION_DEVELOPMENT.md](APPLICATION_DEVELOPMENT.md) for general
 information on Edgent Application Development, Packaging and Execution.
 
+Additional information may also be found in
+Getting Started https://edgent.apache.org/docs/edgent-getting-started
+
 #Building the Edgent samples
 
-By default java8 class files are generated.
+By default Java8 class files are generated.
 Java7 and Android platform class files are produced when the appropriate
 profile is specified.
 
 ```sh
-./mvnw clean package  # -Pplatform-java7 or -Pplatform-android as needed
+./mvnw clean package  # -Pplatform-java7,platform-android as needed
 ```
 
 A standard jar and uber jar is created for each sample category
@@ -35,3 +38,41 @@ in the sample category's target directory: `<category>/target`.
 ##Running the samples
 
 See the README.md in each sample category directory.
+
+#Using Eclipse
+
+The Edgent Git repository, or samples source release bundle, contains 
+Maven project definitions for the samples.
+
+Once you import the Maven projects into your workspace,
+builds and JUnit testing of Edgent in Eclipse use the 
+same artifacts as the Maven command line tooling. Like
+the command line tooling, the jars for dependent projects
+are automatically downloaded to the local maven repository
+and used.
+
+If you want to use Eclipse to clone your fork, use the Eclipse Git Team Provider plugin
+1. From the *File* menu, select *Import...*
+2. From the *Git* folder, select *Projects from Git* and click *Next*
+3. Select *Clone URI* to clone the remote repository. Click *Next*.
+    + In the *Location* section, enter the URI of your fork in the *URI* field (e.g., `git@github.com:<username>/incubator-edgent.git`). The other fields will be populated automatically. Click *Next*. If required, enter your passphrase.
+    + In the *Source Git Repository* window, select the branch (usually `master`) and click *Next*
+    + Specify the directory where your local clone will be stored and click *Next*. The repository will be cloned. Note: You can build and run tests using Maven in this directory.
+4. In the *Select a wizard to use for importing projects* window, click *Cancel*.  Then follow the steps below to import the Maven projects.
+
+
+Once you have cloned the Git repository to your machine or are working from an unpacked samples source release bundle, import the Maven projects into your workspace
+1. From the *File* menu, select *Import...*
+2. From the *Maven* folder, select *Existing Maven Projects* and click *Next*
+  + browse to the `samples` directory in the clone or source release directory and select it.  A hierarchy of samples projects / pom.xml files will be listed and all selected. 
+  + Verify the *Add project(s) to working set* checkbox is checked
+  + Click *Finish*.  Eclipse starts the import process and builds the workspace.
+
+Top-level artifacts such as `README.md` are available under the `edgent-samples` project.
+
+Note: Specifics may change depending on your version of Eclipse or the Eclipse Maven or Git Team Provider.
+
+Once the samples projects have been imported you can run them as any Eclipse application.
+E.g.,
+1. open the `HelloEdgent.java` sample
+2. click on *Run*, *Run As*, then *Java application*.  `HelloEdgent` runs and prints to the Console view.

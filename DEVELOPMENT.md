@@ -22,7 +22,7 @@
 
 See [README.md](README.md) for high-level information about Apache Edgent.
 
-This document describes development of Apache Edgent itself, not how to develop Edgent applications.
+This document describes building and the development of Apache Edgent itself, not how to develop Edgent applications.
 
  * See http://edgent.incubator.apache.org/docs/edgent-getting-started for getting started using Edgent
 
@@ -106,6 +106,23 @@ All Edgent runtime development is done using Java 8. JARs for Java 7 and Android
 
 ## Building Edgent (For using Edgent)
 
+///////////////////////////////////////////////////////////
+TODO this chapter needs work.  
+On one hand, the README file with the source release
+describes how to build Edgent - at least the simple/common case.
+Also below, for this "using Edgent" case isn't "install" more
+appropriate than "package" since the typical case will then be
+to build Edgent apps using the Edgent jars that are then installed into the
+local maven repository.
+Lastly, I don't understand the value of -Pdistribution (I guess the "package"
+task makes sense for use with that), i.e., -Pdistribution creates a tarball that
+only contains the Edgent SDK jars, not any of the transitive dependencies.
+Then what?  Is the story/tools noted in samples/APPLICATION_DEVELOPMENT.md
+more complete / useful? (get-edgent-jars.sh can be used to collect
+the Edgent jars and the transitive deps, which the user can then manually
+bundle into a tarball or zip).
+///////////////////////////////////////////////////////////
+
 Building using a pre-installed Maven installation from a source release bundle:
 ``` sh
 $ mvn package
@@ -148,7 +165,7 @@ $ mvn package -Pdistribution
 ```
 
 Each artifact built by this will be located in the default Maven location (inside each modules `target` directory)
-The distribution archive will be located in `distribution/target/apache-edgent-incubating-1.2.0-SNAPSHOT-java8-bin.zip` (and tar.gz)
+The distribution archive will be located in `distribution/target/apache-edgent-incubating-1.2.0-SNAPSHOT-bin.zip` (and tar.gz)
 
 See [Getting Started](https://edgent.apache.org/docs/edgent-getting-started) for information on using the binary release bundle.
 
@@ -441,10 +458,18 @@ If you want to use Eclipse to clone your fork, use the Eclipse Git Team Provider
 Once you have cloned the Git repository to your machine or are working from an unpacked source release bundle, import the Maven projects into your workspace
 1. From the *File* menu, select *Import...*
 2. From the *Maven* folder, select *Existing Maven Projects* and click *Next*
-  + browse to the the root of the clone of source release directory and select it.  A hierarchy of projects / pom.xml files will be listed and all selected. 
+  + browse to the root of the clone or source release directory and select it.  A hierarchy of projects / pom.xml files will be listed and all selected. 
   + Verify the *Add project(s) to working set* checkbox is checked
   + Click *Finish*.  Eclipse starts the import process and builds the workspace.  Be patient, it may take a minute or so.
 
 Top-level artifacts such as `README.md` are available under the `edgent-parent` project.
 
 Note: Specifics may change depending on your version of Eclipse or the Eclipse Maven or Git Team Provider.
+
+### Markdown Text Editor
+
+The ALv2 license headers in various markdown files (e.g., README.md)
+seem to confuse the Eclipse `wikitext` editor resulting in blank contents
+in its preview panel.  This situation may be improved by installing 
+the `Markdown text editor` from the Eclipse marketplace and adjusting
+Eclipse's file associations accordingly.

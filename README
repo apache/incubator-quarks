@@ -11,11 +11,11 @@ Pre-requisites:
 - A maven-integrated IDE will be required if you want to do
   development using an IDE.
 
-The source releaase includes a Maven wrapper. The wrapper removes
+The source release includes a Maven wrapper. The wrapper removes
 the need for the user to manually install maven on their system.
 
 
-Building the Edgent SDK Java8 jars and installing them in the local maven repo
+Building the Edgent SDK Java8 jars and installing them in the local maven repository
 
 $ ./mvnw clean install # add -DskipTests to save time and omit running the tests
  
@@ -28,7 +28,10 @@ e.g., on OSX system:
   j8 jdkHome:  /Library/Java/JavaVirtualMachines/jdk1.8.0_112.jdk/Contents/Home
   j7 jdkHome:  /Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home
 
-$ ./mvnw -t toolchains-local.xml -Djava8.home=$JAVA_HOME clean install -Pplatform-java7,platform-android # add -DskipTests to save time and omit running the tests
+$ ./mvnw -t toolchains-local.xml clean install -Pplatform-java7,platform-android  # add -DskipTests to save time and omit running the tests
+
+If you put the toolchain information in `~/.m2/toolchain.xml` you 
+can omit the `-t toolchains-local.xml` from the command.
 
 
 At the conclusion of the build, the Edgent SDK jars will have been 
@@ -36,13 +39,10 @@ installed in the local maven repository and may then be used for
 Edgent Application development.
 
 
-See samples/README.md in the Edgent Samples source bundle or git repository
+See samples/README.md in the Edgent Samples source bundle or github repository
 for general information on Edgent Application development and deployment, 
-and for building and running the samples.   **TODO** link to samples/README.md in the git repo
-
-**TODO** Hmm... remove this reference to Getting Started... is it / should it be present in samples/README.md?
-**TODO** need a link a new Getting Started (for new Eclipse maven dependency, 
-See Getting Started https://edgent.apache.org/docs/edgent-getting-started
+and for building and running the samples. 
+https://github.com/apache/incubator-edgent/samples/README.md
 
 For more information about the Edgent sources, testing, and
 contributing to Edgent runtime development see DEVELOPMENT.md in the source tree
