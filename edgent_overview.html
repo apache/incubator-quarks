@@ -18,8 +18,7 @@ under the License.
 -->
 
 <body>
-Edgent provides an programming model and micro-service style runtime
-for executing streaming analytics at the <i>edge</i>.
+Apache Edgent is an SDK for developing and executing streaming analytics at the <i>edge</i>.
 <P>
 <em>
 Apache Edgent is an effort undergoing incubation at The Apache Software Foundation (ASF), sponsored by Apache Incubator PMC. Incubation is required of all newly accepted projects until a further review indicates that the infrastructure, communications, and decision making process have stabilized in a manner consistent with other successful ASF projects. While incubation status is not necessarily a reflection of the completeness or stability of the code, it does indicate that the project has yet to be fully endorsed by the ASF.
@@ -33,11 +32,18 @@ Apache Edgent is an effort undergoing incubation at The Apache Software Foundati
 </OL>
 <a name="overview"></a>
 <H2>Overview</H2>
-Edgent provides an programming model and runtime for executing streaming
-analytics at the <i>edge</i>. Edgent is focusing on two edge cases:
+Apache Edgent is an SDK for developing and executing streaming analytics at the <i>edge</i>.
+Edgent provides a stream processing style programming model for 
+composing stream processing graphs and a micro-services style runtime for
+executing the graphs.  Some analytics and a rich collection
+of connectors are provided. Users can easily develop and use their 
+own analytics and connectors.  
+A framework for testing processing graphs is also included.
+<P>
+Edgent is focusing on two edge cases:
 <UL>
-<LI>Internet of Things (IoT) - Widely distributed and/or mobile devices.</LI>
-<LI>Enterprise Embedded - Edge analytics within an enterprise, such as local analytic applications of eash system in a machine room, or error log analytics in application servers.</LI>
+<LI>Internet of Things (IoT) - Widely distributed and/or mobile devices and gateways.</LI>
+<LI>Enterprise Embedded - Edge analytics within an enterprise, such as local analytic applications of each system in a machine room, or error log analytics in application servers.</LI>
 </UL>
 In both cases Edgent applications analyze live data and
 send results of that analytics and/or data intermittently
