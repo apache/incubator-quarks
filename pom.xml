@@ -641,7 +641,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.10.4</version>
+        <version>3.0.0-M1</version><!-- was 2.10.4 -->
         <reportSets>
           <reportSet>
             <id>non-aggregate</id>
@@ -659,6 +659,66 @@
             </reports>
           </reportSet>
         </reportSets>
+        <!-- hmm... configuration is having no effect for 'mvn javadoc:aggregate'
+          only for 'mvn site'
+         -->
+        <configuration>
+          <windowtitle>${project.name} (incubating) v${project.version} API</windowtitle>
+          <doctitle>${project.name} (incubating) v${project.version} API</doctitle>
+          <overview>${basedir}/edgent_overview.html</overview>
+          <!-- Exclude
+            o.a.e.test.*               don't want showing up in Other Packages
+            o.a.e.oplet.core.mbeans    there are no classes and it shows up in Low-Level Packages
+            o.a.e.connectors.*.runtime it's impl not API
+                sigh, maven seems to really only support '*' at the beginning or end.
+                (what about '**' ?)
+                When in the middle like above it's causing an empty, hence omitted,
+                Connectors group (it's like excluding o.a.e.connectors.*)
+                and o.e.e.runtime.* is being omitted from Other Packages
+                (it's like excluding *.runtime).
+                So we have to enumerate each connector runtime exclusion.
+            o.a.e.javax.websocket      it's impl not API
+            o.a.e.console.*            it's impl not API
+            o.a.e.analytics.math3.utils.Java7Helper   it's impl not API
+            o.a.e.analytics.sensors.utils.Java7Helper it's impl not API
+           -->
+          <excludePackageNames>org.apache.edgent.test.*:org.apache.edgent.oplet.core.mbeans:org.apache.edgent.console.*:org.apache.edgent.analytics.math3.utils.Java7Helper:org.apache.edgent.analytics.sensors.utils.Java7Helper:*.connectors.command.runtime:*.connectors.file.runtime:*.connectors.http.runtime:*.connectors.iotp.runtime:*.connectors.jdbc.runtime:*.connectors.kafka.runtime:*.connectors.mqtt.runtime:*.connectors.runtime:*.connectors.wsclient.javax.websocket.runtime:org.apache.edgent.javax.websocket</excludePackageNames>
+          <groups>
+            <group>
+              <title>Edgent Providers</title>
+              <packages>org.apache.edgent.providers.*</packages>
+            </group>
+            <group>
+              <title>Edgent API</title>
+              <packages>org.apache.edgent.execution:org.apache.edgent.function:org.apache.edgent.topology:org.apache.edgent.topology.json:org.apache.edgent.topology.mbeans:org.apache.edgent.topology.plumbing:org.apache.edgent.topology.services:org.apache.edgent.execution.*</packages>
+            </group>
+            <group>
+              <title>Edgent Analytics</title>
+              <packages>org.apache.edgent.analytics.*</packages>
+            </group>
+            <group>
+              <title>Edgent Connectors</title>
+              <packages>org.apache.edgent.connectors.*</packages>
+            </group>
+            <group>
+              <title>Edgent Utilities</title>
+              <packages>org.apache.edgent.metrics:org.apache.edgent.metrics.*:org.apache.edgent.streamscope:org.apache.edgent.streamscope.*</packages>
+            </group>
+            <group>
+              <title>Edgent Tester</title>
+              <packages>org.apache.edgent.topology.tester:org.apache.edgent.topology.tester.*</packages>
+            </group>
+            <group>
+              <title>Edgent Low-Level API</title>
+              <packages>org.apache.edgent.graph:org.apache.edgent.graph.*:org.apache.edgent.oplet:org.apache.edgent.oplet.*:org.apache.edgent.window</packages>
+            </group>
+            <group>
+              <title>Edgent SPI</title>
+              <packages>org.apache.edgent.topology.spi:org.apache.edgent.topology.spi.*</packages>
+            </group>
+            <!-- everything else is automatically added to a "Other Packages" group -->
+          </groups>
+        </configuration>
       </plugin>
     </plugins>
   </reporting>
