@@ -17,6 +17,6 @@ specific language governing permissions and limitations
 under the License.
 */
 /**
- * WebSocket Client Connector for sending and receiving messages to a WebSocket Server.
+ * A JSR356 based WebSocket Client Connector for sending and receiving messages to a WebSocket Server.
  */
 package org.apache.edgent.connectors.wsclient.javax.websocket;
