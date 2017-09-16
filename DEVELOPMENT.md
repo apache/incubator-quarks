@@ -183,6 +183,8 @@ $ ./mvnw clean package
 
 ## Continuous Integration
 
+### Travis CI
+
 When a pull request is opened on the GitHub mirror site, the Travis CI service runs a full build of the java8 modules.
 
 The latest build status for the project's branches can be seen at: https://travis-ci.org/apache/incubator-edgent/branches
@@ -209,14 +211,15 @@ following statement:
 
 Closing and reopening a pull request will kick off a new build against the pull request.
 
-## Nightly? builds (Jenkins, SonarQube)
+### Jenkins, SonarQube
 
-///////////////////////////////////////////////////////////
-TODO: This chapter needs work.  Setup?  How/when is run?  URLs?
-Chris: "after getting the Jenkins build working, now we have our first SonarQube analysis online:
-https://builds.apache.org/analysis/overview?id=45154"
-///////////////////////////////////////////////////////////
+In addition to Travis CI running the quick tests with only the Java8 modules, we have also setup additional build-jobs at the Apaches Jenkins instance at https://builds.apache.org/view/E-G/view/Edgent/
 
+This build also automatically runs on every commit, but in contrast to the Travis build, it also builds and tests the Java7 and Android modules using the toolchain profile.
+
+This is also the build which produces and deploys the Maven artifacts that are published to the Apache Maven repository at https://repository.apache.org/
+
+As an additional quality assurance tool, this build also runs a SonarQube analysis who's results are available at Apaches SonarQube instance at https://builds.apache.org/analysis/overview?id=45154
 
 ## Java 7 and Android
 
@@ -358,7 +361,7 @@ A couple of key items in the mean time:
 * Don't deliver code with warnings (e.g., unused imports)
 * All source files, scripts, etc must have the standard Apache License header
   * run the `rat` build task to check license headers
-* Per ASF policy, released source bundles must not contain binaries (e.g., .class, .jar)
+*** Per ASF policy, released source bundles must not contain binaries (e.g., .class, .jar)**
 * Per ASF policy, release source and binary bundle LICENSE and NOTICE files must be accurate and up to date, and only bundled 3rd party dependencies whose license meets the ASF licensing requirements can be included. 
 
 ## Logging
