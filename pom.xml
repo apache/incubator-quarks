@@ -651,13 +651,15 @@
             </reports>
           </reportSet>
           <!-- Generate an aggregate report only in the root -->
-          <reportSet>
+          <!-- Disabled this as this runs before the build of the modules and the java7 and android modules javadocs
+          require the java8 versions being built first -->
+          <!--reportSet>
             <id>aggregate</id>
             <inherited>false</inherited>
             <reports>
               <report>aggregate</report>
             </reports>
-          </reportSet>
+          </reportSet-->
         </reportSets>
         <!-- hmm... configuration is having no effect for 'mvn javadoc:aggregate'
           only for 'mvn site'
@@ -682,7 +684,9 @@
             o.a.e.analytics.math3.utils.Java7Helper   it's impl not API
             o.a.e.analytics.sensors.utils.Java7Helper it's impl not API
            -->
-          <excludePackageNames>org.apache.edgent.test.*:org.apache.edgent.oplet.core.mbeans:org.apache.edgent.console.*:org.apache.edgent.analytics.math3.utils.Java7Helper:org.apache.edgent.analytics.sensors.utils.Java7Helper:*.connectors.command.runtime:*.connectors.file.runtime:*.connectors.http.runtime:*.connectors.iotp.runtime:*.connectors.jdbc.runtime:*.connectors.kafka.runtime:*.connectors.mqtt.runtime:*.connectors.runtime:*.connectors.wsclient.javax.websocket.runtime:org.apache.edgent.javax.websocket</excludePackageNames>
+          <excludePackageNames>
+            org.apache.edgent.test.*:org.apache.edgent.oplet.core.mbeans:org.apache.edgent.console.*:org.apache.edgent.analytics.math3.utils.Java7Helper:org.apache.edgent.analytics.sensors.utils.Java7Helper:*.connectors.command.runtime:*.connectors.file.runtime:*.connectors.http.runtime:*.connectors.iotp.runtime:*.connectors.jdbc.runtime:*.connectors.kafka.runtime:*.connectors.mqtt.runtime:*.connectors.runtime:*.connectors.wsclient.javax.websocket.runtime:org.apache.edgent.javax.websocket
+          </excludePackageNames>
           <groups>
             <group>
               <title>Edgent Providers</title>
@@ -690,7 +694,9 @@
             </group>
             <group>
               <title>Edgent API</title>
-              <packages>org.apache.edgent.execution:org.apache.edgent.function:org.apache.edgent.topology:org.apache.edgent.topology.json:org.apache.edgent.topology.mbeans:org.apache.edgent.topology.plumbing:org.apache.edgent.topology.services:org.apache.edgent.execution.*</packages>
+              <packages>
+                org.apache.edgent.execution:org.apache.edgent.function:org.apache.edgent.topology:org.apache.edgent.topology.json:org.apache.edgent.topology.mbeans:org.apache.edgent.topology.plumbing:org.apache.edgent.topology.services:org.apache.edgent.execution.*
+              </packages>
             </group>
             <group>
               <title>Edgent Analytics</title>
@@ -702,7 +708,9 @@
             </group>
             <group>
               <title>Edgent Utilities</title>
-              <packages>org.apache.edgent.metrics:org.apache.edgent.metrics.*:org.apache.edgent.streamscope:org.apache.edgent.streamscope.*</packages>
+              <packages>
+                org.apache.edgent.metrics:org.apache.edgent.metrics.*:org.apache.edgent.streamscope:org.apache.edgent.streamscope.*
+              </packages>
             </group>
             <group>
               <title>Edgent Tester</title>
@@ -710,7 +718,9 @@
             </group>
             <group>
               <title>Edgent Low-Level API</title>
-              <packages>org.apache.edgent.graph:org.apache.edgent.graph.*:org.apache.edgent.oplet:org.apache.edgent.oplet.*:org.apache.edgent.window</packages>
+              <packages>
+                org.apache.edgent.graph:org.apache.edgent.graph.*:org.apache.edgent.oplet:org.apache.edgent.oplet.*:org.apache.edgent.window
+              </packages>
             </group>
             <group>
               <title>Edgent SPI</title>
@@ -730,6 +740,33 @@
       <modules>
         <module>distribution</module>
       </modules>
+    </profile>
+    <profile>
+      <id>apache-release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>source-release-assembly</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>single</goal>
+                </goals>
+                <configuration>
+                  <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
+                  <descriptors>
+                    <descriptor>src/assembly/source-release.xml</descriptor>
+                  </descriptors>
+                  <tarLongFileMode>gnu</tarLongFileMode>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
   </profiles>
 
