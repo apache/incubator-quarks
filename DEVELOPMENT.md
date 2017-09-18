@@ -110,45 +110,51 @@ All Edgent runtime development is done using Java 8. JARs for Java 7 and Android
 TODO this chapter needs work.  
 On one hand, the README file with the source release
 describes how to build Edgent - at least the simple/common case.
-Also below, for this "using Edgent" case isn't "install" more
-appropriate than "package" since the typical case will then be
-to build Edgent apps using the Edgent jars that are then installed into the
-local maven repository.
-Lastly, I don't understand the value of -Pdistribution (I guess the "package"
-task makes sense for use with that), i.e., -Pdistribution creates a tarball that
-only contains the Edgent SDK jars, not any of the transitive dependencies.
-Then what?  Is the story/tools noted in samples/APPLICATION_DEVELOPMENT.md
+Is the story/tools noted in samples/APPLICATION_DEVELOPMENT.md
 more complete / useful? (get-edgent-jars.sh can be used to collect
 the Edgent jars and the transitive deps, which the user can then manually
 bundle into a tarball or zip).
 ///////////////////////////////////////////////////////////
 
+There are two different use-cases:
+1) Build Edgent for usage in a Maven project. 
+2) Build Edgent not using it to import a directory of jars. This is the normal use-case when not using Maven and for example setting up a project with Eclipse.  
+
+### Building Edgent for using it with Maven
+
 Building using a pre-installed Maven installation from a source release bundle:
 ``` sh
-$ mvn package
+$ mvn install
 ```
 
 Building using the maven-wrapper which automatically handles downloading the right Maven version.
 ``` sh
-$ ./mvnw package
+$ ./mvnw install
 ```
 
-Both will build and test all Edgent Java 8 modules using Maven.
+Both will build and test all Edgent Java 8 modules using Maven and install the artifacts in the Maven local repository.
 
-If you want to use the artifacts built by this in other projects, please 
-use `install` instead of `package` as this will additionally make the build 
-results available to other projects on the same machine in the local Maven 
-repository.
+### Building Edgent for NOT using it with Maven
 
-For a not quite two hour introduction into Maven please feel free to watch
-this video we created for another Apache project:
-https://vimeo.com/167857327
+Building using a pre-installed Maven installation from a source release bundle:
+``` sh
+$ mvn package -Pdistribution
+```
 
-A set of Maven `profiles` have been created to control which parts
-should be built. The default profile only builds and tests the Java 8
-versions of all modules and doesn't assemble a binary distribution
-as usually Maven builds don't require such a step. It also doesn't build
-the Java 7 or Android modules either.
+Building using the maven-wrapper which automatically handles downloading the right Maven version.
+``` sh
+$ ./mvnw package -Pdistribution
+```
+
+Both will build and test all Edgent Java 8 modules using Maven and create an archive containing all Edgent jars in `distribution/target/apache-edgent-incubating-{version}-bin.tar.gz` and `distribution/target/apache-edgent-incubating-{version}-bin.zip`.
+The content of these archives should contain all libraries required to build an Edgent application.
+The `libs` directory inside these contain the Edgent jars and the `ext` directory contains third party dependencies the Edgent jars require. 
+
+### Documentation of all defined Maven profiles
+
+A set of Maven `profiles` have been created to control which parts should be built. 
+The default profile only builds and tests the Java 8 versions of all modules and doesn't assemble a binary distribution as usually Maven builds don't require such a step. 
+It also doesn't build the Java 7 or Android modules either.
 
 Edgent currently comes with these profiles:
 
@@ -159,15 +165,9 @@ Edgent currently comes with these profiles:
 
 As the Android modules are based on the Java 7 versions, when building the `platform-android` profile, the `platform-java7` profile is required to be enabled too, or the build will fail. 
 
-Example: Building an Edgent binary release bundle for Java 8:
-``` sh
-$ mvn package -Pdistribution
-```
-
-Each artifact built by this will be located in the default Maven location (inside each modules `target` directory)
-The distribution archive will be located in `distribution/target/apache-edgent-incubating-1.2.0-SNAPSHOT-bin.zip` (and tar.gz)
-
 See [Getting Started](https://edgent.apache.org/docs/edgent-getting-started) for information on using the binary release bundle.
+
+For a not quite two hour introduction into Maven please feel free to watch this video we created for another Apache project: https://vimeo.com/167857327
 
 ## Building for Edgent (For Edgent development)
 
@@ -177,6 +177,7 @@ any pull request is expected to maintain the build success of `mvn package`.
 The Maven wrapper `<edgent>/{mvnw,mvnw.cmd}` should be used.
 The wrapper ensures the appropriate version of Maven is used and it
 will automatically download it if needed, e.g.:
+
 ``` sh
 $ ./mvnw clean package
 ```
