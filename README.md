@@ -69,7 +69,6 @@ Devices and sensors are everywhere. And more are coming online every day. You ne
 Edgent is an open source programming model and runtime for edge devices that enables you to analyze data and events at the device. When you analyze on the edge, you can:
 
 * Reduce the amount of data that you transmit to your analytics server
-
 * Reduce the amount of data that you store
 
 An Edgent application uses analytics to determine when data needs to be sent to a back-end system for further analysis, action, or storage. For example, you can use Edgent to determine whether a system is running outside of normal parameters, such as an engine that is running too hot.

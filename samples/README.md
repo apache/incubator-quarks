@@ -52,6 +52,7 @@ are automatically downloaded to the local maven repository
 and used.
 
 If you want to use Eclipse to clone your fork, use the Eclipse Git Team Provider plugin
+
 1. From the *File* menu, select *Import...*
 2. From the *Git* folder, select *Projects from Git* and click *Next*
 3. Select *Clone URI* to clone the remote repository. Click *Next*.
@@ -62,6 +63,7 @@ If you want to use Eclipse to clone your fork, use the Eclipse Git Team Provider
 
 
 Once you have cloned the Git repository to your machine or are working from an unpacked samples source release bundle, import the Maven projects into your workspace
+
 1. From the *File* menu, select *Import...*
 2. From the *Maven* folder, select *Existing Maven Projects* and click *Next*
   + browse to the `samples` directory in the clone or source release directory and select it.  A hierarchy of samples projects / pom.xml files will be listed and all selected. 
@@ -74,5 +76,52 @@ Note: Specifics may change depending on your version of Eclipse or the Eclipse M
 
 Once the samples projects have been imported you can run them as any Eclipse application.
 E.g.,
+
 1. open the `HelloEdgent.java` sample
 2. click on *Run*, *Run As*, then *Java application*.  `HelloEdgent` runs and prints to the Console view.
+
+#Samples Summary
+
+<pre>
+HelloEdgent          Basic mechanics of declaring a topology and executing
+                     it. Prints Hello Edgent! to standard output.
+
+PeriodicSource       Create a stream by polling a random number generator
+                     for a new value every second and then prints out the
+                     raw tuple value and a filtered and transformed stream.
+                          
+SensorAggregates     Demonstrates partitioned window aggregation and 
+                     filtering of simulated sensors that are bursty in
+                     nature, so that only intermittently is the data output
+                     to standard output.
+                         
+File                 Use the File stream connector to write a stream of
+                     tuples to files. Also watch a directory for new files
+                     and create a stream of tuples from the file contents.
+                         
+Iotp                 Use the IBM Watson IoT Platform connector to send
+                     simulated sensor readings to an IBM Watson IoT Platform
+                     instance as device events. Receive device commands.
+                         
+JDBC                 Use the JDBC stream connector to write a stream of
+                     tuples to an Apache Derby database table. Create a
+                     stream of tuples by reading a table.
+                         
+Kafka                Use the Kafka stream connector to publish a stream of
+                     tuples to a Kafka topic. Create a stream of tuples by
+                     subscribing to a topic and receiving messages from it.
+                         
+MQTT                 Use the MQTT stream connector to publish a stream of
+                     tuples to a MQTT topic. Create a stream of tuples by
+                     subscribing to a topic and receiving messages from it.
+                         
+SensorAnalytics      Demonstrates a more complex sample that includes 
+                     configuration control, a device of one or more sensors
+                     and some typical analytics, use of MQTT for publishing
+                     results and receiving commands, local results logging,
+                     conditional stream tracing.
+</pre>
+
+Other samples are provided but have not yet been fully documented.
+Feel free to explore.
+

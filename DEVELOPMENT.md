@@ -106,6 +106,7 @@ All Edgent runtime development is done using Java 8. JARs for Java 7 and Android
 
 ## Building Edgent (For using Edgent)
 
+<b>
 ///////////////////////////////////////////////////////////
 TODO this chapter needs work.  
 On one hand, the README file with the source release
@@ -115,6 +116,7 @@ more complete / useful? (get-edgent-jars.sh can be used to collect
 the Edgent jars and the transitive deps, which the user can then manually
 bundle into a tarball or zip).
 ///////////////////////////////////////////////////////////
+</b>
 
 There are two different use-cases:
 1) Build Edgent for usage in a Maven project. 
@@ -268,6 +270,7 @@ When running `verify` or above (`install`, `deploy`, etc.) the integration
 tests are also executed.
 
 Each Maven plugin produces output to different directories:
+
 * `<module>/target/surefire-reports` - JUnit unit-test reports
 * `<module>/target/failsafe-reports` - JUnit integration-test reports
 
@@ -285,7 +288,8 @@ at the following `Site generation` chapter.
 ## Site generation
 
 Maven has 3 built in lifecycles:
-* clean - For cleaning up (effectively simply deleting the output forler)
+
+* clean - For cleaning up (effectively simply deleting the output folder)
 * default - For building, testing, deploying the code
 * site - For generating, documentation, reports, ...
 
@@ -450,6 +454,7 @@ are automatically downloaded to the local maven repository
 and used.
 
 If you want to use Eclipse to clone your fork, use the Eclipse Git Team Provider plugin
+
 1. From the *File* menu, select *Import...*
 2. From the *Git* folder, select *Projects from Git* and click *Next*
 3. Select *Clone URI* to clone the remote repository. Click *Next*.
@@ -460,6 +465,7 @@ If you want to use Eclipse to clone your fork, use the Eclipse Git Team Provider
 
 
 Once you have cloned the Git repository to your machine or are working from an unpacked source release bundle, import the Maven projects into your workspace
+
 1. From the *File* menu, select *Import...*
 2. From the *Maven* folder, select *Existing Maven Projects* and click *Next*
   + browse to the root of the clone or source release directory and select it.  A hierarchy of projects / pom.xml files will be listed and all selected. 
