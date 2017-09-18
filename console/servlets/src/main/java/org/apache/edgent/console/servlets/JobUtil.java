@@ -40,14 +40,14 @@ import org.slf4j.LoggerFactory;
 
 final class JobUtil {
 	
-	static MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
+	private static MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
 	private static final Logger logger = LoggerFactory.getLogger(JobUtil.class);
 
 	static String getJobsInfo(ObjectName jobObjName) {
         Set<ObjectInstance> jobInstances = mBeanServer.queryMBeans(jobObjName, null);
         
         Iterator<ObjectInstance> jobIterator = jobInstances.iterator();
-        StringBuffer json = new StringBuffer("[");
+        StringBuilder json = new StringBuilder("[");
         int counter = 0;
         while (jobIterator.hasNext()) {
         	if (counter > 0) {
@@ -55,47 +55,43 @@ final class JobUtil {
         	}
         	ObjectInstance jobInstance = jobIterator.next();
             ObjectName jobObjectName = jobInstance.getObjectName();
-            MBeanInfo mBeanInfo = null;
+            MBeanInfo mBeanInfo;
 			try {
 				mBeanInfo = mBeanServer.getMBeanInfo(jobObjectName);
 			} catch (IntrospectionException | InstanceNotFoundException | ReflectionException e) {
 			    logger.error("Exception caught while getting MBeanInfo", e);
+				throw new RuntimeException("Exception caught while getting MBeanInfo", e);
 			}
             
             /*
              * Get the names of all the attributes
              */
-			            
-			Set<String> names = new HashSet<String> ();
+			Set<String> names = new HashSet<> ();
 	    	for (MBeanAttributeInfo attributeInfo : mBeanInfo.getAttributes()) {
 	    			names.add(attributeInfo.getName());
 	    	}
 	    	// now construct the job json and add it to the string buffer
-	    	StringBuffer s = new StringBuffer();
+	    	StringBuilder s = new StringBuilder();
 	    	s.append("{\"");
-	    	Iterator<String> it = names.iterator();
-	    	while(it.hasNext()) {
-	    		String attr = it.next();
-	    		s.append(attr);
-	    		s.append("\":\"");
-	    		try {
-					s.append((String)mBeanServer.getAttribute(jobObjectName, attr));
-				} catch (AttributeNotFoundException | InstanceNotFoundException 
+			for (String attr : names) {
+				s.append(attr);
+				s.append("\":\"");
+				try {
+					s.append((String) mBeanServer.getAttribute(jobObjectName, attr));
+				} catch (AttributeNotFoundException | InstanceNotFoundException
 						| MBeanException | ReflectionException e) {
-				    logger.error("Exception caught while accessing MBean", e);
+					logger.error("Exception caught while accessing MBean", e);
 				}
-	    		s.append("\",\"");
-	    	}
+				s.append("\",\"");
+			}
 	    	// remove the trailing ,\
 	    	s.deleteCharAt(s.length()-1);
 	    	s.deleteCharAt(s.length()-1);
-	    	json.append(s.toString() + "}");
+	    	json.append(s.toString()).append("}");
 	    	counter++;
         }
         json.append("]");
-        String jsonString = json.toString();
-		
-		return jsonString;
+        return json.toString();
 	}
 	
 	static String getJobGraph(ObjectName jobObjName) {
@@ -109,25 +105,25 @@ final class JobUtil {
         String gSnapshot = "";
         if (jobInstance != null) {
             ObjectName jobObjectName = jobInstance.getObjectName();
-            MBeanInfo mBeanInfo = null;
+            MBeanInfo mBeanInfo;
 			try {
 				mBeanInfo = mBeanServer.getMBeanInfo(jobObjectName);
 			} catch (IntrospectionException | InstanceNotFoundException | ReflectionException e) {
 			    logger.error("Exception caught while getting MBeanInfo", e);
+			    throw new RuntimeException("Exception caught while getting MBeanInfo", e);
 			}
+
 	    	/*
 	    	 * Now get the graph for the job
 	    	 */
-	    	Set<String> operations = new HashSet<String> ();
 	    	for (MBeanOperationInfo operationInfo: mBeanInfo.getOperations()) {
-	    		operations.add(operationInfo.getName());
 	    		if (operationInfo.getName().equals("graphSnapshot")) {
 	    			try {
 						gSnapshot = (String) mBeanServer.invoke(jobObjectName, "graphSnapshot",null, null);
-						//System.out.println(gSnapshot);
 					} catch (InstanceNotFoundException | ReflectionException | MBeanException e) {
 					    logger.error("Exception caught while invoking operation on MBean", e);
-					}
+                        throw new RuntimeException("Exception caught while invoking operation on MBean", e);
+                    }
 	    		}
 	    	}
 	}
