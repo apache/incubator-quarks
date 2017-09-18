@@ -104,23 +104,47 @@ This file is located or has to be created in: `~/.m2/toolchains.xml`
 
 All Edgent runtime development is done using Java 8. JARs for Java 7 and Android platforms are created by back-porting the compiled Java 8 code using a tool called `retrolambda`. More details on this below.
 
-## Building Edgent (For using Edgent)
+## Building Edgent For Edgent Development
 
-<b>
-///////////////////////////////////////////////////////////
-TODO this chapter needs work.  
-On one hand, the README file with the source release
-describes how to build Edgent - at least the simple/common case.
-Is the story/tools noted in samples/APPLICATION_DEVELOPMENT.md
-more complete / useful? (get-edgent-jars.sh can be used to collect
-the Edgent jars and the transitive deps, which the user can then manually
-bundle into a tarball or zip).
-///////////////////////////////////////////////////////////
-</b>
+The primary build process is using [Maven](https://maven.apache.org/),
+any pull request is expected to maintain the build success of `mvn package`.
+
+The Maven wrapper `<edgent>/{mvnw,mvnw.cmd}` should be used.
+The wrapper ensures the appropriate version of Maven is used and it
+will automatically download it if needed, e.g.:
+
+``` sh
+$ ./mvnw clean package
+```
+
+### Documentation of all defined Maven profiles
+
+A set of Maven `profiles` have been created to control which parts should be built. 
+The default profile only builds and tests the Java 8 versions of all modules and doesn't assemble a binary distribution as usually Maven builds don't require such a step. 
+It also doesn't build the Java 7 or Android modules either.
+
+Edgent currently comes with these profiles:
+
+- `distribution`: Builds one binary distribution for Java 8. If the java 7 and android profiles are enabled too, for each of these an additional binary distribution is created.
+- `platform-java7`: Builds Java 7 versions of all Edgent modules and runs the tests.
+- `platform-android`: Builds Android versions of all Edgent modules that are compatible with Android (See [JAVA_SUPPORT.md](JAVA_SUPPORT.md).
+- `toolchain`: Runs the tests in the Java 7 and Android modules using a Java 7 runtime instead of Java 8 version, which happens if this profile is not enabled. 
+
+As the Android modules are based on the Java 7 versions, when building the `platform-android` profile, the `platform-java7` profile is required to be enabled too, or the build will fail. 
+
+For a not quite two hour introduction into Maven please feel free to watch this video we created for another Apache project: https://vimeo.com/167857327
+
+## Building Edgent For Using Edgent
+
+If possible you probably want to use already released Edgent jars.
+See [samples/APPLICATION_DEVELOPMENT.md](samples/APPLICATION_DEVELOPMENT.md).
+
+If instead you want to build Edgent for your use you can do so.
 
 There are two different use-cases:
-1) Build Edgent for usage in a Maven project. 
-2) Build Edgent not using it to import a directory of jars. This is the normal use-case when not using Maven and for example setting up a project with Eclipse.  
+
+1.  Build Edgent for usage in a Maven project. 
+2.  Build Edgent for usage with non-Maven integrated tooling.  
 
 ### Building Edgent for using it with Maven
 
@@ -138,6 +162,21 @@ Both will build and test all Edgent Java 8 modules using Maven and install the a
 
 ### Building Edgent for NOT using it with Maven
 
+Build Edgent as described above to populate the local maven repository.
+Then see [samples/APPLICATION_DEVELOPMENT.md](samples/APPLICATION_DEVELOPMENT.md)
+for information about the `get-edgent-jars.sh` script.
+
+<b>
+///////////////////////////////////////////////////////////
+TODO decide to include or omit the following -Pdistribution stuff
+(possibly based on LICENSE/NOTICE content discussion)
+///////////////////////////////////////////////////////////
+</b>
+
+An alternative to using the `get-edgent-jars.sh` script is to
+directly create a binary release bundle consisting of the Edgent runtime
+jars and their external dependencies.
+
 Building using a pre-installed Maven installation from a source release bundle:
 ``` sh
 $ mvn package -Pdistribution
@@ -150,39 +189,11 @@ $ ./mvnw package -Pdistribution
 
 Both will build and test all Edgent Java 8 modules using Maven and create an archive containing all Edgent jars in `distribution/target/apache-edgent-incubating-{version}-bin.tar.gz` and `distribution/target/apache-edgent-incubating-{version}-bin.zip`.
 The content of these archives should contain all libraries required to build an Edgent application.
-The `libs` directory inside these contain the Edgent jars and the `ext` directory contains third party dependencies the Edgent jars require. 
+The `libs` directory inside these contain the Edgent jars and the `ext` directory contains third party dependencies the Edgent jars require.
 
-### Documentation of all defined Maven profiles
-
-A set of Maven `profiles` have been created to control which parts should be built. 
-The default profile only builds and tests the Java 8 versions of all modules and doesn't assemble a binary distribution as usually Maven builds don't require such a step. 
-It also doesn't build the Java 7 or Android modules either.
-
-Edgent currently comes with these profiles:
-
-- `distribution`: Builds one binary distribution for Java 8. If the java 7 and android profiles are enabled too, for each of these an additional binary distribution is created.
-- `platform-java7`: Builds Java 7 versions of all Edgent modules and runs the tests.
-- `platform-android`: Builds Android versions of all Edgent modules that are compatible with Android (See [JAVA_SUPPORT.md](JAVA_SUPPORT.md).
-- `toolchain`: Runs the tests in the Java 7 and Android modules using a Java 7 runtime instead of Java 8 version, which happens if this profile is not enabled. 
-
-As the Android modules are based on the Java 7 versions, when building the `platform-android` profile, the `platform-java7` profile is required to be enabled too, or the build will fail. 
-
-See [Getting Started](https://edgent.apache.org/docs/edgent-getting-started) for information on using the binary release bundle.
-
-For a not quite two hour introduction into Maven please feel free to watch this video we created for another Apache project: https://vimeo.com/167857327
-
-## Building for Edgent (For Edgent development)
-
-The primary build process is using [Maven](https://maven.apache.org/),
-any pull request is expected to maintain the build success of `mvn package`.
-
-The Maven wrapper `<edgent>/{mvnw,mvnw.cmd}` should be used.
-The wrapper ensures the appropriate version of Maven is used and it
-will automatically download it if needed, e.g.:
-
-``` sh
-$ ./mvnw clean package
-```
+You will need to manually setup the CLASSPATH for the build tooling that you're
+using to develop your Edgent application.
+ 
 
 ## Continuous Integration
 
