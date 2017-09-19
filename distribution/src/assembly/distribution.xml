@@ -34,14 +34,8 @@
       <directory>${project.basedir}/../</directory>
       <outputDirectory>/</outputDirectory>
       <includes>
-        <include>CONTRIBUTORS*</include>
-        <include>DEVELOPMENT*</include>
         <include>DISCLAIMER*</include>
-        <include>JAVA_SUPPORT*</include>
-        <include>KEYS*</include>
         <include>LICENSE*</include>
-        <include>README*</include>
-        <include>RELEASE_NOTES*</include>
         <include>NOTICE*</include>
       </includes>
     </fileSet>
@@ -62,7 +56,17 @@
       </includes>
       <excludes>
         <exclude>org.apache.edgent.distribution*</exclude>
+        <exclude>org.apache.edgent.console*</exclude>
       </excludes>
+    </dependencySet>
+
+    <!-- The parts that make up the console -->
+    <dependencySet>
+      <outputDirectory>/console</outputDirectory>
+      <scope>runtime</scope>
+      <includes>
+        <include>org.apache.edgent.console*</include>
+      </includes>
     </dependencySet>
 
     <!-- All other libs are treated as external libs -->
