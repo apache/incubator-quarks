@@ -755,7 +755,7 @@
                 <goals>
                   <goal>single</goal>
                 </goals>
-                <configuration>
+                <configuration combine.self="override">
                   <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
                   <descriptors>
                     <descriptor>src/assembly/source-release.xml</descriptor>
