@@ -28,8 +28,13 @@ public class MetricsGson {
     private ArrayList<Operator> ops = new ArrayList<>();
 	
 	class Operator {
-		String opId = null;
-		ArrayList<OpMetric> metrics = null;
+		final String opId;
+		final ArrayList<OpMetric> metrics;
+		Operator(String name) {
+		    opId = name;
+		    metrics = new ArrayList<>();
+		    MetricsGson.this.addOp(this);
+		}
 	}
 	
 	class OpMetric {
@@ -95,10 +100,6 @@ public class MetricsGson {
 	
 	public ArrayList<OpMetric> getOpMetrics(Operator theOp) {
 		return theOp.metrics;
-	}
-	
-	public void setOpMetrics(Operator theOp, ArrayList<OpMetric> theMetrics) {
-		theOp.metrics = theMetrics;
 	}
 	
 }
