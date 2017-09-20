@@ -54,7 +54,7 @@ getCounterMetricsForJob = function(callback, jobId, bIsNewJob) {
 					  var metrics = op.metrics;
 					  metrics.forEach(function(met) {
 						 obj.type = met.type;
-						 obj.opId = met.opId;
+						 obj.opId = obj.opId;
 						 obj.name = met.name;
 						 obj.value = met.value;
 					  });
