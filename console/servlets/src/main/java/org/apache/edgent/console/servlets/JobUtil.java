@@ -126,7 +126,7 @@ final class JobUtil {
                     }
 	    		}
 	    	}
-	}
+	    }
 		return gSnapshot;
 	}
 }

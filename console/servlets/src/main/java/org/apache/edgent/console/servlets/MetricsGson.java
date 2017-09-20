@@ -24,8 +24,8 @@ import java.util.Iterator;
 
 public class MetricsGson {
 
-	public String jobId = null;
-	public ArrayList<Operator> ops = new ArrayList<Operator>();
+    private String jobId = null;
+    private ArrayList<Operator> ops = new ArrayList<>();
 	
 	class Operator {
 		String opId = null;
@@ -58,7 +58,7 @@ public class MetricsGson {
 		
 		Iterator<Operator> opsIterator = this.ops.iterator();
 		while (opsIterator.hasNext()) {
-			Operator op = (Operator) opsIterator.next();
+			Operator op = opsIterator.next();
 			if (getOpId(op).equals(opId)) {
 				return op;
 			}
@@ -77,7 +77,7 @@ public class MetricsGson {
 		
 		Iterator<Operator> opsIterator = this.ops.iterator();
 		while (opsIterator.hasNext()) {
-			Operator op = (Operator) opsIterator.next();
+			Operator op = opsIterator.next();
 			if (getOpId(op).equals(opId)) {
 				return true;
 			}
