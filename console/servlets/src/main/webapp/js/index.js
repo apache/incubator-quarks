@@ -240,10 +240,10 @@ var sankey = d3.sankey()
 
 var path = d3.svg.diagonal()
 .source(function(d) { 
-	return {"x":d.sourceIdx.y + d.sourceIdx.dy/2, "y":d.sourceIdx.x + sankey.nodeWidth()/2}; 
+	return {"x":d.source.y + d.source.dy/2, "y":d.source.x + sankey.nodeWidth()/2};
  })            
 .target(function(d) { 
-	return {"x":d.targetIdx.y + d.targetIdx.dy/2, "y":d.targetIdx.x + sankey.nodeWidth()/2}; 
+	return {"x":d.target.y + d.target.dy/2, "y":d.target.x + sankey.nodeWidth()/2};
  })
 .projection(function(d) { 
 	return [d.y, d.x]; 
@@ -703,8 +703,8 @@ var makeRows = function() {
 		var sourceStreamAliasesMap = new Map();
 		var sourceStreamTagsMap = new Map();
 		n.targetLinks.forEach(function(trg) {
-			var source = trg.sourceIdx.idx.toString();
-			var sourceLinks = trg.sourceIdx.sourceLinks;
+			var source = trg.source.idx.toString();
+			var sourceLinks = trg.source.sourceLinks;
 			for (var i = 0; i < sourceLinks.length; i++) {
 				if (trg.sourceId == sourceLinks[i].sourceId && trg.targetId == sourceLinks[i].targetId) {
 					if (layer == "static") {
@@ -731,8 +731,8 @@ var makeRows = function() {
 		var targetStreamAliasesMap = new Map();
 		var targetStreamTagsMap = new Map();
 		n.sourceLinks.forEach(function(src) {
-			var target = src.targetIdx.idx.toString();
-			var targetLinks = src.targetIdx.targetLinks;
+			var target = src.target.idx.toString();
+			var targetLinks = src.target.targetLinks;
 			for (var i = 0; i < targetLinks.length; i++) {
 				if (src.sourceId == targetLinks[i].sourceId && src.targetId == targetLinks[i].targetId) {
 					if (layer == "static") {
@@ -1075,8 +1075,8 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
 				value = edge.value;
 			}
 			edge.value = value;
-			edge.sourceIdx = vertexMap[edge.sourceId].idx;
-			edge.targetIdx = vertexMap[edge.targetId].idx;
+			edge.source = vertexMap[edge.sourceId].idx;
+			edge.target = vertexMap[edge.targetId].idx;
 			i++;
 			if (edge.tags && edge.tags.length > 0) {
 				setAvailableTags(edge.tags);
@@ -1165,10 +1165,10 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
     	  } else if (d.isZero) {
     		  value = "0";
     	  }
-    	  var sKind = parseOpletKind(d.sourceIdx.invocation.kind);
-    	  var tKind = parseOpletKind(d.targetIdx.invocation.kind);
-    	  var retString = "Oplet name: " + d.sourceIdx.idx + "\nOplet kind: " + sKind + " --> \n"
-    	  + "Oplet name: " + d.targetIdx.idx + "\nOplet kind: " + tKind + "\n" + value;
+    	  var sKind = parseOpletKind(d.source.invocation.kind);
+    	  var tKind = parseOpletKind(d.target.invocation.kind);
+    	  var retString = "Oplet name: " + d.source.idx + "\nOplet kind: " + sKind + " --> \n"
+    	  + "Oplet name: " + d.target.idx + "\nOplet kind: " + tKind + "\n" + value;
 
     	  if (d.alias) {
     		  retString += "\nStream alias: " + d.alias;
@@ -1308,8 +1308,8 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
 		var sourceStreamAliasesMap = new Map();
 		var sourceStreamTagsMap = new Map();
 		d.targetLinks.forEach(function(trg) {
-			var source = trg.sourceIdx.idx.toString();
-			var sourceLinks = trg.sourceIdx.sourceLinks;
+			var source = trg.source.idx.toString();
+			var sourceLinks = trg.source.sourceLinks;
 			for (var i = 0; i < sourceLinks.length; i++) {
 				if (trg.sourceId == sourceLinks[i].sourceId && trg.targetId == sourceLinks[i].targetId) {
 					if (layer == "static") {
@@ -1337,8 +1337,8 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
 		var targetStreamAliasesMap = new Map();
 		var targetStreamTagsMap = new Map();
 		d.sourceLinks.forEach(function(src) {
-			var target = src.targetIdx.idx.toString();
-			var targetLinks = src.targetIdx.targetLinks;
+			var target = src.target.idx.toString();
+			var targetLinks = src.target.targetLinks;
 			for (var i = 0; i < targetLinks.length; i++) {
 				if (src.sourceId == targetLinks[i].sourceId && src.targetId == targetLinks[i].targetId) {
 					if (layer == "static") {
