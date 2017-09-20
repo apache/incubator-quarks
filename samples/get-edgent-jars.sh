@@ -31,14 +31,6 @@
 ##
 ## Creates the directory get-edgent-jars-project and a maven project in it
 
-### TODO
-### missing console/servlets/target/edgent-console-servlets-1.2.0-SNAPSHOT.war
-###    before manually adding it below, figure out why it's not automatically pulled in as a dep
-###    note, as is, even if putting that war in the classpath, DevelopmentSample doesn't work
-###
-### connector-websocket doesn't work??? / check on correct set of wsclient deps
-### FWIW, HelloEdgent and IotpQuickstart work against the jars retrieved by this script.
-
 USAGE="usage: [--platform {java8|java7|android}] [--version edgent-version] [--artifacts csv-gav-list] [--file gav-file]"
 
 set -e
@@ -73,6 +65,15 @@ fi
 # would directly declare/use and let these components
 # (most typically the provider) pull in the rest of the
 # Edgent jars (and their dependencies)
+#
+# Explicitly add edgent-connectors-websocket-jetty
+# as there's not a direct dependency on it from connectors-websocket.
+#
+# Hmm... consider adding org.apache.edgent.console:edgent-console-servlets:{EV}:war
+# It's bundled in edgent-console-server.jar.  Having it separately available
+# would enable having the "console" in a Servler engine of the user's choosing.
+# If added, may want to put it in a directory other than edgent-jars.
+#
 DEFAULT_GAVS=`cat << EOF
 org.slf4j:slf4j-jdk14:${SLF4J_VERSION}
 org.apache.edgent.analytics:edgent-analytics-math3:{EV}
@@ -89,9 +90,7 @@ org.apache.edgent.connectors:edgent-connectors-mqtt:{EV}
 org.apache.edgent.connectors:edgent-connectors-pubsub:{EV}
 org.apache.edgent.connectors:edgent-connectors-serial:{EV}
 org.apache.edgent.connectors:edgent-connectors-websocket:{EV}
-org.apache.edgent.connectors:edgent-connectors-websocket-base:{EV}
 org.apache.edgent.connectors:edgent-connectors-websocket-jetty:{EV}
-org.apache.edgent.connectors:edgent-connectors-websocket-misc:{EV}
 org.apache.edgent.providers:edgent-providers-development:{EV}
 org.apache.edgent.providers:edgent-providers-direct:{EV}
 org.apache.edgent.providers:edgent-providers-iot:{EV}
@@ -158,7 +157,7 @@ mkdir -p target
 DEP_DECLS_FILE=target/tmp-dep-decls
 rm -f ${DEP_DECLS_FILE}
 for i in ${ARTIFACT_GAVS}; do
-    echo $i | awk -F : '{ printf "<dependency>\n  <groupId>%s</groupId>\n  <artifactId>%s</artifactId>\n  <version>%s</version>\n</dependency>\n", $1, $2, $3 }' >> ${DEP_DECLS_FILE}
+    echo $i | awk -F : '{ type=""; if ($4 != "") type="  <type>" $4 "</type>\n"; printf "<dependency>\n  <groupId>%s</groupId>\n  <artifactId>%s</artifactId>\n  <version>%s</version>\n%s</dependency>\n", $1, $2, $3, type }' >> ${DEP_DECLS_FILE}
 done
 DEP_DECLS=`cat ${DEP_DECLS_FILE}`
 
