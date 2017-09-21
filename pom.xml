@@ -257,20 +257,6 @@
           <version>2.5.3</version>
           <configuration>
             <finalName>apache-edgent-incubating-${project.version}</finalName>
-            <formats>
-              <format>zip</format>
-              <format>tar.gz</format>
-            </formats>
-            <!-- sadly this excludes isn't effective.  Chris? -->
-            <fileSets>
-              <fileSet>
-                <excludes>
-                  <exclude>samples/**</exclude>  <!-- see above note about samples module -->
-                  <exclude>samples</exclude>  <!-- see above note about samples module -->
-                  <exclude>**/samples/**</exclude>  <!-- see above note about samples module -->
-                </excludes>
-              </fileSet>
-            </fileSets>
           </configuration>
         </plugin>
 
@@ -456,6 +442,26 @@
             <goals>
               <goal>test-jar</goal>
             </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Make sure the DISCLAIMER contains the incubator version -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-remote-resources-plugin</artifactId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>process</goal>
+            </goals>
+            <configuration>
+              <resourceBundles>
+                <!-- Will generate META-INF/DISCLAIMER  -->
+                <resourceBundle>org.apache.apache.resources:apache-incubator-disclaimer-resource-bundle:1.2-SNAPSHOT</resourceBundle>
+              </resourceBundles>
+            </configuration>
           </execution>
         </executions>
       </plugin>
