@@ -761,6 +761,11 @@
                 <goals>
                   <goal>single</goal>
                 </goals>
+                <!-- heads up: combine.self in the following is highlighted
+                    as an error in Eclipse's xml editor view.
+                    Just ignore that.
+                    See  https://issues.apache.org/jira/browse/MNG-5454  sigh.
+                 -->
                 <configuration combine.self="override">
                   <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
                   <descriptors>
