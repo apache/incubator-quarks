@@ -450,7 +450,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-remote-resources-plugin</artifactId>
-        <version>1.5</version>
+        <version>1.5</version><!--$NO-MVN-MAN-VER$-->
         <executions>
           <execution>
             <goals>
