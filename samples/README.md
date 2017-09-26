@@ -21,6 +21,37 @@ information on Edgent Application Development, Packaging and Execution.
 Additional information may also be found in
 Getting Started https://edgent.apache.org/docs/edgent-getting-started
 
+# Setup
+
+Once you have downloaded and unpacked the samples source bundle 
+or cloned the the samples repository you need to download
+these additional development software tools.
+
+* Java 8 - The development setup assumes Java 8
+* Maven - *(optional) (https://maven.apache.org/)*
+
+Maven is used as build tool. Currently there are two options:
+
+1. Using the maven-wrapper (the `mvnw` or `mvnw.bat` command - preferred)
+2. Using an installed version of Maven (the `mvn` command)
+
+The maven-wrapper will automatically download and install the
+correct Maven version and use that. Besides this, there is no
+difference between using the `mvn` and `mvnw` command.
+
+You may also use a maven-integrated IDE with the samples.
+e.g., see the _Using Eclipse_ section below.
+
+The samples use Edgent SDK jars that have been released
+in a maven repository such as Maven Central.
+
+Alternatively, you can download the Edgent SDK sources and build them,
+populating your local maven repository.  The samples
+will then use those Edgent SDK jars.  Adjust the `edgent.version` 
+property in the top level samples `pom.xml` accordingly.
+See [downloads](https://edgent.apache.org/docs/downloads) 
+for downloading the Edgent SDK sources.
+
 # Building the Edgent samples
 
 By default Java8 class files are generated.
@@ -29,7 +60,9 @@ profile is specified.
 
 Currently, building and running the samples for the Android platform
 is not supported.  Many samples use the `DevelopmentProvider` and
-the `DevelopmentProvider` is not supported on the Android platform. 
+the `DevelopmentProvider` is not supported on the Android platform.
+
+Build the samples
 ```sh
 ./mvnw clean package  # -Pplatform-java7 as needed
 ```
@@ -47,14 +80,14 @@ See the README.md in each sample category directory.
 The Edgent Git repository, or samples source release bundle, contains 
 Maven project definitions for the samples.
 
-Once you import the Maven projects into your workspace,
-builds and JUnit testing of Edgent in Eclipse use the 
-same artifacts as the Maven command line tooling. Like
-the command line tooling, the jars for dependent projects
+Once you import the Maven projects into your workspace, builds
+in Eclipse use the same artifacts as the Maven command line tooling. 
+Like the command line tooling, the jars for dependent projects
 are automatically downloaded to the local maven repository
 and used.
 
-If you want to use Eclipse to clone your fork, use the Eclipse Git Team Provider plugin
+If you want to use Eclipse to clone your fork, use the 
+Eclipse Git Team Provider plugin
 
 1. From the *File* menu, select *Import...*
 2. From the *Git* folder, select *Projects from Git* and click *Next*
@@ -65,7 +98,9 @@ If you want to use Eclipse to clone your fork, use the Eclipse Git Team Provider
 4. In the *Select a wizard to use for importing projects* window, click *Cancel*.  Then follow the steps below to import the Maven projects.
 
 
-Once you have cloned the Git repository to your machine or are working from an unpacked samples source release bundle, import the Maven projects into your workspace
+Once you have cloned the Git repository to your machine or are working 
+from an unpacked samples source release bundle, import the Maven projects
+into your workspace
 
 1. From the *File* menu, select *Import...*
 2. From the *Maven* folder, select *Existing Maven Projects* and click *Next*
@@ -73,12 +108,14 @@ Once you have cloned the Git repository to your machine or are working from an u
   + Verify the *Add project(s) to working set* checkbox is checked
   + Click *Finish*.  Eclipse starts the import process and builds the workspace.
 
-Top-level artifacts such as `README.md` are available under the `edgent-samples` project.
+Top-level artifacts such as `README.md` are available under the 
+`edgent-samples` project.
 
-Note: Specifics may change depending on your version of Eclipse or the Eclipse Maven or Git Team Provider.
+Note: Specifics may change depending on your version of Eclipse or the 
+Eclipse Maven or Git Team Provider.
 
-Once the samples projects have been imported you can run them as any Eclipse application.
-E.g.,
+Once the samples projects have been imported you can run them as any 
+Eclipse application. E.g.,
 
 1. open the `HelloEdgent.java` sample
 2. click on *Run*, *Run As*, then *Java application*.  `HelloEdgent` runs and prints to the Console view.
