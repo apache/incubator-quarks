@@ -26,7 +26,7 @@ node('windows-2012-1') {
 
     // Setup the required environment variables.
     env.PATH = "${tool 'Maven 3 (latest)'}\\bin;${env.PATH}"
-    dev java8Home = "${tool 'JDK 1.8 (latest)'}"
+    def java8Home = "${tool 'JDK 1.8 (latest)'}"
 
     // Make sure the feature branches don't change the SNAPSHOTS in Nexus.
     def mavenGoal = "install"
