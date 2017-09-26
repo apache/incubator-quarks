@@ -6,48 +6,26 @@ or in the ASF git repository https://git-wip-us.apache.org/repos/asf/incubator-e
 or in the repository mirror at github https://github.com/apache/incubator-edgent.
 
 Pre-requisites:
-- Java 8 is required to build an Edgent binary distribution
-- Network connectivity a maven repository such as Maven Central
-- A maven-integrated IDE will be required if you want to do
-  development using an IDE.
-
-The source release includes a Maven wrapper. The wrapper removes
-the need for the user to manually install maven on their system.
+- Java 8 is required to build an Edgent SDK
+- Network connectivity to a maven repository such as Maven Central
+  (for downloading external third party dependencies)
 
 
 Building the Edgent SDK Java8 jars and installing them in the local maven repository
 
-$ ./mvnw clean install # add -DskipTests to save time and omit running the tests
+$ ./mvnw clean install # add -DskipTests to omit running the tests
+
+
+See DEVELOPMENT.md in this folder or 
+https://github.com/apache/incubator-edgent/DEVELOPMENT.md for information
+about building the Edgent SDK for the Java 7 and Android platforms.
+
  
-
-Building the SDK jars for Java7 and Android too (if needed)
-
-Create a toolchains-local.xml file by cloning the toolchains-travis.xml file
-and setting the appropriate j8-jdk-home and j7-jdk-home locations on your system
-e.g., on OSX system:
-  j8 jdkHome:  /Library/Java/JavaVirtualMachines/jdk1.8.0_112.jdk/Contents/Home
-  j7 jdkHome:  /Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home
-
-$ ./mvnw -t toolchains-local.xml clean install -Pplatform-java7,platform-android  # add -DskipTests to save time and omit running the tests
-
-If you put the toolchain information in `~/.m2/toolchain.xml` you 
-can omit the `-t toolchains-local.xml` from the command.
-
-
-At the conclusion of the build, the Edgent SDK jars will have been 
-installed in the local maven repository and may then be used for 
-Edgent Application development.
-
-
 See samples/README.md in the Edgent Samples source bundle or github repository
 for general information on Edgent Application development and deployment, 
 and for building and running the samples. 
 https://github.com/apache/incubator-edgent/samples/README.md
 
-For more information about the Edgent sources, testing, and
-contributing to Edgent runtime development see DEVELOPMENT.md in the source tree
-or in the ASF git repository https://git-wip-us.apache.org/repos/asf/incubator-edgent.git
-or in the repository mirror at github https://github.com/apache/incubator-edgent.
 
 Apache Edgent is released under the Apache License Version 2.0.
 
