@@ -18,7 +18,7 @@
  *  limitations under the License.
  *
  */
-node('windows-2012-1') {
+node {
 
     currentBuild.result = "SUCCESS"
 
