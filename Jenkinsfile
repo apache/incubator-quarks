@@ -29,12 +29,9 @@ node {
     def java8Home = "${tool 'JDK 1.8 (latest)'}"
 
     // Make sure the feature branches don't change the SNAPSHOTS in Nexus.
-    def mavenGoal = "install"
-    def mavenLocalRepo = ""
+    def mavenGoal = "package"
     if(env.BRANCH_NAME == 'develop') {
         mavenGoal = "deploy"
-    } else {
-        mavenLocalRepo = "-Dmaven.repo.local=..\\.repository"
     }
 
     try {
@@ -44,11 +41,11 @@ node {
 
         stage 'Build'
             echo 'Building'
-            sh "${mvnHome}/bin/mvn -U -Pplatform-android,platform-java7,distribution,toolchain,apache-release -Djava8.home=${java8Home} -Dedgent.build.ci=true ${mavenLocalRepo} clean ${mavenGoal} sonar:sonar site:site"
+            sh "${mvnHome}/bin/mvn -Pplatform-android,platform-java7,distribution,toolchain,apache-release -Djava8.home=${java8Home} -Dedgent.build.ci=true clean ${mavenGoal} sonar:sonar site:site"
 
         stage 'Stage Site'
             echo 'Staging Site'
-            sh "${mvnHome}/bin/mvn -Pplatform-android,platform-java7,distribution,toolchain,apache-release -Djava8.home=${java8Home} -Dedgent.build.ci=true ${mavenLocalRepo} site:stage"
+            sh "${mvnHome}/bin/mvn -Pplatform-android,platform-java7,distribution,toolchain,apache-release -Djava8.home=${java8Home} -Dedgent.build.ci=true site:stage"
 
     }
 
