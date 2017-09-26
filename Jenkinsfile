@@ -26,8 +26,8 @@ node {
 
     // Setup the required environment variables.
     def mvnHome = "${tool 'Maven 3 (latest)'}"
-    def java8Home = "${tool 'JDK 1.8 (latest)'}"
-
+    env.JAVA_HOME="${tool 'JDK 1.8 (latest)'}"
+    env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
     // Make sure the feature branches don't change the SNAPSHOTS in Nexus.
     def mavenGoal = "package"
     if(env.BRANCH_NAME == 'develop') {
