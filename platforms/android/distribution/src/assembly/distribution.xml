@@ -31,17 +31,11 @@
 
   <fileSets>
     <fileSet>
-      <directory>${project.basedir}/../</directory>
+      <directory>${project.basedir}/../../../</directory>
       <outputDirectory>/</outputDirectory>
       <includes>
-        <include>CONTRIBUTORS*</include>
-        <include>DEVELOPMENT*</include>
         <include>DISCLAIMER*</include>
-        <include>JAVA_SUPPORT*</include>
-        <include>KEYS*</include>
         <include>LICENSE*</include>
-        <include>README*</include>
-        <include>RELEASE_NOTES*</include>
         <include>NOTICE*</include>
       </includes>
     </fileSet>
@@ -66,13 +60,13 @@
     </dependencySet>
 
     <!-- All other libs are treated as external libs -->
-    <!--dependencySet>
-      <outputDirectory>/libs/ext</outputDirectory>
+    <dependencySet>
+      <outputDirectory>/ext</outputDirectory>
       <scope>runtime</scope>
       <excludes>
         <exclude>org.apache.edgent*</exclude>
       </excludes>
-    </dependencySet-->
+    </dependencySet>
   </dependencySets>
 
 </assembly>

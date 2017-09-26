@@ -62,48 +62,50 @@
   </build>
 
   <dependencies>
+    <!-- The general strategy here is to only declare "top-level"
+         Edgent artifacts, like an Edgent application pom would,
+         and let those artifacts pull in their dependent
+         Edgent artifacts, etc.
+         So declare Providers, Analytics, Utils, Connectors.
+    -->
+
+    <!-- Providers -->
     <dependency>
-      <groupId>org.apache.edgent.android.android</groupId>
-      <artifactId>edgent-android-hardware</artifactId>
+      <groupId>org.apache.edgent.android.providers</groupId>
+      <artifactId>edgent-providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.android.android</groupId>
-      <artifactId>edgent-android-topology</artifactId>
+      <groupId>org.apache.edgent.android.providers</groupId>
+      <artifactId>edgent-providers-iot</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
 
+    <!-- Analytics -->
     <dependency>
-      <groupId>org.apache.edgent.android.api</groupId>
-      <artifactId>edgent-api-execution</artifactId>
+      <groupId>org.apache.edgent.android.analytics</groupId>
+      <artifactId>edgent-analytics-math3</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.android.api</groupId>
-      <artifactId>edgent-api-function</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.android.api</groupId>
-      <artifactId>edgent-api-graph</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.android.api</groupId>
-      <artifactId>edgent-api-oplet</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.android.api</groupId>
-      <artifactId>edgent-api-topology</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.android.api</groupId>
-      <artifactId>edgent-api-window</artifactId>
+      <groupId>org.apache.edgent.android.analytics</groupId>
+      <artifactId>edgent-analytics-sensors</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
 
+    <!-- Utils -->
+    <dependency>
+      <groupId>org.apache.edgent.android.utils</groupId>
+      <artifactId>edgent-utils-metrics</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.edgent.android.utils</groupId>
+      <artifactId>edgent-utils-streamscope</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
+    </dependency>
+
+    <!-- Connectors -->
     <dependency>
       <groupId>org.apache.edgent.android.connectors</groupId>
       <artifactId>edgent-connectors-command</artifactId>
@@ -117,11 +119,6 @@
     <dependency>
       <groupId>org.apache.edgent.android.connectors</groupId>
       <artifactId>edgent-connectors-csv</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.android.connectors</groupId>
-      <artifactId>edgent-connectors-websocket-misc</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
@@ -142,16 +139,6 @@
     <dependency>
       <groupId>org.apache.edgent.android.connectors</groupId>
       <artifactId>edgent-connectors-iotp</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.android.connectors</groupId>
-      <artifactId>edgent-connectors-websocket-jetty</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.android.connectors</groupId>
-      <artifactId>edgent-connectors-websocket-server</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
@@ -181,77 +168,12 @@
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.android.connectors</groupId>
-      <artifactId>edgent-connectors-websocket-base</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.edgent.android.providers</groupId>
-      <artifactId>edgent-providers-direct</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.android.providers</groupId>
-      <artifactId>edgent-providers-iot</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.edgent.android.runtime</groupId>
-      <artifactId>edgent-runtime-appservice</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.android.runtime</groupId>
-      <artifactId>edgent-runtime-etiao</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.android.runtime</groupId>
-      <artifactId>edgent-runtime-jobregistry</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.android.runtime</groupId>
-      <artifactId>edgent-runtime-jsoncontrol</artifactId>
+      <artifactId>edgent-connectors-websocket</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.android.connectors</groupId>
-      <artifactId>edgent-connectors-websocket</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.edgent.android.spi</groupId>
-      <artifactId>edgent-spi-graph</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.android.spi</groupId>
-      <artifactId>edgent-spi-topology</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.edgent.android.analytics</groupId>
-      <artifactId>edgent-analytics-math3</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.android.analytics</groupId>
-      <artifactId>edgent-analytics-sensors</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.edgent.android.utils</groupId>
-      <artifactId>edgent-utils-metrics</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.android.utils</groupId>
-      <artifactId>edgent-utils-streamscope</artifactId>
+      <artifactId>edgent-connectors-websocket-jetty</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
   </dependencies>

@@ -36,8 +36,8 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.5.3</version>
         <configuration>
           <descriptor>src/assembly/distribution.xml</descriptor>
         </configuration>
@@ -53,7 +53,6 @@
       </plugin>
       <!-- We don't need any jars as output in this module -->
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
         <configuration>
           <skip>true</skip>
@@ -93,37 +92,55 @@
   </build>
 
   <dependencies>
+    <!-- The general strategy here is to only declare "top-level"
+         Edgent artifacts, like an Edgent application pom would,
+         and let those artifacts pull in their dependent
+         Edgent artifacts, etc.
+         So declare Providers, Analytics, Utils, Connectors.
+    -->
+
+    <!-- Providers -->
     <dependency>
-      <groupId>org.apache.edgent.java7.api</groupId>
-      <artifactId>edgent-api-execution</artifactId>
+      <groupId>org.apache.edgent.java7.providers</groupId>
+      <artifactId>edgent-providers-development</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.java7.api</groupId>
-      <artifactId>edgent-api-function</artifactId>
+      <groupId>org.apache.edgent.java7.providers</groupId>
+      <artifactId>edgent-providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.java7.api</groupId>
-      <artifactId>edgent-api-graph</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.java7.api</groupId>
-      <artifactId>edgent-api-oplet</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.java7.api</groupId>
-      <artifactId>edgent-api-topology</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.java7.api</groupId>
-      <artifactId>edgent-api-window</artifactId>
+      <groupId>org.apache.edgent.java7.providers</groupId>
+      <artifactId>edgent-providers-iot</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
 
+    <!-- Analytics -->
+    <dependency>
+      <groupId>org.apache.edgent.java7.analytics</groupId>
+      <artifactId>edgent-analytics-math3</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.edgent.java7.analytics</groupId>
+      <artifactId>edgent-analytics-sensors</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
+    </dependency>
+
+    <!-- Utils -->
+    <dependency>
+      <groupId>org.apache.edgent.java7.utils</groupId>
+      <artifactId>edgent-utils-metrics</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.edgent.java7.utils</groupId>
+      <artifactId>edgent-utils-streamscope</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
+    </dependency>
+
+    <!-- Connectors -->
     <dependency>
       <groupId>org.apache.edgent.java7.connectors</groupId>
       <artifactId>edgent-connectors-command</artifactId>
@@ -137,11 +154,6 @@
     <dependency>
       <groupId>org.apache.edgent.java7.connectors</groupId>
       <artifactId>edgent-connectors-csv</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.java7.connectors</groupId>
-      <artifactId>edgent-connectors-websocket-misc</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
@@ -162,16 +174,6 @@
     <dependency>
       <groupId>org.apache.edgent.java7.connectors</groupId>
       <artifactId>edgent-connectors-iotp</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.java7.connectors</groupId>
-      <artifactId>edgent-connectors-websocket-jetty</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.java7.connectors</groupId>
-      <artifactId>edgent-connectors-websocket-server</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
@@ -201,88 +203,26 @@
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.java7.connectors</groupId>
-      <artifactId>edgent-connectors-websocket-base</artifactId>
+      <artifactId>edgent-connectors-websocket</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.java7.connectors</groupId>
-      <artifactId>edgent-connectors-websocket</artifactId>
+      <artifactId>edgent-connectors-websocket-jetty</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
 
+    <!-- Include console-servlets.war to enable a user to run
+         it in their own Servlets engine.
+         It's bundled in the edgent-console-server.jar.
+         Note, edgent-console-server is pulled in as a dependency
+         of the development provider.
+    -->
     <dependency>
-      <groupId>org.apache.edgent.java7.providers</groupId>
-      <artifactId>edgent-providers-development</artifactId>
+      <groupId>org.apache.edgent.java7.console</groupId>
+      <artifactId>edgent-console-servlets</artifactId>
       <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.java7.providers</groupId>
-      <artifactId>edgent-providers-direct</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.java7.providers</groupId>
-      <artifactId>edgent-providers-iot</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.edgent.java7.runtime</groupId>
-      <artifactId>edgent-runtime-appservice</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.java7.runtime</groupId>
-      <artifactId>edgent-runtime-etiao</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.java7.runtime</groupId>
-      <artifactId>edgent-runtime-jmxcontrol</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.java7.runtime</groupId>
-      <artifactId>edgent-runtime-jobregistry</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.java7.runtime</groupId>
-      <artifactId>edgent-runtime-jsoncontrol</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.edgent.java7.spi</groupId>
-      <artifactId>edgent-spi-graph</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.java7.spi</groupId>
-      <artifactId>edgent-spi-topology</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.edgent.java7.analytics</groupId>
-      <artifactId>edgent-analytics-math3</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.java7.analytics</groupId>
-      <artifactId>edgent-analytics-sensors</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.edgent.java7.utils</groupId>
-      <artifactId>edgent-utils-metrics</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.edgent.java7.utils</groupId>
-      <artifactId>edgent-utils-streamscope</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <type>war</type>
     </dependency>
   </dependencies>
 
