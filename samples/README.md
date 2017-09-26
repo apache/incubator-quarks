@@ -21,25 +21,28 @@ information on Edgent Application Development, Packaging and Execution.
 Additional information may also be found in
 Getting Started https://edgent.apache.org/docs/edgent-getting-started
 
-#Building the Edgent samples
+# Building the Edgent samples
 
 By default Java8 class files are generated.
-Java7 and Android platform class files are produced when the appropriate
+Java7 platform class files are produced when the appropriate
 profile is specified.
 
+Currently, building and running the samples for the Android platform
+is not supported.  Many samples use the `DevelopmentProvider` and
+the `DevelopmentProvider` is not supported on the Android platform. 
 ```sh
-./mvnw clean package  # -Pplatform-java7,platform-android as needed
+./mvnw clean package  # -Pplatform-java7 as needed
 ```
 
-A standard jar and uber jar is created for each sample category
+A standard jar and uber jar are created for each sample category
 in the sample category's target directory: `<category>/target`.
 
 
-##Running the samples
+## Running the samples
 
 See the README.md in each sample category directory.
 
-#Using Eclipse
+# Using Eclipse
 
 The Edgent Git repository, or samples source release bundle, contains 
 Maven project definitions for the samples.
@@ -80,7 +83,7 @@ E.g.,
 1. open the `HelloEdgent.java` sample
 2. click on *Run*, *Run As*, then *Java application*.  `HelloEdgent` runs and prints to the Console view.
 
-#Samples Summary
+# Samples Summary
 
 <pre>
 HelloEdgent          Basic mechanics of declaring a topology and executing

@@ -146,77 +146,8 @@
   </dependencies>
 
   <profiles>
-    <!--
-        This defines a self-activating profile which is only enabled for
-        for projects that have a src/main/java directory (effectivley excludes
-        it from the current pom module.
-    -->
-    <!--profile>
-      <id>generate-classpath</id>
-      <activation>
-        <file>
-          <exists>src/main/java</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-dependency-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>dump-dependency-tree</id>
-                <phase>generate-resources</phase>
-                <goals>
-                  <goal>tree</goal>
-                </goals>
-                <configuration>
-                  <outputFile>${project.build.directory}/dependency-tree.graphml</outputFile>
-                  <outputType>graphml</outputType>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>xml-maven-plugin</artifactId>
-            <version>1.0.1</version>
-            <executions>
-              <execution>
-                <id>transform-dependency-tree</id>
-                <goals>
-                  <goal>transform</goal>
-                </goals>
-                <configuration>
-                  <transformationSets>
-                    <transformationSet>
-                      <file>${project.build.directory}/dependency-tree.graphml</file>
-                      <stylesheet>${project.basedir}/../src/main/xslt/classpath.xsl</stylesheet>
-                      <parameters>
-                        <parameter>
-                          <name>groupId</name>
-                          <value>${project.groupId}</value>
-                        </parameter>
-                        <parameter>
-                          <name>artifactId</name>
-                          <value>${project.artifactId}</value>
-                        </parameter>
-                        <parameter>
-                          <name>version</name>
-                          <value>${project.version}</value>
-                        </parameter>
-                      </parameters>
-                    </transformationSet>
-                  </transformationSets>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile-->
-
     <profile>
+      <!-- build app to run on Java7 platform -->
       <id>platform-java7</id>
       <properties>
         <platform.java7>true</platform.java7>
@@ -241,6 +172,7 @@
       </build>
     </profile>
     <profile>
+      <!-- build app to run on Android platform -->
       <id>platform-android</id>
       <properties>
         <platform.android>true</platform.android>
@@ -294,19 +226,6 @@
               </goals>
             </execution>
           </executions>
-        </plugin>
-
-        <!-- Inject the "incubating" into the output filename -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <configuration>
-            <finalName>apache-edgent-incubating-samples-${project.version}</finalName>
-            <formats>
-              <format>zip</format>
-              <format>tar.gz</format>
-            </formats>
-          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
