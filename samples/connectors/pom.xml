@@ -27,6 +27,7 @@
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
+  <groupId>${edgent.base.groupId}.samples</groupId>
   <artifactId>edgent-samples-connectors</artifactId>
 
   <name>Apache Edgent: Samples: Connectors</name>
