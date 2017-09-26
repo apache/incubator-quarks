@@ -25,7 +25,7 @@ node {
     echo 'Building Branch: ' + env.BRANCH_NAME
 
     // Setup the required environment variables.
-    def mvnHone = "${tool 'Maven 3 (latest)'}"
+    def mvnHome = "${tool 'Maven 3 (latest)'}"
     def java8Home = "${tool 'JDK 1.8 (latest)'}"
 
     // Make sure the feature branches don't change the SNAPSHOTS in Nexus.
