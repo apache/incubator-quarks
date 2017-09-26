@@ -44,7 +44,12 @@ node('windows-2012-1') {
 
         stage 'Build'
             echo 'Building'
-            sh "${mvnHome}/bin/mvn -U clean ${mavenGoal} site:site ${mavenLocalRepo} -Djava8.home=${java8Home} -Pplatform-android,platform-java7,distribution,toolchain,apache-release"
+            sh "${mvnHome}/bin/mvn -U -Pplatform-android,platform-java7,distribution,toolchain,apache-release -Djava8.home=${java8Home} -Dedgent.build.ci=true ${mavenLocalRepo} clean ${mavenGoal} sonar:sonar site:site"
+
+        stage 'Stage Site'
+            echo 'Staging Site'
+            sh "${mvnHome}/bin/mvn -Pplatform-android,platform-java7,distribution,toolchain,apache-release -Djava8.home=${java8Home} -Dedgent.build.ci=true ${mavenLocalRepo} site:stage"
+
     }
 
 
