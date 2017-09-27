@@ -28,6 +28,7 @@ node('ubuntu') {
     def mvnHome = "${tool 'Maven 3 (latest)'}"
     env.JAVA_HOME="${tool 'JDK 1.8 (latest)'}"
     env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
+
     // Make sure the feature branches don't change the SNAPSHOTS in Nexus.
     def mavenGoal = "package"
     if(env.BRANCH_NAME == 'develop') {
@@ -41,11 +42,11 @@ node('ubuntu') {
 
         stage 'Build'
             echo 'Building'
-            sh "${mvnHome}/bin/mvn -Pplatform-android,platform-java7,distribution,toolchain,apache-release -Djava8.home=${java8Home} -Dedgent.build.ci=true clean ${mavenGoal} sonar:sonar site:site"
+            sh "${mvnHome}/bin/mvn -Pplatform-android,platform-java7,distribution,toolchain,apache-release -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true clean ${mavenGoal} sonar:sonar site:site"
 
         stage 'Stage Site'
             echo 'Staging Site'
-            sh "${mvnHome}/bin/mvn -Pplatform-android,platform-java7,distribution,toolchain,apache-release -Djava8.home=${java8Home} -Dedgent.build.ci=true site:stage"
+            sh "${mvnHome}/bin/mvn -Pplatform-android,platform-java7,distribution,toolchain,apache-release -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true site:stage"
 
     }
 
