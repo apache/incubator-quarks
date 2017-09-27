@@ -18,7 +18,7 @@
  *  limitations under the License.
  *
  */
-node {
+node('ubuntu') {
 
     currentBuild.result = "SUCCESS"
 
