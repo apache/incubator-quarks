@@ -39,6 +39,10 @@ node('ubuntu') {
     }
 
     try {
+        stage 'Cleanup'
+            echo 'Cleaning up the workspace'
+            deleteDir()
+
         stage 'Checkout'
             echo 'Checking out branch ' + env.BRANCH_NAME
             checkout scm
