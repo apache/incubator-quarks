@@ -321,6 +321,9 @@
             <!-- Documentation related files -->
             <exclude>.mailmap</exclude>
 
+            <!-- Stuff needed by the Jenkins Multibranch Pipeline build -->
+            <exclude>.repository/**</exclude>
+
             <!-- Other files
                 TODO: Should be examined
             -->
