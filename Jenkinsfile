@@ -35,7 +35,7 @@ node('ubuntu') {
     if(env.BRANCH_NAME == 'develop') {
         mavenGoal = "deploy"
     } else {
-        mavenLocalRepo = "-Dmaven.repo.local=..\\.repository"
+        mavenLocalRepo = "-Dmaven.repo.local=.repository"
     }
 
     try {
