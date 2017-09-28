@@ -42,12 +42,17 @@ node('ubuntu') {
 
         stage 'Build'
             echo 'Building'
-            sh "${mvnHome}/bin/mvn -Pplatform-android,platform-java7,distribution,toolchain,apache-release -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true clean ${mavenGoal} sonar:sonar site:site"
+            withMaven(maven: 'Maven 3 (latest)',
+                      mavenLocalRepo: '.repository') {
+                sh "mvn -Pplatform-android,platform-java7,distribution,toolchain,apache-release -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true clean ${mavenGoal} sonar:sonar site:site"
+            }
 
         stage 'Stage Site'
             echo 'Staging Site'
-            sh "${mvnHome}/bin/mvn -Pplatform-android,platform-java7,distribution,toolchain,apache-release -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true site:stage"
-
+            withMaven(maven: 'Maven 3 (latest)',
+                      mavenLocalRepo: '.repository') {
+                sh "mvn -Pplatform-android,platform-java7,distribution,toolchain,apache-release -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true site:stage"
+            }
     }
 
 
