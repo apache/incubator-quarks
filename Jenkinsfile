@@ -30,9 +30,12 @@ node('ubuntu') {
     env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
 
     // Make sure the feature branches don't change the SNAPSHOTS in Nexus.
-    def mavenGoal = "package"
+    def mavenGoal = "install"
+    def mavenLocalRepo = ""
     if(env.BRANCH_NAME == 'develop') {
         mavenGoal = "deploy"
+    } else {
+        mavenLocalRepo = "-Dmaven.repo.local=..\\.repository"
     }
 
     try {
@@ -42,17 +45,12 @@ node('ubuntu') {
 
         stage 'Build'
             echo 'Building'
-            withMaven(maven: 'Maven 3 (latest)',
-                      mavenLocalRepo: '.repository') {
-                sh "mvn -Pplatform-android,platform-java7,distribution,toolchain,apache-release -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true clean ${mavenGoal} sonar:sonar site:site"
-            }
+            sh "${mvnHome}/bin/mvn ${mavenLocalRepo) -Pplatform-android,platform-java7,distribution,toolchain,apache-release -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true clean ${mavenGoal} sonar:sonar site:site"
 
         stage 'Stage Site'
             echo 'Staging Site'
-            withMaven(maven: 'Maven 3 (latest)',
-                      mavenLocalRepo: '.repository') {
-                sh "mvn -Pplatform-android,platform-java7,distribution,toolchain,apache-release -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true site:stage"
-            }
+            sh "${mvnHome}/bin/mvn ${mavenLocalRepo) -Pplatform-android,platform-java7,distribution,toolchain,apache-release -Djava8.home=${java8Home} -Dedgent.build.ci=true site:stage"
+
     }
 
 
