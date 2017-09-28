@@ -49,11 +49,11 @@ node('ubuntu') {
 
         stage 'Build'
             echo 'Building'
-            sh "${mvnHome}/bin/mvn ${mavenLocalRepo} -Pplatform-android,platform-java7,distribution,toolchain,apache-release -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true clean ${mavenGoal} sonar:sonar site:site"
+            sh "${mvnHome}/bin/mvn ${mavenLocalRepo} -Pplatform-android,platform-java7,distribution,toolchain -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true clean ${mavenGoal} sonar:sonar site:site"
 
         stage 'Stage Site'
             echo 'Staging Site'
-            sh "${mvnHome}/bin/mvn ${mavenLocalRepo} -Pplatform-android,platform-java7,distribution,toolchain,apache-release -Djava8.home=${java8Home} -Dedgent.build.ci=true site:stage"
+            sh "${mvnHome}/bin/mvn ${mavenLocalRepo} -Pplatform-android,platform-java7,distribution,toolchain -Djava8.home=${java8Home} -Dedgent.build.ci=true site:stage"
 
     }
 
