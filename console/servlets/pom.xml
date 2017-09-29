@@ -60,6 +60,42 @@
           </excludes>
         </configuration>
       </plugin>
+      <!-- download and include copies of all dependency license texts -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <version>1.14</version>
+        <executions>
+          <!--
+              Generate the "THIRD-PARTY.txt" containing information about which
+              third party dependency uses which license.
+          -->
+          <execution>
+            <id>generate-third-party</id>
+            <goals>
+              <goal>add-third-party</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}</outputDirectory>
+            </configuration>
+          </execution>
+          <!--
+              Generate the "licenses" directory containing downloaded license texts
+              As some licenses are no longer downloadable at the locations specified
+              inside the jars, the src/licenses/licenses.xml file provides updated
+              information.
+          -->
+          <execution>
+            <id>download-licenses</id>
+            <goals>
+              <goal>download-licenses</goal>
+            </goals>
+            <configuration>
+              <licensesOutputDirectory>${project.build.directory}/${project.artifactId}-${project.version}/licenses</licensesOutputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
