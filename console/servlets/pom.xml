@@ -76,6 +76,10 @@
               <goal>add-third-party</goal>
             </goals>
             <configuration>
+              <licenseMerges>
+                <licenseMerge>Apache License, Version 2.0|Apache 2.0|Apache License 2.0</licenseMerge>
+                <licenseMerge>BSD 3-Clause|New BSD License</licenseMerge>
+              </licenseMerges>
               <outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}</outputDirectory>
             </configuration>
           </execution>
