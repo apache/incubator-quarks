@@ -85,10 +85,12 @@
           -->
           <execution>
             <id>download-licenses</id>
+            <phase>generate-resources</phase>
             <goals>
               <goal>download-licenses</goal>
             </goals>
             <configuration>
+              <licensesConfigFile>src/license/license.xml</licensesConfigFile>
               <licensesOutputDirectory>
                 ${project.build.directory}/${project.artifactId}-${project.version}/META-INF/licenses
               </licensesOutputDirectory>
@@ -141,13 +143,6 @@
           </execution>
         </executions>
       </plugin>
-      <!--plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
-        <configuration>
-          <warSourceExcludes>META-INF/</warSourceExcludes>
-        </configuration>
-      </plugin-->
       <plugin>
         <groupId>org.apache.tomcat.maven</groupId>
         <artifactId>tomcat7-maven-plugin</artifactId>
