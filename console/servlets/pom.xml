@@ -60,29 +60,23 @@
           </excludes>
         </configuration>
       </plugin>
+      <!--
+          The default configuration would include the META-INF stuff into the
+          WEB-INF/classes/META-INF directory. We want it in the project root.
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <configuration>
+          <outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}</outputDirectory>
+        </configuration>
+      </plugin>
       <!-- download and include copies of all dependency license texts -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>
         <version>1.14</version>
         <executions>
-          <!--
-              Generate the "THIRD-PARTY.txt" containing information about which
-              third party dependency uses which license.
-          -->
-          <execution>
-            <id>generate-third-party</id>
-            <goals>
-              <goal>add-third-party</goal>
-            </goals>
-            <configuration>
-              <licenseMerges>
-                <licenseMerge>Apache License, Version 2.0|Apache 2.0|Apache License 2.0</licenseMerge>
-                <licenseMerge>BSD 3-Clause|New BSD License</licenseMerge>
-              </licenseMerges>
-              <outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}</outputDirectory>
-            </configuration>
-          </execution>
           <!--
               Generate the "licenses" directory containing downloaded license texts
               As some licenses are no longer downloadable at the locations specified
@@ -95,7 +89,9 @@
               <goal>download-licenses</goal>
             </goals>
             <configuration>
-              <licensesOutputDirectory>${project.build.directory}/${project.artifactId}-${project.version}/licenses</licensesOutputDirectory>
+              <licensesOutputDirectory>
+                ${project.build.directory}/${project.artifactId}-${project.version}/META-INF/licenses
+              </licensesOutputDirectory>
             </configuration>
           </execution>
         </executions>
@@ -145,6 +141,13 @@
           </execution>
         </executions>
       </plugin>
+      <!--plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <warSourceExcludes>META-INF/</warSourceExcludes>
+        </configuration>
+      </plugin-->
       <plugin>
         <groupId>org.apache.tomcat.maven</groupId>
         <artifactId>tomcat7-maven-plugin</artifactId>
