@@ -118,8 +118,8 @@
             <configuration>
               <!-- I was getting random failures if not running retrolambda in a separate process -->
               <fork>true</fork>
-              <mainInputDir>${project.build.outputDirectory}/META-INF/classes</mainInputDir>
-              <mainOutputDir>${project.build.outputDirectory}/META-INF/classes</mainOutputDir>
+              <mainInputDir>${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes</mainInputDir>
+              <mainOutputDir>${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/classes</mainOutputDir>
             </configuration>
           </execution>
         </executions>
