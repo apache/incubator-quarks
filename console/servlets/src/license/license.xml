@@ -91,16 +91,6 @@
       </licenses>
     </dependency>
     <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId></artifactId>
-      <licenses>
-        <license>
-          <name>MIT License</name>
-          <url>https://spdx.org/licenses/MIT.html#licenseText</url>
-        </license>
-      </licenses>
-    </dependency>
-    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>1.7.12</version>
