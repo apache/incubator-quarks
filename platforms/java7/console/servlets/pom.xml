@@ -34,6 +34,44 @@
 
   <build>
     <plugins>
+      <!--
+        The default configuration would include the META-INF stuff into the
+        WEB-INF/classes/META-INF directory. We want it in the project root.
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <configuration>
+          <outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}</outputDirectory>
+        </configuration>
+      </plugin>
+      <!-- download and include copies of all dependency license texts -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <version>1.14</version>
+        <executions>
+          <!--
+              Generate the "licenses" directory containing downloaded license texts
+              As some licenses are no longer downloadable at the locations specified
+              inside the jars, the src/licenses/licenses.xml file provides updated
+              information.
+          -->
+          <execution>
+            <id>download-licenses</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>download-licenses</goal>
+            </goals>
+            <configuration>
+              <licensesConfigFile>src/license/license.xml</licensesConfigFile>
+              <licensesOutputDirectory>
+                ${project.build.directory}/${project.artifactId}-${project.version}/META-INF/licenses
+              </licensesOutputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -51,7 +89,7 @@
                   <artifactId>edgent-console-servlets</artifactId>
                   <version>${project.version}</version>
                   <type>war</type>
-                  <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                  <outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}</outputDirectory>
                   <excludes>META-INF/**</excludes>
                 </artifactItem>
                 <artifactItem>
@@ -108,6 +146,34 @@
       <artifactId>javax.servlet-api</artifactId>
       <version>3.1.0</version>
       <scope>provided</scope>
+    </dependency>
+    <!--
+       Added these dependencies as "optional" so they are listed in the
+       META-INF/DEPENDENCIES section, but not really included in the output.
+   -->
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>jquery</artifactId>
+      <version>1.11.2</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>jquery-ui</artifactId>
+      <version>1.11.4</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars.bower</groupId>
+      <artifactId>d3</artifactId>
+      <version>3.3.9</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars.bower</groupId>
+      <artifactId>d3-plugins-sankey</artifactId>
+      <version>1.1.0</version>
+      <optional>true</optional>
     </dependency>
   </dependencies>
 

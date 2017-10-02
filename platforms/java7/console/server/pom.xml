@@ -88,6 +88,33 @@
           </execution>
         </executions>
       </plugin>
+      <!-- download and include copies of all dependency license texts -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <version>1.14</version>
+        <executions>
+          <!--
+              Generate the "licenses" directory containing downloaded license texts
+              As some licenses are no longer downloadable at the locations specified
+              inside the jars, the src/licenses/licenses.xml file provides updated
+              information.
+          -->
+          <execution>
+            <id>download-licenses</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>download-licenses</goal>
+            </goals>
+            <configuration>
+              <licensesConfigFile>src/license/license.xml</licensesConfigFile>
+              <licensesOutputDirectory>
+                ${project.build.outputDirectory}/META-INF/licenses
+              </licensesOutputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
@@ -152,13 +179,46 @@
       <version>1.7.12</version>
     </dependency>
 
-    <!-- Just needed to ensure the console-servlets module is built before this module -->
+    <!--
+        Added these dependencies as "optional" so they are listed in the
+        META-INF/DEPENDENCIES section, but not really included in the output.
+    -->
     <dependency>
-      <groupId>org.apache.edgent.java7.console</groupId>
+      <groupId>org.apache.edgent.console</groupId>
       <artifactId>edgent-console-servlets</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <type>war</type>
-      <scope>test</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.8.0</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>jquery</artifactId>
+      <version>1.11.2</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>jquery-ui</artifactId>
+      <version>1.11.4</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars.bower</groupId>
+      <artifactId>d3</artifactId>
+      <version>3.3.9</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars.bower</groupId>
+      <artifactId>d3-plugins-sankey</artifactId>
+      <version>1.1.0</version>
+      <optional>true</optional>
     </dependency>
   </dependencies>
 
