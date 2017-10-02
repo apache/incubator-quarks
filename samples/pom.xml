@@ -312,6 +312,28 @@
     </pluginManagement>
 
     <plugins>
+
+      <!-- Make sure the DISCLAIMER contains the incubator version -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-remote-resources-plugin</artifactId>
+        <version>1.5</version><!--$NO-MVN-MAN-VER$-->
+        <executions>
+          <execution>
+            <id>process-resource-bundles</id>
+            <goals>
+              <goal>process</goal>
+            </goals>
+            <configuration>
+              <resourceBundles>
+                <resourceBundle>org.apache:apache-jar-resource-bundle:1.4</resourceBundle>
+                <!-- Will generate META-INF/DISCLAIMER  -->
+                <resourceBundle>org.apache.apache.resources:apache-incubator-disclaimer-resource-bundle:1.2-SNAPSHOT</resourceBundle>
+              </resourceBundles>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <!-- build an uber JAR -->
         <groupId>org.apache.maven.plugins</groupId>
