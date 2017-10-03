@@ -46,26 +46,7 @@
       </resource>
     </resources>
     <plugins>
-      <plugin>
-        <groupId>org.apache.rat</groupId>
-        <artifactId>apache-rat-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>license-check</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <excludes combine.children="append">
-            <!-- TODO: Still got one unlicensed file in there ... -->
-            <exclude>src/main/webapp/js/ext/**</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-      <!--
+     <!--
           The default configuration would include the META-INF stuff into the
           WEB-INF/classes/META-INF directory. We want it in the project root.
       -->
