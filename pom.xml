@@ -449,7 +449,9 @@
         </executions>
       </plugin>
 
-      <!-- Make sure the DISCLAIMER contains the incubator version -->
+      <!-- Make sure the DISCLAIMER contains the incubator version
+           and identify supplemental model information.
+       -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-remote-resources-plugin</artifactId>
@@ -461,6 +463,9 @@
               <goal>process</goal>
             </goals>
             <configuration>
+              <!-- Identify where supplemental-model.xml resides.
+                   See the comments in it.
+                -->
               <appendedResourcesDirectory>../../src/main/appended-resources</appendedResourcesDirectory>
               <resourceBundles>
                 <resourceBundle>org.apache:apache-jar-resource-bundle:1.4</resourceBundle>

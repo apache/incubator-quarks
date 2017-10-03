@@ -17,8 +17,22 @@
   limitations under the License.
 
 -->
+<!--
+  Some times the third party dependencies don't have 100% accurate License
+  and Organization information. Some times the Licenses are simply just
+  named differently ("Apache License, Version 2.0" or "AL2.0") or the link
+  to the license text no longer works. 
+  This file is used by the maven-remote-resources-plugin to lookup missing
+  and incorrect information to include in generated DEPENDENCIES files.
+  
+  TODO: hmm the need for this information is inherently dependent
+  on the version of the artifact that we use. Hence it may become
+  unnecessary in later versions.  But below we don't document which
+  version(s) the info is needed for.
+  ->
 <supplementalDataModels>
   <supplement>
+    <!-- from multiple projects -->
     <project>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
@@ -32,6 +46,7 @@
     </project>
   </supplement>
   <supplement>
+    <!-- from multiple projects -->
     <project>
       <groupId>io.dropwizard.metrics</groupId>
       <artifactId>metrics-core</artifactId>
@@ -44,6 +59,7 @@
     </project>
   </supplement>
   <supplement>
+    <!-- from console/servlets -->
     <project>
       <groupId>org.webjars.bower</groupId>
       <artifactId>d3-plugins-sankey</artifactId>
@@ -56,6 +72,7 @@
     </project>
   </supplement>
   <supplement>
+    <!-- from console/servlets -->
     <project>
       <groupId>org.webjars.bower</groupId>
       <artifactId>d3</artifactId>
@@ -68,6 +85,7 @@
     </project>
   </supplement>
   <supplement>
+    <!-- from console/servlets -->
     <project>
       <groupId>org.webjars</groupId>
       <artifactId>jquery-ui</artifactId>
@@ -80,6 +98,7 @@
     </project>
   </supplement>
   <supplement>
+    <!-- from console/servlets -->
     <project>
       <groupId>org.webjars</groupId>
       <artifactId>jquery</artifactId>
@@ -92,6 +111,7 @@
     </project>
   </supplement>
   <supplement>
+    <!-- from console/server -->
     <project>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-http</artifactId>
@@ -104,6 +124,7 @@
     </project>
   </supplement>
   <supplement>
+    <!-- from console/server -->
     <project>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-io</artifactId>
@@ -116,6 +137,7 @@
     </project>
   </supplement>
   <supplement>
+    <!-- from console/server -->
     <project>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-security</artifactId>
@@ -128,6 +150,7 @@
     </project>
   </supplement>
   <supplement>
+    <!-- from console/server -->
     <project>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-server</artifactId>
@@ -140,6 +163,7 @@
     </project>
   </supplement>
   <supplement>
+    <!-- from console/server -->
     <project>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-servlet</artifactId>
@@ -152,6 +176,7 @@
     </project>
   </supplement>
   <supplement>
+    <!-- from console/server -->
     <project>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-util</artifactId>
@@ -164,6 +189,7 @@
     </project>
   </supplement>
   <supplement>
+    <!-- from console/server -->
     <project>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-webapp</artifactId>
@@ -176,6 +202,7 @@
     </project>
   </supplement>
   <supplement>
+    <!-- from console/server -->
     <project>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-xml</artifactId>

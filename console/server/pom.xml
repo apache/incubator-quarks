@@ -34,6 +34,7 @@
   <build>
     <resources>
       <resource>
+        <!--  bundle the licenses of the artifacts we are bundling -->
         <directory>${project.basedir}/../../src/main/appended-resources/licenses</directory>
         <targetPath>${project.build.outputDirectory}/META-INF/licenses</targetPath>
       </resource>
@@ -54,6 +55,20 @@
               <goal>copy</goal>
             </goals>
             <configuration>
+               <!--  Bundle these dependencies in the jar.
+                    
+                  You must maintain the corresponding info if you
+                  add/remove artifacts or change their versions:
+                    - an "optional=true" build dependency declaration below
+                    - entry in src/main/resources/META-INF/LICENSE
+                    - entry in src/main/resources/META-INF/NOTICE when appropriate                    
+ 
+                  You must include the bundled artifact's transitive
+                  dependencies. See console/servlets and its pom,LICENSE,NOTICE.
+                  
+                  You must maintain the info in this project's
+                  corresponding platforms/java7 files.
+               -->
               <artifactItems>
                 <artifactItem>
                   <groupId>org.apache.edgent.console</groupId>
@@ -119,8 +134,9 @@
     </dependency>
 
     <!--
-        Added these dependencies as "optional" so they are listed in the
-        META-INF/DEPENDENCIES section, but not really included in the output.
+        Augment META-INF/DEPENDENCIES to include the
+        the bundled edgent-console-servlets from above
+        by declaring it as an "optional" dependency.
     -->
     <dependency>
       <groupId>org.apache.edgent.console</groupId>
@@ -129,6 +145,15 @@
       <type>war</type>
       <optional>true</optional>
     </dependency>
+    
+    <!--
+        Augment META-INF/DEPENDENCIES to include the
+        the bundled edgent-console-servlets's bundled dependencies
+        by declaring them as "optional" dependencies.
+        
+        This must be the exact list as the corresponding
+        entries in console/servlets/pom.xml
+    -->
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>

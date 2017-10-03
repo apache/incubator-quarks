@@ -39,6 +39,7 @@
         <directory>${project.build.directory}/generated-resources/META-INF/resources/webjars</directory>
         <targetPath>${project.build.directory}/${project.artifactId}-${project.version}/js/ext</targetPath>
       </resource>
+      <!--  bundle the licenses of the artifacts we are bundling -->
       <resource>
         <directory>${project.basedir}/../../src/main/appended-resources/licenses</directory>
         <targetPath>${project.build.directory}/${project.artifactId}-${project.version}/META-INF/licenses</targetPath>
@@ -86,6 +87,21 @@
               <goal>unpack</goal>
             </goals>
             <configuration>
+              <!--  Bundle these dependencies in the war.
+                    
+                  You must maintain the corresponding info if you
+                  add/remove artifacts or change their versions:
+                    - an "optional=true" build dependency declaration below
+                    - entry in src/main/webapp/META-INF/LICENSE
+                    - entry in src/main/webapp/META-INF/NOTICE when appropriate
+                    - info in ../../src/main/appended-resources/supplemental-models.xml
+                    
+                  You must maintain the info in the corresponding
+                  console/server files because it bundles this war. 
+                  
+                  You must maintain the info in this project's
+                  corresponding platforms/java7 files.
+               -->
               <artifactItems>
                 <artifactItem>
                   <groupId>org.webjars</groupId>
@@ -140,9 +156,15 @@
       <version>3.1.0</version>
       <scope>provided</scope>
     </dependency>
+
     <!--
-        Added these dependencies as "optional" so they are listed in the
-        META-INF/DEPENDENCIES section, but not really included in the output.
+        Augment META-INF/DEPENDENCIES to include the
+        dynamically bundled components from above
+        by declaring them as "optional" dependencies.
+        
+        TODO - ability to declare an entry for the
+        js/ext/d3.legend.js that we bundle?  
+        Any coordinates for it? Do they have to "work"?
     -->
     <dependency>
       <groupId>org.webjars</groupId>
