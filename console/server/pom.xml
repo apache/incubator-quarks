@@ -50,7 +50,7 @@
         <executions>
           <execution>
             <id>copy</id>
-            <phase>generate-test-resources</phase>
+            <phase>generate-resources</phase>
             <goals>
               <goal>copy</goal>
             </goals>

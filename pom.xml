@@ -302,6 +302,9 @@
         </executions>
         <configuration>
           <excludes>
+            <!-- License texts -->
+            <exclude>src/main/appended-resources/licenses/**</exclude>
+
             <!-- Git related files -->
             <exclude>**/.git/**</exclude>
             <exclude>**/.gitignore</exclude>
