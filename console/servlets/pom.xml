@@ -136,6 +136,26 @@
           </execution>
         </executions>
       </plugin>
+      <!-- Download JavaScript form GitHub -->
+      <plugin>
+        <groupId>com.googlecode.maven-download-plugin</groupId>
+        <artifactId>download-maven-plugin</artifactId>
+        <version>1.2.1</version>
+        <executions>
+          <execution>
+            <id>get-d3-legend-js</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>wget</goal>
+            </goals>
+            <configuration>
+              <url>https://gist.githubusercontent.com/ZJONSSON/3918369/raw/bf9bce6b68a3b70f87450f155436ca4a84af1ba4/d3.legend.js</url>
+              <outputDirectory>${project.build.directory}/generated-resources/META-INF/resources/webjars/d3.legend/</outputDirectory>
+              <outputFileName>d3.legend.js</outputFileName>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.tomcat.maven</groupId>
         <artifactId>tomcat7-maven-plugin</artifactId>
