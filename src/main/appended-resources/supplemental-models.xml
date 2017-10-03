@@ -29,7 +29,7 @@
   on the version of the artifact that we use. Hence it may become
   unnecessary in later versions.  But below we don't document which
   version(s) the info is needed for.
-  ->
+-->
 <supplementalDataModels>
   <supplement>
     <!-- from multiple projects -->
