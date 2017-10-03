@@ -204,19 +204,19 @@
 -----------------------------------------------------------------------------------------------
 
 This product bundles jquery 1.11.2, which is available under a
-"MIT" license.  For details, see META-INF/licenses/mit license - mit.html.
+"MIT" license.  For details, see META-INF/licenses/mit-license.html.
 
 This product bundles jquery-ui 1.11.4, which is available under a
-"MIT" license.  For details, see META-INF/licenses/mit license - mit.html.
+"MIT" license.  For details, see META-INF/licenses/mit-license.html.
 
 This product bundles d3 3.3.9, which is available under a
-"BSD 3-Clause" license.  For details, see META-INF/licenses/bsd 3-clause - bsd-3-clause.html.
+"BSD 3-Clause" license.  For details, see META-INF/licenses/bsd-3-clause.html.
 
 This product bundles d3-plugins-sankey 1.1.0, which is available under a
-"BSD 2-Clause" license.  For details, see META-INF/licenses/bsd 2-clause - bsd-2-clause.html.
+"BSD 2-Clause" license.  For details, see META-INF/licenses/bsd-2-clause.html.
 
 This product bundles d3.legend.js, which is available under a
-"MIT" license.  For details, see META-INF/licenses/mit license - mit.html.
+"MIT" license.  For details, see META-INF/licenses/mit-license.html.
 
 This product includes code derived from the JSR-166 project (ThreadLocalRandom, Striped64,
 LongAdder) released into the public domain.

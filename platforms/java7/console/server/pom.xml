@@ -32,6 +32,12 @@
   <name>Apache Edgent (Java 7): Console: Server</name>
 
   <build>
+    <resources>
+      <resource>
+        <directory>${project.basedir}/../../../../src/main/appended-resources/licenses</directory>
+        <targetPath>${project.build.outputDirectory}/META-INF/licenses</targetPath>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -84,33 +90,6 @@
                   <destFileName>servlets.war</destFileName>
                 </artifactItem>
               </artifactItems>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <!-- download and include copies of all dependency license texts -->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>license-maven-plugin</artifactId>
-        <version>1.14</version>
-        <executions>
-          <!--
-              Generate the "licenses" directory containing downloaded license texts
-              As some licenses are no longer downloadable at the locations specified
-              inside the jars, the src/licenses/licenses.xml file provides updated
-              information.
-          -->
-          <execution>
-            <id>download-licenses</id>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>download-licenses</goal>
-            </goals>
-            <configuration>
-              <licensesConfigFile>src/license/license.xml</licensesConfigFile>
-              <licensesOutputDirectory>
-                ${project.build.outputDirectory}/META-INF/licenses
-              </licensesOutputDirectory>
             </configuration>
           </execution>
         </executions>
