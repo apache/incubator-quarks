@@ -91,7 +91,6 @@
                     
                   You must maintain the corresponding info if you
                   add/remove artifacts or change their versions:
-                    - an "optional=true" build dependency declaration below
                     - entry in src/main/webapp/META-INF/LICENSE
                     - entry in src/main/webapp/META-INF/NOTICE when appropriate
                     - info in ../../src/main/appended-resources/supplemental-models.xml
@@ -155,40 +154,6 @@
       <artifactId>javax.servlet-api</artifactId>
       <version>3.1.0</version>
       <scope>provided</scope>
-    </dependency>
-
-    <!--
-        Augment META-INF/DEPENDENCIES to include the
-        dynamically bundled components from above
-        by declaring them as "optional" dependencies.
-        
-        TODO - ability to declare an entry for the
-        js/ext/d3.legend.js that we bundle?  
-        Any coordinates for it? Do they have to "work"?
-    -->
-    <dependency>
-      <groupId>org.webjars</groupId>
-      <artifactId>jquery</artifactId>
-      <version>1.11.2</version>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.webjars</groupId>
-      <artifactId>jquery-ui</artifactId>
-      <version>1.11.4</version>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.webjars.bower</groupId>
-      <artifactId>d3</artifactId>
-      <version>3.3.9</version>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.webjars.bower</groupId>
-      <artifactId>d3-plugins-sankey</artifactId>
-      <version>1.1.0</version>
-      <optional>true</optional>
     </dependency>
   </dependencies>
 

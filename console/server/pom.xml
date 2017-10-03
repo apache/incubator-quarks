@@ -59,12 +59,10 @@
                     
                   You must maintain the corresponding info if you
                   add/remove artifacts or change their versions:
-                    - an "optional=true" build dependency declaration below
                     - entry in src/main/resources/META-INF/LICENSE
                     - entry in src/main/resources/META-INF/NOTICE when appropriate                    
  
-                  You must include the bundled artifact's transitive
-                  dependencies. See console/servlets and its pom,LICENSE,NOTICE.
+                  See console/servlets and its pom,LICENSE,NOTICE.
                   
                   You must maintain the info in this project's
                   corresponding platforms/java7 files.
@@ -143,45 +141,6 @@
       <artifactId>edgent-console-servlets</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <type>war</type>
-      <optional>true</optional>
-    </dependency>
-    
-    <!--
-        Augment META-INF/DEPENDENCIES to include the
-        the bundled edgent-console-servlets's bundled dependencies
-        by declaring them as "optional" dependencies.
-        
-        This must be the exact list as the corresponding
-        entries in console/servlets/pom.xml
-    -->
-    <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-      <version>2.8.0</version>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.webjars</groupId>
-      <artifactId>jquery</artifactId>
-      <version>1.11.2</version>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.webjars</groupId>
-      <artifactId>jquery-ui</artifactId>
-      <version>1.11.4</version>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.webjars.bower</groupId>
-      <artifactId>d3</artifactId>
-      <version>3.3.9</version>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.webjars.bower</groupId>
-      <artifactId>d3-plugins-sankey</artifactId>
-      <version>1.1.0</version>
       <optional>true</optional>
     </dependency>
   </dependencies>
