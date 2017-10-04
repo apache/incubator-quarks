@@ -134,54 +134,16 @@
     </dependency>
 
     <!--
-        Augment META-INF/DEPENDENCIES to include the
-        the bundled edgent-console-servlets from above
-        by declaring it as an "optional" dependency.
+        This artifact is needed by the maven-dependency-plugin
+        by marking this dependency optional, it is not included
+        in the resulting artifact, but Maven ensures it is built
+        prior to this module.
     -->
     <dependency>
       <groupId>org.apache.edgent.console</groupId>
       <artifactId>edgent-console-servlets</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <type>war</type>
-      <optional>true</optional>
-    </dependency>
-    
-    <!--
-        Augment META-INF/DEPENDENCIES to include the
-        the bundled edgent-console-servlets's bundled dependencies
-        by declaring them as "optional" dependencies.
-        
-        This must be the exact list as the corresponding
-        entries in console/servlets/pom.xml
-    -->
-    <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-      <version>2.8.0</version>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.webjars</groupId>
-      <artifactId>jquery</artifactId>
-      <version>1.11.2</version>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.webjars</groupId>
-      <artifactId>jquery-ui</artifactId>
-      <version>1.11.4</version>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.webjars.bower</groupId>
-      <artifactId>d3</artifactId>
-      <version>3.3.9</version>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.webjars.bower</groupId>
-      <artifactId>d3-plugins-sankey</artifactId>
-      <version>1.1.0</version>
       <optional>true</optional>
     </dependency>
   </dependencies>
