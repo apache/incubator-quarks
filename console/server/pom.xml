@@ -36,6 +36,10 @@
       <resource>
         <!--  bundle the licenses of the artifacts we are bundling -->
         <directory>${project.basedir}/../../src/main/appended-resources/licenses</directory>
+        <includes>
+          <include>bsd-*</include>
+          <include>mit-*</include>
+        </includes>
         <targetPath>${project.build.outputDirectory}/META-INF/licenses</targetPath>
       </resource>
     </resources>
