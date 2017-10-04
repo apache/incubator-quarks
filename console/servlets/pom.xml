@@ -141,6 +141,9 @@
         </executions>
       </plugin>
       <plugin>
+        <!--  Included to enable "mvn tomcat:run" and have a running
+              console server without using the server jar.
+        -->
         <groupId>org.apache.tomcat.maven</groupId>
         <artifactId>tomcat7-maven-plugin</artifactId>
         <version>2.2</version>
