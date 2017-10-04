@@ -31,13 +31,26 @@
 
   <fileSets>
     <fileSet>
-      <directory>${project.basedir}/../../../</directory>
-      <outputDirectory>/</outputDirectory>
+      <directory>${project.basedir}/../../..</directory>
+      <outputDirectory/>
       <includes>
-        <include>DISCLAIMER*</include>
-        <include>LICENSE*</include>
-        <include>NOTICE*</include>
+        <include>DISCLAIMER</include>
+        <include>LICENSE</include>
+        <include>NOTICE</include>
       </includes>
+    </fileSet>
+
+    <fileSet>
+      <directory>${project.basedir}/../../../src/main/appended-resources/licenses</directory>
+      <outputDirectory>licenses</outputDirectory>
+    </fileSet>
+
+    <fileSet>
+      <directory>${project.build.outputDirectory}/META-INF</directory>
+      <includes>
+        <include>DEPENDENCIES</include>
+      </includes>
+      <outputDirectory/>
     </fileSet>
 
     <!--fileSet>
@@ -49,22 +62,22 @@
   <dependencySets>
     <!-- Any edgent libs -->
     <dependencySet>
-      <outputDirectory>/libs</outputDirectory>
+      <outputDirectory>libs</outputDirectory>
       <scope>runtime</scope>
       <includes>
-        <include>org.apache.edgent*</include>
+        <include>org.apache.edgent.android*</include>
       </includes>
       <excludes>
-        <exclude>org.apache.edgent.distribution*</exclude>
+        <exclude>org.apache.edgent.android.distribution*</exclude>
       </excludes>
     </dependencySet>
 
     <!-- All other libs are treated as external libs -->
     <dependencySet>
-      <outputDirectory>/ext</outputDirectory>
+      <outputDirectory>ext</outputDirectory>
       <scope>runtime</scope>
       <excludes>
-        <exclude>org.apache.edgent*</exclude>
+        <exclude>org.apache.edgent.android*</exclude>
       </excludes>
     </dependencySet>
   </dependencySets>

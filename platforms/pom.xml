@@ -46,8 +46,8 @@
               <goal>process</goal>
             </goals>
             <configuration>
-              <appendedResourcesDirectory>../../../../src/main/appended-resources</appendedResourcesDirectory>
               <resourceBundles>
+                <resourceBundle>org.apache:apache-jar-resource-bundle:1.4</resourceBundle>
                 <!-- Will generate META-INF/DISCLAIMER  -->
                 <resourceBundle>org.apache.apache.resources:apache-incubator-disclaimer-resource-bundle:1.2-SNAPSHOT</resourceBundle>
               </resourceBundles>
@@ -55,7 +55,6 @@
           </execution>
         </executions>
       </plugin>
-
     </plugins>
   </build>
 
