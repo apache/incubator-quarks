@@ -74,7 +74,6 @@
                   add/remove artifacts or change their versions:
                     - entry in src/main/webapp/META-INF/LICENSE
                     - entry in src/main/webapp/META-INF/NOTICE when appropriate
-                    - info in ../../src/main/appended-resources/supplemental-models.xml
                     
                   You must maintain the info in the corresponding
                   console/server files because it bundles this war. 
