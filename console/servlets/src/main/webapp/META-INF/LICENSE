@@ -201,22 +201,42 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 
------------------------------------------------------------------------------------------------
+======================================
+APACHE EDGENT SUBCOMPONENTS:
 
-This product bundles jquery 1.11.2, which is available under a
-"MIT" license.  For details, see META-INF/licenses/mit-license.html.
+This binary includes a number of subcomponents with separate
+copyright notices and license terms.  Your use of this binary
+is subject to the terms and conditions of the following licenses.
 
-This product bundles jquery-ui 1.11.4, which is available under a
-"MIT" license.  For details, see META-INF/licenses/mit-license.html.
+==========================
+License: Apache License Version 2.0
+For details, see META-INF/licenses/apache-license-version-2.0.txt
 
-This product bundles d3 3.3.9, which is available under a
-"BSD 3-Clause" license.  For details, see META-INF/licenses/bsd-3-clause.html.
+gson (com.google.code.gson:gson:2.2.4)
+metrics-core (io.dropwizard.metrics:metrics-core:3.1.2)
 
-This product bundles d3-plugins-sankey 1.1.0, which is available under a
-"BSD 2-Clause" license.  For details, see META-INF/licenses/bsd-2-clause.html.
+==========================
+License: MIT
 
-This product bundles d3.legend.js, which is available under a
-"MIT" license.  For details, see META-INF/licenses/mit-license.html.
+jquery (org.webjars:jquery:1.11.2)
+    For details, see META-INF/licenses/jquery-1_11_2-MIT.txt.
 
-This product includes code derived from the JSR-166 project (ThreadLocalRandom, Striped64,
-LongAdder) released into the public domain.
+jquery-ui (org.webjars:jquery-ui:1.11.4)
+    For details, see META-INF/licenses/jquery-ui-1_11_4-MIT.txt.
+
+d3.legend.js (https://gist.githubusercontent.com/ZJONSSON/3918369/raw/bf9bce6b68a3b70f87450f155436ca4a84af1ba4/d3.legend.js)
+    For details, see META-INF/licenses/d3.legend-MIT.txt.
+
+==========================
+License: BSD 3-Clause
+
+d3 (org.webjars.bower:d3:3.3.9)
+    For details, see META-INF/licenses/d3-3_3_9-BSD.txt.
+
+==========================
+License: BSD 2-Clause
+
+d3-plugins-sankey (org.webjars.bower:d3-plugins-sankey:1.1.0)
+    For details, see META-INF/licenses/d3-plugins-sankey-1_1_0-BSD.txt.
+
+======================================
