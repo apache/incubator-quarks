@@ -59,12 +59,10 @@
                     
                   You must maintain the corresponding info if you
                   add/remove artifacts or change their versions:
-                    - an "optional=true" build dependency declaration below
                     - entry in src/main/resources/META-INF/LICENSE
                     - entry in src/main/resources/META-INF/NOTICE when appropriate                    
  
-                  You must include the bundled artifact's transitive
-                  dependencies. See console/servlets and its pom,LICENSE,NOTICE.
+                  See console/servlets and its pom,LICENSE,NOTICE.
                   
                   You must maintain the info in this project's
                   corresponding platforms/java7 files.

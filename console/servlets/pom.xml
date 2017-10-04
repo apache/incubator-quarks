@@ -76,7 +76,6 @@
                     
                   You must maintain the corresponding info if you
                   add/remove artifacts or change their versions:
-                    - an "optional=true" build dependency declaration below
                     - entry in src/main/webapp/META-INF/LICENSE
                     - entry in src/main/webapp/META-INF/NOTICE when appropriate
                     - info in ../../src/main/appended-resources/supplemental-models.xml
