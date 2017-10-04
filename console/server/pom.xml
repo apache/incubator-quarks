@@ -132,9 +132,10 @@
     </dependency>
 
     <!--
-        Augment META-INF/DEPENDENCIES to include the
-        the bundled edgent-console-servlets from above
-        by declaring it as an "optional" dependency.
+        This artifact is needed by the maven-dependency-plugin
+        by marking this dependency optional, it is not included
+        in the resulting artifact, but Maven ensures it is built
+        prior to this module.
     -->
     <dependency>
       <groupId>org.apache.edgent.console</groupId>

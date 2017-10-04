@@ -4,11 +4,12 @@ Copyright 2017 The Apache Software Foundation
 This product includes software developed at
 The Apache Software Foundation (http://www.apache.org/).
 
-===============================================================================
+-----------------------------------------------------------------------------------------------
 
 Portions of this bundle were developed by IBM Corp.
 Copyright IBM Corp. 2015, 2016
 
+<<<<<<< HEAD
 ===============================================================================
 
 APACHE EDGENT SUBCOMPONENTS:
@@ -19,6 +20,8 @@ copyright notices and license terms.  The following notices apply.
 -------------------------------------------------------------------------------
 metrics-core (io.dropwizard.metrics:metrics-core:3.1.2)
 
+=======
+>>>>>>> 560ba0818da486eac83e02d5d2012b8fa9e829b1
 Metrics
 Copyright 2010-2013 Coda Hale and Yammer, Inc.
 
