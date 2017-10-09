@@ -263,7 +263,13 @@
           </configuration>
         </plugin>
 
-        <!-- Inject the "incubating" into the output filename -->
+        <!-- Inject the "incubating" into the output filename
+           N.B. this finalName config spec is currently ignored/overridden
+           by the "apache-release" profile based configuration
+           in this pom. See that config for the finalName.
+           Retain this for now in case we get to the point where
+           that "apache-release" config is no longer needed.
+         -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-assembly-plugin</artifactId>
@@ -793,6 +799,7 @@
                     <descriptor>src/assembly/source-release.xml</descriptor>
                   </descriptors>
                   <tarLongFileMode>gnu</tarLongFileMode>
+                  <finalName>apache-edgent-incubating-${project.version}</finalName>
                 </configuration>
               </execution>
             </executions>
