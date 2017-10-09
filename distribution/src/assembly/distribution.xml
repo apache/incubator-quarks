@@ -21,6 +21,12 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
 
+  <!--
+    NOTE: each platform (platforms/java7 and platforms/android) have their
+    own distribution project and a copy of this configuration file that
+    must be manually kept in sync. 
+   -->
+   
   <id>bin</id>
 
   <formats>
