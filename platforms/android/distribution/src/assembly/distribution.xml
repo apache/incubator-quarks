@@ -30,7 +30,7 @@
   </formats>
 
   <fileSets>
-    <fileSet>
+    <!--fileSet>
       <directory>${project.basedir}/../../..</directory>
       <outputDirectory/>
       <includes>
@@ -43,12 +43,20 @@
     <fileSet>
       <directory>${project.basedir}/../../../src/main/appended-resources/licenses</directory>
       <outputDirectory>licenses</outputDirectory>
-    </fileSet>
+    </fileSet-->
 
     <fileSet>
       <directory>${project.build.outputDirectory}/META-INF</directory>
       <includes>
         <include>DEPENDENCIES</include>
+      </includes>
+      <outputDirectory/>
+    </fileSet>
+
+    <fileSet>
+      <directory>${project.build.outputDirectory}</directory>
+      <includes>
+        <include>README</include>
       </includes>
       <outputDirectory/>
     </fileSet>
