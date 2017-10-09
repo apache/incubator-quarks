@@ -15,11 +15,45 @@
   limitations under the License.
 -->
 
+# Quickstart
+
+You must have Java 8 installed on your system.
+
+Build the samples for Java 8
+```sh
+./mvnw clean package
+```
+
+Run the HelloEdgent sample
+```sh
+cd topology
+./run-sample.sh HelloEdgent   # prints a hello message and terminates
+  Hello
+  Edgent!
+  ...
+```
+
+# Overview
+
+The Edgent samples provide a starting point for jump starting your
+use of Edgent.  See the _Samples Summary_ section for a list of the samples.
+
+The Edgent samples are organized into a few categories (subdirectories)
+and are a collection of maven projects.  They can be built using maven
+or other maven-integrated tooling such as Eclipse.
+
+An Edgent application template maven project is supplied.
+It may be a useful starting point to clone for your application.
+The template has a standalone maven project pom, rather than a 
+stylized one used by the rest of the samples. 
+See [template/README.md](template/README.md).
+
 See [APPLICATION_DEVELOPMENT.md](APPLICATION_DEVELOPMENT.md) for general
 information on Edgent Application Development, Packaging and Execution.
 
 Additional information may also be found in
 Getting Started https://edgent.apache.org/docs/edgent-getting-started
+
 
 # Setup
 
@@ -28,16 +62,13 @@ or cloned the the samples repository you need to download
 these additional development software tools.
 
 * Java 8 - The development setup assumes Java 8
-* Maven - *(optional) (https://maven.apache.org/)*
 
-Maven is used as build tool. Currently there are two options:
+Maven is used as build tool and a maven-wrapper
+script (`mvwn` or `mvnw.bat`) is included.
 
-1. Using the maven-wrapper (the `mvnw` or `mvnw.bat` command - preferred)
-2. Using an installed version of Maven (the `mvn` command)
-
-The maven-wrapper will automatically download and install the
-correct Maven version and use that. Besides this, there is no
-difference between using the `mvn` and `mvnw` command.
+The maven-wrapper automatically downloads and installs the
+correct Maven version and use it. Besides this, there is no
+difference between using the `mvnw` command and the `mvn` command. 
 
 You may also use a maven-integrated IDE with the samples.
 e.g., see the _Using Eclipse_ section below.
@@ -59,8 +90,8 @@ Java7 platform class files are produced when the appropriate
 profile is specified.
 
 Currently, building and running the samples for the Android platform
-is not supported.  Many samples use the `DevelopmentProvider` and
-the `DevelopmentProvider` is not supported on the Android platform.
+is not supported.  Many samples happen to use the `DevelopmentProvider`,
+which is not supported on the Android platform.
 
 Build the samples
 ```sh
@@ -73,11 +104,13 @@ in the sample category's target directory: `<category>/target`.
 
 ## Running the samples
 
-See the README.md in each sample category directory.
+See the README.md in each sample category directory for information
+on running the samples.
+
 
 # Using Eclipse
 
-The Edgent Git repository, or samples source release bundle, contains 
+The Edgent Git repository and samples source release bundle contains 
 Maven project definitions for the samples.
 
 Once you import the Maven projects into your workspace, builds
@@ -92,10 +125,17 @@ Eclipse Git Team Provider plugin
 1. From the *File* menu, select *Import...*
 2. From the *Git* folder, select *Projects from Git* and click *Next*
 3. Select *Clone URI* to clone the remote repository. Click *Next*.
-    + In the *Location* section, enter the URI of your fork in the *URI* field (e.g., `git@github.com:<username>/incubator-edgent.git`). The other fields will be populated automatically. Click *Next*. If required, enter your passphrase.
-    + In the *Source Git Repository* window, select the branch (usually `master`) and click *Next*
-    + Specify the directory where your local clone will be stored and click *Next*. The repository will be cloned. Note: You can build and run tests using Maven in this directory.
-4. In the *Select a wizard to use for importing projects* window, click *Cancel*.  Then follow the steps below to import the Maven projects.
+    + In the *Location* section, enter the URI of your fork in the *URI* field
+      (e.g., `git@github.com:<username>/incubator-edgent.git`). 
+      The other fields will be populated automatically. 
+      Click *Next*. If required, enter your passphrase.
+    + In the *Source Git Repository* window, select the branch 
+      (usually `master`) and click *Next*
+    + Specify the directory where your local clone will be stored 
+      and click *Next*. The repository will be cloned. 
+      Note: You can build and run tests using Maven in this directory.
+4. In the *Select a wizard to use for importing projects* window, click *Cancel*.  
+   Then follow the steps below to import the Maven projects.
 
 
 Once you have cloned the Git repository to your machine or are working 
@@ -104,7 +144,9 @@ into your workspace
 
 1. From the *File* menu, select *Import...*
 2. From the *Maven* folder, select *Existing Maven Projects* and click *Next*
-  + browse to the `samples` directory in the clone or source release directory and select it.  A hierarchy of samples projects / pom.xml files will be listed and all selected. 
+  + browse to the `samples` directory in the clone or source release directory
+    and select it.  A hierarchy of samples projects / pom.xml files will be
+    listed and all selected. 
   + Verify the *Add project(s) to working set* checkbox is checked
   + Click *Finish*.  Eclipse starts the import process and builds the workspace.
 
@@ -114,11 +156,13 @@ Top-level artifacts such as `README.md` are available under the
 Note: Specifics may change depending on your version of Eclipse or the 
 Eclipse Maven or Git Team Provider.
 
-Once the samples projects have been imported you can run them as any 
-Eclipse application. E.g.,
+Once the samples projects have been imported you can run them from
+Eclipse in the usual manner. E.g.,
 
 1. open the `HelloEdgent.java` sample
-2. click on *Run*, *Run As*, then *Java application*.  `HelloEdgent` runs and prints to the Console view.
+2. click on *Run*, *Run As*, then *Java application*.  
+   `HelloEdgent` runs and prints to the Console view.
+
 
 # Samples Summary
 
@@ -162,6 +206,17 @@ SensorAnalytics      Demonstrates a more complex sample that includes
                      conditional stream tracing.
 </pre>
 
-Other samples are provided but have not yet been fully documented.
+Other samples are provided but have not yet been noted above.
 Feel free to explore.
 
+# Licensing
+
+Apache Edgent samples are released under the Apache License Version 2.0.
+
+Apache Edgent is an effort undergoing incubation at The Apache Software Foundation (ASF),
+sponsored by the Incubator PMC. Incubation is required of all newly accepted
+projects until a further review indicates that the infrastructure, communications,
+and decision making process have stabilized in a manner consistent with other
+successful ASF projects. While incubation status is not necessarily a reflection
+of the completeness or stability of the code, it does indicate that the project
+has yet to be fully endorsed by the ASF.
