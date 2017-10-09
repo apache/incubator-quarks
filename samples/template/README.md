@@ -15,7 +15,7 @@ Read `../README.md` for general information about Edgent Application development
 
 # Building the project
 ```sh
-./mvnw clean install  # add -Pplatform-java7 or -Pplatform-android as needed
+./mvnw clean package  # add -Pplatform-java7 or -Pplatform-android as needed
 ```
 
 # Running the application

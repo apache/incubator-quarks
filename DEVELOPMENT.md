@@ -195,7 +195,8 @@ the `ext` directory contains third party dependencies the Edgent jars require.
 
 <b>NOTE: each third party dependency in the bundle comes with its 
 own copyright and license terms which you implicitly accept when using
-a distribution bundle.</b>
+a distribution bundle.  See the README file in the bundle for more
+information.</b>
 
 You will need to manually setup the CLASSPATH for the build tooling that you're
 using to develop your Edgent application.
