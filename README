@@ -1,31 +1,34 @@
 Building the Apache Edgent SDK from a Source Distribution
 
+Quickstart
+----------
+
+You must have Java 8 installed on your system and connectivity to Maven Central
+(for downloading external thrid party dependencies). Maven will be automatically
+downloaded installed by the maven wrapper `mvnw`.
+
+Build the Edgent SDK Java8 jars and install them in your local maven repository
+
+$ ./mvnw clean install  # add -DskipTests to omit running the tests
+
+You can now construct applications that use Edgent.  The Edgent samples
+are a good place to start and are available as a separate download.
+
+Additional Information
+----------------------
+
 Apache Edgent is supported on several Java target platforms.
 For more information see JAVA_SUPPORT.md in the source tree
 or in the ASF git repository https://git-wip-us.apache.org/repos/asf/incubator-edgent.git
 or in the repository mirror at github https://github.com/apache/incubator-edgent.
 
-Pre-requisites:
-- Java 8 is required to build an Edgent SDK
-- Network connectivity to a maven repository such as Maven Central
-  (for downloading external third party dependencies)
-
-
-Building the Edgent SDK Java8 jars and installing them in the local maven repository
-
-$ ./mvnw clean install # add -DskipTests to omit running the tests
-
-
 See DEVELOPMENT.md in this folder or 
 https://github.com/apache/incubator-edgent/DEVELOPMENT.md for information
 about building the Edgent SDK for the Java 7 and Android platforms.
 
- 
-See samples/README.md in the Edgent Samples source bundle or github repository
-for general information on Edgent Application development and deployment, 
-and for building and running the samples. 
-https://github.com/apache/incubator-edgent/samples/README.md
 
+Licensing
+---------
 
 Apache Edgent is released under the Apache License Version 2.0.
 
