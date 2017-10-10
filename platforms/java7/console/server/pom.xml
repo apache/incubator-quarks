@@ -34,6 +34,10 @@
   <build>
     <resources>
       <resource>
+        <directory>${project.basedir}/src/main/resources</directory>
+        <targetPath>${project.build.outputDirectory}/</targetPath>
+      </resource>
+      <resource>
         <directory>${project.basedir}/../../../../src/main/appended-resources/licenses</directory>
         <targetPath>${project.build.outputDirectory}/META-INF/licenses</targetPath>
       </resource>
