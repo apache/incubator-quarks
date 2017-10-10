@@ -35,7 +35,7 @@
   <name>My Edgent Application</name>
 
   <properties>
-    <edgent.platform></edgent.platform>
+    <edgent.platform/>   <!-- set by -Pplatform-* -->
     <edgent.base.groupId>org.apache.edgent${edgent.platform}</edgent.base.groupId>
     <edgent.version>1.2.0-SNAPSHOT</edgent.version>
 

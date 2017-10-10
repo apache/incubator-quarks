@@ -19,11 +19,9 @@
 ## Create a self contained application specific tar bundle that can be
 ## brought to a system, unpacked and run.
 ##
-## Requires that maven (mvn) be installed and on the PATH
-##
 ## Run from the Application project's top level directory.
 
-USAGE="usage: `basename $0` [--platform {java8|java7|android}] [--mainClass classname] [--appjar jarname] [--add csv-paths]"
+USAGE="usage: `basename $0` [--platform {java8|java7|android}] [--mainClass classname] [--appjar jarname] [--add csv-paths] [--mvn mvn-cmd]"
 
 ## --platform the platform the app was built for (default: java8. options: java7, android)
 ##   This controls which Edgent platform jars are collected.
@@ -35,8 +33,12 @@ USAGE="usage: `basename $0` [--platform {java8|java7|android}] [--mainClass clas
 ##   Works best for paths in/under the App's project dir.
 ##   NOTE: anything in the App's src/main/resources dir generally
 ##   gets included in the App's jar.
+## --mvn mvn-cmd use mvn-cmd instead of "./mvnw"
 
 set -e
+
+SAMPLES_DIR=`(cd $(dirname $0); pwd)`
+MVN_CMD=${SAMPLES_DIR}/mvnw
 
 MAIN_CLASS=com.mycompany.app.App
 APP_JAR=my-app-1.0-SNAPSHOT.jar
@@ -73,7 +75,10 @@ if [ "${PLATFORM}" ] ; then
   PROFILES="-Pplatform-${PLATFORM}"
 fi
 rm -rf target/dependency
-mvn dependency:copy-dependencies -DincludeScope=runtime ${PROFILES}
+# if someone screws up j7 or android deps, uncomment the following and
+# it will help identify wrong jars that are getting included / copied.
+#DEBUG_DEPS=-Dmdep.prependGroupId=true
+${MVN_CMD} dependency:copy-dependencies -DincludeScope=runtime ${PROFILES} ${DEBUG_DEPS}
 
 echo
 echo "##### create target/app-run.sh..."
