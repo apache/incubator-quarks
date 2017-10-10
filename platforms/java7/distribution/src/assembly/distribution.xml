@@ -85,7 +85,7 @@
       <outputDirectory>ext</outputDirectory>
       <scope>runtime</scope>
       <excludes>
-        <exclude>org.apache.edgent.java7*</exclude>
+        <exclude>org.apache.edgent*</exclude>
       </excludes>
     </dependencySet>
   </dependencySets>
