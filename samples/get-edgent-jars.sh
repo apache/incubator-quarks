@@ -17,7 +17,6 @@
 #
 
 ## Get the Apache Edgent jars and their transitive external dependencies.
-## Requires that maven (mvn) be installed and on the PATH
 ##
 ## By default get the Edgent java8 platform jars for the script's default Edgent version.
 ##
@@ -28,12 +27,16 @@
 ## --file gav-file get only the specified artifacts. Not restricted to Edgent jars.
 ##   The Edgent version is substituted for all instances of '{EV}'
 ##   Lines that begin with '#' are ignored.
+## --mvn mvn-cmd use mvn-cmd instead of "./mvnw"
 ##
 ## Creates the directory get-edgent-jars-project and a maven project in it
 
-USAGE="usage: [--platform {java8|java7|android}] [--version edgent-version] [--artifacts csv-gav-list] [--file gav-file]"
+USAGE="usage: [--platform {java8|java7|android}] [--version edgent-version] [--artifacts csv-gav-list] [--file gav-file] [--mvn mvn-cmd]"
 
 set -e
+
+SAMPLES_DIR=`(cd $(dirname $0); pwd)`
+MVN_CMD=${SAMPLES_DIR}/mvnw
 
 EDGENT_PLATFORM=java8
 EDGENT_VERSION=1.2.0
@@ -55,6 +58,9 @@ fi
 if [ "$1" = "--file" -a $# -gt 1 ]; then
     OPT_GAVS_FILE=$2; shift; shift
     OPT_GAVS=`sed -e '/^#/d' < ${OPT_GAVS_FILE}`
+fi
+if [ "$1" = "--mvn" -a $# -gt 1 ]; then
+    MVN_CMD=$2; shift; shift
 fi
 if [ $# != 0 ]; then
     echo "$USAGE"
@@ -132,11 +138,19 @@ confirm "Continue?" || exit
 ###########################
 if [ ! -d ${PROJ_DIR} ]; then
     echo "##### Generating maven project ${PROJ_DIR}..."
-    mvn -B archetype:generate \
+    # ensure a standalone pom (no parent) to avoid unwanted inherited deps
+    TMP_PROJ=${PROJ_DIR}-tmp
+    mkdir ${TMP_PROJ}
+    cd ${TMP_PROJ}
+    ${MVN_CMD} -B archetype:generate \
         -DarchetypeGroupId=org.apache.maven.archeTypes \
+        -DarchetypeArtifactId=maven-archetype-quickstart \
         -DgroupId=org.apache.edgent.tools \
         -DartifactId=${PROJ_DIR} \
         -Dversion=1.0
+    cd ..
+    mv ${TMP_PROJ}/${PROJ_DIR} ${PROJ_DIR}
+    rmdir ${TMP_PROJ}
     cp ${PROJ_DIR}/pom.xml ${PROJ_DIR}/pom.xml.orig
 else
     cp ${PROJ_DIR}/pom.xml.orig ${PROJ_DIR}/pom.xml
@@ -175,12 +189,16 @@ EOF
 ###########################
 echo
 echo "##### Retrieving jars into local maven repo..."
-mvn clean compile
+${MVN_CMD} clean compile
 
 ###########################
 echo
 echo "##### Copying jars..."
-mvn dependency:copy-dependencies -DincludeScope=runtime
+# if someone screws up j7 or android deps, uncomment the following and
+# it will help identify wrong jars that are getting included / copied
+# (and otherwise overwriting each other).
+#DEBUG_DEPS=-Dmdep.prependGroupId=true
+${MVN_CMD} dependency:copy-dependencies -DincludeScope=runtime ${DEBUG_DEPS}
 
 DEPS_SRC_DIR=target/dependency
 EDGENT_DEPS_DIR=${EDGENT_PLATFORM}/edgent-jars
@@ -191,7 +209,7 @@ rm -rf "${EXT_DEPS_DIR}"; mkdir -p ${EXT_DEPS_DIR}
 
 cp ${DEPS_SRC_DIR}/* ${EXT_DEPS_DIR}
 
-for i in `find ${EXT_DEPS_DIR} -name 'edgent-*.*ar'`; do
+for i in `find ${EXT_DEPS_DIR} -name '*edgent-*.*ar'`; do
   mv $i ${EDGENT_DEPS_DIR}
 done
 

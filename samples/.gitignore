@@ -1,0 +1,42 @@
+
+# get-edgent-jars generated outout
+get-edgent-jars-project
+
+*.class
+
+# Local developers toolchain
+/toolchains-local.xml
+
+# Exclude the maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.jar
+
+# More generated artifacts
+target/
+/test/svt/lib
+/release-edgent
+/reports
+/.gradle/
+build/
+/externalJars
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# IntelliJ Idea
+.idea/
+*.iml
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Emacs
+*~
