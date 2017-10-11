@@ -10,6 +10,7 @@ PLATFORMS=java7
 
 for p in ${PLATFORMS}; do
   for proj in ${J8_PROJECTS}; do
+    echo Updating platforms/${p}/${proj}/pom.xml...
     if [ ! -d platforms/${p}/${proj} ]; then
         mkdir -p platforms/${p}/${proj}
     fi

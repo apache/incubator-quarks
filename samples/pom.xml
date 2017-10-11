@@ -37,7 +37,8 @@
   <properties>
     <samples.projname.platform> (Java 8)</samples.projname.platform>  <!--  tweaked by -Pplatform-* -->
     <edgent.base.groupId>org.apache.edgent</edgent.base.groupId>
-    <edgent.core.version>1.2.0-SNAPSHOT</edgent.core.version>
+    <!--  at least for now, the samples version is lockstep with the core -->
+    <edgent.core.version>${project.version}</edgent.core.version>
 
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
