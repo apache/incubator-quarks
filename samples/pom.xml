@@ -32,12 +32,12 @@
   <version>1.2.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>Apache Edgent: Samples</name>
+  <name>Apache Edgent${samples.projname.platform}: Samples</name>
 
   <properties>
-    <edgent.platform/> <!-- set by -Pplatform-* -->    
-    <edgent.base.groupId>org.apache.edgent${edgent.platform}</edgent.base.groupId>
-    <edgent.version>1.2.0-SNAPSHOT</edgent.version>
+    <samples.projname.platform> (Java 8)</samples.projname.platform>  <!--  tweaked by -Pplatform-* -->
+    <edgent.base.groupId>org.apache.edgent</edgent.base.groupId>
+    <edgent.core.version>1.2.0-SNAPSHOT</edgent.core.version>
 
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -57,6 +57,7 @@
     <module>scenarios</module>
     <module>topology</module>
     <module>utils</module>
+    <module>platforms</module>
   </modules>
 
   <dependencies>
@@ -79,150 +80,12 @@
       <scope>runtime</scope>
     </dependency>
 
-    <!-- the Edgent provider(s) being used -->
-    <dependency>
-      <groupId>${edgent.base.groupId}.providers</groupId>
-      <artifactId>edgent-providers-direct</artifactId>
-      <version>${edgent.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>${edgent.base.groupId}.providers</groupId>
-      <artifactId>edgent-providers-development</artifactId>
-      <version>${edgent.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>${edgent.base.groupId}.providers</groupId>
-      <artifactId>edgent-providers-iot</artifactId>
-      <version>${edgent.version}</version>
-    </dependency>
-    <!-- each sample module declares its own connector dependencies, etc -->
+    <!-- each sample module declares its own (platform specific) Edgent dependencies, etc -->
+    <!-- HEADS UP, NO PLATFORM SPECIFIC EDGENT DEPS HERE
+       at they will be inherited by other platform specific
+       projects - which will cause problems.
+    -->
   </dependencies>
-
-  <profiles>
-    <!--
-        This defines a self-activating profile which is only enabled for
-        for projects that have a src/main/java directory (effectivley excludes
-        it from the current pom module.
-    -->
-    <!--profile>
-      <id>generate-classpath</id>
-      <activation>
-        <file>
-          <exists>src/main/java</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-dependency-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>dump-dependency-tree</id>
-                <phase>generate-resources</phase>
-                <goals>
-                  <goal>tree</goal>
-                </goals>
-                <configuration>
-                  <outputFile>${project.build.directory}/dependency-tree.graphml</outputFile>
-                  <outputType>graphml</outputType>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>xml-maven-plugin</artifactId>
-            <version>1.0.1</version>
-            <executions>
-              <execution>
-                <id>transform-dependency-tree</id>
-                <goals>
-                  <goal>transform</goal>
-                </goals>
-                <configuration>
-                  <transformationSets>
-                    <transformationSet>
-                      <file>${project.build.directory}/dependency-tree.graphml</file>
-                      <stylesheet>${project.basedir}/../src/main/xslt/classpath.xsl</stylesheet>
-                      <parameters>
-                        <parameter>
-                          <name>groupId</name>
-                          <value>${project.groupId}</value>
-                        </parameter>
-                        <parameter>
-                          <name>artifactId</name>
-                          <value>${project.artifactId}</value>
-                        </parameter>
-                        <parameter>
-                          <name>version</name>
-                          <value>${project.version}</value>
-                        </parameter>
-                      </parameters>
-                    </transformationSet>
-                  </transformationSets>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile-->
-
-    <profile>
-      <id>platform-java7</id>
-      <properties>
-        <platform.java7>true</platform.java7>
-        <edgent.platform>.java7</edgent.platform>
-      </properties>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>net.orfjackal.retrolambda</groupId>
-            <artifactId>retrolambda-maven-plugin</artifactId>
-            <version>${retrolambda.version}</version>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>process-main</goal>
-                  <goal>process-test</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <!-- Currently, many samples use the DevelopmentProvider,
-         which doesn't exist for the android platform.
-         For now don't support building/running the
-         samples for that context.
-    -->
-    <!--profile>
-      <id>platform-android</id>
-      <properties>
-        <platform.android>true</platform.android>
-        <edgent.platform>.android</edgent.platform>
-      </properties>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>net.orfjackal.retrolambda</groupId>
-            <artifactId>retrolambda-maven-plugin</artifactId>
-            <version>${retrolambda.version}</version>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>process-main</goal>
-                  <goal>process-test</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile-->
-  </profiles>
 
   <build>
     <pluginManagement>

@@ -22,35 +22,27 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.apache.edgent.platforms</groupId>
-    <artifactId>edgent-platforms</artifactId>
+    <groupId>org.apache.edgent.samples.platforms</groupId>
+    <artifactId>edgent-samples-platforms</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.apache.edgent.java7</groupId>
-  <artifactId>edgent-platforms-java7</artifactId>
+  <groupId>org.apache.edgent.java7.samples</groupId>
+  <artifactId>edgent-samples</artifactId>
   <packaging>pom</packaging>
 
-  <name>Apache Edgent: Platforms: Java7</name>
+  <name>Apache Edgent${samples.projname.platform}: Samples</name>
 
   <properties>
-    <!-- The 9.2 version is the last to support Java7 -->
-    <jetty.version>9.2.21.v20170120</jetty.version>
+    <edgent.base.groupId>org.apache.edgent.java7</edgent.base.groupId>
   </properties>
 
   <modules>
-    <!-- Real modules -->
-
-    <!-- Repacked modules -->
-    <module>analytics</module>
-    <module>api</module>
     <module>apps</module>
     <module>connectors</module>
     <module>console</module>
-    <module>providers</module>
-    <module>runtimes</module>
-    <module>spi</module>
-    <module>test</module>
+    <module>scenarios</module>
+    <module>topology</module>
     <module>utils</module>
   </modules>
 
