@@ -89,12 +89,12 @@
     <!--dependency>
       <groupId>${edgent.base.groupId}.android</groupId>
       <artifactId>edgent-android-hardware</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency-->
     <!--dependency>
       <groupId>${edgent.base.groupId}.android</groupId>
       <artifactId>edgent-android-topology</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency-->
 
     <!-- declare Edgent Analytics dependencies
@@ -102,12 +102,12 @@
     <!--dependency>
       <groupId>${edgent.base.groupId}.analytics</groupId>
       <artifactId>edgent-analytics-math3</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency-->
     <!--dependency>
       <groupId>${edgent.base.groupId}.analytics</groupId>
       <artifactId>edgent-analytics-sensors</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency-->
 
     <!-- declare Edgent Utils dependencies
@@ -115,7 +115,7 @@
     <!--dependency>
       <groupId>${edgent.base.groupId}.utils</groupId>
       <artifactId>edgent-utils-metrics</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency-->
 
     <!-- declare Edgent Connector dependencies
@@ -123,37 +123,37 @@
     <!--dependency>
       <groupId>${edgent.base.groupId}.connectors</groupId>
       <artifactId>edgent-connectors-file</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency-->
     <!--dependency>
       <groupId>${edgent.base.groupId}.connectors</groupId>
       <artifactId>edgent-connectors-iot</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency-->
     <!--dependency>
       <groupId>${edgent.base.groupId}.connectors</groupId>
       <artifactId>edgent-connectors-iotp</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency-->
     <!--dependency>
       <groupId>${edgent.base.groupId}.connectors</groupId>
       <artifactId>edgent-connectors-jdbc</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency-->
     <!--dependency>
       <groupId>${edgent.base.groupId}.connectors</groupId>
       <artifactId>edgent-connectors-kafka</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency-->
     <!--dependency>
       <groupId>${edgent.base.groupId}.connectors</groupId>
       <artifactId>edgent-connectors-mqtt</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency-->
     <!--dependency>
       <groupId>${edgent.base.groupId}.connectors</groupId>
       <artifactId>edgent-connectors-serial</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>${edgent.version}</version>
     </dependency-->
 
   </dependencies>
@@ -178,6 +178,9 @@
                   <goal>process-main</goal>
                   <goal>process-test</goal>
                 </goals>
+                <configuration>
+                  <fork>true</fork>
+                </configuration>
               </execution>
             </executions>
           </plugin>
@@ -203,6 +206,9 @@
                   <goal>process-main</goal>
                   <goal>process-test</goal>
                 </goals>
+                <configuration>
+                  <fork>true</fork>
+                </configuration>
               </execution>
             </executions>
           </plugin>
