@@ -31,21 +31,23 @@
 
   <name>Apache Edgent: Connectors: Kafka</name>
 
+  <properties>
+    <remote-resources-maven-plugin.remote-resources.dir>../../src/main/ibm-remote-resources</remote-resources-maven-plugin.remote-resources.dir>
+  </properties>
+
   <!--
-  The pom for kafka includes dependencies that don't make sense for us.
-  In at least one case kafka dependencies include a slf4j *implementation* jar
-  and that conflicts with our samples' binding to a particular
-  version of slf4j implementation.
-  This all seems like fallout from, I believe, the kafka jars containing
-  the code for their cli tools too, and possibly tests, which need things like:
-    slf4j-log4j12, snappy-java, jline, jopt-simple, junit-3.8.1
-  
-  So at least for now, avoid transitive and just match our ant/gradle based
-  config.  Include only the exact dependencies that our kafka
-  dependency requires to function properly.
-  -->
+   The pom for kafka includes dependencies that don't make sense for us.
+   In at least one case kafka dependencies include a slf4j *implementation* jar
+   and that conflicts with our samples' binding to a particular
+   version of slf4j implementation.
+   This all seems like fallout from, I believe, the kafka jars containing
+   the code for their cli tools too, and possibly tests, which need things like:
+     slf4j-log4j12, snappy-java, jline, jopt-simple, junit-3.8.1
 
-
+   So at least for now, avoid transitive and just match our ant/gradle based
+   config.  Include only the exact dependencies that our kafka
+   dependency requires to function properly.
+   -->
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>

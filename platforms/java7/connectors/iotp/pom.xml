@@ -31,6 +31,10 @@
 
   <name>Apache Edgent (Java 7): Connectors: IoTP</name>
 
+  <properties>
+    <remote-resources-maven-plugin.remote-resources.dir>../../../../src/main/ibm-remote-resources</remote-resources-maven-plugin.remote-resources.dir>
+  </properties>
+
   <build>
     <plugins>
       <plugin>

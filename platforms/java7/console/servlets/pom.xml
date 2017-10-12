@@ -40,13 +40,9 @@
       </resource>
     </resources>
     <plugins>
-      <!--
-        The default configuration would include the META-INF stuff into the
-        WEB-INF/classes/META-INF directory. We want it in the project root.
-      -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-resources-plugin</artifactId>
+        <artifactId>maven-remote-resources-plugin</artifactId>
         <configuration>
           <outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}</outputDirectory>
         </configuration>

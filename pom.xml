@@ -36,6 +36,9 @@
   <name>Apache Edgent</name>
   <description>The Apache Edgent Project</description>
 
+  <!-- Needed by the remote-resources-maven-plugin to generate the project time-span in the NOTICE files -->
+  <inceptionYear>2016</inceptionYear>
+
   <scm>
     <connection>scm:git:https://git-wip-us.apache.org/repos/asf/incubator-edgent.git</connection>
     <developerConnection>scm:git:https://git-wip-us.apache.org/repos/asf/incubator-edgent.git</developerConnection>
@@ -63,6 +66,8 @@
     <!-- Tell sonar where the coverage reports are located -->
     <sonar.jacoco.reportPath>${project.build.directory}/coverage-reports/jacoco-ut.exec</sonar.jacoco.reportPath>
     <sonar.jacoco.itReportPath>${project.build.directory}/coverage-reports/jacoco-it.exec</sonar.jacoco.itReportPath>
+
+    <remote-resources-maven-plugin.remote-resources.dir>src/main/remote-resources</remote-resources-maven-plugin.remote-resources.dir>
   </properties>
 
   <!-- Only configure the site distribution as the rest is handled by the apache parent -->
@@ -484,10 +489,13 @@
             </goals>
             <configuration>
               <resourceBundles>
+                <!-- Will generate META-INF/{DEPENDENCIES,LICENSE,NOTICE} -->
                 <resourceBundle>org.apache:apache-jar-resource-bundle:1.4</resourceBundle>
                 <!-- Will generate META-INF/DISCLAIMER  -->
-                <resourceBundle>org.apache.apache.resources:apache-incubator-disclaimer-resource-bundle:1.2-SNAPSHOT</resourceBundle>
+                <resourceBundle>org.apache:apache-incubator-disclaimer-resource-bundle:1.1</resourceBundle>
               </resourceBundles>
+              <!-- Content in this directory will be appended to generated resources -->
+              <appendedResourcesDirectory>${remote-resources-maven-plugin.remote-resources.dir}</appendedResourcesDirectory>
             </configuration>
           </execution>
         </executions>

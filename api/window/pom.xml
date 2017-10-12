@@ -31,6 +31,10 @@
 
   <name>Apache Edgent: API: Window</name>
 
+  <properties>
+    <remote-resources-maven-plugin.remote-resources.dir>../../src/main/ibm-remote-resources</remote-resources-maven-plugin.remote-resources.dir>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.apache.edgent.api</groupId>
