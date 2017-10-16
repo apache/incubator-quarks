@@ -36,7 +36,8 @@
 
   <properties>
     <samples.projname.platform> (Java 8)</samples.projname.platform>  <!--  tweaked by -Pplatform-* -->
-    <edgent.base.groupId>org.apache.edgent</edgent.base.groupId>
+    <edgent.platform/> <!-- set by -Pplatform-* -->    
+    <edgent.base.groupId>org.apache.edgent${edgent.platform}</edgent.base.groupId>
     <!--  at least for now, the samples version is lockstep with the core -->
     <edgent.core.version>${project.version}</edgent.core.version>
 
@@ -58,8 +59,38 @@
     <module>scenarios</module>
     <module>topology</module>
     <module>utils</module>
-    <module>platforms</module>
   </modules>
+    
+  <profiles>
+    <profile>
+      <id>platform-java7</id>
+      <properties>
+        <edgent.platform>.java7</edgent.platform>
+        <platform.java7>true</platform.java7>
+        <samples.projname.platform> (Java 7)</samples.projname.platform>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>net.orfjackal.retrolambda</groupId>
+            <artifactId>retrolambda-maven-plugin</artifactId>
+            <version>${retrolambda.version}</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>process-main</goal>
+                  <goal>process-test</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!-- We don't currently support building samples for Android as many
+         depend on the Development provider / Edgent Console
+    -->
+  </profiles>
 
   <dependencies>
     <!--
@@ -81,11 +112,23 @@
       <scope>runtime</scope>
     </dependency>
 
-    <!-- each sample module declares its own (platform specific) Edgent dependencies, etc -->
-    <!-- HEADS UP, NO PLATFORM SPECIFIC EDGENT DEPS HERE
-       at they will be inherited by other platform specific
-       projects - which will cause problems.
-    -->
+    <!-- Other common sample dependencies -->
+    <dependency>
+      <groupId>${edgent.base.groupId}.providers</groupId>
+      <artifactId>edgent-providers-direct</artifactId>
+      <version>${edgent.core.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${edgent.base.groupId}.providers</groupId>
+      <artifactId>edgent-providers-development</artifactId>
+      <version>${edgent.core.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${edgent.base.groupId}.providers</groupId>
+      <artifactId>edgent-providers-iot</artifactId>
+      <version>${edgent.core.version}</version>
+    </dependency>
+
   </dependencies>
 
   <build>

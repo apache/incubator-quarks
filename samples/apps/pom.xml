@@ -21,8 +21,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <!-- UPDATE_PLATFORM_POMS_MSG_PLACEHOLDER -->
-
   <parent>
     <groupId>org.apache.edgent.samples</groupId>
     <artifactId>edgent-samples</artifactId>
@@ -32,25 +30,10 @@
   <groupId>org.apache.edgent.samples</groupId>
   <artifactId>edgent-samples-apps</artifactId>
 
-  <name>Apache Edgent${samples.projname.platform}: Samples: Apps</name>
+  <name>Apache Edgent Samples${samples.projname.platform}: Apps</name>
 
   <dependencies>
-    <!-- parent pom has SLF4J dependencies -->
-    <dependency>
-      <groupId>${edgent.base.groupId}.providers</groupId>
-      <artifactId>edgent-providers-direct</artifactId>
-      <version>${edgent.core.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>${edgent.base.groupId}.providers</groupId>
-      <artifactId>edgent-providers-development</artifactId>
-      <version>${edgent.core.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>${edgent.base.groupId}.providers</groupId>
-      <artifactId>edgent-providers-iot</artifactId>
-      <version>${edgent.core.version}</version>
-    </dependency>
+    <!-- parent pom has Platforms and SLF4J dependencies -->
 
     <dependency>
       <groupId>${edgent.base.groupId}.analytics</groupId>
@@ -84,7 +67,7 @@
     </dependency>
     
     <dependency>
-      <groupId>${edgent.base.groupId}.samples</groupId>
+      <groupId>org.apache.edgent.samples</groupId>
       <artifactId>edgent-samples-utils</artifactId>
       <version>${project.version}</version>
     </dependency>
