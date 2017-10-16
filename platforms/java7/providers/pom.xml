@@ -34,7 +34,7 @@
   <name>Apache Edgent (Java 7): Providers</name>
 
   <modules>
-    <module>devlopment</module>
+    <module>development</module>
     <module>direct</module>
     <module>iot</module>
   </modules>

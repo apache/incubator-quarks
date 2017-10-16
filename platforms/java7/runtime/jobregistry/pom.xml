@@ -27,13 +27,9 @@
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>edgent-runtime-appservice</artifactId>
+  <artifactId>edgent-runtime-jobregistry</artifactId>
 
-  <name>Apache Edgent (Java 7): Runtime: AppService</name>
-
-  <properties>
-    <remote-resources-maven-plugin.remote-resources.dir>../../../../src/main/ibm-remote-resources</remote-resources-maven-plugin.remote-resources.dir>
-  </properties>
+  <name>Apache Edgent (Java 7): Runtime: JobRegistry</name>
 
   <build>
     <plugins>
@@ -51,14 +47,14 @@
               <artifactItems>
                 <artifactItem>
                   <groupId>org.apache.edgent.runtime</groupId>
-                  <artifactId>edgent-runtime-appservice</artifactId>
+                  <artifactId>edgent-runtime-jobregistry</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
                   <excludes>META-INF/**</excludes>
                 </artifactItem>
                 <artifactItem>
                   <groupId>org.apache.edgent.runtime</groupId>
-                  <artifactId>edgent-runtime-appservice</artifactId>
+                  <artifactId>edgent-runtime-jobregistry</artifactId>
                   <version>${project.version}</version>
                   <classifier>tests</classifier>
                   <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
@@ -82,14 +78,6 @@
       <groupId>org.apache.edgent.java7.api</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-
-    <!-- Just needed to make sure it is scheduled before this module in the reactor -->
-    <dependency>
-      <groupId>org.apache.edgent.java7.test</groupId>
-      <artifactId>edgent-test-appservice-applications</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-      <scope>test</scope>
     </dependency>
   </dependencies>
 

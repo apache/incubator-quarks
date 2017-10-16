@@ -31,10 +31,6 @@
 
   <name>Apache Edgent (Android): Runtime: JobRegistry</name>
 
-  <properties>
-    <remote-resources-maven-plugin.remote-resources.dir>../../../../src/main/ibm-remote-resources</remote-resources-maven-plugin.remote-resources.dir>
-  </properties>
-
   <build>
     <plugins>
       <plugin>
