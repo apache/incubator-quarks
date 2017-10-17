@@ -29,20 +29,21 @@
 ##   Lines that begin with '#' are ignored.
 ## --mvn mvn-cmd use mvn-cmd instead of "./mvnw"
 ##
-## Creates the directory get-edgent-jars-project and a maven project in it
+## Creates bundles and classpath.sh in the target dir.
 
 USAGE="usage: [--platform {java8|java7|android}] [--version edgent-version] [--artifacts csv-gav-list] [--file gav-file] [--mvn mvn-cmd]"
 
 set -e
 
-SAMPLES_DIR=`(cd $(dirname $0); pwd)`
+# project dir is whereever this script resides
+PROJ_DIR=`(cd $(dirname $0); pwd)`
+
+SAMPLES_DIR=`(cd $(dirname $0); pwd)`/..
 MVN_CMD=${SAMPLES_DIR}/mvnw
 
 EDGENT_PLATFORM=java8
-EDGENT_VERSION=1.2.0
+EDGENT_VERSION=
 SLF4J_VERSION=1.7.12
-
-PROJ_DIR=get-edgent-jars-project
 
 if [ "$1" = "--platform" -a $# -gt 1 ]; then
     EDGENT_PLATFORM=$2; shift; shift
@@ -128,58 +129,24 @@ function confirm () {  # [$1: question]
 }
 
 ###########################
-cat <<EOF
-This command downloads the Apache Edgent jars and their transitive external dependencies.
-The external dependencies have their own licensing term that you should review.
-A summary of the external dependencies can be found here <TODO URL>.
-EOF
-confirm "Continue?" || exit
-
-###########################
-if [ ! -d ${PROJ_DIR} ]; then
-    echo "##### Generating maven project ${PROJ_DIR}..."
-    # ensure a standalone pom (no parent) to avoid unwanted inherited deps
-    TMP_PROJ=${PROJ_DIR}-tmp
-    mkdir ${TMP_PROJ}
-    cd ${TMP_PROJ}
-    ${MVN_CMD} -B archetype:generate \
-        -DarchetypeGroupId=org.apache.maven.archeTypes \
-        -DarchetypeArtifactId=maven-archetype-quickstart \
-        -DgroupId=org.apache.edgent.tools \
-        -DartifactId=${PROJ_DIR} \
-        -Dversion=1.0
-    cd ..
-    mv ${TMP_PROJ}/${PROJ_DIR} ${PROJ_DIR}
-    rmdir ${TMP_PROJ}
-    cp ${PROJ_DIR}/pom.xml ${PROJ_DIR}/pom.xml.orig
-else
-    cp ${PROJ_DIR}/pom.xml.orig ${PROJ_DIR}/pom.xml
-fi    
-
-###########################
-
-cd ${PROJ_DIR}
-
-###########################
-
-###########################
 echo
 echo "##### Generating dependency decls..."
 ARTIFACT_GAVS="${OPT_GAVS:-${DEFAULT_GAVS}}"
-ARTIFACT_GAVS=`echo "${ARTIFACT_GAVS}" | sed -e "s/{EV}/${EDGENT_VERSION}/g"`
 mkdir -p target
 DEP_DECLS_FILE=target/tmp-dep-decls
 rm -f ${DEP_DECLS_FILE}
 for i in ${ARTIFACT_GAVS}; do
-    echo $i | awk -F : '{ type=""; if ($4 != "") type="  <type>" $4 "</type>\n"; printf "<dependency>\n  <groupId>%s</groupId>\n  <artifactId>%s</artifactId>\n  <version>%s</version>\n%s</dependency>\n", $1, $2, $3, type }' >> ${DEP_DECLS_FILE}
+    echo $i | awk -F : '{ type=""; if ($3 == "{EV}") $3="${edgent.core.version}"; if ($4 != "") type="  <type>" $4 "</type>\n"; printf "<dependency>\n  <groupId>%s</groupId>\n  <artifactId>%s</artifactId>\n  <version>%s</version>\n%s</dependency>\n", $1, $2, $3, type }' >> ${DEP_DECLS_FILE}
 done
 DEP_DECLS=`cat ${DEP_DECLS_FILE}`
 
 ###########################
 echo
-echo "##### Adding dependency decls to pom..."
-ed pom.xml <<EOF
-/<dependencies>
+echo "##### Generating pom.xml..."
+cd ${PROJ_DIR}
+cp pom.xml.template pom.xml
+ed -s pom.xml <<EOF
+/INJECT_DEPENDENCIES_HERE
 a
 ${DEP_DECLS}
 .
@@ -188,55 +155,50 @@ EOF
 
 ###########################
 echo
-echo "##### Retrieving jars into local maven repo..."
-${MVN_CMD} clean compile
+echo "##### Generating the bundles..."
+EDGENT_VERSION_PROPERTY=
+if [ "${EDGENT_VERSION}" ]; then
+  EDGENT_VERSION_PROPERTY=-Dedgent.core.version=${EDGENT_VERSION}
+fi
+PLATFORM_PROFILE=
+if [ ${EDGENT_PLATFORM} != "java8" ]; then
+  PLATFORM_PROFILE="-Pplatform-${EDGENT_PLATFORM}"
+fi
+${MVN_CMD} clean package ${EDGENT_VERSION_PROPERTY} ${PLATFORM_PROFILE}
 
-###########################
-echo
-echo "##### Copying jars..."
-# if someone screws up j7 or android deps, uncomment the following and
-# it will help identify wrong jars that are getting included / copied
-# (and otherwise overwriting each other).
-#DEBUG_DEPS=-Dmdep.prependGroupId=true
-${MVN_CMD} dependency:copy-dependencies -DincludeScope=runtime ${DEBUG_DEPS}
-
-DEPS_SRC_DIR=target/dependency
-EDGENT_DEPS_DIR=${EDGENT_PLATFORM}/edgent-jars
-EXT_DEPS_DIR=${EDGENT_PLATFORM}/ext-jars
-
-rm -rf "${EDGENT_DEPS_DIR}"; mkdir -p ${EDGENT_DEPS_DIR}
-rm -rf "${EXT_DEPS_DIR}"; mkdir -p ${EXT_DEPS_DIR}
-
-cp ${DEPS_SRC_DIR}/* ${EXT_DEPS_DIR}
-
-for i in `find ${EXT_DEPS_DIR} -name '*edgent-*.*ar'`; do
-  mv $i ${EDGENT_DEPS_DIR}
-done
 
 ###########################
 echo
 echo "##### Generating classpath.sh..."
-cat << 'EOF'  > ${EDGENT_PLATFORM}/classpath.sh
+cat << 'EOF'  > ${PROJ_DIR}/target/classpath.sh
 #!/bin/sh
+USAGE="usage: classpath.sh [--add-slf4j-jdk] <path-to-unpacked-bundle>"
 set -e
-if [ "${1}" = "" -o "${1}" = "-?" -o "${1}" = "-help" ]; then 
-    echo "usage: classpath.sh <path-to-parent-of-edgent-jars-dir>"
+if [ "${1}" == "--add-slf4j-jdk" ]; then
+    ADD_SLF4J_IMPL=slf4j-jdk
+    shift
+fi
+if [ $# != 1 ] || [[ ${1} == -* ]] ; then
+    echo "${USAGE}"
     exit 1
 fi
 BASEDIR=${1}
 cd ${BASEDIR}
 SEP=
 CP=
-if [ "`ls edgent-jars 2>/dev/null`" != "" ]; then
-    for i in edgent-jars/*; do
+if [ "`ls libs 2>/dev/null`" != "" ]; then
+    for i in libs/*; do
         CP="${CP}${SEP}${BASEDIR}/${i}"
         SEP=":"
     done
 fi
-if [ "`ls ext-jars 2>/dev/null`" != "" ]; then
-    for i in ext-jars/*; do
+if [ "`ls ext 2>/dev/null`" != "" ]; then
+    for i in ext/*; do
         if [[ ${i} == */slf4j-* ]] && [[ ${i} != */slf4j-api-* ]] ; then
-            continue
+            # it's an slf4j impl
+            if [[ "${ADD_SLF4J_IMPL}" == "" ]] || [[ ${i} != */${ADD_SLF4J_IMPL}* ]] ; then 
+                continue
+            fi
         fi
         CP="${CP}${SEP}${BASEDIR}/${i}"
         SEP=":"
@@ -244,11 +206,21 @@ if [ "`ls ext-jars 2>/dev/null`" != "" ]; then
 fi
 echo "${CP}"
 EOF
-chmod +x ${EDGENT_PLATFORM}/classpath.sh
+chmod +x target/classpath.sh
 
 ###########################
 echo
-echo "##### The Edgent jars are in ${PROJ_DIR}/${EDGENT_DEPS_DIR}"
-echo "##### The external jars are in ${PROJ_DIR}/${EXT_DEPS_DIR}"
-echo "##### CLASSPATH may be set by copying ${PROJ_DIR}/${EDGENT_PLATFORM}/classpath.sh and using it like:"
-echo '#####    export CLASSPATH=`classpath.sh path-to-parent-of-edgent-jars-dir`'
+echo "##### Bundle LICENSING information:"
+echo
+cat ${PROJ_DIR}/src/main/resources/README
+echo
+cat <<'EOF'
+##### Using a bundle:
+
+    copy a bundle from target and unpack it
+    copy target/classpath.sh and use it to compose a classpath:
+
+        export CLASSPATH=`./classpath.sh --add-slf4j-jdk <path-to-unpacked-bundle>`
+
+    Omit "--add-slf4j-jdk" to omit an slf4j-jdk* implementation jar from the classpath.
+EOF

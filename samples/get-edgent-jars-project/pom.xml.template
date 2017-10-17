@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- standalone project -->
+  <!--parent>
+    <groupId>org.apache.edgent</groupId>
+    <artifactId>edgent-parent</artifactId>
+    <version>1.2.0-SNAPSHOT</version>
+  </parent-->
+
+  <groupId>org.apache.edgent.get-edgent-jars</groupId>
+  <artifactId>get-edgent-jars</artifactId>
+  <version>1.2.0-SNAPSHOT</version>
+
+  <name>Apache Edgent get-edgent-jars ${samples.projname.platform}</name>
+
+  <properties>
+    <samples.projname.platform> (Java 8)</samples.projname.platform>  <!--  tweaked by -Pplatform-* -->
+    <edgent.platform>java8</edgent.platform> <!-- tweaked by -Pplatform-* -->    
+    <edgent.groupId.platform/> <!-- tweaked by -Pplatform-* -->    
+    <edgent.base.groupId>org.apache.edgent${edgent.groupId.platform}</edgent.base.groupId>
+    <!--  at least for now, the samples version is lockstep with the core
+          so default to using the same core as the this project.
+          get-edgent-jars.sh overrides via -Dedgent.core.version=...
+    -->
+    <edgent.core.version>${project.version}</edgent.core.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>2.5.3</version>
+          <configuration>
+            <finalName>edgent-${edgent.platform}-jars-${edgent.core.version}</finalName>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-remote-resources-plugin</artifactId>
+        <version>1.5</version><!--$NO-MVN-MAN-VER$-->
+        <executions>
+          <execution>
+            <id>process-resource-bundles</id>
+            <goals>
+              <goal>process</goal>
+            </goals>
+            <configuration>
+              <resourceBundles>
+                <!-- Will generate META-INF/{DEPENDENCIES,LICENSE,NOTICE} -->
+                <resourceBundle>org.apache:apache-jar-resource-bundle:1.4</resourceBundle>
+                <!-- Will generate META-INF/DISCLAIMER (incubator version) -->
+                <resourceBundle>org.apache:apache-incubator-disclaimer-resource-bundle:1.1</resourceBundle>
+              </resourceBundles>
+              <!-- Content in this directory will be appended to generated resources -->
+              <appendedResourcesDirectory>${remote-resources-maven-plugin.remote-resources.dir}</appendedResourcesDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptor>src/assembly/distribution.xml</descriptor>
+        </configuration>
+        <executions>
+          <execution>
+            <id>create-archive</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- We don't need any jars as output in this module -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>default-jar</id>
+            <phase>none</phase>
+          </execution>
+          <execution>
+            <id>default</id>
+            <phase>none</phase>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>platform-java7</id>
+      <properties>
+        <edgent.platform>java7</edgent.platform>
+        <edgent.groupId.platform>.${edgent.platform}</edgent.groupId.platform>
+        <platform.java7>true</platform.java7>
+        <samples.projname.platform> (Java 7)</samples.projname.platform>
+      </properties>
+    </profile>
+    <profile>
+      <id>platform-android</id>
+      <properties>
+        <edgent.platform>android</edgent.platform>
+        <edgent.groupId.platform>.${edgent.platform}</edgent.groupId.platform>
+        <platform.android>true</platform.android>
+        <samples.projname.platform> (Android)</samples.projname.platform>
+      </properties>
+    </profile>
+  </profiles>
+
+  <dependencies>
+<!-- INJECT_DEPENDENCIES_HERE -->
+  </dependencies>
+
+</project>

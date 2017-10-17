@@ -1,7 +1,4 @@
 
-# get-edgent-jars generated outout
-get-edgent-jars-project
-
 *.class
 
 # Local developers toolchain

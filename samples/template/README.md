@@ -36,3 +36,10 @@ Adjust the main class name and application jar path below for your application.
 PLATFORM=  # add "--platform java7"  or  "--platform android" as appropriate
 ../package-app.sh $PLATFORM --mainClass com.mycompany.app.TemplateApp --appjar target/my-app-1.0-SNAPSHOT.jar
 ```
+
+# Using get-edgent-jars-project
+
+If you don't want to use the generated uber jar or `package-app.sh`
+approaches, you can copy the application's standard jar and a
+`get-edgent-jars-project` generated jar bundle to the edge device.
+See `samples/get-edgent-jars-project`.

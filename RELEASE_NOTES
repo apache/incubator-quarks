@@ -20,7 +20,10 @@ A release now includes two source bundles:
 
 A binary bundle is no longer released.  A release now publishes
 the Edgent SDK jars in the Apache Nexus repository which auto-sync's
-to Maven Central. The names of the jars now conform to standard
+to Maven Central. For cases where a user requires a binary bundle,
+see the new `samples/get-edgent-jars-project`.
+
+The names of the Edgent jars now conform to standard
 practices: "." has been replaced with "-" and the Edgent SDK
 versionId is now included.  
 
@@ -37,13 +40,6 @@ See `JAVA_SUPPORT.md` for information about the coordinates, jar names, etc.
 See `samples/README.md` for information related to Edgent Application
 development and deployment as well as information on building and
 running the samples.
-
-The (`samples/get-edgent-jars.sh`) tool is provided to make it
-easy for a user to retrieve the Edgent SDK jars and their dependencies
-from a maven repository.  The retrieved jars can then be used
-with application development tooling that does not support
-maven repositories and/or they can bundled and conveyed to an 
-edge device in support of application execution.
 
 The samples sources and build tooling are now structured as an
 Edgent Application Developer, Edgent SDK consumer, might structure

@@ -17,8 +17,6 @@
 
 # Edgent Application Development, Packaging and Execution.
 
-This file is a work-in-progress.
-
 To develop Edgent applications you will utilize the 
 Edgent SDK/runtime jars and package your application
 artifacts for deploying to an edge device for execution.
@@ -78,9 +76,8 @@ that users can use to create an application project template.
 
 If you can't or don't want to use maven-repository-enabled tooling
 you will need to get a local copy of the Edgent jars and their
-dependencies and add them to your compile classpath.
-The Edgent supplied `get-edgent-jars.sh` tool can be used to
-get copies of the jars from a maven repository.
+dependencies and add them to your compile classpath.  This case
+is covered in the following sections.
 
 
 ## Packaging and Execution
@@ -109,7 +106,8 @@ The uber jar contains the application's classes and
 the application's dependent Edgent classes and their
 transitive dependencies.
 
-The Edgent samples poms contain configuration information
+The Edgent samples template project's pom and
+the Edgent samples poms contain configuration information
 that generates an uber jar in addition to the standard
 application jar.  Eclipse can also export an uber jar.
 
@@ -142,46 +140,8 @@ binary bundle containing all of the Edgent jars
 and their dependencies.  The binary artifacts
 are only released to maven central.
 
-The Edgent supplied get-edgent-jars.sh tool supports this mode.
-   
-## get-edgent-jars.sh
-
-The `get-edgent-jars.sh` script copies the Edgent runtime jars and their
-dependencies from a local or remote maven repository into a local folder.
-
-The user may then directly use the jars in CLASSPATH specifications
-for Edgent application compilation or execution.
-A `classpath.sh` script is generated to assist with this.
-
-By default the script retrieves the Edgent java8 platform jars for the
-script's default Edgent version.
-
-The script creates and builds a small maven project as
-part of its execution.
-
-``` sh
-get-edgent-jars.sh --version 1.2.0-SNAPSHOT  # retrieve the Edgent 1.2.0-SNAPSHOT java8 jars
-This command downloads the Apache Edgent jars and their transitive external dependencies.
-The external dependencies have their own licensing term that you should review.
-A summary of the external dependencies can be found here <TODO URL>.
-Continue? [y/n] y
-##### Generating maven project get-edgent-jars-project...
-##### Generating dependency decls...
-##### Adding dependency decls to pom...
-##### Retrieving jars into local maven repo...
-...
-##### Copying jars...
-##### Generating classpath.sh...
-##### The Edgent jars are in get-edgent-jars-project/edgent-jars
-##### The external jars are in get-edgent-jars-project/ext-jars
-##### CLASSPATH may be set by copying get-edgent-jars-project/java8/classpath.sh and using it like:
-#####    export CLASSPATH=`classpath.sh path-to-parent-of-edgent-jars-dir`
-```
-
-For more usage information:
-``` sh
-get-edgent-jars.sh -h
-```
+See `samples/get-edgent-jars-project` for a tool 
+to get a copy of the Edgent jars.
 
 ## package-app.sh
 
@@ -198,14 +158,13 @@ The application's pom specified Edgent runtime jars and
 their dependencies are retrieved from a local or remote
 maven repository.
 
-If the application was built using java8, complied against
-the java8 Edgent jars, and the execution environment is
+If the application's execution environment is
 java7 or android, use the appropriate script options
 to retrieve the appropriate Edgent platform jars for
 execution.
 
-The run-app.sh script configures the CLASSPATH and runs
-the application.
+The generated run-app.sh script configures the CLASSPATH
+and runs the application.
 
 E.g.,
 
