@@ -105,7 +105,7 @@ in the sample category's target directory: `<category>/target`.
 
 ## Running the samples
 
-See the README.md in each sample category directory for information
+See the `README.md` in each sample category directory for information
 on running the samples.
 
 

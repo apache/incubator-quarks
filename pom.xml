@@ -101,20 +101,7 @@
     <module>console</module>
     <module>providers</module>
     <module>runtime</module>
-    <!--    <module>samples</module>
-
-            TODO figure out what to do with samples.
-            On one hand we want them to be self-standing and not
-            part of the "core" edgent source bundle.
-            We want the samples to have their own released source bundle
-            and not release any sample binary jars or samples binary bundle.
-            The samples don't depend on this ~edgent-core pom.xml.
-            On the other hand, we need to understand how the overall
-            release flow will work.
-            At this moment, with this pom and the current sample poms,
-            you "cd samples; mvn clean install -Papache-release"
-            to create the samples source bundles.
-     -->
+    <!-- <module>samples</module> intentionally omitted -->
     <module>spi</module>
     <module>test</module>
     <module>utils</module>

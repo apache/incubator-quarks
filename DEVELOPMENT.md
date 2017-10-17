@@ -328,6 +328,92 @@ to do this, is to append a simple `site:site` at the end of the maven command.
 Each modules `<module>/target/site` directory will then contain the generated 
 Module documentation.
 
+## More Build Tooling Miscellenea
+
+There is a lot of surface area to the maven build tooling.  The following
+information may help to better understand it.
+
+* `pom.xml/maven-surefile-plugin` - unit test execution
+* `pom.xml/maven-failsafe-plugin` - integration test execution
+* `pom.xml/jacoco-maven-plugin` - jacoco code coverage reports
+* `pom.xml/animal-sniffer-maven-plugin` - retrolambda results checker
+* `pom.xml/org.codehaus.sonar-plugins` - SonarQube code quality reports
+* `pom.xml/maven-javadoc-plugin` - javadoc generation and the config
+  for all of the "grouping" control.
+* `pom.xml/apache-rat-plugin` - builds automatically run Apache RAT
+  (Release Audit Tool) for checking for appropriate content.  
+  The build fails if the checking fails.
+  See configuration info for controlling excluded artifacts.
+* `pom.xml/maven-assembly-plugin` - used in a couple places for configuring
+  and generating "assemblies" => source release bundle, distribution bundles  
+* `pom.xml/maven-site-plugin` - things related to website generation that includes
+   a number of interesting things, including html reports from various things
+   above plus aggregated javadoc.  How / if this untimately relates to the
+   public website is TDB.
+* `platforms/java7/pom.xml/retrolambda-maven-plugin` 
+   and `platforms/android/android/pom.xml/retrolambda-maven-plugin` - where
+   retrolambda is enabled
+* As mentioned earlier the current scheme for generating Java7 and Android
+  Edgent jars, is achieved by replicating the java8 project structure in
+  platforms/{java7,android}.  <b>Manual synchronization of the corresponding
+  info in the alternate platform poms and other configuration files
+  is required.</b>
+* LICENSE and NOTICE: it's a requirement that released bundles
+  (source release bundle, released jars) contain accurate LICENSE, NOTICE
+  and DISCLAIMER files.  Some of the Edgent projects contain code that
+  that was contributed by IBM, some of the generated jars/war bundle
+  external components.  The build tooling is configured to automatically
+  include standard ALv2.0 LICENSE and NOTICE files in the jars.
+  The non-default cases are handled in a variety of ways: 
+    * `pom.xml/maven-remote-resources-plugin` config plays a role in all of this
+    * `src/main/appended-resources` - contains copies of license text for
+      artifacts that are bundled in Edgent bundles.  For the most part
+      this means the Edgent Console jar/war.  These are incorporated
+      into a jar by including a declaration like the following in the
+      project's pom:
+``` xml
+        <resource>
+          <directory>${project.basedir}/../../src/main/appended-resources/licenses</directory>
+          <targetPath>${project.build.directory}/${project.artifactId}-${project.version}/META-INF/licenses</targetPath>
+        </resource>
+```
+    * `src/main/ibm-remote-resources` - contains the NOTICE fragment for
+      projects containing IBM contributed code.  Applicable project's
+      define the following in their pom to ensure a correct
+      NOTICE is included in the project's jar:
+``` xml
+        <properties>
+          <remote-resources-maven-plugin.remote-resources.dir>../../src/main/ibm-remote-resources</remote-resources-maven-plugin.remote-resources.dir>
+        </properties>
+```
+    * `edgent-console-servlets:war` contains bundled code (downloaded and
+      incorporated by the build tooling).  It includes the bundled code's
+      license text as described above.  Its own LICENSE and NOTICE is
+      copied from the respective files in its `src/main/remote-resources/META-INF`.
+      <b>There are copies of those in under the java7 platform as well.</b>
+    * `edgent-console-server:jar` bundles the console-servlets war and as such
+      requires the same LICENSE/NOTICE/licenses treatment as the servlets war.
+      <b>There are copies of its LICENSE/NOTICE in its  `src/main/remote-resources/META-INF`.
+      There are copies of those in under the java7 platform as well.</b>
+* source-release bundle
+    * `src/assembly/source-release.xml` - configuration information
+      controlling source-release bundle and distribution bundle names,
+      included/excluded files, etc.
+* distribution bundles:
+  Each platform has a "distribution" project.
+  We don't release these bundles hence they aren't obligated to 
+  strictly conform to the ASF LICENSE/NOTICE file requirements.
+  That said, much of the same information is provided via an
+  automatically generated DEPENDENCIES file in the bundle.
+  <b>There are copies of the following information in the java7 and android platforms.</b>
+  Related, `samples/get-edgent-jars-project` uses the same scheme and has
+  its own copies of the files.
+  * the name of the bundle is inherited from the source-release bundle's
+    configuration file noted above.
+  * src/assembly/distribution.xml - additional configuration info
+  * src/main/resources/README - source of the file in the bundle
+    
+
 ## Testing the Kafka Connector
 
 The kafka connector tests aren't run by default as the connector must

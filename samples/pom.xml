@@ -56,7 +56,9 @@
     <module>apps</module>
     <module>connectors</module>
     <module>console</module>
+    <!-- <module>get-edgent-jars-project</module> intentionally omitted -->
     <module>scenarios</module>
+    <!-- <module>template</module> intentionally omitted -->
     <module>topology</module>
     <module>utils</module>
   </modules>

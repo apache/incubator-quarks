@@ -38,6 +38,8 @@ Java 8 and Java 7 respectively.
 
 See `JAVA_SUPPORT.md` for more information on artifact coordinates, etc.
 
+## Writing Your Application
+
 The Edgent API is most easily used by using Java8 lambda expressions.
 If you only want to deploy your Edgent application to a java8 environment
 then your application may use any java8 features it chooses.  You compile
@@ -63,22 +65,20 @@ Eclipse or IntelliJ).  The tooling transparently downloads the
 required Edgent jars from the maven repository if they aren't
 already present in your local maven repository.
 
-The supplied Edgent samples poms include support for building for
-a java8, java7 or android execution environment. The poms are
-configured for the generation of a standard jar as well as an
-uber jar for a sample application.
-
-You can clone the `samples/template` project as a starting point
-for your Edgent application.  See `samples/template/README.md`.
+### Edgent Application Template
+ 
+You can clone the `template` project as a starting point for your
+Edgent application. See [samples/template/README.md](template/README.md).
 
 TODO: we would like to provide a maven Edgent Application archetype
 that users can use to create an application project template.
 
+### Using Non-maven-integrated Tooling
+
 If you can't or don't want to use maven-repository-enabled tooling
 you will need to get a local copy of the Edgent jars and their
 dependencies and add them to your compile classpath.  This case
-is covered in the following sections.
-
+is covered in subsequent sections.
 
 ## Packaging and Execution
 
@@ -106,10 +106,25 @@ The uber jar contains the application's classes and
 the application's dependent Edgent classes and their
 transitive dependencies.
 
-The Edgent samples template project's pom and
+The template project's pom and
 the Edgent samples poms contain configuration information
 that generates an uber jar in addition to the standard
 application jar.  Eclipse can also export an uber jar.
+
+### Separately manage the application and Edgent jars
+
+Copy the application's jars to the device.
+Get a copy of the Edgent jars and their dependencies
+onto the device. It's possible for multiple Edgent
+applications to share the Edgent jars.
+
+The Apache Edgent project does not release a
+binary bundle containing all of the Edgent jars
+and their dependencies.  The binary artifacts
+are only released to maven central.
+
+See [samples/get-edgent-jars-project](get-edgent-jars-project/README.md)
+for a tool to get a copy of the Edgent jars.
 
 ### Create an application package bundle
 
@@ -124,37 +139,15 @@ The bundle is copied to the device and unpacked.
 A run script forms the appropriate `CLASSPATH`
 to the package's jars and starts the application.
 
-The Edgent supplied `package-app.sh` tool supports this mode.
-Eclipse can also export a similar collection
-of information.
-
-### Separately manage the application and Edgent jars
-
-Copy the application's jars to the device.
-Get a copy of the Edgent jars and their dependencies
-onto the device to be shared by any Edgent applications
-that want to use them.
-
-The Apache Edgent project does not release a
-binary bundle containing all of the Edgent jars
-and their dependencies.  The binary artifacts
-are only released to maven central.
-
-See `samples/get-edgent-jars-project` for a tool 
-to get a copy of the Edgent jars.
-
-## package-app.sh
-
-The `package-app.sh` script creates an application bundle.
-The application bundle can be copied to an edge-device,
-unpacked and then used to run the application.
+The supplied `package-app.sh` script creates an
+application bundle.
 
 The application bundle contains the application's jar,
 the application's dependent Edgent jars (as specified in
 the application's pom) and the Edgent jars' dependencies,
 and a run-app.sh script.
 
-The application's pom specified Edgent runtime jars and 
+The application's dependent Edgent runtime jars and 
 their dependencies are retrieved from a local or remote
 maven repository.
 
@@ -185,5 +178,5 @@ package-app.sh --mainClass com.mycompany.app.MyApp --appjar target/my-app-1.0-SN
 For more usage information:
 
 ``` sh
-package-app.sh -h
+./package-app.sh -h
 ```
