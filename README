@@ -5,7 +5,7 @@ Quickstart
 
 You must have Java 8 installed on your system and connectivity to Maven Central
 (for downloading external thrid party dependencies). Maven will be automatically
-downloaded installed by the maven wrapper `mvnw`.
+downloaded and installed by the maven wrapper `mvnw`.
 
 Build the Edgent SDK Java8 jars and install them in your local maven repository
 

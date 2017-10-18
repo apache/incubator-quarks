@@ -18,7 +18,7 @@
 # Quickstart
 
 You must have Java 8 installed on your system. Maven will be automatically
-downloaded installed by the maven wrapper `mvnw`.
+downloaded and installed by the maven wrapper `mvnw`.
 
 Build the samples for Java 8
 ```sh

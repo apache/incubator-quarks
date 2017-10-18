@@ -22,7 +22,7 @@
 
 Apache Edgent is an open source programming model and runtime for edge devices that enables you to analyze data and events at the device.
 
-Please joins us by subscribing to the developer mailing list
+Please join us by subscribing to the developer mailing list
 [dev at edgent.incubator.apache.org](http://mail-archives.apache.org/mod_mbox/incubator-edgent-dev/).
 To subscribe, send an email to `dev-subscribe at edgent.incubator.apache.org`.
 
@@ -41,27 +41,6 @@ We want to build a community around Edgent for analytics at the edge, so welcome
 Please *Get Involved!*
 
 Edgent is released under the [Apache License Version 2.0](LICENSE)
-
-# Renamed from Apache Quarks
-Apache Edgent is the new name. Things are in a state of transition until all
-of the pieces arrive.
-
-The "incubator-quarks" repository has been fully updated.
-
-Until the Apache infrastructure changes are done, continue to use
-the Quarks mailing list, website, and repositories:
-  * mailing list: dev at quarks.incubator.apache.org
-  * http://quarks.incubator.apache.org/
-  * https://git-wip-us.apache.org/repos/asf/incubator-quarks.git
-  * https://github.com/apache/incubator-quarks
-
-Code changes:
-  * package names have the prefix "org.apache.edgent"
-  * jar names have the prefix "edgent"
-  
-Users of Edgent will need to update their references to the above.
-It's recommended that developers of Edgent create a new workspace instead of
-reusing their Quarks workspace.
 
 # Edgent
 Devices and sensors are everywhere. And more are coming online every day. You need a way to analyze all of the data coming from your devices, but it can be expensive to transmit all of the data from a sensor to your central analytics engine.
@@ -119,3 +98,8 @@ aspects of Edgent including Getting Started.
 For details about the Edgent sources and contributing to 
 Edgent runtime development see [DEVELOPMENT.md](DEVELOPMENT.md)
 
+# Renamed from Apache Quarks
+Apache Quarks was renamed to Apache Edgent.
+
+See the [RELEASE_NOTES](RELEASE_NOTES] for change information if
+you are converting from "Apache Quarks".
