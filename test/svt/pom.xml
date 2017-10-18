@@ -22,7 +22,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.apache.edgent.test</groupId>
+    <groupId>org.apache.edgent</groupId>
     <artifactId>edgent-test</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
@@ -37,22 +37,22 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.edgent.api</groupId>
+      <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.console</groupId>
+      <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-console-server</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.utils</groupId>
+      <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-utils-metrics</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.providers</groupId>
+      <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-providers-development</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>

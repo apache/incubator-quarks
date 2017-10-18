@@ -22,7 +22,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.apache.edgent.android.runtime</groupId>
+    <groupId>org.apache.edgent.android</groupId>
     <artifactId>edgent-runtime</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
@@ -50,7 +50,7 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>org.apache.edgent.java7.runtime</groupId>
+                  <groupId>org.apache.edgent.java7</groupId>
                   <artifactId>edgent-runtime-etiao</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
@@ -66,17 +66,17 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.edgent.android.api</groupId>
+      <groupId>org.apache.edgent.android</groupId>
       <artifactId>edgent-api-execution</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.android.api</groupId>
+      <groupId>org.apache.edgent.android</groupId>
       <artifactId>edgent-api-graph</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.android.spi</groupId>
+      <groupId>org.apache.edgent.android</groupId>
       <artifactId>edgent-spi-graph</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>

@@ -22,7 +22,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.apache.edgent.test</groupId>
+    <groupId>org.apache.edgent</groupId>
     <artifactId>edgent-test</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
@@ -46,7 +46,7 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>org.apache.edgent.test</groupId>
+                  <groupId>org.apache.edgent</groupId>
                   <artifactId>edgent-test-appservice-applications</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/test-resources</outputDirectory>
@@ -62,38 +62,38 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.edgent.connectors</groupId>
+      <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-connectors-pubsub</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.runtime</groupId>
+      <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-runtime-jsoncontrol</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.providers</groupId>
+      <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.apps</groupId>
+      <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-apps-iot</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.apps</groupId>
+      <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-apps-iot</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.providers</groupId>
+      <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-providers-iot</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>

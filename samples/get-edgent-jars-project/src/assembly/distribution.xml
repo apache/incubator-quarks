@@ -64,7 +64,7 @@
         <include>org.apache.edgent*</include>
       </includes>
       <excludes>
-        <exclude>org.apache.edgent.get-edgent-jars*</exclude>
+        <exclude>org.apache.edgent*:get-edgent-jars-project</exclude>
       </excludes>
     </dependencySet>
 

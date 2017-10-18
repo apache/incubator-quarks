@@ -28,11 +28,11 @@
     <version>1.2.0-SNAPSHOT</version>
   </parent-->
 
-  <groupId>org.apache.edgent.get-edgent-jars</groupId>
-  <artifactId>get-edgent-jars</artifactId>
+  <groupId>org.apache.edgent</groupId>
+  <artifactId>get-edgent-jars-project</artifactId>
   <version>1.2.0-SNAPSHOT</version>
 
-  <name>Apache Edgent get-edgent-jars ${samples.projname.platform}</name>
+  <name>Apache Edgent get-edgent-jars-project ${samples.projname.platform}</name>
 
   <properties>
     <samples.projname.platform> (Java 8)</samples.projname.platform>  <!--  tweaked by -Pplatform-* -->
@@ -41,9 +41,9 @@
     <edgent.base.groupId>org.apache.edgent${edgent.groupId.platform}</edgent.base.groupId>
     <!--  at least for now, the samples version is lockstep with the core
           so default to using the same core as the this project.
-          get-edgent-jars.sh overrides via -Dedgent.core.version=...
+          get-edgent-jars.sh overrides via -Dedgent.runtime.version=...
     -->
-    <edgent.core.version>${project.version}</edgent.core.version>
+    <edgent.runtime.version>${project.version}</edgent.runtime.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
@@ -55,7 +55,7 @@
           <artifactId>maven-assembly-plugin</artifactId>
           <version>2.5.3</version>
           <configuration>
-            <finalName>edgent-${edgent.platform}-jars-${edgent.core.version}</finalName>
+            <finalName>edgent-${edgent.platform}-jars-${edgent.runtime.version}</finalName>
           </configuration>
         </plugin>
       </plugins>

@@ -22,27 +22,26 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.apache.edgent.samples</groupId>
+    <groupId>org.apache.edgent</groupId>  <!-- EDGENT_BUILD_PARENT_GROUPID -->
     <artifactId>edgent-samples</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.apache.edgent.samples</groupId>
   <artifactId>edgent-samples-topology</artifactId>
 
-  <name>Apache Edgent Samples${samples.projname.platform}: Topology</name>
+  <name>Apache Edgent Samples ${samples.projname.platform}: Topology</name>
 
   <dependencies>
     <!-- parent pom has Providers and SLF4J dependencies -->
 
     <dependency>
-      <groupId>${edgent.base.groupId}.analytics</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-analytics-math3</artifactId>
-      <version>${edgent.core.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.apache.edgent.samples</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-samples-utils</artifactId>
       <version>${project.version}</version>
     </dependency>

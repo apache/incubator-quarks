@@ -82,7 +82,7 @@
         <include>org.apache.edgent*</include>
       </includes>
       <excludes>
-        <exclude>org.apache.edgent.distribution*</exclude>
+        <exclude>org.apache.edgent*:edgent-distribution</exclude>
       </excludes>
     </dependencySet>
 

@@ -22,24 +22,24 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.apache</groupId>
+    <groupId>org.apache</groupId>  <!-- EDGENT_BUILD_PARENT_GROUPID -->
     <artifactId>apache</artifactId>
     <version>18</version>
   </parent>
 
-  <groupId>org.apache.edgent.samples</groupId>
+  <groupId>org.apache.edgent</groupId>
   <artifactId>edgent-samples</artifactId>
   <version>1.2.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>Apache Edgent${samples.projname.platform}: Samples</name>
+  <name>Apache Edgent Samples ${samples.projname.platform}:</name>
 
   <properties>
-    <samples.projname.platform> (Java 8)</samples.projname.platform>  <!--  tweaked by -Pplatform-* -->
-    <edgent.platform/> <!-- set by -Pplatform-* -->    
-    <edgent.base.groupId>org.apache.edgent${edgent.platform}</edgent.base.groupId>
+    <samples.projname.platform>(Java 8)</samples.projname.platform>  <!--  tweaked by -Pplatform-* -->
+    <edgent.runtime.platform/> <!-- set by -Pplatform-* -->    
+    <edgent.runtime.groupId>org.apache.edgent${edgent.runtime.platform}</edgent.runtime.groupId>
     <!--  at least for now, the samples version is lockstep with the core -->
-    <edgent.core.version>${project.version}</edgent.core.version>
+    <edgent.runtime.version>${project.version}</edgent.runtime.version>
 
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -67,9 +67,9 @@
     <profile>
       <id>platform-java7</id>
       <properties>
-        <edgent.platform>.java7</edgent.platform>
+        <edgent.runtime.platform>.java7</edgent.runtime.platform>
         <platform.java7>true</platform.java7>
-        <samples.projname.platform> (Java 7)</samples.projname.platform>
+        <samples.projname.platform>(Java 7)</samples.projname.platform>
       </properties>
       <build>
         <plugins>
@@ -116,19 +116,19 @@
 
     <!-- Other common sample dependencies -->
     <dependency>
-      <groupId>${edgent.base.groupId}.providers</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-providers-direct</artifactId>
-      <version>${edgent.core.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.base.groupId}.providers</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-providers-development</artifactId>
-      <version>${edgent.core.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.base.groupId}.providers</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-providers-iot</artifactId>
-      <version>${edgent.core.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency>
 
   </dependencies>

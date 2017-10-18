@@ -22,57 +22,56 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.apache.edgent.samples</groupId>
+    <groupId>org.apache.edgent</groupId>  <!-- EDGENT_BUILD_PARENT_GROUPID -->
     <artifactId>edgent-samples</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.apache.edgent.samples</groupId>
   <artifactId>edgent-samples-connectors</artifactId>
 
-  <name>Apache Edgent Samples${samples.projname.platform}: Connectors</name>
+  <name>Apache Edgent Samples ${samples.projname.platform}: Connectors</name>
 
   <dependencies>
     <!-- parent pom has Platforms and SLF4J dependencies -->
 
     <dependency>
-      <groupId>${edgent.base.groupId}.connectors</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-connectors-mqtt</artifactId>
-      <version>${edgent.core.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.base.groupId}.connectors</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-connectors-kafka</artifactId>
-      <version>${edgent.core.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.base.groupId}.connectors</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-connectors-jdbc</artifactId>
-      <version>${edgent.core.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.base.groupId}.connectors</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-connectors-serial</artifactId>
-      <version>${edgent.core.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.base.groupId}.connectors</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-connectors-file</artifactId>
-      <version>${edgent.core.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.base.groupId}.connectors</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-connectors-iotp</artifactId>
-      <version>${edgent.core.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.base.groupId}.analytics</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-analytics-math3</artifactId>
-      <version>${edgent.core.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.apache.edgent.samples</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-samples-topology</artifactId>
       <version>${project.version}</version>
     </dependency>

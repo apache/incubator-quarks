@@ -35,7 +35,7 @@ USAGE="usage: [--platform {java8|java7|android}] [--version edgent-version] [--a
 
 set -e
 
-SAMPLES_DIR=`(cd $(dirname $0); pwd)`
+SAMPLES_DIR=`(cd $(dirname $0); pwd)`/..
 MVN_CMD=${SAMPLES_DIR}/mvnw
 
 EDGENT_PLATFORM=java8
@@ -82,26 +82,26 @@ fi
 #
 DEFAULT_GAVS=`cat << EOF
 org.slf4j:slf4j-jdk14:${SLF4J_VERSION}
-org.apache.edgent.analytics:edgent-analytics-math3:{EV}
-org.apache.edgent.analytics:edgent-analytics-sensors:{EV}
-org.apache.edgent.connectors:edgent-connectors-command:{EV}
-org.apache.edgent.connectors:edgent-connectors-csv:{EV}
-org.apache.edgent.connectors:edgent-connectors-file:{EV}
-org.apache.edgent.connectors:edgent-connectors-http:{EV}
-org.apache.edgent.connectors:edgent-connectors-iot:{EV}
-org.apache.edgent.connectors:edgent-connectors-iotp:{EV}
-org.apache.edgent.connectors:edgent-connectors-jdbc:{EV}
-org.apache.edgent.connectors:edgent-connectors-kafka:{EV}
-org.apache.edgent.connectors:edgent-connectors-mqtt:{EV}
-org.apache.edgent.connectors:edgent-connectors-pubsub:{EV}
-org.apache.edgent.connectors:edgent-connectors-serial:{EV}
-org.apache.edgent.connectors:edgent-connectors-websocket:{EV}
-org.apache.edgent.connectors:edgent-connectors-websocket-jetty:{EV}
-org.apache.edgent.providers:edgent-providers-development:{EV}
-org.apache.edgent.providers:edgent-providers-direct:{EV}
-org.apache.edgent.providers:edgent-providers-iot:{EV}
-org.apache.edgent.utils:edgent-utils-metrics:{EV}
-org.apache.edgent.utils:edgent-utils-streamscope:{EV}
+org.apache.edgent:edgent-analytics-math3:{EV}
+org.apache.edgent:edgent-analytics-sensors:{EV}
+org.apache.edgent:edgent-connectors-command:{EV}
+org.apache.edgent:edgent-connectors-csv:{EV}
+org.apache.edgent:edgent-connectors-file:{EV}
+org.apache.edgent:edgent-connectors-http:{EV}
+org.apache.edgent:edgent-connectors-iot:{EV}
+org.apache.edgent:edgent-connectors-iotp:{EV}
+org.apache.edgent:edgent-connectors-jdbc:{EV}
+org.apache.edgent:edgent-connectors-kafka:{EV}
+org.apache.edgent:edgent-connectors-mqtt:{EV}
+org.apache.edgent:edgent-connectors-pubsub:{EV}
+org.apache.edgent:edgent-connectors-serial:{EV}
+org.apache.edgent:edgent-connectors-websocket:{EV}
+org.apache.edgent:edgent-connectors-websocket-jetty:{EV}
+org.apache.edgent:edgent-providers-development:{EV}
+org.apache.edgent:edgent-providers-direct:{EV}
+org.apache.edgent:edgent-providers-iot:{EV}
+org.apache.edgent:edgent-utils-metrics:{EV}
+org.apache.edgent:edgent-utils-streamscope:{EV}
 EOF
 `
 if [ "${EDGENT_PLATFORM}" != "java8" ]; then
@@ -109,8 +109,8 @@ if [ "${EDGENT_PLATFORM}" != "java8" ]; then
 fi
 if [ "${EDGENT_PLATFORM}" == "android" ]; then
   DEFAULT_GAVS=`echo "${DEFAULT_GAVS}" | sed -e "/edgent-providers-development/d"`
-  DEFAULT_GAVS=`echo "${DEFAULT_GAVS}"; echo "org.apache.edgent.android.android:edgent-android-hardware:{EV}"`
-  DEFAULT_GAVS=`echo "${DEFAULT_GAVS}"; echo "org.apache.edgent.android.android:edgent-android-topology:{EV}"`
+  DEFAULT_GAVS=`echo "${DEFAULT_GAVS}"; echo "org.apache.edgent.android:edgent-android-hardware:{EV}"`
+  DEFAULT_GAVS=`echo "${DEFAULT_GAVS}"; echo "org.apache.edgent.android:edgent-android-topology:{EV}"`
 fi
 
 

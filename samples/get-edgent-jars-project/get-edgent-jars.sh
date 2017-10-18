@@ -27,7 +27,7 @@
 ## --file gav-file get only the specified artifacts. Not restricted to Edgent jars.
 ##   The Edgent version is substituted for all instances of '{EV}'
 ##   Lines that begin with '#' are ignored.
-## --mvn mvn-cmd use mvn-cmd instead of "./mvnw"
+## --mvn mvn-cmd use mvn-cmd instead of "../mvnw"
 ##
 ## Creates bundles and classpath.sh in the target dir.
 
@@ -35,7 +35,7 @@ USAGE="usage: [--platform {java8|java7|android}] [--version edgent-version] [--a
 
 set -e
 
-# project dir is whereever this script resides
+# project dir is where this script resides
 PROJ_DIR=`(cd $(dirname $0); pwd)`
 
 SAMPLES_DIR=`(cd $(dirname $0); pwd)`/..
@@ -83,26 +83,26 @@ fi
 #
 DEFAULT_GAVS=`cat << EOF
 org.slf4j:slf4j-jdk14:${SLF4J_VERSION}
-org.apache.edgent.analytics:edgent-analytics-math3:{EV}
-org.apache.edgent.analytics:edgent-analytics-sensors:{EV}
-org.apache.edgent.connectors:edgent-connectors-command:{EV}
-org.apache.edgent.connectors:edgent-connectors-csv:{EV}
-org.apache.edgent.connectors:edgent-connectors-file:{EV}
-org.apache.edgent.connectors:edgent-connectors-http:{EV}
-org.apache.edgent.connectors:edgent-connectors-iot:{EV}
-org.apache.edgent.connectors:edgent-connectors-iotp:{EV}
-org.apache.edgent.connectors:edgent-connectors-jdbc:{EV}
-org.apache.edgent.connectors:edgent-connectors-kafka:{EV}
-org.apache.edgent.connectors:edgent-connectors-mqtt:{EV}
-org.apache.edgent.connectors:edgent-connectors-pubsub:{EV}
-org.apache.edgent.connectors:edgent-connectors-serial:{EV}
-org.apache.edgent.connectors:edgent-connectors-websocket:{EV}
-org.apache.edgent.connectors:edgent-connectors-websocket-jetty:{EV}
-org.apache.edgent.providers:edgent-providers-development:{EV}
-org.apache.edgent.providers:edgent-providers-direct:{EV}
-org.apache.edgent.providers:edgent-providers-iot:{EV}
-org.apache.edgent.utils:edgent-utils-metrics:{EV}
-org.apache.edgent.utils:edgent-utils-streamscope:{EV}
+org.apache.edgent:edgent-analytics-math3:{EV}
+org.apache.edgent:edgent-analytics-sensors:{EV}
+org.apache.edgent:edgent-connectors-command:{EV}
+org.apache.edgent:edgent-connectors-csv:{EV}
+org.apache.edgent:edgent-connectors-file:{EV}
+org.apache.edgent:edgent-connectors-http:{EV}
+org.apache.edgent:edgent-connectors-iot:{EV}
+org.apache.edgent:edgent-connectors-iotp:{EV}
+org.apache.edgent:edgent-connectors-jdbc:{EV}
+org.apache.edgent:edgent-connectors-kafka:{EV}
+org.apache.edgent:edgent-connectors-mqtt:{EV}
+org.apache.edgent:edgent-connectors-pubsub:{EV}
+org.apache.edgent:edgent-connectors-serial:{EV}
+org.apache.edgent:edgent-connectors-websocket:{EV}
+org.apache.edgent:edgent-connectors-websocket-jetty:{EV}
+org.apache.edgent:edgent-providers-development:{EV}
+org.apache.edgent:edgent-providers-direct:{EV}
+org.apache.edgent:edgent-providers-iot:{EV}
+org.apache.edgent:edgent-utils-metrics:{EV}
+org.apache.edgent:edgent-utils-streamscope:{EV}
 EOF
 `
 if [ "${EDGENT_PLATFORM}" != "java8" ]; then
@@ -110,8 +110,8 @@ if [ "${EDGENT_PLATFORM}" != "java8" ]; then
 fi
 if [ "${EDGENT_PLATFORM}" == "android" ]; then
   DEFAULT_GAVS=`echo "${DEFAULT_GAVS}" | sed -e "/edgent-providers-development/d"`
-  DEFAULT_GAVS=`echo "${DEFAULT_GAVS}"; echo "org.apache.edgent.android.android:edgent-android-hardware:{EV}"`
-  DEFAULT_GAVS=`echo "${DEFAULT_GAVS}"; echo "org.apache.edgent.android.android:edgent-android-topology:{EV}"`
+  DEFAULT_GAVS=`echo "${DEFAULT_GAVS}"; echo "org.apache.edgent.android:edgent-android-hardware:{EV}"`
+  DEFAULT_GAVS=`echo "${DEFAULT_GAVS}"; echo "org.apache.edgent.android:edgent-android-topology:{EV}"`
 fi
 
 
@@ -136,7 +136,7 @@ mkdir -p target
 DEP_DECLS_FILE=target/tmp-dep-decls
 rm -f ${DEP_DECLS_FILE}
 for i in ${ARTIFACT_GAVS}; do
-    echo $i | awk -F : '{ type=""; if ($3 == "{EV}") $3="${edgent.core.version}"; if ($4 != "") type="  <type>" $4 "</type>\n"; printf "<dependency>\n  <groupId>%s</groupId>\n  <artifactId>%s</artifactId>\n  <version>%s</version>\n%s</dependency>\n", $1, $2, $3, type }' >> ${DEP_DECLS_FILE}
+    echo $i | awk -F : '{ type=""; if ($3 == "{EV}") $3="${edgent.runtime.version}"; if ($4 != "") type="  <type>" $4 "</type>\n"; printf "<dependency>\n  <groupId>%s</groupId>\n  <artifactId>%s</artifactId>\n  <version>%s</version>\n%s</dependency>\n", $1, $2, $3, type }' >> ${DEP_DECLS_FILE}
 done
 DEP_DECLS=`cat ${DEP_DECLS_FILE}`
 
@@ -158,7 +158,7 @@ echo
 echo "##### Generating the bundles..."
 EDGENT_VERSION_PROPERTY=
 if [ "${EDGENT_VERSION}" ]; then
-  EDGENT_VERSION_PROPERTY=-Dedgent.core.version=${EDGENT_VERSION}
+  EDGENT_VERSION_PROPERTY=-Dedgent.runtime.version=${EDGENT_VERSION}
 fi
 PLATFORM_PROFILE=
 if [ ${EDGENT_PLATFORM} != "java8" ]; then

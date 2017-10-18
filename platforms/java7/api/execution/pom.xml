@@ -22,7 +22,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.apache.edgent.java7.api</groupId>
+    <groupId>org.apache.edgent.java7</groupId>
     <artifactId>edgent-api</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
@@ -50,14 +50,14 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>org.apache.edgent.api</groupId>
+                  <groupId>org.apache.edgent</groupId>
                   <artifactId>edgent-api-execution</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
                   <excludes>META-INF/**</excludes>
                 </artifactItem>
                 <artifactItem>
-                  <groupId>org.apache.edgent.api</groupId>
+                  <groupId>org.apache.edgent</groupId>
                   <artifactId>edgent-api-execution</artifactId>
                   <version>${project.version}</version>
                   <classifier>tests</classifier>
@@ -74,7 +74,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.edgent.java7.api</groupId>
+      <groupId>org.apache.edgent.java7</groupId>
       <artifactId>edgent-api-function</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>

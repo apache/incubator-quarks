@@ -22,7 +22,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.apache.edgent.test</groupId>
+    <groupId>org.apache.edgent</groupId>
     <artifactId>edgent-test</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
@@ -33,7 +33,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.edgent.api</groupId>
+      <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>

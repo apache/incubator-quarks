@@ -73,10 +73,10 @@
       <outputDirectory>libs</outputDirectory>
       <scope>runtime</scope>
       <includes>
-        <include>org.apache.edgent.java7*</include>
+        <include>org.apache.edgent*</include>
       </includes>
       <excludes>
-        <exclude>org.apache.edgent.java7.distribution*</exclude>
+        <exclude>org.apache.edgent*:edgent-distribution</exclude>
       </excludes>
     </dependencySet>
 

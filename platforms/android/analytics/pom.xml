@@ -27,7 +27,6 @@
     <version>1.2.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.apache.edgent.android.analytics</groupId>
   <artifactId>edgent-analytics</artifactId>
   <packaging>pom</packaging>
 

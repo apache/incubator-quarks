@@ -35,9 +35,9 @@
   <name>My Edgent Application</name>
 
   <properties>
-    <edgent.platform/>   <!-- set by -Pplatform-* -->
-    <edgent.base.groupId>org.apache.edgent${edgent.platform}</edgent.base.groupId>
-    <edgent.version>1.2.0-SNAPSHOT</edgent.version>
+    <edgent.runtime.platform/>   <!-- set by -Pplatform-* -->
+    <edgent.runtime.groupId>org.apache.edgent${edgent.runtime.platform}</edgent.runtime.groupId>
+    <edgent.runtime.version>1.2.0-SNAPSHOT</edgent.runtime.version>
 
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -69,91 +69,91 @@
 
     <!-- declare the Edgent provider(s) being used -->
     <dependency>
-      <groupId>${edgent.base.groupId}.providers</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-providers-direct</artifactId>
-      <version>${edgent.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency>
     <!--dependency>
-      <groupId>${edgent.base.groupId}.providers</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-providers-development</artifactId>
-      <version>${edgent.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency-->
     <!--dependency>
-      <groupId>${edgent.base.groupId}.providers</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-providers-iot</artifactId>
-      <version>${edgent.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency-->
 
     <!-- declare Edgent Android dependencies
     -->
     <!--dependency>
-      <groupId>${edgent.base.groupId}.android</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-android-hardware</artifactId>
-      <version>${edgent.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency-->
     <!--dependency>
-      <groupId>${edgent.base.groupId}.android</groupId>
+      <groupId>${edgent.runtime.groupId}.android</groupId>
       <artifactId>edgent-android-topology</artifactId>
-      <version>${edgent.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency-->
 
     <!-- declare Edgent Analytics dependencies
     -->
     <!--dependency>
-      <groupId>${edgent.base.groupId}.analytics</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-analytics-math3</artifactId>
-      <version>${edgent.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency-->
     <!--dependency>
-      <groupId>${edgent.base.groupId}.analytics</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-analytics-sensors</artifactId>
-      <version>${edgent.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency-->
 
     <!-- declare Edgent Utils dependencies
     -->
     <!--dependency>
-      <groupId>${edgent.base.groupId}.utils</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-utils-metrics</artifactId>
-      <version>${edgent.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency-->
 
     <!-- declare Edgent Connector dependencies
     -->
     <!--dependency>
-      <groupId>${edgent.base.groupId}.connectors</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-connectors-file</artifactId>
-      <version>${edgent.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency-->
     <!--dependency>
-      <groupId>${edgent.base.groupId}.connectors</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-connectors-iot</artifactId>
-      <version>${edgent.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency-->
     <!--dependency>
-      <groupId>${edgent.base.groupId}.connectors</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-connectors-iotp</artifactId>
-      <version>${edgent.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency-->
     <!--dependency>
-      <groupId>${edgent.base.groupId}.connectors</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-connectors-jdbc</artifactId>
-      <version>${edgent.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency-->
     <!--dependency>
-      <groupId>${edgent.base.groupId}.connectors</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-connectors-kafka</artifactId>
-      <version>${edgent.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency-->
     <!--dependency>
-      <groupId>${edgent.base.groupId}.connectors</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-connectors-mqtt</artifactId>
-      <version>${edgent.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency-->
     <!--dependency>
-      <groupId>${edgent.base.groupId}.connectors</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-connectors-serial</artifactId>
-      <version>${edgent.version}</version>
+      <version>${edgent.runtime.version}</version>
     </dependency-->
 
   </dependencies>
@@ -164,7 +164,7 @@
       <id>platform-java7</id>
       <properties>
         <platform.java7>true</platform.java7>
-        <edgent.platform>.java7</edgent.platform>
+        <edgent.runtime.platform>.java7</edgent.runtime.platform>
       </properties>
       <build>
         <plugins>
@@ -192,7 +192,7 @@
       <id>platform-android</id>
       <properties>
         <platform.android>true</platform.android>
-        <edgent.platform>.android</edgent.platform>
+        <edgent.runtime.platform>.android</edgent.runtime.platform>
       </properties>
       <build>
         <plugins>

@@ -35,7 +35,7 @@ platform the artifact is for.  The Edgent jar/war file name is the same
 for each of the platforms.
 
 The coordinates have the following form:
-* groupId: `org.apache.edgent[.platform].<component>`
+* groupId: `org.apache.edgent[.platform]`
 * artifactId: `edgent-<component>-<subcomponent>`
 
 The [.platform] is as follows:
@@ -47,14 +47,14 @@ For example:
 ```
 <!-- for Java8 -->
 <dependency>
-  <groupId>org.apache.edgent.providers</groupId>
+  <groupId>org.apache.edgent</groupId>
   <artifactId>edgent-providers-direct</artifactId>
   <version>1.2.0</version>
 </dependency>
 
 <!-- for Java7 -->
 <dependency>
-  <groupId>org.apache.edgent.java7.providers</groupId>
+  <groupId>org.apache.edgent.java7</groupId>
   <artifactId>edgent-providers-direct</artifactId>
   <version>1.2.0</version>
 </dependency>

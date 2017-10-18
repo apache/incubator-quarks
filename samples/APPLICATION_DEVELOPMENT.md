@@ -26,15 +26,14 @@ Alternatively, you can build the Edgent SDK yourself from a source release
 and the resulting jars will be added to your local maven repository.
   
 There are a set of Edgent jars for each supported platform: java8, java7, and android.
-The maven artifact groupId prefixes are:
+The maven artifact groupIds for the Edgent jars are:
 
 - `org.apache.edgent`  - for java8,
 - `org.apache.edgent.java7`
 - `org.apache.edgent.android`
 
-e.g., the groupIds for the Edgent API artifacts are
-`org.apache.edgent.api` and  `org.apache.edgent.api.java7` for
-Java 8 and Java 7 respectively.
+Note, the Java package names for Edgent components do not incorporate
+the platform kind; the package names are the same regardless of the platform.
 
 See `JAVA_SUPPORT.md` for more information on artifact coordinates, etc.
 

@@ -73,10 +73,10 @@
       <outputDirectory>libs</outputDirectory>
       <scope>runtime</scope>
       <includes>
-        <include>org.apache.edgent.android*</include>
+        <include>org.apache.edgent*</include>
       </includes>
       <excludes>
-        <exclude>org.apache.edgent.android.distribution*</exclude>
+        <exclude>org.apache.edgent*:edgent-distribution</exclude>
       </excludes>
     </dependencySet>
 

@@ -22,7 +22,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.apache.edgent.android.android</groupId>
+    <groupId>org.apache.edgent.android</groupId>
     <artifactId>edgent-android</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
@@ -37,7 +37,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.edgent.android.api</groupId>
+      <groupId>org.apache.edgent.android</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>

@@ -22,7 +22,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.apache.edgent.android.providers</groupId>
+    <groupId>org.apache.edgent.android</groupId>
     <artifactId>edgent-providers</artifactId>
     <version>1.2.0-SNAPSHOT</version>
   </parent>
@@ -46,7 +46,7 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>org.apache.edgent.java7.providers</groupId>
+                  <groupId>org.apache.edgent.java7</groupId>
                   <artifactId>edgent-providers-iot</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
@@ -62,37 +62,37 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.edgent.android.providers</groupId>
+      <groupId>org.apache.edgent.android</groupId>
       <artifactId>edgent-providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.android.runtime</groupId>
+      <groupId>org.apache.edgent.android</groupId>
       <artifactId>edgent-runtime-jsoncontrol</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.android.runtime</groupId>
+      <groupId>org.apache.edgent.android</groupId>
       <artifactId>edgent-runtime-appservice</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.android.connectors</groupId>
+      <groupId>org.apache.edgent.android</groupId>
       <artifactId>edgent-connectors-iot</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.android.connectors</groupId>
+      <groupId>org.apache.edgent.android</groupId>
       <artifactId>edgent-connectors-pubsub</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.android.apps</groupId>
+      <groupId>org.apache.edgent.android</groupId>
       <artifactId>edgent-apps-iot</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.android.apps</groupId>
+      <groupId>org.apache.edgent.android</groupId>
       <artifactId>edgent-apps-runtime</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
