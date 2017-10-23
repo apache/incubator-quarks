@@ -238,6 +238,17 @@ This is also the build which produces and deploys the Maven artifacts that are p
 
 As an additional quality assurance tool, this build also runs a SonarQube analysis who's results are available at Apaches SonarQube instance at https://builds.apache.org/analysis/overview?id=45154
 
+Heads up: the (Jenkins?) test failure reporting tooling seems to get confused
+in the face of the same named tests being run for multiple platforms.
+Generally you will see each test file listed twice: once for Java8 and once
+for Java7.  In the html results it seems impossible to tell which platform
+a failed test (or passed test for that matter) applies to.  Even though the
+html links for the two tests differ (e.g., the 2nd one has a "_2" at the end
+of the URL), a failed test's page shows the passed test's page.  My approach
+to investigating failures is to open the "View as plain text" page and
+then use the browser's search feature to look for the test name of interest
+to locate the output for the failing test.  ugh.
+
 ## Java 7 and Android Build Tooling
 
 Java 7 and Android target platforms are supported through use of
