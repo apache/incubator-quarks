@@ -39,6 +39,7 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.edgent.connectors.mqtt.MqttConfig;
 import org.apache.edgent.connectors.mqtt.MqttStreams;
 import org.apache.edgent.function.BiFunction;
@@ -791,7 +792,7 @@ public class MqttStreamsTestManual extends ConnectorTestBase {
 //        propTester.add("mqtt.persistence", "some.persistence.classname",
 //                () -> configRef.get().getPersistence());
         propTester.add("mqtt.serverURLs", "tcp://somehost:1234,ssl://somehost:5678",
-                () -> String.join(",", configRef.get().getServerURLs()));
+                () -> StringUtils.join(configRef.get().getServerURLs(), ","));
         propTester.add("mqtt.subscriberIdleReconnectIntervalSec", "14", 
                 () -> ((Integer)configRef.get().getSubscriberIdleReconnectInterval()).toString());
         propTester.add("mqtt.trustStore", "some/path/truststore",
