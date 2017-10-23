@@ -35,6 +35,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -83,6 +86,19 @@ public class FileStreamsTextFileWriterTest extends DirectTopologyTestBase {
     public String[] getLines() {
         return stdLines;
     }
+    
+    // Cover for Java8 Files.newBufferedReader() convenience fn
+    private static BufferedReader newBufferedReader(Path path) throws IOException {
+        return newBufferedReader(path, StandardCharsets.UTF_8);
+    }
+    private static BufferedReader newBufferedReader(Path path, Charset cs)
+            throws IOException
+        {
+            CharsetDecoder decoder = cs.newDecoder();
+            Reader reader = new InputStreamReader(Files.newInputStream(path), decoder);
+            return new BufferedReader(reader);
+        }
+
 
     @Test
     public void testFlushConfig() throws Exception {
@@ -818,7 +834,7 @@ public class FileStreamsTextFileWriterTest extends DirectTopologyTestBase {
         System.out.println("<<<<< Dumping "+f);
         try {
             Path path = f.toPath();
-            try (BufferedReader br = Files.newBufferedReader(path)) {
+            try (BufferedReader br = newBufferedReader(path)) {
                 br.lines().forEach(line -> System.out.println(line));
             }
         }
@@ -905,7 +921,7 @@ public class FileStreamsTextFileWriterTest extends DirectTopologyTestBase {
         }
         System.out.println("checking file "+path);
         int lineCnt = 0;
-        try (BufferedReader br = Files.newBufferedReader(path)) {
+        try (BufferedReader br = newBufferedReader(path)) {
             for (String line : lines) {
                 ++lineCnt;
                 String actLine = br.readLine();
