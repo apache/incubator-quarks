@@ -29,7 +29,7 @@
 
   <artifactId>edgent-test-appservice-applications</artifactId>
 
-  <name>Apache Edgent (Java 7): Test: AppService Applications</name>
+  <name>Apache Edgent ${edgent.projname.platform}: Test: AppService Applications</name>
 
   <build>
     <plugins>
@@ -46,15 +46,15 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>org.apache.edgent</groupId>
-                  <artifactId>edgent-test-appservice-applications</artifactId>
+                  <groupId>${edgent.retrolambda.srcArtifactGroupId}</groupId>
+                  <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
                   <excludes>META-INF/*,META-INF/maven/**</excludes>
                 </artifactItem>
                 <artifactItem>
-                  <groupId>org.apache.edgent</groupId>
-                  <artifactId>edgent-test-appservice-applications</artifactId>
+                  <groupId>${edgent.retrolambda.srcArtifactGroupId}</groupId>
+                  <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
                   <classifier>tests</classifier>
                   <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
@@ -80,7 +80,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.edgent.java7</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>

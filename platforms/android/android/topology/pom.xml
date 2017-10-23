@@ -29,7 +29,7 @@
 
   <artifactId>edgent-android-topology</artifactId>
 
-  <name>Apache Edgent (Android): Android: Topology</name>
+  <name>Apache Edgent ${edgent.projname.platform}: Android: Topology</name>
 
   <properties>
     <remote-resources-maven-plugin.remote-resources.dir>../../../../src/main/ibm-remote-resources</remote-resources-maven-plugin.remote-resources.dir>
@@ -37,12 +37,12 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.edgent.android</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.android</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-api-oplet</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>

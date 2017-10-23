@@ -29,7 +29,7 @@
 
   <artifactId>edgent-connectors-http</artifactId>
 
-  <name>Apache Edgent: Connectors: HTTP</name>
+  <name>Apache Edgent ${edgent.projname.platform}: Connectors: HTTP</name>
 
   <properties>
     <remote-resources-maven-plugin.remote-resources.dir>../../src/main/ibm-remote-resources</remote-resources-maven-plugin.remote-resources.dir>
@@ -37,7 +37,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.edgent</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
@@ -53,13 +53,13 @@
     </dependency>
 
     <dependency>
-      <groupId>org.apache.edgent</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <type>test-jar</type>

@@ -29,17 +29,17 @@
 
   <artifactId>edgent-connectors-pubsub</artifactId>
 
-  <name>Apache Edgent: Connectors: PubSub</name>
+  <name>Apache Edgent ${edgent.projname.platform}: Connectors: PubSub</name>
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.edgent</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
-      <groupId>org.apache.edgent</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>

@@ -29,7 +29,7 @@
 
   <artifactId>edgent-connectors-kafka</artifactId>
 
-  <name>Apache Edgent: Connectors: Kafka</name>
+  <name>Apache Edgent ${edgent.projname.platform}: Connectors: Kafka</name>
 
   <properties>
     <remote-resources-maven-plugin.remote-resources.dir>../../src/main/ibm-remote-resources</remote-resources-maven-plugin.remote-resources.dir>
@@ -50,7 +50,7 @@
    -->
   <dependencies>
     <dependency>
-      <groupId>org.apache.edgent</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
@@ -133,27 +133,27 @@
     </dependency>
 
     <dependency>
-      <groupId>org.apache.edgent</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-connectors-common</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <type>test-jar</type>

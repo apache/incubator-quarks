@@ -30,7 +30,7 @@
   <artifactId>edgent-connectors</artifactId>
   <packaging>pom</packaging>
 
-  <name>Apache Edgent (Java 7): Connectors</name>
+  <name>Apache Edgent ${edgent.projname.platform}: Connectors</name>
 
   <modules>
     <module>command</module>

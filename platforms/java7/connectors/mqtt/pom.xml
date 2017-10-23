@@ -29,7 +29,7 @@
 
   <artifactId>edgent-connectors-mqtt</artifactId>
 
-  <name>Apache Edgent (Java 7): Connectors: MQTT</name>
+  <name>Apache Edgent ${edgent.projname.platform}: Connectors: MQTT</name>
 
   <properties>
     <remote-resources-maven-plugin.remote-resources.dir>../../../../src/main/ibm-remote-resources</remote-resources-maven-plugin.remote-resources.dir>
@@ -50,16 +50,16 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>org.apache.edgent</groupId>
-                  <artifactId>edgent-connectors-mqtt</artifactId>
+                  <groupId>${edgent.retrolambda.srcArtifactGroupId}</groupId>
+                  <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
                   <excludes>META-INF/**</excludes>
                 </artifactItem>
                 <!-- TODO: Makes use of the List.stream in MqttStreamsTestManual, excluding test execution -->
                 <!--artifactItem>
-                  <groupId>org.apache.edgent</groupId>
-                  <artifactId>edgent-connectors-mqtt</artifactId>
+                  <groupId>${edgent.retrolambda.srcArtifactGroupId}</groupId>
+                  <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
                   <classifier>tests</classifier>
                   <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
@@ -75,17 +75,17 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.edgent.java7</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.java7</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-connectors-iot</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.java7</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-connectors-common</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
@@ -96,27 +96,27 @@
     </dependency>
 
     <dependency>
-      <groupId>org.apache.edgent.java7</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-connectors-common</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.java7</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.java7</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.java7</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <type>test-jar</type>

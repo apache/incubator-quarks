@@ -31,11 +31,16 @@
   <artifactId>edgent-platforms-java7</artifactId>
   <packaging>pom</packaging>
 
-  <name>Apache Edgent: Platforms: Java7</name>
+  <name>Apache Edgent ${edgent.projname.platform}: Platforms: Java7</name>
 
   <properties>
     <!-- The 9.2 version is the last to support Java7 -->
     <jetty.version>9.2.21.v20170120</jetty.version>
+    <edgent.projname.platform>(Java 7)</edgent.projname.platform>
+    <edgent.runtime.groupId>org.apache.edgent.java7</edgent.runtime.groupId>
+    
+    <!-- Edgent groupId of jars the retrolambda processing will use -->
+    <edgent.retrolambda.srcArtifactGroupId>org.apache.edgent</edgent.retrolambda.srcArtifactGroupId>
   </properties>
 
   <modules>

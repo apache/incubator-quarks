@@ -29,7 +29,7 @@
 
   <artifactId>edgent-api-oplet</artifactId>
 
-  <name>Apache Edgent: API: Oplet</name>
+  <name>Apache Edgent ${edgent.projname.platform}: API: Oplet</name>
 
   <properties>
     <remote-resources-maven-plugin.remote-resources.dir>../../src/main/ibm-remote-resources</remote-resources-maven-plugin.remote-resources.dir>
@@ -37,17 +37,17 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.edgent</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-api-function</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-api-execution</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-api-window</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>

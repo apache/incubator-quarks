@@ -29,42 +29,42 @@
 
   <artifactId>edgent-connectors-command</artifactId>
 
-  <name>Apache Edgent: Connectors: Command</name>
+  <name>Apache Edgent ${edgent.projname.platform}: Connectors: Command</name>
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.edgent</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-connectors-common</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
-      <groupId>org.apache.edgent</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-connectors-common</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <type>test-jar</type>

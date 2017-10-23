@@ -48,7 +48,11 @@
 
   <properties>
     <!-- Up here and not in the java8 profile, so hopefully the maven-release-plugin will find it -->
-    <edgent.version>1.2.0-SNAPSHOT</edgent.version>
+    <edgent.runtime.version>1.2.0-SNAPSHOT</edgent.runtime.version>
+
+    <!-- The next two are overriden by platforms/{java7,android}/pom -->
+    <edgent.projname.platform>(Java 8)</edgent.projname.platform>
+    <edgent.runtime.groupId>org.apache.edgent</edgent.runtime.groupId>
 
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

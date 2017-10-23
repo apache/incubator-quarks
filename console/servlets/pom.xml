@@ -30,7 +30,7 @@
   <artifactId>edgent-console-servlets</artifactId>
   <packaging>war</packaging>
 
-  <name>Apache Edgent: Console: Servlets</name>
+  <name>Apache Edgent ${edgent.projname.platform}: Console: Servlets</name>
 
   <build>
     <!-- Add the directory where all the external resources were unpacked to the build -->
@@ -144,7 +144,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.edgent</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-utils-streamscope</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>

@@ -29,7 +29,7 @@
 
   <artifactId>edgent-api-function</artifactId>
 
-  <name>Apache Edgent: API: Function</name>
+  <name>Apache Edgent ${edgent.projname.platform}: API: Function</name>
 
   <properties>
     <remote-resources-maven-plugin.remote-resources.dir>../../src/main/ibm-remote-resources</remote-resources-maven-plugin.remote-resources.dir>

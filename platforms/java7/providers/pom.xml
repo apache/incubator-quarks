@@ -30,7 +30,7 @@
   <artifactId>edgent-providers</artifactId>
   <packaging>pom</packaging>
 
-  <name>Apache Edgent (Java 7): Providers</name>
+  <name>Apache Edgent ${edgent.projname.platform}: Providers</name>
 
   <modules>
     <module>development</module>

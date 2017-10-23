@@ -29,7 +29,7 @@
 
   <artifactId>edgent-apps-runtime</artifactId>
 
-  <name>Apache Edgent (Java 7): Apps: Runtime</name>
+  <name>Apache Edgent ${edgent.projname.platform}: Apps: Runtime</name>
 
   <build>
     <plugins>
@@ -46,15 +46,15 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>org.apache.edgent</groupId>
-                  <artifactId>edgent-apps-runtime</artifactId>
+                  <groupId>${edgent.retrolambda.srcArtifactGroupId}</groupId>
+                  <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
                   <excludes>META-INF/**</excludes>
                 </artifactItem>
                 <artifactItem>
-                  <groupId>org.apache.edgent</groupId>
-                  <artifactId>edgent-apps-runtime</artifactId>
+                  <groupId>${edgent.retrolambda.srcArtifactGroupId}</groupId>
+                  <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
                   <classifier>tests</classifier>
                   <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
@@ -70,24 +70,24 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.edgent.java7</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.java7</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-runtime-jobregistry</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
-      <groupId>org.apache.edgent.java7</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-providers-direct</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.java7</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-runtime-jmxcontrol</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>

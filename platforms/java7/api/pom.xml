@@ -30,7 +30,7 @@
   <artifactId>edgent-api</artifactId>
   <packaging>pom</packaging>
 
-  <name>Apache Edgent (Java 7): API</name>
+  <name>Apache Edgent ${edgent.projname.platform}: API</name>
 
   <modules>
     <module>execution</module>

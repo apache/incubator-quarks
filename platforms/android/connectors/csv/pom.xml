@@ -29,7 +29,7 @@
 
   <artifactId>edgent-connectors-csv</artifactId>
 
-  <name>Apache Edgent (Android): Connectors: CSV</name>
+  <name>Apache Edgent ${edgent.projname.platform}: Connectors: CSV</name>
 
   <build>
     <plugins>
@@ -46,8 +46,8 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>org.apache.edgent.java7</groupId>
-                  <artifactId>edgent-connectors-csv</artifactId>
+                  <groupId>${edgent.retrolambda.srcArtifactGroupId}</groupId>
+                  <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
                   <excludes>META-INF/**</excludes>

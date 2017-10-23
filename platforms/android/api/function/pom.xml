@@ -29,7 +29,7 @@
 
   <artifactId>edgent-api-function</artifactId>
 
-  <name>Apache Edgent (Android): API: Function</name>
+  <name>Apache Edgent ${edgent.projname.platform}: API: Function</name>
 
   <properties>
     <remote-resources-maven-plugin.remote-resources.dir>../../../../src/main/ibm-remote-resources</remote-resources-maven-plugin.remote-resources.dir>
@@ -50,8 +50,8 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>org.apache.edgent.java7</groupId>
-                  <artifactId>edgent-api-function</artifactId>
+                  <groupId>${edgent.retrolambda.srcArtifactGroupId}</groupId>
+                  <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
                   <excludes>META-INF/**</excludes>

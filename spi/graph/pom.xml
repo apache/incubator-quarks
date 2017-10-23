@@ -29,7 +29,7 @@
 
   <artifactId>edgent-spi-graph</artifactId>
 
-  <name>Apache Edgent: SPI: Graph</name>
+  <name>Apache Edgent ${edgent.projname.platform}: SPI: Graph</name>
 
   <properties>
     <remote-resources-maven-plugin.remote-resources.dir>../../src/main/ibm-remote-resources</remote-resources-maven-plugin.remote-resources.dir>
@@ -37,12 +37,12 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.edgent</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-api-execution</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-api-graph</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>

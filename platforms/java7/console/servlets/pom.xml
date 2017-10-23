@@ -30,7 +30,7 @@
   <artifactId>edgent-console-servlets</artifactId>
   <packaging>war</packaging>
 
-  <name>Apache Edgent (Java 7): Console: Servlets</name>
+  <name>Apache Edgent ${edgent.projname.platform}: Console: Servlets</name>
 
   <build>
     <resources>
@@ -60,16 +60,16 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>org.apache.edgent</groupId>
-                  <artifactId>edgent-console-servlets</artifactId>
+                  <groupId>${edgent.retrolambda.srcArtifactGroupId}</groupId>
+                  <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
                   <type>war</type>
                   <outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}</outputDirectory>
                   <excludes>META-INF/**</excludes>
                 </artifactItem>
                 <artifactItem>
-                  <groupId>org.apache.edgent</groupId>
-                  <artifactId>edgent-console-servlets</artifactId>
+                  <groupId>${edgent.retrolambda.srcArtifactGroupId}</groupId>
+                  <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
                   <classifier>tests</classifier>
                   <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
@@ -112,7 +112,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.edgent.java7</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-utils-streamscope</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>

@@ -30,7 +30,7 @@
   <artifactId>edgent-runtime</artifactId>
   <packaging>pom</packaging>
 
-  <name>Apache Edgent (Android): Runtimes</name>
+  <name>Apache Edgent ${edgent.projname.platform}: Runtimes</name>
 
   <modules>
     <module>appservice</module>

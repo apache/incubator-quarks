@@ -29,7 +29,7 @@
 
   <artifactId>edgent-runtime-appservice</artifactId>
 
-  <name>Apache Edgent (Java 7): Runtime: AppService</name>
+  <name>Apache Edgent ${edgent.projname.platform}: Runtime: AppService</name>
 
   <build>
     <plugins>
@@ -46,15 +46,15 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>org.apache.edgent</groupId>
-                  <artifactId>edgent-runtime-appservice</artifactId>
+                  <groupId>${edgent.retrolambda.srcArtifactGroupId}</groupId>
+                  <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
                   <excludes>META-INF/**</excludes>
                 </artifactItem>
                 <artifactItem>
-                  <groupId>org.apache.edgent</groupId>
-                  <artifactId>edgent-runtime-appservice</artifactId>
+                  <groupId>${edgent.retrolambda.srcArtifactGroupId}</groupId>
+                  <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
                   <classifier>tests</classifier>
                   <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
@@ -70,19 +70,19 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.edgent.java7</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-api-execution</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.edgent.java7</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.2.0-SNAPSHOT</version>
     </dependency>
 
     <!-- Just needed to make sure it is scheduled before this module in the reactor -->
     <dependency>
-      <groupId>org.apache.edgent.java7</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-test-appservice-applications</artifactId>
       <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>

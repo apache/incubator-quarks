@@ -30,7 +30,7 @@
   <artifactId>edgent-utils</artifactId>
   <packaging>pom</packaging>
 
-  <name>Apache Edgent (Java 7): Utils</name>
+  <name>Apache Edgent ${edgent.projname.platform}: Utils</name>
 
   <modules>
     <module>metrics</module>

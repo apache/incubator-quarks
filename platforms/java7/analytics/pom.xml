@@ -30,7 +30,7 @@
   <artifactId>edgent-analytics</artifactId>
   <packaging>pom</packaging>
 
-  <name>Apache Edgent (Java 7): Analytics</name>
+  <name>Apache Edgent ${edgent.projname.platform}: Analytics</name>
 
   <modules>
     <module>math3</module>

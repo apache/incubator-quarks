@@ -30,7 +30,7 @@
   <artifactId>edgent-spi</artifactId>
   <packaging>pom</packaging>
 
-  <name>Apache Edgent (Android): SPI</name>
+  <name>Apache Edgent ${edgent.projname.platform}: SPI</name>
 
   <modules>
     <module>graph</module>
