@@ -37,6 +37,7 @@ node('ubuntu') {
     } else {
         mavenLocalRepo = "-Dmaven.repo.local=.repository"
     }
+    def mavenFailureMode = "--fail-at-end"  // vs --fail-fast
 
     try {
         stage ('Cleanup') {
@@ -51,12 +52,12 @@ node('ubuntu') {
 
         stage ('Build') {
             echo 'Building'
-            sh "${mvnHome}/bin/mvn ${mavenLocalRepo} -Pplatform-android,platform-java7,distribution,toolchain -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true clean ${mavenGoal} sonar:sonar site:site"
+            sh "${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-android,platform-java7,distribution,toolchain -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true clean ${mavenGoal} sonar:sonar site:site"
         }
 
         stage ('Stage Site') {
             echo 'Staging Site'
-            sh "${mvnHome}/bin/mvn ${mavenLocalRepo} -Pplatform-android,platform-java7,distribution,toolchain -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true site:stage"
+            sh "${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-android,platform-java7,distribution,toolchain -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true site:stage"
         }
 
     }
