@@ -70,8 +70,8 @@
 
   <dependencies>
     <!-- The general strategy here is to only declare "top-level"
-         Edgent artifacts, like an Edgent application pom would, 
-         and let those artifacts pull in their dependent 
+         Edgent artifacts, like an Edgent application pom would,
+         and let those artifacts pull in their dependent
          Edgent artifacts, etc.
          So declare Providers, Analytics, Utils, Connectors.
     -->
