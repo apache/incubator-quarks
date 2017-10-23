@@ -36,15 +36,12 @@
     <module>command</module>
     <module>common</module>
     <module>csv</module>
-    <!-- This makes use of Stream in the tests, excluding some tests. -->
     <module>file</module>
     <module>http</module>
     <module>iot</module>
     <module>iotp</module>
-    <!-- This makes use of Predicates in the tests, excluding tests. -->
     <module>jdbc</module>
     <module>kafka</module>
-    <!-- This makes use of List.stream in the tests, excluding tests. -->
     <module>mqtt</module>
     <module>pubsub</module>
     <module>serial</module>

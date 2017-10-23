@@ -40,19 +40,7 @@ See the updated _Building_ and _Using Eclipse_ sections below.
 The Ant and Gradle tooling is no longer functional.
 
 It's recommended that developers of Edgent create a new workspace instead of
-reusing current ant-based Edgent workspaces.
-
-## Renamed from Apache Quarks
-Apache Edgent is the new name and the conversion is complete.
-
-Code changes:
-
-  * Package names have the prefix "org.apache.edgent"
-  * JAR names have the prefix "edgent"
-
-Users of Edgent will need to update their references to the above.
-It's recommended that developers of Edgent create a new workspace instead of
-reusing their Quarks workspace.
+reusing current gradle-based Edgent workspaces.
 
 ## Setup
 
@@ -250,7 +238,7 @@ This is also the build which produces and deploys the Maven artifacts that are p
 
 As an additional quality assurance tool, this build also runs a SonarQube analysis who's results are available at Apaches SonarQube instance at https://builds.apache.org/analysis/overview?id=45154
 
-## Java 7 and Android
+## Java 7 and Android Build Tooling
 
 Java 7 and Android target platforms are supported through use of
 retrolambda to convert Edgent Java 8 JARs to Java 7 JARs. In order
@@ -283,6 +271,8 @@ have to be built too.
 
 See [JAVA_SUPPORT.md](JAVA_SUPPORT.md) for which Edgent capabilities / JARs 
 are supported for each environment.
+
+Also see _Coding Conventions_ below.
 
 ## Test reports
 
@@ -477,15 +467,10 @@ A couple of key items in the mean time:
 * Don't use wildcard imports
 * Don't deliver code with warnings (e.g., unused imports)
 * All source files, scripts, etc must have the standard Apache License header
-  * run the `rat` build task to check license headers
-*** Per ASF policy, released source bundles must not contain binaries (e.g., .class, .jar)**
+  * the build tooling automatically runs `rat` to check license headers
+    and fails if non-conforming files are encountered.
+* __Per ASF policy, released source bundles must not contain binaries (e.g., .class, .jar)__
 * Per ASF policy, release source and binary bundle LICENSE and NOTICE files must be accurate and up to date, and only bundled 3rd party dependencies whose license meets the ASF licensing requirements can be included. 
-
-## Logging
-
-[SLF4J](http://www.slf4j.org) is used for logging and tracing.
-
-Search the code for org.slf4j.LoggerFactory to see a sample of its use.
 
 ### Use of Java 8 features
 Edgent's primary development environment is Java 8, to take advantage of lambda expressions
@@ -494,20 +479,24 @@ since Edgent's primary API is a functional one.
 **However**, in order to support Android (and Java 7), other features of Java 8 are not used in the core
 code. Lambdas are translated into Java 7 compatible classes using retrolambda.
 
-Thus:
+Thus for core code and tests that needs to run on Android/Java7:
 
-* For core code that needs to run on Android:
    * The only Java 8 feature that can be used is lambda expressions
-   * JMX functionality cannot be used.
-* For test code that tests core code that runs on Android:
-   * Java 8 lambda expressions can be used
-   * Java 8 default & static interface methods
+   * Java 8 default & static interface methods cannot be used
    * Java 8 new classes and methods cannot be used
+   * Android only: JMX functionality cannot be used
 
-In general, most code is expected to work on Android (but might not yet) with the exception:
+In general, most code is expected to work on Android (but might not yet)
+with the exception of these excluded features:
 
-* Functionality aimed at the developer environment, such as console and development provider
-* Any JMX related code
+   * Functionality aimed at the developer environment, such as console and development provider
+   * Any JMX related code
+
+### Logging
+
+[SLF4J](http://www.slf4j.org) is used for logging and tracing.
+
+Search the code for org.slf4j.LoggerFactory to see a sample of its use.
 
 ## The ASF / GitHub Integration
 
@@ -595,3 +584,16 @@ seem to confuse the Eclipse `wikitext` editor resulting in blank contents
 in its preview panel.  This situation may be improved by installing 
 the `Markdown text editor` from the Eclipse marketplace and adjusting
 Eclipse's file associations accordingly.
+
+## Renamed from Apache Quarks
+Apache Edgent is the new name and the conversion is complete.
+
+Code changes:
+
+  * Package names have the prefix "org.apache.edgent"
+  * JAR names have the prefix "edgent"
+
+Users of Edgent will need to update their references to the above.
+It's recommended that developers of Edgent create a new workspace instead of
+reusing their Quarks workspace.
+

@@ -62,8 +62,7 @@
                   <version>${project.version}</version>
                   <classifier>tests</classifier>
                   <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
-                  <!-- Exclude FileStreamsTest as Stream class is not available in Java7 -->
-                  <excludes>META-INF/**,org/apache/edgent/test/connectors/file/FileStreams*Test.class,</excludes>
+                  <excludes>META-INF/**</excludes>
                 </artifactItem>
               </artifactItems>
             </configuration>
