@@ -38,7 +38,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 
 import org.apache.edgent.connectors.mqtt.MqttConfig;
 import org.apache.edgent.connectors.mqtt.MqttStreams;
@@ -295,6 +294,14 @@ public class MqttStreamsTestManual extends ConnectorTestBase {
         completeAndValidate(clientId, top, rcvd, mgen, SEC_TIMEOUT, msgs.toArray(new String[0]));
     }
     
+    private List<String> msgsAsStr(String topic, List<String> msgs) {
+        List<String> msgsAsStr = new ArrayList<>();
+        for (String msgStr : msgs) {
+            msgsAsStr.add(new Msg(msgStr, topic).toString());
+        }
+        return msgsAsStr;
+    }
+    
     @Test
     public void testGenericPublish() throws Exception {
         Topology top = newTopology("testGenericPublish");
@@ -306,11 +313,7 @@ public class MqttStreamsTestManual extends ConnectorTestBase {
         // and use a different topic
         String topic = getMqttTopics()[0] + "-Generic";
         List<String> msgs = createMsgs(mgen, topic, getMsg1(), getMsg2());
-        List<String> expMsgsAsStr = 
-                msgs
-                .stream()
-                .map(t -> (new Msg(t, topic)).toString())
-                .collect(Collectors.toList());
+        List<String> expMsgsAsStr = msgsAsStr(topic, msgs);
 
         TStream<Msg> s = PlumbingStreams.blockingOneShotDelay(
                 top.collection(msgs), PUB_DELAY_MSEC, TimeUnit.MILLISECONDS)
@@ -550,11 +553,7 @@ public class MqttStreamsTestManual extends ConnectorTestBase {
         
         // verify the next connect/subscribe [doesn't] sees the retain and then new msgs
         List<String> msgs = createMsgs(mgen, topic, getMsg1(), getMsg2());
-        List<String> expMsgsAsStr = 
-                msgs
-                .stream()
-                .map(t -> (new Msg(t, topic)).toString())
-                .collect(Collectors.toList());
+        List<String> expMsgsAsStr = msgsAsStr(topic, msgs);
         if (isRetained)
             expMsgsAsStr.add(0, (new Msg(retainedMsg, topic)).toString());
 
@@ -592,11 +591,7 @@ public class MqttStreamsTestManual extends ConnectorTestBase {
         
         // verify the next connect/subscribe [doesn't] sees the retain and then new msgs
         List<String> msgs = createMsgs(mgen, topic, getMsg1(), getMsg2());
-        List<String> expMsgsAsStr = 
-                msgs
-                .stream()
-                .map(t -> (new Msg(t, topic)).toString())
-                .collect(Collectors.toList());
+        List<String> expMsgsAsStr = msgsAsStr(topic, msgs);
         if (isRetained)
             expMsgsAsStr.add(0, (new Msg(retainedMsg, topic)).toString());
 

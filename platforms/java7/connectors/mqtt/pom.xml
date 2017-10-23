@@ -56,15 +56,14 @@
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
                   <excludes>META-INF/**</excludes>
                 </artifactItem>
-                <!-- TODO: Makes use of the List.stream in MqttStreamsTestManual, excluding test execution -->
-                <!--artifactItem>
+                <artifactItem>
                   <groupId>${edgent.retrolambda.srcArtifactGroupId}</groupId>
                   <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
                   <classifier>tests</classifier>
                   <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
                   <excludes>META-INF/**</excludes>
-                </artifactItem-->
+                </artifactItem>
               </artifactItems>
             </configuration>
           </execution>
