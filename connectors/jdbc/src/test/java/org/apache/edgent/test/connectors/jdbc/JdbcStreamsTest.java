@@ -32,11 +32,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 import javax.sql.DataSource;
 
 import org.apache.edgent.connectors.jdbc.JdbcStreams;
+import org.apache.edgent.function.Predicate;
 import org.apache.edgent.test.connectors.common.ConnectorTestBase;
 import org.apache.edgent.topology.TSink;
 import org.apache.edgent.topology.TStream;
@@ -235,15 +235,18 @@ public class JdbcStreamsTest  extends ConnectorTestBase {
         return rcvdPerson;
     }
     
-    private static java.util.function.Predicate<Person> newOddIdPredicate() {
+    private static Predicate<Person> newOddIdPredicate() {
         return (person) -> person.id % 2 != 0;
     }
     
-    private List<String> expectedPersons(java.util.function.Predicate<Person> predicate, List<Person> persons) {
-        return persons.stream()
-                .filter(predicate)
-                .map(person -> person.toString())
-                .collect(Collectors.toList());
+    private List<String> expectedPersons(Predicate<Person> predicate, List<Person> persons) {
+        List<String> expPersons = new ArrayList<>();
+        for (Person p : persons) {
+            if (predicate.test(p)) {
+                expPersons.add(p.toString());
+            }
+        }
+        return expPersons;
     }
 
     @Test

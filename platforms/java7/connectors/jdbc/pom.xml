@@ -56,15 +56,14 @@
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
                   <excludes>META-INF/**</excludes>
                 </artifactItem>
-                <!-- TODO: The tests make use of Java8 Predicates and hereby break Java7 support -->
-                <!--artifactItem>
+                <artifactItem>
                   <groupId>${edgent.retrolambda.srcArtifactGroupId}</groupId>
                   <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
                   <classifier>tests</classifier>
                   <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
                   <excludes>META-INF/**</excludes>
-                </artifactItem-->
+                </artifactItem>
               </artifactItems>
             </configuration>
           </execution>
