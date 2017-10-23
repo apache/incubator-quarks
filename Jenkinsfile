@@ -53,6 +53,17 @@ node('ubuntu') {
         stage ('Build') {
             echo 'Building'
             sh "${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-android,platform-java7,distribution,toolchain -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true clean ${mavenGoal} sonar:sonar site:site"
+
+            echo 'Verify samples build, etc'
+            sh "cd samples; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} clean package"
+            sh "cd samples/topology; ./run-sample.sh HelloEdgent"
+            sh "cd samples; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-java7 clean package"
+            sh "cd samples/topology; ./run-sample.sh HelloEdgent"
+            
+            echo 'Verify app template builds, etc'
+            sh "cd samples/template; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} clean package; ./run-app.sh"
+            sh "cd samples/template; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-java7 clean package; ./run-app.sh"
+            sh "cd samples/template; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-android clean package; ./run-app.sh"
         }
 
         stage ('Stage Site') {
