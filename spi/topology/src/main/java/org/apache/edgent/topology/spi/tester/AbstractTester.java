@@ -49,7 +49,7 @@ public abstract class AbstractTester implements Tester {
         
         if (Boolean.getBoolean("edgent.build.ci")) {
             // could do something like base the decision of the current value of timeout and/or units
-            return timeout * 10;
+            return timeout * 2;  // minimize the multiplier because of the aforementioned await-tmo test cases
         }
         return timeout;
     }
@@ -59,8 +59,8 @@ public abstract class AbstractTester implements Tester {
             long timeout, TimeUnit unit) throws Exception {
 
         long tmoMsec = Math.max(unit.toMillis(timeout), 1000);
-        long maxTime = System.currentTimeMillis() + tmoMsec;
         tmoMsec = getTimeoutValue(tmoMsec, TimeUnit.MILLISECONDS);
+        long maxTime = System.currentTimeMillis() + tmoMsec;
 
         Future<?> future = submitter.submit(topology(), config);
         // wait at most tmoMsec for the submit to create the job

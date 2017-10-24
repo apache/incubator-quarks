@@ -212,7 +212,7 @@ public class Executable implements RuntimeServices {
         // in the face of overloaded/slow build/test servers.
         if (Boolean.getBoolean("edgent.build.ci")) {
             // could do something like base the decision of the current value of timeout and/or units
-            return timeout * 10;
+            return timeout * 2; // try to minimize
         }
         return timeout;
     }
