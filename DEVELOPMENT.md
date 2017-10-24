@@ -213,6 +213,20 @@ It includes:
 * Testing on Java 8
   - Not all tests may be run, some tests are skipped due to timing issues or if excessive setup is required.
 
+In an attempt to more generally desentize tmo failures
+when the system property edgent.build.ci=true is set
+some runtime and test infrastructure components will 
+bump the normal tmo value (e.g., 10x).
+This affects travis and Jenkins runs (both set edgent.build.ci).
+See:
+
+    * TStreamTest.waitForCompletion()
+    * AbstractTester.complete()
+    * Execuatble.invokeAction()
+    * generally search for uses of edgent.build.ci
+        * maybe remove other test specific uses of it in light of the general change 
+
+The following may now best be avoided:
 If your test randomly fails because, for example, it depends on publicly available test services,
 or is timing dependent, and if timing variances on the Travis CI servers may make it more likely
 for your tests to fail, you may disable the test from being executed on Travis CI using the

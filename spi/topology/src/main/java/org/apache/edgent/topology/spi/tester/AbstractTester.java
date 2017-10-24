@@ -22,8 +22,8 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.edgent.execution.Job;
-import org.apache.edgent.execution.Submitter;
 import org.apache.edgent.execution.Job.State;
+import org.apache.edgent.execution.Submitter;
 import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.tester.Condition;
 import org.apache.edgent.topology.tester.Tester;
@@ -33,6 +33,26 @@ import com.google.gson.JsonObject;
 public abstract class AbstractTester implements Tester { 
     
     private Job job;
+    
+    private static long getTimeoutValue(long timeout, TimeUnit units) {
+        // try to protect the tests from timing out prematurely
+        // in the face of overloaded/slow build/test servers.
+        //
+        // One problem with the following "generally bump the timeout value"
+        // scheme is that there are some tests that expect / test-for something
+        // to NOT happen - within some timeout tolerance.
+        // Ideally we don't want such tests to always take this extra-long timeout.
+        // Not sure what to do about that.  The first step is to just try this and
+        // see if it generally addresses the slow-test-server problem.
+        // Then we can review test execution times to identify those that fall
+        // into this case and then contemplate what to do about them.
+        
+        if (Boolean.getBoolean("edgent.build.ci")) {
+            // could do something like base the decision of the current value of timeout and/or units
+            return timeout * 10;
+        }
+        return timeout;
+    }
 
     @Override
     public boolean complete(Submitter<Topology, ? extends Job> submitter, JsonObject config, Condition<?> endCondition,
@@ -40,6 +60,7 @@ public abstract class AbstractTester implements Tester {
 
         long tmoMsec = Math.max(unit.toMillis(timeout), 1000);
         long maxTime = System.currentTimeMillis() + tmoMsec;
+        tmoMsec = getTimeoutValue(tmoMsec, TimeUnit.MILLISECONDS);
 
         Future<?> future = submitter.submit(topology(), config);
         // wait at most tmoMsec for the submit to create the job

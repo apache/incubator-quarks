@@ -853,15 +853,29 @@ public abstract class TStreamTest extends TopologyAbstractTest {
         Condition<Long> tc = t.getTester().tupleCount(joinsHappened, 100);
         complete(t, tc);      
     }
+    
+    private static long getTimeoutValue(long timeout, TimeUnit units) {
+        // try to protect the tests from timing out prematurely
+        // in the face of overloaded/slow build/test servers.
+        if (Boolean.getBoolean("edgent.build.ci")) {
+            // could do something like base the decision of the current value of timeout and/or units
+            return timeout * 10;
+        }
+        return timeout;
+    }
 
     private void waitForCompletion(ExecutorCompletionService<Boolean> completer, int numtasks) throws ExecutionException {
         int remainingTasks = numtasks;
+        long getFutureTimeout = 4;
+        TimeUnit getFutureTimeoutUnits = TimeUnit.SECONDS;
+        getFutureTimeout = getTimeoutValue(getFutureTimeout, getFutureTimeoutUnits);
         while (remainingTasks > 0) {
             try {
-                Future<Boolean> completed = completer.poll(4, TimeUnit.SECONDS);
+                Future<Boolean> completed = completer.poll(getFutureTimeout, getFutureTimeoutUnits);
                 if (completed == null) {
-                    System.err.println("Completer timed out");
-                    throw new RuntimeException(new TimeoutException());
+                    String msg = String.format("Completer timed out: %d%s timeout", getFutureTimeout, getFutureTimeoutUnits.toString());
+                    System.err.println(msg);
+                    throw new RuntimeException(new TimeoutException(msg));
                 }
                 else {
                     completed.get();
