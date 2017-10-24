@@ -47,6 +47,25 @@
     </resources>
     <plugins>
       <plugin>
+        <groupId>org.apache.rat</groupId>
+        <artifactId>apache-rat-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>license-check</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <excludes combine.children="append">
+            <!-- TODO: Still got one unlicensed file in there ... -->
+            <exclude>src/main/webapp/js/ext/**</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-remote-resources-plugin</artifactId>
         <configuration>
@@ -112,7 +131,7 @@
         </executions>
       </plugin>
       <!-- Download JavaScript form GitHub -->
-      <plugin>
+      <!--plugin>
         <groupId>com.googlecode.maven-download-plugin</groupId>
         <artifactId>download-maven-plugin</artifactId>
         <version>1.2.1</version>
@@ -130,7 +149,7 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>
+      </plugin-->
       <plugin>
         <!--  Included to enable "mvn tomcat:run" and have a running
               console server without using the server jar.
