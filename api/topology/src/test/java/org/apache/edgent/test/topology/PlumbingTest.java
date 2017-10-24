@@ -64,7 +64,7 @@ public abstract class PlumbingTest extends TopologyAbstractTest {
         // delay stream
         starts = PlumbingStreams.blockingDelay(starts, 300, TimeUnit.MILLISECONDS);
         
-        // calculate display
+        // calculate delay
         starts = starts.modify(v -> System.currentTimeMillis() - v);
         
         starts = starts.filter(v -> v >= 300);
@@ -561,10 +561,6 @@ public abstract class PlumbingTest extends TopologyAbstractTest {
     
     @Test
     public void testParallelBalanced() throws Exception {
-        // May need tweak validation sensitivity or add this:
-        // Timing variances on shared machines can cause this test to fail
-        // assumeTrue(!Boolean.getBoolean("edgent.build.ci"));
-
         Topology top = newTopology("testParallelBalanced");
         
         // arrange for even channels to process ~2x as many as odd channels.
@@ -576,6 +572,7 @@ public abstract class PlumbingTest extends TopologyAbstractTest {
         
         int width = 4;
         int tupCnt = 60;
+        int expEvenChCnt = 2 * (tupCnt / 3);   // even:2/3rds, odd:1/3rd 
         Integer[] resultTuples = new Integer[tupCnt];
         for (int i = 0; i < tupCnt; i++)
           resultTuples[i] = i;
@@ -616,17 +613,19 @@ public abstract class PlumbingTest extends TopologyAbstractTest {
           assertTrue("expMinSerialDuration="+expMinSerialDuration+" actDuration="+actDuration, 
               actDuration < 0.5 * expMinSerialDuration);
         
-        int evenChCounts = 0;
-        int oddChCounts = 0;
+        // Verify the balancing seemed to work.
+        // On loaded systems we've seen eCnt:37 oCnt:23.  Settle for expEvenCnt +- 15%
+        double thresholdCnt = expEvenChCnt * 0.15;
+        int evenChCnt = 0;
         for (int ch = 0; ch < width; ch++) {
-          assertTrue(chCounts[ch].get() != 0);
+          assertTrue("ch:"+ch, chCounts[ch].get() != 0);
           if (ch % 2 == 0)
-            evenChCounts += chCounts[ch].get();
-          else
-            oddChCounts += chCounts[ch].get();
+            evenChCnt += chCounts[ch].get();
         }
-        assertTrue(oddChCounts > 0.4 * evenChCounts
-            && oddChCounts < 0.6 * evenChCounts);
+        assertTrue(
+                String.format("evenChCnt:%d expEvenChCnt:%d +-:%d", evenChCnt, expEvenChCnt, thresholdCnt),
+                evenChCnt >= (expEvenChCnt - thresholdCnt)
+                && evenChCnt <= (expEvenChCnt + thresholdCnt)); 
     }
     
 //    @Test
