@@ -615,7 +615,7 @@ public abstract class PlumbingTest extends TopologyAbstractTest {
         
         // Verify the balancing seemed to work.
         // On loaded systems we've seen eCnt:37 oCnt:23.  Settle for expEvenCnt +- 15%
-        double thresholdCnt = expEvenChCnt * 0.15;
+        int thresholdCnt = (int) (expEvenChCnt * 0.15);
         int evenChCnt = 0;
         for (int ch = 0; ch < width; ch++) {
           assertTrue("ch:"+ch, chCounts[ch].get() != 0);
