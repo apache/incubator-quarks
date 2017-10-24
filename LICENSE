@@ -210,7 +210,9 @@ conditions of the following licenses.
 
 This product bundles d3-legend which is available under a separate license.
 
-console/servlets/src/main/webapp/js/ext/d3.legend.js
+console/servlets/src/main/webapp/js/ext/d3-legend/d3.legend.js
+https://gist.githubusercontent.com/ZJONSSON/3918369/raw/bf9bce6b68a3b70f87450f155436ca4a84af1ba4/d3.legend.js
+With Edgent specific modifications.
 License type: MIT
 
   Copyright (c) 2012 ziggy.jonsson.nyc@gmail.com

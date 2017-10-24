@@ -2,6 +2,8 @@
 // (C) 2012 ziggy.jonsson.nyc@gmail.com
 // MIT licence
 
+// Edgent modified from https://gist.githubusercontent.com/ZJONSSON/3918369/raw/bf9bce6b68a3b70f87450f155436ca4a84af1ba4/d3.legend.js
+
 (function() {
     d3.legend = function(g, chartSvg, pItems, legendTitle) {
         g.each(function() {

@@ -23,6 +23,7 @@ jquery-ui (org.webjars:jquery-ui:1.11.4)
     For details, see META-INF/licenses/jquery-ui-1_11_4-MIT.txt.
 
 d3.legend.js (included inside the resources/servlets.war!/js/ext/d3.legend/d3.legend.js)
+    https://gist.githubusercontent.com/ZJONSSON/3918369/raw/bf9bce6b68a3b70f87450f155436ca4a84af1ba4/d3.legend.js
     With Edgent specific modifications.
     For details, see META-INF/licenses/d3.legend-MIT.txt.
 
