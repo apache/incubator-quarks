@@ -23,10 +23,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.edgent.test.providers.direct.DirectTopologyTestBase;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.Topology;
+import org.apache.edgent.topology.tester.Condition;
 
 public class ConnectorTestBase extends DirectTopologyTestBase {
     
@@ -101,6 +103,24 @@ public class ConnectorTestBase extends DirectTopologyTestBase {
                 String.format("[%s][%s] rcvd: %s", t.getName(), simpleTS(), tuple)));
 
         super.completeAndValidate(ordered, msg, t, s, secTimeout, expected);
+    }
+    
+    public static Condition<Object> newWaitTimeCondition(int seconds) {
+        return new Condition<Object>() {
+            private long startTime = 0;
+            private long endTime = 0;
+            private volatile boolean done = false;
+            public boolean valid() {
+                if (startTime==0) {
+                    startTime = System.currentTimeMillis();
+                    endTime = startTime + TimeUnit.SECONDS.toMillis(seconds);
+                }
+                long now = System.currentTimeMillis();
+                done = now >= endTime;
+                return done;
+            }
+            public Object getResult() { return done; }
+        };
     }
 
 }

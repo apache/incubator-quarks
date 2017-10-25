@@ -495,17 +495,24 @@ public class MqttStreamsTestManual extends ConnectorTestBase {
                 top.collection(msgs), PUB_DELAY_MSEC, TimeUnit.MILLISECONDS);
         
         // Code coverage test: induce connection failure
-        //
-        // At this point the only thing we can check is an expected
-        // result of 0 msgs received.
         
         MqttConfig config = newConfig("tcp://localhost:31999", clientId);
         MqttStreams mqtt = new MqttStreams(top, () -> config);
 
         mqtt.publish(s, topic, qos, retain);
-        TStream<String> rcvd = mqtt.subscribe(topic, qos);
-
-        completeAndValidate(clientId, top, rcvd, mgen, SEC_TIMEOUT, new String[0]);
+        TStream<String> rcvd = mqtt.subscribe(topic, qos);  // rcv nothing
+        
+        // in this case there's no useful condition that we can check for
+        // to validate this is behaving properly other than the connector doesn't
+        // blow up and that nothing is rcvd, so just wait a short time
+        // before verifying nothing was rcvd.
+        // Don't use the complete() TMO for successful termination.
+        
+        Condition<List<String>> rcvdContent = top.getTester().streamContents(rcvd, new String[0]);
+        Condition<Object> tc = newWaitTimeCondition(3);
+        
+        complete(top, tc, SEC_TIMEOUT, TimeUnit.SECONDS);
+        assertTrue("rcvd: "+rcvdContent.getResult(), rcvdContent.valid());
     }
     
     private String retainTestSetup(boolean isRetained, MsgGenerator mgen) throws Exception {

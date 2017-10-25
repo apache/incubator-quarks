@@ -614,25 +614,6 @@ public class WebSocketClientTest extends ConnectorTestBase {
         assertTrue("rcvd: "+rcvdContent.getResult(), rcvdContent.valid());
     }
     
-    private Condition<Object> newWaitTimeCondition(int seconds) {
-        return new Condition<Object>() {
-            private long startTime = 0;
-            private long endTime = 0;
-            private volatile boolean done = false;
-            public boolean valid() {
-                if (startTime==0) {
-                    startTime = System.currentTimeMillis();
-                    endTime = startTime + TimeUnit.SECONDS.toMillis(seconds);
-                }
-                long now = System.currentTimeMillis();
-                done = now >= endTime;
-                return done;
-            }
-            public Object getResult() { return done; }
-        };
-
-    }
-    
     @Test
     public void testSslClientAuth() throws Exception {
 
