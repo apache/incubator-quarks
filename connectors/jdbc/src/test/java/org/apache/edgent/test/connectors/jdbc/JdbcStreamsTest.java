@@ -20,6 +20,7 @@ package org.apache.edgent.test.connectors.jdbc;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 
 import java.lang.reflect.Method;
@@ -42,6 +43,7 @@ import org.apache.edgent.topology.TSink;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.plumbing.PlumbingStreams;
+import org.apache.edgent.topology.tester.Condition;
 import org.junit.Test;
 
 /**
@@ -464,6 +466,7 @@ public class JdbcStreamsTest  extends ConnectorTestBase {
                         executionExcCnt.incrementAndGet();
                         return;
                     }
+                    // don't ever expect to get here in this case
                     resultSet.next();
                     int id = resultSet.getInt("id");
                     String firstName = resultSet.getString("firstname");
@@ -475,10 +478,21 @@ public class JdbcStreamsTest  extends ConnectorTestBase {
                 );
         TStream<String> rcvd = rcvdPerson.map(person -> person.toString());
         
+        // Await completion on having received the correct number of exception.
+        // Then also verify that no non-exceptional results were received.
+        Condition<Object> tc = new Condition<Object>() {
+            public boolean valid() {
+                return executionExcCnt.get() == expectedExcCnt;
+            }
+            public Object getResult() { return executionExcCnt.get(); }
+        };
+        Condition<List<String>> rcvdContents = t.getTester().streamContents(rcvd, expected.toArray(new String[0]));
+        
         rcvd.sink(tuple -> System.out.println(
                 String.format("%s rcvd: %s", t.getName(), tuple)));
-        completeAndValidate("", t, rcvd, SEC_TIMEOUT, expected.toArray(new String[0]));
+        complete(t, tc, SEC_TIMEOUT, TimeUnit.SECONDS);
         assertEquals("executionExcCnt", expectedExcCnt, executionExcCnt.get());
+        assertTrue("rcvd: "+rcvdContents.getResult(), rcvdContents.valid());
     }
     
     @Test
