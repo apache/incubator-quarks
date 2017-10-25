@@ -30,6 +30,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -69,9 +70,11 @@ public class FileUtil {
    * Validate that the file contains the specified content.
    * @param path file to validate
    * @param lines the expected content
-   * @throws Exception on failure
+   * @param silent control return vs throw
+   * @return false on failure - only applicable when silent==true
+   * @throws Exception on failure when silent==false
    */
-  public static void validateFile(Path path, String[] lines) throws Exception {
+  public static boolean validateFile(Path path, String[] lines, boolean silent) throws Exception {
     List<String> actLines = new ArrayList<>();
     try (BufferedReader reader = 
           new BufferedReader(new InputStreamReader(
@@ -81,8 +84,26 @@ public class FileUtil {
       while ((line = reader.readLine()) != null) {
         actLines.add(line);
       }
-      assertArrayEquals(lines, actLines.toArray(new String[actLines.size()]));
+      if (!silent)
+          assertArrayEquals(lines, actLines.toArray(new String[actLines.size()]));
+      else if (!Arrays.equals(lines, actLines.toArray(new String[actLines.size()])))
+          return false;
+      return true;
     }
+    catch (Exception e) {
+        if (!silent) throw e;
+        return false;
+    }
+  }
+  
+  /**
+   * Validate that the file contains the specified content.
+   * @param path file to validate
+   * @param lines the expected content
+   * @throws Exception on failure
+   */
+  public static void validateFile(Path path, String[] lines) throws Exception {
+      validateFile(path, lines, false);
   }
 
 }
