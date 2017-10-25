@@ -20,6 +20,7 @@ package org.apache.edgent.test.connectors.wsclient.javax.websocket;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 
 import java.net.InetSocketAddress;
@@ -27,6 +28,7 @@ import java.net.Socket;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
@@ -42,6 +44,7 @@ import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.json.JsonFunctions;
 import org.apache.edgent.topology.plumbing.PlumbingStreams;
+import org.apache.edgent.topology.tester.Condition;
 import org.junit.After;
 import org.junit.Test;
 
@@ -596,9 +599,38 @@ public class WebSocketClientTest extends ConnectorTestBase {
         s = PlumbingStreams.blockingOneShotDelay(s, 2, TimeUnit.SECONDS);
         wsClient.sendString(s);
         
-        TStream<String> rcvd = wsClient.receiveString();
+        TStream<String> rcvd = wsClient.receiveString();  // rcv nothing
         
-        completeAndValidate("", t, rcvd, SEC_TMO, new String[0]);  //rcv nothing
+        // in this case there's no useful condition that we can check for
+        // to validate this is behaving properly other than the connector doesn't
+        // blow up and that nothing is rcvd, so just wait a short time
+        // before verifying nothing was rcvd.
+        // Don't use the complete() TMO for successful termination.
+        
+        Condition<List<String>> rcvdContent = t.getTester().streamContents(rcvd, new String[0]);
+        Condition<Object> tc = newWaitTimeCondition(3);
+        
+        complete(t, tc, SEC_TMO, TimeUnit.SECONDS);
+        assertTrue("rcvd: "+rcvdContent.getResult(), rcvdContent.valid());
+    }
+    
+    private Condition<Object> newWaitTimeCondition(int seconds) {
+        return new Condition<Object>() {
+            private long startTime = 0;
+            private long endTime = 0;
+            private volatile boolean done = false;
+            public boolean valid() {
+                if (startTime==0) {
+                    startTime = System.currentTimeMillis();
+                    endTime = startTime + TimeUnit.SECONDS.toMillis(seconds);
+                }
+                long now = System.currentTimeMillis();
+                done = now >= endTime;
+                return done;
+            }
+            public Object getResult() { return done; }
+        };
+
     }
     
     @Test
@@ -675,9 +707,19 @@ public class WebSocketClientTest extends ConnectorTestBase {
         s = PlumbingStreams.blockingOneShotDelay(s, 2, TimeUnit.SECONDS);
         wsClient.sendString(s);
         
-        TStream<String> rcvd = wsClient.receiveString();
+        TStream<String> rcvd = wsClient.receiveString();  // rcv nothing
         
-        completeAndValidate("", t, rcvd, SEC_TMO, new String[0]); // rcv nothing
+        // in this case there's no useful condition that we can check for
+        // to validate this is behaving properly other than the connector doesn't
+        // blow up and that nothing is rcvd, so just wait a short time
+        // before verifying nothing was rcvd.
+        // Don't use the complete() TMO for successful termination.
+        
+        Condition<List<String>> rcvdContent = t.getTester().streamContents(rcvd, new String[0]);
+        Condition<Object> tc = newWaitTimeCondition(3);
+        
+        complete(t, tc, SEC_TMO, TimeUnit.SECONDS);
+        assertTrue("rcvd: "+rcvdContent.getResult(), rcvdContent.valid());
     }
     
     @Test
@@ -733,9 +775,19 @@ public class WebSocketClientTest extends ConnectorTestBase {
         s = PlumbingStreams.blockingOneShotDelay(s, 2, TimeUnit.SECONDS);
         wsClient.sendString(s);
         
-        TStream<String> rcvd = wsClient.receiveString();
+        TStream<String> rcvd = wsClient.receiveString();  // rcv nothing
         
-        completeAndValidate("", t, rcvd, SEC_TMO, new String[0]);  //rcv nothing
+        // in this case there's no useful condition that we can check for
+        // to validate this is behaving properly other than the connector doesn't
+        // blow up and that nothing is rcvd, so just wait a short time
+        // before verifying nothing was rcvd.
+        // Don't use the complete() TMO for successful termination.
+        
+        Condition<List<String>> rcvdContent = t.getTester().streamContents(rcvd, new String[0]);
+        Condition<Object> tc = newWaitTimeCondition(3);
+        
+        complete(t, tc, SEC_TMO, TimeUnit.SECONDS);
+        assertTrue("rcvd: "+rcvdContent.getResult(), rcvdContent.valid());
     }
     
     private void skipTestIfCantConnect(Properties config) throws Exception {
@@ -847,9 +899,19 @@ public class WebSocketClientTest extends ConnectorTestBase {
             s = PlumbingStreams.blockingOneShotDelay(s, 2, TimeUnit.SECONDS);
             wsClient.sendString(s);
             
-            TStream<String> rcvd = wsClient.receiveString();
+            TStream<String> rcvd = wsClient.receiveString();  // rcv nothing
             
-            completeAndValidate("", t, rcvd, SEC_TMO, new String[0]);  //rcv nothing
+            // in this case there's no useful condition that we can check for
+            // to validate this is behaving properly other than the connector doesn't
+            // blow up and that nothing is rcvd, so just wait a short time
+            // before verifying nothing was rcvd.
+            // Don't use the complete() TMO for successful termination.
+            
+            Condition<List<String>> rcvdContent = t.getTester().streamContents(rcvd, new String[0]);
+            Condition<Object> tc = newWaitTimeCondition(3);
+            
+            complete(t, tc, SEC_TMO, TimeUnit.SECONDS);
+            assertTrue("rcvd: "+rcvdContent.getResult(), rcvdContent.valid());
         }
         finally {
             sslProps.restore();
