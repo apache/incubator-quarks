@@ -808,7 +808,9 @@ public abstract class TStreamTest extends TopologyAbstractTest {
                 try {
                     complete(t, tc);
                 } catch (Exception e) {
+                    // we're receiving the CancellationException here (and it percolates through waitForCompletion
                     System.err.println("MTPWE complete() threw e:"+e);
+                    e.printStackTrace();
                     throw e;
                 }
                 return true;
@@ -819,6 +821,7 @@ public abstract class TStreamTest extends TopologyAbstractTest {
             waitForCompletion(completer, executions);
         } catch (Exception e) {
             System.err.println("MTPWE waitForCompletion() threw e:"+e);
+            e.printStackTrace();
             throw e;
         }
    }
