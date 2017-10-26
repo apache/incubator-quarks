@@ -486,7 +486,6 @@ public class WindowTest {
         
         numTuples += batches.get(batches.size() -1).size();
         assertEquals("Number of batch tuples", count.get(), numTuples);
-        assertEquals("Number of batches", MAX_TUP_CNT/100, batches.size());
         assertTrue("Number of batches exp:"+MAX_TUP_CNT/100+" got:"+batches.size(),
                 withinToleranceAmt((double)MAX_TUP_CNT/100, (double)batches.size(), 1)); // +/- 1
     }
