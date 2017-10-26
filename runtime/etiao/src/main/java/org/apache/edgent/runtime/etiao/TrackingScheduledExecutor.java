@@ -117,6 +117,7 @@ public final class TrackingScheduledExecutor extends ScheduledThreadPoolExecutor
 
     private int cancelAllAsyncTasks(boolean mayInterruptIfRunning) {
         int notCanceled = 0;
+        // follow the iterator access pattern doc'd by Collections:synchronizedSet()
         synchronized (asyncTasks) {
             // hmm have gotten CMEs here with testMultiTopologyPollWithError.
             // This seems to follow the required access pattern for synchronized collection iterator.
@@ -126,10 +127,22 @@ public final class TrackingScheduledExecutor extends ScheduledThreadPoolExecutor
             //    hasActiveTasks() - iterates while synchronized and can remove
             //    removeTrack() - remove
             // Just to make things iron clad, synch the add and remove too
-            for (RunnableScheduledFuture<?> task : asyncTasks) {
+            // hmm... got another CME even after mods to the above.
+            //   java.util.ConcurrentModificationException
+            //   at java.util.HashMap$HashIterator.nextNode(HashMap.java:1437)
+            //   at java.util.HashMap$KeyIterator.next(HashMap.java:1461)
+            //   at: for (RunnableScheduledFuture<?> task : asyncTasks)
+//            for (RunnableScheduledFuture<?> task : asyncTasks) {
+//                if (!task.cancel(mayInterruptIfRunning))
+//                    notCanceled++;
+//            }
+            Iterator<RunnableScheduledFuture<?>> i = asyncTasks.iterator();
+            while (i.hasNext()) {
+                RunnableScheduledFuture<?> task = i.next();
                 if (!task.cancel(mayInterruptIfRunning))
                     notCanceled++;
             }
+
             // remove tasks which are done
             hasActiveTasks();
         }
