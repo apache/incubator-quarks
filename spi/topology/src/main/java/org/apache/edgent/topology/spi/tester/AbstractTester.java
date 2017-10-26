@@ -73,8 +73,14 @@ public abstract class AbstractTester implements Tester {
             Thread.sleep(100);
         }
         
+        if (!endCondition.valid() && getJob().getCurrentState() != State.CLOSED) {
+            System.err.println("complete(): timed out after " + tmoMsec + "msec");
+        }
+        
         if (getJob().getCurrentState() != State.CLOSED)
             getJob().stateChange(Job.Action.CLOSE);
+        else
+            System.out.println("complete(): Job already closed");
 
         return endCondition.valid();
     }
