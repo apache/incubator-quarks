@@ -507,7 +507,7 @@ public class WindowTest {
     public static boolean withinToleranceAmt(double expected, Double actual, double toleranceAmt) {
         double lowBound = expected - toleranceAmt;
         double highBound = expected + toleranceAmt;
-        return (actual < highBound && actual > lowBound);
+        return (actual <= highBound && actual >= lowBound);
     }
 
 }
