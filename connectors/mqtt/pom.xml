@@ -55,6 +55,7 @@
             <exclude>src/test/resources/keystores/*.key</exclude>
             <exclude>src/test/resources/keystores/*.srl</exclude>
             <exclude>src/test/resources/keystores/*.csr</exclude>
+            <exclude>src/test/resources/keystores/*.p12</exclude>
             <exclude>src/test/resources/keystores/mosquitto-SSL.conf.template</exclude>
             <exclude>src/test/resources/keystores/mosquitto.org.crt</exclude>
           </excludes>
