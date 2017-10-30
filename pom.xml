@@ -356,13 +356,6 @@
             <exclude>licenses/binary-release/mqttv3-1.1.0.EDL-1.0</exclude>
             <exclude>licenses/binary-release/watson-iot-0.2.2.EPL-1.0</exclude>
             <exclude>samples/**</exclude>  <!-- samples are separate -->
-
-            <!-- TODO: Remove this after finishing the maven migration -->
-            <exclude>gradlew</exclude>
-            <exclude>gradlew.bat</exclude>
-            <exclude>**/build/**</exclude>
-            <exclude>**/.gradle/**</exclude>
-            <exclude>.gradle-wrapper/**</exclude>
           </excludes>
         </configuration>
       </plugin>

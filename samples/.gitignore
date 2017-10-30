@@ -9,12 +9,7 @@
 
 # More generated artifacts
 target/
-/test/svt/lib
-/release-edgent
 /reports
-/.gradle/
-build/
-/externalJars
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
