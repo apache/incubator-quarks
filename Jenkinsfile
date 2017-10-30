@@ -37,7 +37,7 @@ node('ubuntu') {
     } else {
         mavenLocalRepo = "-Dmaven.repo.local=.repository"
     }
-    def mavenFailureMode = "--fail-at-end"  // vs --fail-fast
+    def mavenFailureMode = "" // consider "--fail-at-end"? Odd ordering side effects?
 
     try {
         stage ('Cleanup') {
@@ -64,6 +64,9 @@ node('ubuntu') {
             sh "cd samples/template; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} clean package; ./run-app.sh"
             sh "cd samples/template; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-java7 clean package; ./run-app.sh"
             sh "cd samples/template; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-android clean package; ./run-app.sh"
+            
+            echo 'Verify get-edgent-jars'
+            sh "cd samples/get-edgent-jars; ./get-edgent-jars.sh"
         }
 
         stage ('Stage Site') {
