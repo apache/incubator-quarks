@@ -37,6 +37,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.edgent.topology.TSink;
@@ -795,13 +796,14 @@ public abstract class TStreamTest extends TopologyAbstractTest {
         int executions = 4;
         ExecutorCompletionService<Boolean> completer = new ExecutorCompletionService<>(
                 Executors.newFixedThreadPool(executions));
+        final AtomicInteger excCnt = new AtomicInteger();
         for (int i = 0; i < executions; i++) {
             completer.submit(() -> {
                 Topology t = newTopology();
                 AtomicLong n = new AtomicLong(0);
                 TStream<Long> s = t.poll(() -> n.incrementAndGet(), 10, TimeUnit.MILLISECONDS);
                 // Throw on the 8th tuple
-                s.sink((tuple) -> { if (8 == n.get()) throw new RuntimeException("MTPWE Expected Test Exception");});
+                s.sink((tuple) -> { if (8 == n.get()) throw new RuntimeException("MTPWE Expected Test Exception # "+excCnt.incrementAndGet());});
                 // Expect 7 tuples out of 8
                 Condition<Long> tc = t.getTester().tupleCount(s, 7);
 //              complete(t, tc);
