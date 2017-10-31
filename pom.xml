@@ -271,7 +271,7 @@
           <artifactId>maven-assembly-plugin</artifactId>
           <version>2.5.3</version>
           <configuration>
-            <finalName>apache-edgent-incubating-${project.version}</finalName>
+            <finalName>apache-edgent-${project.version}-incubating</finalName>
           </configuration>
         </plugin>
 
@@ -792,7 +792,7 @@
                     <descriptor>src/assembly/source-release.xml</descriptor>
                   </descriptors>
                   <tarLongFileMode>gnu</tarLongFileMode>
-                  <finalName>apache-edgent-incubating-${project.version}</finalName>
+                  <finalName>apache-edgent-${project.version}-incubating</finalName>
                 </configuration>
               </execution>
             </executions>

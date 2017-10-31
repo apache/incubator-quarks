@@ -168,7 +168,7 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-assembly-plugin</artifactId>
           <configuration>
-            <finalName>apache-edgent-incubating-samples-${project.version}</finalName>
+            <finalName>apache-edgent-${project.version}-incubating-samples</finalName>
             <formats>
               <format>zip</format>
               <format>tar.gz</format>
