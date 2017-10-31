@@ -50,22 +50,28 @@ node('ubuntu') {
             checkout scm
         }
 
-        stage ('Build') {
-            echo 'Building'
+        stage ('Build Edgent') {
+            echo 'Building Edgent'
             sh "${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-android,platform-java7,distribution,toolchain -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true clean ${mavenGoal} sonar:sonar site:site"
+        }
 
-            echo 'Verify samples build, etc'
+        stage ('Build Samples') {
+            echo 'Building samples'
             sh "cd samples; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} clean package"
             sh "cd samples/topology; ./run-sample.sh HelloEdgent"
             sh "cd samples; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-java7 clean package"
             sh "cd samples/topology; ./run-sample.sh HelloEdgent"
-            
-            echo 'Verify app template builds, etc'
+        }
+
+        stage ('Build Templates') {
+            echo 'Building templates'
             sh "cd samples/template; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} clean package; ./run-app.sh"
             sh "cd samples/template; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-java7 clean package; ./run-app.sh"
             sh "cd samples/template; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-android clean package; ./run-app.sh"
-            
-            echo 'Verify get-edgent-jars'
+        }
+
+        stage ('Verify get-engent-jars') {
+            echo 'Verifying get-edgent-jars'
             sh "cd samples/get-edgent-jars; ./get-edgent-jars.sh"
         }
 
