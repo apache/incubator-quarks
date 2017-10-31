@@ -29,13 +29,15 @@ node('ubuntu') {
     env.JAVA_HOME="${tool 'JDK 1.8 (latest)'}"
     env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
 
+    def workspace = pwd()
+
     // Make sure the feature branches don't change the SNAPSHOTS in Nexus.
     def mavenGoal = "install"
     def mavenLocalRepo = ""
     if(env.BRANCH_NAME == 'develop') {
         mavenGoal = "deploy"
     } else {
-        mavenLocalRepo = "-Dmaven.repo.local=.repository"
+        mavenLocalRepo = "-Dmaven.repo.local=${workspace)/.repository"
     }
     def mavenFailureMode = "" // consider "--fail-at-end"? Odd ordering side effects?
 
@@ -53,24 +55,24 @@ node('ubuntu') {
         stage ('Build Edgent') {
             echo 'Building Edgent'
             sh "${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-android,platform-java7,distribution,toolchain -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true clean ${mavenGoal} sonar:sonar site:site"
-/*        }
+        }
 
-        stage ('Build Samples') {*/
+        stage ('Build Samples') {
             echo 'Building samples'
             sh "cd samples; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} clean package"
             sh "cd samples/topology; ./run-sample.sh HelloEdgent"
             sh "cd samples; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-java7 clean package"
             sh "cd samples/topology; ./run-sample.sh HelloEdgent"
-/*        }
+        }
 
-        stage ('Build Templates') {*/
+        stage ('Build Templates') {
             echo 'Building templates'
             sh "cd samples/template; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} clean package; ./run-app.sh"
             sh "cd samples/template; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-java7 clean package; ./run-app.sh"
             sh "cd samples/template; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-android clean package; ./run-app.sh"
-/*        }
+        }
 
-        stage ('Verify get-engent-jars') {*/
+        stage ('Verify get-engent-jars') {
             echo 'Verifying get-edgent-jars'
             sh "cd samples/get-edgent-jars; ./get-edgent-jars.sh"
         }
