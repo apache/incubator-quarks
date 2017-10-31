@@ -29,15 +29,13 @@ node('ubuntu') {
     env.JAVA_HOME="${tool 'JDK 1.8 (latest)'}"
     env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
 
-    def workspace = pwd()
-
     // Make sure the feature branches don't change the SNAPSHOTS in Nexus.
     def mavenGoal = "install"
     def mavenLocalRepo = ""
     if(env.BRANCH_NAME == 'develop') {
         mavenGoal = "deploy"
     } else {
-        mavenLocalRepo = "-Dmaven.repo.local=${workspace)@script/.repository"
+        mavenLocalRepo = "-Dmaven.repo.local=${env.WORKSPACE)/.repository"
     }
     def mavenFailureMode = "" // consider "--fail-at-end"? Odd ordering side effects?
 
