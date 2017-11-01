@@ -1,10 +1,28 @@
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
 # Welcome to Apache Edgent!
 
 *Apache Edgent is an effort undergoing incubation at The Apache Software Foundation (ASF), sponsored by the Incubator PMC. Incubation is required of all newly accepted projects until a further review indicates that the infrastructure, communications, and decision making process have stabilized in a manner consistent with other successful ASF projects. While incubation status is not necessarily a reflection of the completeness or stability of the code, it does indicate that the project has yet to be fully endorsed by the ASF.*
 
 Apache Edgent is an open source programming model and runtime for edge devices that enables you to analyze data and events at the device.
 
-Please joins us by subscribing to the developer mailing list
+Please join us by subscribing to the developer mailing list
 [dev at edgent.incubator.apache.org](http://mail-archives.apache.org/mod_mbox/incubator-edgent-dev/).
 To subscribe, send an email to `dev-subscribe at edgent.incubator.apache.org`.
 
@@ -24,34 +42,12 @@ Please *Get Involved!*
 
 Edgent is released under the [Apache License Version 2.0](LICENSE)
 
-# Renamed from Apache Quarks
-Apache Edgent is the new name. Things are in a state of transition until all
-of the pieces arrive.
-
-The "incubator-quarks" repository has been fully updated.
-
-Until the Apache infrastructure changes are done, continue to use
-the Quarks mailing list, website, and repositories:
-  * mailing list: dev at quarks.incubator.apache.org
-  * http://quarks.incubator.apache.org/
-  * https://git-wip-us.apache.org/repos/asf/incubator-quarks.git
-  * https://github.com/apache/incubator-quarks
-
-Code changes:
-  * package names have the prefix "org.apache.edgent"
-  * jar names have the prefix "edgent"
-  
-Users of Edgent will need to update their references to the above.
-It's recommended that developers of Edgent create a new workspace instead of
-reusing their Quarks workspace.
-
 # Edgent
 Devices and sensors are everywhere. And more are coming online every day. You need a way to analyze all of the data coming from your devices, but it can be expensive to transmit all of the data from a sensor to your central analytics engine.
 
 Edgent is an open source programming model and runtime for edge devices that enables you to analyze data and events at the device. When you analyze on the edge, you can:
 
 * Reduce the amount of data that you transmit to your analytics server
-
 * Reduce the amount of data that you store
 
 An Edgent application uses analytics to determine when data needs to be sent to a back-end system for further analysis, action, or storage. For example, you can use Edgent to determine whether a system is running outside of normal parameters, such as an engine that is running too hot.
@@ -102,3 +98,8 @@ aspects of Edgent including Getting Started.
 For details about the Edgent sources and contributing to 
 Edgent runtime development see [DEVELOPMENT.md](DEVELOPMENT.md)
 
+# Renamed from Apache Quarks
+Apache Quarks was renamed to Apache Edgent.
+
+See the [RELEASE_NOTES](RELEASE_NOTES] for change information if
+you are converting from "Apache Quarks".

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.apache.edgent</groupId>
+    <artifactId>edgent-platforms</artifactId>
+    <version>1.2.0-SNAPSHOT</version>
+  </parent>
+
+  <groupId>org.apache.edgent.android</groupId>
+  <artifactId>edgent-platforms-android</artifactId>
+  <packaging>pom</packaging>
+
+  <name>Apache Edgent ${edgent.projname.platform}: Platforms: Android</name>
+
+  <properties>
+    <edgent.projname.platform>(Android)</edgent.projname.platform>
+    <edgent.runtime.groupId>org.apache.edgent.android</edgent.runtime.groupId>
+
+    <!-- Edgent groupId of jars the retrolambda processing will use -->
+    <edgent.retrolambda.srcArtifactGroupId>org.apache.edgent.java7</edgent.retrolambda.srcArtifactGroupId>
+  </properties>
+
+  <modules>
+    <!-- Real modules -->
+    <module>android</module>
+
+    <!-- Repacked modules -->
+    <module>analytics</module>
+    <module>api</module>
+    <module>apps</module>
+    <module>connectors</module>
+    <module>providers</module>
+    <module>runtime</module>
+    <module>spi</module>
+    <module>utils</module>
+  </modules>
+
+  <build>
+    <plugins>
+      <!-- Check artifacts against Java7 signatures -->
+      <!--
+          Let the plugin run in the process-test-classes so we immediately know if
+          test run problems could be related to using APIs unavailable to Java7.
+      -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>animal-sniffer-maven-plugin</artifactId>
+        <version>1.15</version>
+        <executions>
+          <execution>
+            <id>check-jdk-signatures</id>
+            <phase>process-test-classes</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <signature>
+            <groupId>org.codehaus.mojo.signature</groupId>
+            <artifactId>java18</artifactId>
+            <version>1.0</version>
+          </signature>
+        </configuration>
+      </plugin>
+      <!-- We don't do testing on Android ;-) -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>default</id>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!--
+          The android platform depends on the modules of the java7 platform,
+          so we have to make sure that profile is activated too.
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>enforce-java7-profile-is-activated</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireProperty>
+                  <property>platform.java7</property>
+                  <message>the 'platform-java7' profile must be activated!</message>
+                </requireProperty>
+              </rules>
+              <fail>true</fail>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <!-- Additionally build the binary distribution package. -->
+  <profiles>
+    <profile>
+      <id>distribution</id>
+      <modules>
+        <module>distribution</module>
+      </modules>
+    </profile>
+  </profiles>
+
+</project>

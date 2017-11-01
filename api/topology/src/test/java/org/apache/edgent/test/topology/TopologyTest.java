@@ -134,23 +134,23 @@ public abstract class TopologyTest extends TopologyAbstractTest {
             job = jf.get();
             assertEquals(Job.State.RUNNING, job.getCurrentState());
             
-            setPollFrequency(s, 100, TimeUnit.MILLISECONDS);
+            setPollFrequency(s, 10, TimeUnit.MILLISECONDS);
             cnt.set(0);
-            Thread.sleep(TimeUnit.SECONDS.toMillis(3));
+            Thread.sleep(TimeUnit.SECONDS.toMillis(1));
             int curCnt = cnt.get();
-            assertTrue("curCnt="+curCnt, curCnt >= 20);
-            
-            setPollFrequency(s, 1, TimeUnit.SECONDS);
-            cnt.set(0);
-            Thread.sleep(TimeUnit.SECONDS.toMillis(3));
-            curCnt = cnt.get();
-            assertTrue("curCnt="+curCnt, curCnt >= 2 && curCnt <= 4);
+            assertTrue("curCnt="+curCnt, curCnt >= 70);
             
             setPollFrequency(s, 100, TimeUnit.MILLISECONDS);
             cnt.set(0);
-            Thread.sleep(TimeUnit.SECONDS.toMillis(3));
+            Thread.sleep(TimeUnit.SECONDS.toMillis(1));
             curCnt = cnt.get();
-            assertTrue("curCnt="+curCnt, curCnt >= 20);
+            assertTrue("curCnt="+curCnt, curCnt >= 5 && curCnt <= 20);
+            
+            setPollFrequency(s, 10, TimeUnit.MILLISECONDS);
+            cnt.set(0);
+            Thread.sleep(TimeUnit.SECONDS.toMillis(1));
+            curCnt = cnt.get();
+            assertTrue("curCnt="+curCnt, curCnt >= 70);
         }
         finally {
             if (job != null)

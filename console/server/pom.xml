@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.apache.edgent</groupId>
+    <artifactId>edgent-console</artifactId>
+    <version>1.2.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>edgent-console-server</artifactId>
+
+  <name>Apache Edgent ${edgent.projname.platform}: Console: Server</name>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>${project.basedir}/src/main/resources</directory>
+        <targetPath>${project.build.outputDirectory}/</targetPath>
+      </resource>
+      <resource>
+        <!--  bundle the licenses of the artifacts we are bundling -->
+        <directory>${project.basedir}/../../src/main/appended-resources/licenses</directory>
+        <targetPath>${project.build.outputDirectory}/META-INF/licenses</targetPath>
+      </resource>
+    </resources>
+    <plugins>
+      <!--
+        Copy the servlets.war into the build output so it is embedded as
+        resource into the jar.
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+               <!--  Bundle these dependencies in the jar.
+                    
+                  You must maintain the corresponding info if you
+                  add/remove artifacts or change their versions:
+                    - entry in src/main/resources/META-INF/LICENSE
+                    - entry in src/main/resources/META-INF/NOTICE when appropriate                    
+ 
+                  See console/servlets and its pom,LICENSE,NOTICE.
+                  
+                  You must maintain the info in this project's
+                  corresponding platforms/java7 files.
+               -->
+              <artifactItems>
+                <artifactItem>
+                  <groupId>${edgent.runtime.groupId}</groupId>
+                  <artifactId>edgent-console-servlets</artifactId>
+                  <version>${project.version}</version>
+                  <type>war</type>
+                  <outputDirectory>${project.build.outputDirectory}/resources</outputDirectory>
+                  <destFileName>servlets.war</destFileName>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+   </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-http</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-io</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-security</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-server</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-servlet</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-util</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-webapp</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-xml</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.12</version>
+    </dependency>
+
+    <!--
+        This artifact is needed by the maven-dependency-plugin
+        by marking this dependency optional, it is not included
+        in the resulting artifact, but Maven ensures it is built
+        prior to this module.
+    -->
+    <dependency>
+      <groupId>${edgent.runtime.groupId}</groupId>
+      <artifactId>edgent-console-servlets</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
+      <type>war</type>
+      <optional>true</optional>
+    </dependency>
+  </dependencies>
+
+</project>

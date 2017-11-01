@@ -23,6 +23,7 @@ import java.util.Collection;
 import org.apache.edgent.analytics.math3.json.JsonAnalytics;
 import org.apache.edgent.analytics.math3.stat.Regression2;
 import org.apache.edgent.analytics.math3.stat.Statistic2;
+import org.apache.edgent.analytics.math3.utils.Java7Helper;
 import org.apache.edgent.function.ToDoubleFunction;
 import org.apache.edgent.topology.TWindow;
 
@@ -195,6 +196,7 @@ public class Aggregations {
    * An aggregation result may be null under other conditions,
    * e.g., a Regression2.SLOPE where the minimum number of samples has not been met.
    * 
+   * @param <T> Tuple type
    * @param c the Collection to aggregate
    * @param getter function that returns the variable to aggregate from a {@code T}
    * @param aggregate the aggregation to perform
@@ -213,6 +215,7 @@ public class Aggregations {
    * The ResultMap does not contain an entry for an aggregation with a null,
    * e.g., a Regression2.SLOPE where the minimum number of samples has not been met.
    * 
+   * @param <T> Tuple type
    * @param c the Collection to aggregate
    * @param getter function that returns the variable to aggregate from a {@code T}
    * @param aggregates the aggregations to perform
@@ -242,8 +245,8 @@ public class Aggregations {
           // do as JsonAnalytics did and omit Nan/Inf results from the map.
           double rv = agg.getResult();
           
-          if (Double.isFinite(rv))
-              result.put(agg.getAggregate(), Double.valueOf(rv));
+          if (Java7Helper.doubleIsFinite(rv))
+              result.put(agg.getAggregate(), rv);
       }
     }
 

@@ -24,12 +24,17 @@ import java.util.Iterator;
 
 public class MetricsGson {
 
-	public String jobId = null;
-	public ArrayList<Operator> ops = new ArrayList<Operator>();
+    private String jobId = null;
+    private ArrayList<Operator> ops = new ArrayList<>();
 	
 	class Operator {
-		String opId = null;
-		ArrayList<OpMetric> metrics = null;
+		final String opId;
+		final ArrayList<OpMetric> metrics;
+		Operator(String name) {
+		    opId = name;
+		    metrics = new ArrayList<>();
+		    MetricsGson.this.addOp(this);
+		}
 	}
 	
 	class OpMetric {
@@ -58,7 +63,7 @@ public class MetricsGson {
 		
 		Iterator<Operator> opsIterator = this.ops.iterator();
 		while (opsIterator.hasNext()) {
-			Operator op = (Operator) opsIterator.next();
+			Operator op = opsIterator.next();
 			if (getOpId(op).equals(opId)) {
 				return op;
 			}
@@ -77,7 +82,7 @@ public class MetricsGson {
 		
 		Iterator<Operator> opsIterator = this.ops.iterator();
 		while (opsIterator.hasNext()) {
-			Operator op = (Operator) opsIterator.next();
+			Operator op = opsIterator.next();
 			if (getOpId(op).equals(opId)) {
 				return true;
 			}
@@ -95,10 +100,6 @@ public class MetricsGson {
 	
 	public ArrayList<OpMetric> getOpMetrics(Operator theOp) {
 		return theOp.metrics;
-	}
-	
-	public void setOpMetrics(Operator theOp, ArrayList<OpMetric> theMetrics) {
-		theOp.metrics = theMetrics;
 	}
 	
 }

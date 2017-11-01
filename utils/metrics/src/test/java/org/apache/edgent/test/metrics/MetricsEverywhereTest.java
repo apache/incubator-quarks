@@ -219,7 +219,7 @@ public abstract class MetricsEverywhereTest extends TopologyAbstractTest {
     /**
      * Test Peek. This will only work with an embedded setup.
      * 
-     * @throws Exception
+     * @throws Exception on failure
      */
     @Test
     public void metricsEverywherePeek() throws Exception {

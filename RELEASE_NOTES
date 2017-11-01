@@ -1,3 +1,74 @@
+Apache Edgent (incubating) 1.2.0
+==================
+
+The release includes a number of minor SDK bugfixes and enhancements listed below.
+
+The release also includes a major refactoring of the build/release tooling
+and affects the source and binary artifacts that are released and how
+the Edgent SDK and samples are consumed.
+
+The goals of the refactoring were to improve Edgent SDK and samples 
+consumability by Edgent Application Developers.  Additionally,
+Edgent runtime developers and release managers should benefit
+from tooling/process commonality with other Apache projects.
+
+The build/release tooling is now maven based.
+
+A release now includes two source bundles:
+  - Edgent SDK bundle
+  - Edgent Samples bundle
+
+A binary bundle is no longer released.  A release now publishes
+the Edgent SDK jars in the Apache Nexus repository which auto-sync's
+to Maven Central. For cases where a user requires a binary bundle,
+see the new `samples/get-edgent-jars-project`.
+
+The names of the Edgent jars now conform to standard
+practices: "." has been replaced with "-" and the Edgent SDK
+versionId is now included.  
+
+The websocket connector jar names are now more sensible:
+* `edgent-connectors-websocket-<ver>.jar` was `edgent.connectors.websocket.wsclient-javax.websocket.jar`
+* `edgent-connectors-websocket-base-<ver>.jar` was  `edgent.connectors.wsclient.jar`
+* `edgent-connectors-websocket-misc-<ver>.jar` was  `edgent.javax.websocket.jar`
+* `edgent-connectors-websocket-jetty-<ver>.jar` was  `javax.websocket-client.jar`
+
+Almost all of the Edgent SDK jars are now available for the Java7 and Android platforms.
+
+See `JAVA_SUPPORT.md` for information about the coordinates, jar names, etc.
+
+See `samples/README.md` for information related to Edgent Application
+development and deployment as well as information on building and
+running the samples.
+
+The samples sources and build tooling are now structured as an
+Edgent Application Developer, Edgent SDK consumer, might structure
+their Edgent applications.  They are no longer part of the SDK and
+an associated binary artifact is not released. A new sample/template 
+project is provided to help an Edgent Application Developer get started.
+
+
+New Features
+--------------------
+TODO
+
+Incompatible API changes
+------------------------
+TODO
+    
+Known Issues
+--------
+Open JIRAs may be found at https://issues.apache.org/jira/browse/EDGENT
+
+Bug Fixes
+---------
+TODO
+
+Miscellaneous changes
+---------------------
+TODO
+
+
 Apache Edgent (incubating) 1.1.0
 ==================
 

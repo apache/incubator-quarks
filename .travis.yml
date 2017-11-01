@@ -17,24 +17,15 @@
 
 language: java
 
+env:
+   - MAVEN_OPTS="-Xms512m -Xmx512m"
+
 matrix:
    fast_finish: true
 
 install: true
 
-# avoid uploading the cache after every build (per travis doc)
-before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-cache:
-  directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
-
 script:
     - jdk_switcher use oraclejdk8
-    - ./gradlew release -Dedgent.build.ci=true
-    - ./gradlew test --continue -Dedgent.build.ci=true
-    - ./gradlew test7Compile -Dedgent.build.ci=true
-    - jdk_switcher use oraclejdk7
-    - ./gradlew test7Run --continue -Dedgent.build.ci=true 
+    - mvn clean install -Pdistribution -Dedgent.build.ci=true
+#    - mvn -t toolchains-travis.xml -Djava8.home=/usr/lib/jvm/java-8-oracle clean install site:site -Pdistribution,platform-java7,platform-android -Dedgent.build.ci=true

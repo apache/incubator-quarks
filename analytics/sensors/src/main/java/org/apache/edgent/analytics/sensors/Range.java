@@ -25,6 +25,8 @@ import java.util.Objects;
 import org.apache.edgent.function.Function;
 import org.apache.edgent.function.Predicate;
 
+import static org.apache.edgent.analytics.sensors.utils.Java7Helper.*;
+
 /**
  * A generic immutable range of values and a way to 
  * check a value for containment in the range.
@@ -261,7 +263,7 @@ public final class Range<T extends Comparable<?>> implements Predicate<T>, Seria
      * <pre>
      * Comparator&lt;Byte&gt; unsignedByteComparator = new Comparator&lt;Byte&gt;() {
      *     public int compare(Byte b1, Byte b2) {
-     *         return Integer.compareUnsigned(Byte.toUnsignedInt(b1), Byte.toUnsignedInt(b2));
+     *         return intCompareUnsigned(byteToUnsignedInt(b1), byteToUnsignedInt(b2));
      *     }
      *     public boolean equals(Object o2) { return o2==this; }
      *     };
@@ -329,7 +331,7 @@ public final class Range<T extends Comparable<?>> implements Predicate<T>, Seria
     /**
      * Parse a String from {@link #toString()}
      * 
-     * @param str the String
+     * @param s the String
      * @return Four element array with the range's component Strings
      * @throws IllegalArgumentException
      */
@@ -457,14 +459,14 @@ public final class Range<T extends Comparable<?>> implements Predicate<T>, Seria
     
     private static <T> String toUnsignedString(T v) {
         if (v instanceof Byte)
-            return Integer.toUnsignedString(Byte.toUnsignedInt((Byte)v));
+            return intToUnsignedString(byteToUnsignedInt((Byte)v));
         else if (v instanceof Short)
-            return Integer.toUnsignedString(Short.toUnsignedInt((Short)v));
+            return intToUnsignedString(shortToUnsignedInt((Short)v));
         else if (v instanceof Integer)
-            return Integer.toUnsignedString((Integer)v);
+            return intToUnsignedString((Integer)v);
         else if (v instanceof Long)
-            return Long.toUnsignedString((Long)v);
+            return longToUnsignedString((Long)v);
         throw new IllegalArgumentException("Not Range of Byte,Short,Integer, or Long"+v.getClass());
     }
-    
+
 }
