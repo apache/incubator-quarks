@@ -42,6 +42,12 @@ The Ant and Gradle tooling is no longer functional.
 It's recommended that developers of Edgent create a new workspace instead of
 reusing current gradle-based Edgent workspaces.
 
+## Branches
+
+The `develop` branch is used for development.  Jenkins is setup to build this branch and publish internal SNAPSHOT build results to the ASF Nexus SNAPSHOTS Repository (https://repository.apache.org/content/repositories/snapshots).
+
+The `master` branch contains released code. Releases are published to the ASF Nexus Releases Repository (https://repository.apache.org/content/repositories/releases). The Releases repository is automatically mirrored to the Maven Central Repository.
+
 ## Setup
 
 Once you have forked the repository and created your local clone you need to download

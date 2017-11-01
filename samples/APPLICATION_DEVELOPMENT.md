@@ -19,9 +19,11 @@
 
 To develop Edgent applications you will utilize the 
 Edgent SDK/runtime jars and package your application
-artifacts for deploying to an edge device for execution.
+artifacts for deploying to an edge device or gateway for execution.
 
-The Edgent SDK/runtime jars are published to maven-central.
+The Edgent SDK/runtime jars are published to the 
+[ASF Nexus Repository](https://repository.apache.org/content/repositories/releases/)
+and the Maven Central Repository.
 Alternatively, you can build the Edgent SDK yourself from a source release
 and the resulting jars will be added to your local maven repository.
   
@@ -129,10 +131,6 @@ for a tool to get a copy of the Edgent jars.
 
 The bundle is a standalone entity containing
 everything that's needed to run your application.
-
-The bundle contains the application's jar
-and the application's dependent Edgent jars and their
-transitive dependencies.
    
 The bundle is copied to the device and unpacked.
 A run script forms the appropriate `CLASSPATH`

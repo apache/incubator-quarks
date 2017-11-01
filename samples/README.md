@@ -123,7 +123,7 @@ and used.
 If you want to use Eclipse to clone your fork, use the 
 Eclipse Git Team Provider plugin
 
-1. From the *File* menu, select *Import...*
+1. From the Eclipse *File* menu, select *Import...*
 2. From the *Git* folder, select *Projects from Git* and click *Next*
 3. Select *Clone URI* to clone the remote repository. Click *Next*.
     + In the *Location* section, enter the URI of your fork in the *URI* field
@@ -143,7 +143,7 @@ Once you have cloned the Git repository to your machine or are working
 from an unpacked samples source release bundle, import the Maven projects
 into your workspace
 
-1. From the *File* menu, select *Import...*
+1. From the Eclipse *File* menu, select *Import...*
 2. From the *Maven* folder, select *Existing Maven Projects* and click *Next*
   + browse to the `samples` directory in the clone or source release directory
     and select it.  A hierarchy of samples projects / pom.xml files will be
@@ -160,8 +160,10 @@ Eclipse Maven or Git Team Provider.
 Once the samples projects have been imported you can run them from
 Eclipse in the usual manner. E.g.,
 
-1. open the `HelloEdgent.java` sample
-2. click on *Run*, *Run As*, then *Java application*.  
+1. From the Eclipse *Navigate* menu, select *Open Type*
+   + enter type type name `HelloEdgent` and click *OK*
+2. right click on the `HelloEdgent` class name and from the context menu
+   + click on *Run As*, then *Java application*.
    `HelloEdgent` runs and prints to the Console view.
 
 
