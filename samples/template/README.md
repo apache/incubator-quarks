@@ -1,6 +1,6 @@
 An Edgent Application template project.
 
-Clone this template project to start your Edgent application project.
+Clone this template project folder to create your Edgent application project.
 
 The project's pom supports
 

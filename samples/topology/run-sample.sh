@@ -36,6 +36,7 @@ ${SAMPLE_PACKAGE_BASE}.PeriodicSource
 ${SAMPLE_PACKAGE_BASE}.SensorsAggregates
 ${SAMPLE_PACKAGE_BASE}.SimpleFilterTransform
 ${SAMPLE_PACKAGE_BASE}.SplitWithEnumSample
+${SAMPLE_PACKAGE_BASE}.TempSensorApplication
 ${SAMPLE_PACKAGE_BASE}.TerminateAfterNTuples
 EOF
 `

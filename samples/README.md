@@ -172,7 +172,11 @@ Eclipse in the usual manner. E.g.,
 <pre>
 HelloEdgent          Basic mechanics of declaring a topology and executing
                      it. Prints Hello Edgent! to standard output.
-
+        
+TempSensorApplication A basic Edgent application used by the Edgent
+                     "Getting Started Guide":
+                     https://edgent.apache.org/docs/edgent-getting-started.html
+                     
 PeriodicSource       Create a stream by polling a random number generator
                      for a new value every second and then prints out the
                      raw tuple value and a filtered and transformed stream.
