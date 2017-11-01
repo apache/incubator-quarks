@@ -63,7 +63,6 @@ node('ubuntu') {
         stage ('Build Site') {
             echo 'Building Site'
             sh "${mvnHome}/bin/mvn ${mavenLocalRepo} site site:stage"
-
         }
 
         stage ('Build Samples') {
@@ -83,7 +82,7 @@ node('ubuntu') {
 
         stage ('Verify get-engent-jars') {
             echo 'Verifying get-edgent-jars'
-            sh "cd samples/get-edgent-jars; ./get-edgent-jars.sh"
+            sh "cd samples/get-edgent-jars-project; ./get-edgent-jars.sh"
         }
     }
 
