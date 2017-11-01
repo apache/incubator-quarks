@@ -50,9 +50,20 @@ node('ubuntu') {
             checkout scm
         }
 
+        stage ('Clean') {
+            echo 'Cleaning Edgent'
+            sh "${mvnHome}/bin/mvn ${mavenLocalRepo} -Pplatform-android,platform-java7,distribution clean"
+        }
+
         stage ('Build Edgent') {
             echo 'Building Edgent'
-            sh "${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-android,platform-java7,distribution,toolchain -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true clean ${mavenGoal} sonar:sonar site:site"
+            sh "${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-android,platform-java7,distribution,toolchain -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true ${mavenGoal} sonar:sonar"
+        }
+
+        stage ('Build Site') {
+            echo 'Building Site'
+            sh "${mvnHome}/bin/mvn ${mavenLocalRepo} site site:stage"
+
         }
 
         stage ('Build Samples') {
@@ -65,21 +76,15 @@ node('ubuntu') {
 
         stage ('Build Templates') {
             echo 'Building templates'
-            sh "cd samples/template; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} clean package; ./run-app.sh"
-            sh "cd samples/template; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-java7 clean package; ./run-app.sh"
-            sh "cd samples/template; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-android clean package; ./run-app.sh"
+            sh "cd samples/template; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} clean package; ./app-run.sh"
+            sh "cd samples/template; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-java7 clean package; ./app-run.sh"
+            sh "cd samples/template; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-android clean package; ./app-run.sh"
         }
 
         stage ('Verify get-engent-jars') {
             echo 'Verifying get-edgent-jars'
             sh "cd samples/get-edgent-jars; ./get-edgent-jars.sh"
         }
-
-        stage ('Stage Site') {
-            echo 'Staging Site'
-            sh "${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-android,platform-java7,distribution,toolchain -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true site:stage"
-        }
-
     }
 
 
