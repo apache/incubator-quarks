@@ -18,5 +18,4 @@
 -->
 
 1) Rename console/servlets to console/webapp
-2) org.apache.edgent.test.providers.direct.topology.DirectWindowTest seems to be failing randomly
 
