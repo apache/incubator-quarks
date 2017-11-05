@@ -120,7 +120,7 @@ function confirm () {  # [$1: question]
     # call with a prompt string or use a default                                                                                                                                                   
     /bin/echo -n "${1:-Are you sure?}"
     read -r -p " [y/n] " response
-    case $response in
+    case ${response} in
       [yY]) return `true` ;;
       [nN]) return `false` ;;
       *) echo "illegal response '$response'" ;;
@@ -136,7 +136,7 @@ mkdir -p target
 DEP_DECLS_FILE=target/tmp-dep-decls
 rm -f ${DEP_DECLS_FILE}
 for i in ${ARTIFACT_GAVS}; do
-    echo $i | awk -F : '{ type=""; if ($3 == "{EV}") $3="${edgent.runtime.version}"; if ($4 != "") type="  <type>" $4 "</type>\n"; printf "<dependency>\n  <groupId>%s</groupId>\n  <artifactId>%s</artifactId>\n  <version>%s</version>\n%s</dependency>\n", $1, $2, $3, type }' >> ${DEP_DECLS_FILE}
+    echo ${i} | awk -F : '{ type=""; if ($3 == "{EV}") $3="${edgent.runtime.version}"; if ($4 != "") type="  <type>" $4 "</type>\n"; printf "<dependency>\n  <groupId>%s</groupId>\n  <artifactId>%s</artifactId>\n  <version>%s</version>\n%s</dependency>\n", $1, $2, $3, type }' >> ${DEP_DECLS_FILE}
 done
 DEP_DECLS=`cat ${DEP_DECLS_FILE}`
 
