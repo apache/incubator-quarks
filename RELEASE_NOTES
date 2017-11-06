@@ -53,6 +53,7 @@ The DEVELOPMENT.md file has been updated accordingly.
 
 New Features
 --------------------
+EDGENT-393  Add Ranges.outsideOf()
 EDGENT-273  Add scripts, etc to enable building samples
 
 Incompatible API changes

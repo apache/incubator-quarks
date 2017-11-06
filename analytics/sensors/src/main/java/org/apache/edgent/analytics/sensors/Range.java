@@ -164,6 +164,11 @@ public final class Range<T extends Comparable<?>> implements Predicate<T>, Seria
      * Create a new Range&lt;T&gt;
      * <p>
      * See {@link Ranges} for a collection of convenience constructors.
+     * <p>
+     * While not enforced, for a Range to be useful/sensible,
+     * the following must be true: {@code lowerEndpoint <= upperEndpoint}.
+     * Otherwise the Range will be returned but test() and contains()
+     * can never return true.
      * 
      * @param <T> a Comparable type
      * @param lowerEndpoint null for an infinite value (and lbt must be OPEN)
@@ -174,6 +179,9 @@ public final class Range<T extends Comparable<?>> implements Predicate<T>, Seria
      */
     public static <T extends Comparable<?>> Range<T> range(T lowerEndpoint, BoundType lbt, T upperEndpoint, BoundType ubt) {
         // matchs Guava Range.range param order
+        // Note: the lowerEndpoint <= upperEndpoint "requirement" is the same as Guava
+        // don't know if Guava Range.range() enforces that.
+        // Since we didn't originally enforce that, leave it that way. 
         return new Range<T>(lowerEndpoint, lbt, upperEndpoint, ubt);
     }
 
