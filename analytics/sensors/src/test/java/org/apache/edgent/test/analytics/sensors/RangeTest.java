@@ -32,6 +32,7 @@ import java.util.Comparator;
 import org.apache.edgent.analytics.sensors.Range;
 import org.apache.edgent.analytics.sensors.Ranges;
 import org.apache.edgent.function.Function;
+import org.apache.edgent.function.Predicate;
 import org.junit.Test;
 
 import com.google.gson.Gson;
@@ -41,13 +42,18 @@ import com.google.gson.reflect.TypeToken;
  * Test Range and Ranges
  */
 public class RangeTest {
+  
+  private <T extends Comparable<?>> void testOutsideOf(Range<T> range, T v) {
+      Predicate<T> notPredicate = Ranges.outsideOf(range); 
+      assertEquals("outsideOf-"+range+".test("+v+")", !range.test(v), notPredicate.test(v));
+  }
     
     private <T extends Comparable<?>> void testContains(Range<T> range, T v, Boolean expected) {
-        assertEquals("range"+range+".contains(range"+v+")", expected, range.contains(v));
+        assertEquals("range"+range+".contains("+v+")", expected, range.contains(v));
     }
     
     private <T extends Comparable<?>> void testPredicate(Range<T> range, T v, Boolean expected) {
-        assertEquals("range"+range+".test(range"+v+")", expected, range.test(v));
+        assertEquals("range"+range+".test("+v+")", expected, range.test(v));
     }
     
     private <T extends Comparable<?>> void testToString(Range<T> range, String expected) {
@@ -162,6 +168,15 @@ public class RangeTest {
         testPredicate(Ranges.closed(2,4), 3, true);
         testPredicate(Ranges.closed(2,4), 4, true);
         testPredicate(Ranges.closed(2,4), 5, false);
+    }
+    
+    @Test
+    public void testOutsideOf() {
+        testOutsideOf(Ranges.closed(2,4), 1);
+        testOutsideOf(Ranges.closed(2,4), 2);
+        testOutsideOf(Ranges.closed(2,4), 3);
+        testOutsideOf(Ranges.closed(2,4), 4);
+        testOutsideOf(Ranges.closed(2,4), 5);
     }
 
     @Test
