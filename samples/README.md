@@ -213,8 +213,7 @@ SensorAnalytics      Demonstrates a more complex sample that includes
                      conditional stream tracing.
 </pre>
 
-Other samples are provided but have not yet been noted above.
-Feel free to explore.
+Many other samples are provided but have not yet been noted above. Explore!
 
 # Licensing
 

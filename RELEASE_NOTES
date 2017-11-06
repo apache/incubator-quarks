@@ -3,58 +3,61 @@ Apache Edgent (incubating) 1.2.0
 
 The release includes a number of minor SDK bugfixes and enhancements listed below.
 
-The release also includes a major refactoring of the build/release tooling
-and affects the source and binary artifacts that are released and how
-the Edgent SDK and samples are consumed.
-
-The goals of the refactoring were to improve Edgent SDK and samples 
-consumability by Edgent Application Developers.  Additionally,
-Edgent runtime developers and release managers should benefit
-from tooling/process commonality with other Apache projects.
-
-The build/release tooling is now maven based.
-
 A release now includes two source bundles:
   - Edgent SDK bundle
   - Edgent Samples bundle
 
-A binary bundle is no longer released.  A release now publishes
-the Edgent SDK jars in the Apache Nexus repository which auto-sync's
-to Maven Central. For cases where a user requires a binary bundle,
-see the new `samples/get-edgent-jars-project`.
+A release now publishes the Edgent SDK jars in Apache Nexus Release
+repository and to the Maven Central repository.
+
+A binary bundle (tgz) is no longer released.  The new `get-edgent-jars.sh`
+tool included in the Samples source bundle can be used to create such
+a bundle.
+
+A user now builds the samples from the released Samples source bundle
+much as a real application developer might.
+Pre-built samples jars are no longer released.  
+The Samples bundle includes an Edgent Application project template
+and some tools.
+
+There have been many updates to the Edgent website (https://edgent.apache.org/)
+related to the above:
+  - updated Getting Started Guide
+  - updated Downloads page
+  - a new The Power of Edgent page
+  - updated FAQ page
+  - a new Quickstart with Edgent Samples page
+  - a new Edgent Application Development page
+
+There are some additional changes affecting the
+use of Edgent in developing Edgent applications:
 
 The names of the Edgent jars now conform to standard
 practices: "." has been replaced with "-" and the Edgent SDK
 versionId is now included.  
 
-The websocket connector jar names are now more sensible:
+Almost all of the Edgent SDK jars are now available for the Java7 and Android platforms.
+
+The websocket connector jar names have been changed:
 * `edgent-connectors-websocket-<ver>.jar` was `edgent.connectors.websocket.wsclient-javax.websocket.jar`
 * `edgent-connectors-websocket-base-<ver>.jar` was  `edgent.connectors.wsclient.jar`
 * `edgent-connectors-websocket-misc-<ver>.jar` was  `edgent.javax.websocket.jar`
 * `edgent-connectors-websocket-jetty-<ver>.jar` was  `javax.websocket-client.jar`
 
-Almost all of the Edgent SDK jars are now available for the Java7 and Android platforms.
+See the `JAVA_SUPPORT` documentation on the Downloads page details.
 
-See `JAVA_SUPPORT.md` for information about the coordinates, jar names, etc.
-
-See `samples/README.md` for information related to Edgent Application
-development and deployment as well as information on building and
-running the samples.
-
-The samples sources and build tooling are now structured as an
-Edgent Application Developer, Edgent SDK consumer, might structure
-their Edgent applications.  They are no longer part of the SDK and
-an associated binary artifact is not released. A new sample/template 
-project is provided to help an Edgent Application Developer get started.
+From the perspective of building, development, and releasing
+Edgent, Maven is now used for the build tooling.
+The DEVELOPMENT.md file has been updated accordingly.
 
 
 New Features
 --------------------
-TODO
+EDGENT-273  Add scripts, etc to enable building samples
 
 Incompatible API changes
 ------------------------
-TODO
+NONE
     
 Known Issues
 --------
@@ -62,11 +65,21 @@ Open JIRAs may be found at https://issues.apache.org/jira/browse/EDGENT
 
 Bug Fixes
 ---------
-TODO
+EDGENT-429  JobMonitorApp.closeJob() doesn't wait for close
+EDGENT-423  Range.toStringUnsigned() not supported on Java7/Android
 
 Miscellaneous changes
 ---------------------
-TODO
+EDGENT-436  Change tests that use complete() TMO for successful runs
+EDGENT-435  CME in TrackingScheduledExecutor seen with testMultiTopologyPollWithError()
+EDGENT-434  Desensitize PlumbingTest.testParallelBalanced
+EDGENT-433  Automatically bump some TMO values when running CI test context
+EDGENT-432  Reduce runtime of some WindowsTest tests
+EDGENT-431  Cleanup some console code hygiene warnings
+EDGENT-418  LICENSE/NOTICE in .war are wrong
+EDGENT-413  Simplify download experience
+EDGENT-219  WindowsTest.keyedTimeBatchWIndowTest isn't robust
+EDGENT-31   FileStreamsTextFileWriterTest.testRetainAgeBased test fails
 
 
 Apache Edgent (incubating) 1.1.0
