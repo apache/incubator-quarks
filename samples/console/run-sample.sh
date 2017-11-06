@@ -20,7 +20,6 @@ USAGE="usage: `basename $0` [--list] simple-main-class-name [sample-args]"
 
 CATEGORY=console
 
-#UBER_JAR=target/edgent-samples-topology-1.2.0-SNAPSHOT-uber.jar
 UBER_JAR=target/edgent-samples-${CATEGORY}-*-uber.jar
 
 SAMPLE_PACKAGE_BASE=org.apache.edgent.samples.${CATEGORY}
