@@ -37,7 +37,7 @@
   <properties>
     <edgent.runtime.platform/>   <!-- set by -Pplatform-* -->
     <edgent.runtime.groupId>org.apache.edgent${edgent.runtime.platform}</edgent.runtime.groupId>
-    <edgent.runtime.version>1.2.0-SNAPSHOT</edgent.runtime.version>
+    <edgent.runtime.version>1.3.0-SNAPSHOT</edgent.runtime.version>
 
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
