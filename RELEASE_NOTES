@@ -8,7 +8,7 @@ A release now includes two source bundles:
   - Edgent Samples bundle
 
 A release now publishes the Edgent SDK jars in Apache Nexus Release
-repository and to the Maven Central repository.
+repository which are automatically mirrored to the Maven Central repository.
 
 A binary bundle (tgz) is no longer released.  The new `get-edgent-jars.sh`
 tool included in the Samples source bundle can be used to create such
