@@ -76,14 +76,14 @@
     <dependency>
       <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-api-topology</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>1.3.0-SNAPSHOT</version>
     </dependency>
 
     <!-- TODO: This is only required because of a dependency to TopologyAbstractTest -> Would suggest to move test-util stutt into a dedicated test-utils artifact -->
     <dependency>
       <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-api-topology</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>1.3.0-SNAPSHOT</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>

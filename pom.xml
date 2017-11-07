@@ -47,7 +47,7 @@
 
   <properties>
     <!-- Up here and not in the java8 profile, so hopefully the maven-release-plugin will find it -->
-    <edgent.runtime.version>1.2.0-SNAPSHOT</edgent.runtime.version>
+    <edgent.runtime.version>1.3.0-SNAPSHOT</edgent.runtime.version>
 
     <!-- The next two are overriden by platforms/{java7,android}/pom -->
     <edgent.projname.platform>(Java 8)</edgent.projname.platform>

@@ -21,7 +21,7 @@
 ## By default get the Edgent java8 platform jars for the script's default Edgent version.
 ##
 ## --platform {java8|java7|android} get the specified target platform jars
-## --version edgent-version get the specified version's jars (e.g., 1.2.0-SNAPSHOT)
+## --version edgent-version get the specified version's jars (e.g., 1.2.0)
 ## --artifacts csv-gav-list get only the specified artifacts. Not restricted to Edgent jars.
 ##   The Edgent version is substituted for all instances of '{EV}'
 ## --file gav-file get only the specified artifacts. Not restricted to Edgent jars.
