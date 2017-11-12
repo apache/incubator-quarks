@@ -28,27 +28,27 @@
 
   <artifactId>edgent-apps-iot</artifactId>
 
-  <name>Apache Edgent ${edgent.projname.platform}: Apps: IoT</name>
+  <name>Apache Edgent (Java 8): Apps: IoT</name>
 
   <dependencies>
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.3.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-connectors-iot</artifactId>
       <version>1.3.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-connectors-pubsub</artifactId>
       <version>1.3.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-providers-direct</artifactId>
       <version>1.3.0-SNAPSHOT</version>
       <scope>test</scope>

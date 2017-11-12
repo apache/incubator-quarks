@@ -28,7 +28,7 @@
 
   <artifactId>edgent-connectors-websocket-misc</artifactId>
 
-  <name>Apache Edgent ${edgent.projname.platform}: Connectors: Websocket: Misc</name>
+  <name>Apache Edgent (Java 8): Connectors: Websocket: Misc</name>
 
   <properties>
     <remote-resources-maven-plugin.remote-resources.dir>../../src/main/ibm-remote-resources</remote-resources-maven-plugin.remote-resources.dir>

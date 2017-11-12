@@ -28,11 +28,11 @@
 
   <artifactId>edgent-test-appservice-applications</artifactId>
 
-  <name>Apache Edgent ${edgent.projname.platform}: Test: AppService Applications</name>
+  <name>Apache Edgent (Java 8): Test: AppService Applications</name>
 
   <dependencies>
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.3.0-SNAPSHOT</version>
     </dependency>

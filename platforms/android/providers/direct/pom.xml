@@ -29,7 +29,7 @@
 
   <artifactId>edgent-providers-direct</artifactId>
 
-  <name>Apache Edgent ${edgent.projname.platform}: Providers: Direct</name>
+  <name>Apache Edgent (Android): Providers: Direct</name>
 
   <properties>
     <remote-resources-maven-plugin.remote-resources.dir>../../../../src/main/ibm-remote-resources</remote-resources-maven-plugin.remote-resources.dir>
@@ -50,7 +50,7 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>${edgent.retrolambda.srcArtifactGroupId}</groupId>
+                  <groupId>org.apache.edgent.java7</groupId>
                   <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
@@ -66,32 +66,32 @@
 
   <dependencies>
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.3.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-spi-topology</artifactId>
       <version>1.3.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-spi-graph</artifactId>
       <version>1.3.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-runtime-appservice</artifactId>
       <version>1.3.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-runtime-etiao</artifactId>
       <version>1.3.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-runtime-jsoncontrol</artifactId>
       <version>1.3.0-SNAPSHOT</version>
     </dependency>

@@ -29,7 +29,7 @@
 
   <artifactId>edgent-connectors-pubsub</artifactId>
 
-  <name>Apache Edgent ${edgent.projname.platform}: Connectors: PubSub</name>
+  <name>Apache Edgent (Android): Connectors: PubSub</name>
 
   <build>
     <plugins>
@@ -46,7 +46,7 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>${edgent.retrolambda.srcArtifactGroupId}</groupId>
+                  <groupId>org.apache.edgent.java7</groupId>
                   <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
@@ -62,7 +62,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.3.0-SNAPSHOT</version>
     </dependency>

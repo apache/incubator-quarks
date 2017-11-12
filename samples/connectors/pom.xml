@@ -35,37 +35,37 @@
     <!-- parent pom has Platforms and SLF4J dependencies -->
 
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-connectors-mqtt</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-connectors-kafka</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-connectors-jdbc</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-connectors-serial</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-connectors-file</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-connectors-iotp</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-analytics-math3</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency>

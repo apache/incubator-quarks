@@ -30,7 +30,7 @@
   <artifactId>edgent-apps</artifactId>
   <packaging>pom</packaging>
 
-  <name>Apache Edgent ${edgent.projname.platform}: Apps</name>
+  <name>Apache Edgent (Java 7): Apps</name>
 
   <modules>
     <module>iot</module>

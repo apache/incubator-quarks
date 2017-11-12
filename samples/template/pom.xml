@@ -69,17 +69,17 @@
 
     <!-- declare the Edgent provider(s) being used -->
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-providers-direct</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency>
     <!--dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-providers-development</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency-->
     <!--dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-providers-iot</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency-->
@@ -87,12 +87,12 @@
     <!-- declare Edgent Android dependencies
     -->
     <!--dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-android-hardware</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency-->
     <!--dependency>
-      <groupId>${edgent.runtime.groupId}.android</groupId>
+      <groupId>${project.groupId}.android</groupId>
       <artifactId>edgent-android-topology</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency-->
@@ -100,12 +100,12 @@
     <!-- declare Edgent Analytics dependencies
     -->
     <!--dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-analytics-math3</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency-->
     <!--dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-analytics-sensors</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency-->
@@ -113,7 +113,7 @@
     <!-- declare Edgent Utils dependencies
     -->
     <!--dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-utils-metrics</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency-->
@@ -121,37 +121,37 @@
     <!-- declare Edgent Connector dependencies
     -->
     <!--dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-connectors-file</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency-->
     <!--dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-connectors-iot</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency-->
     <!--dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-connectors-iotp</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency-->
     <!--dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-connectors-jdbc</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency-->
     <!--dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-connectors-kafka</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency-->
     <!--dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-connectors-mqtt</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency-->
     <!--dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-connectors-serial</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency-->

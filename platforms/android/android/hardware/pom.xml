@@ -29,7 +29,7 @@
 
   <artifactId>edgent-android-hardware</artifactId>
 
-  <name>Apache Edgent ${edgent.projname.platform}: Android: Hardware</name>
+  <name>Apache Edgent (Android): Android: Hardware</name>
 
   <properties>
     <remote-resources-maven-plugin.remote-resources.dir>../../../../src/main/ibm-remote-resources</remote-resources-maven-plugin.remote-resources.dir>
@@ -37,7 +37,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.3.0-SNAPSHOT</version>
     </dependency>

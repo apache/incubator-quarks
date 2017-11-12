@@ -30,7 +30,7 @@
   <artifactId>edgent-android</artifactId>
   <packaging>pom</packaging>
 
-  <name>Apache Edgent ${edgent.projname.platform}: Android</name>
+  <name>Apache Edgent (Android): Android</name>
 
   <modules>
     <module>hardware</module>

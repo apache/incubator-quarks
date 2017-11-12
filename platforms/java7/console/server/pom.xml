@@ -29,7 +29,7 @@
 
   <artifactId>edgent-console-server</artifactId>
 
-  <name>Apache Edgent ${edgent.projname.platform}: Console: Server</name>
+  <name>Apache Edgent (Java 7): Console: Server</name>
 
   <build>
     <resources>
@@ -47,32 +47,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
-          <execution>
-            <id>copy</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>unpack</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>${edgent.retrolambda.srcArtifactGroupId}</groupId>
-                  <artifactId>${project.artifactId}</artifactId>
-                  <version>${project.version}</version>
-                  <outputDirectory>${project.build.directory}/classes</outputDirectory>
-                  <excludes>META-INF/**,resources/**</excludes>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>${edgent.retrolambda.srcArtifactGroupId}</groupId>
-                  <artifactId>${project.artifactId}</artifactId>
-                  <version>${project.version}</version>
-                  <classifier>tests</classifier>
-                  <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
-                  <excludes>META-INF/**</excludes>
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
           <!--
            Copy the servlets.war into the build output so it is embedded as
            resource into the jar.
@@ -86,12 +60,49 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>${edgent.runtime.groupId}</groupId>
+                  <groupId>${project.groupId}</groupId>
                   <artifactId>edgent-console-servlets</artifactId>
                   <version>${project.version}</version>
                   <type>war</type>
                   <outputDirectory>${project.build.outputDirectory}/resources</outputDirectory>
                   <destFileName>servlets.war</destFileName>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.apache.edgent</groupId>
+                  <artifactId>${project.artifactId}</artifactId>
+                  <version>${project.version}</version>
+                  <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                  <excludes>META-INF/**,resources/**</excludes>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-test</id>
+            <phase>test-compile</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.apache.edgent</groupId>
+                  <artifactId>${project.artifactId}</artifactId>
+                  <version>${project.version}</version>
+                  <classifier>tests</classifier>
+                  <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
+                  <excludes>META-INF/**</excludes>
                 </artifactItem>
               </artifactItems>
             </configuration>
@@ -169,7 +180,7 @@
         prior to this module.
     -->
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-console-servlets</artifactId>
       <version>1.3.0-SNAPSHOT</version>
       <type>war</type>

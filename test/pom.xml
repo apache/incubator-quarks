@@ -29,7 +29,7 @@
   <artifactId>edgent-test</artifactId>
   <packaging>pom</packaging>
 
-  <name>Apache Edgent ${edgent.projname.platform}: Test</name>
+  <name>Apache Edgent (Java 8): Test</name>
 
   <modules>
     <module>appservice-applications</module>

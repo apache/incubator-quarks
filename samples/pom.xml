@@ -116,17 +116,17 @@
 
     <!-- Other common sample dependencies -->
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-providers-direct</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-providers-development</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-providers-iot</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency>

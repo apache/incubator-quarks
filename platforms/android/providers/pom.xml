@@ -30,7 +30,7 @@
   <artifactId>edgent-providers</artifactId>
   <packaging>pom</packaging>
 
-  <name>Apache Edgent ${edgent.projname.platform}: Providers</name>
+  <name>Apache Edgent (Android): Providers</name>
 
   <modules>
     <module>direct</module>

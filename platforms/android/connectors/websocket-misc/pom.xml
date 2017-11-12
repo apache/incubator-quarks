@@ -29,7 +29,7 @@
 
   <artifactId>edgent-connectors-websocket-misc</artifactId>
 
-  <name>Apache Edgent ${edgent.projname.platform}: Connectors: Websocket: Misc</name>
+  <name>Apache Edgent (Android): Connectors: Websocket: Misc</name>
 
   <properties>
     <remote-resources-maven-plugin.remote-resources.dir>../../../../src/main/ibm-remote-resources</remote-resources-maven-plugin.remote-resources.dir>
@@ -50,7 +50,7 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>${edgent.retrolambda.srcArtifactGroupId}</groupId>
+                  <groupId>org.apache.edgent.java7</groupId>
                   <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>

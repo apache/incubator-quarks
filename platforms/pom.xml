@@ -29,7 +29,7 @@
   <artifactId>edgent-platforms</artifactId>
   <packaging>pom</packaging>
 
-  <name>Apache Edgent ${edgent.projname.platform}: Platforms</name>
+  <name>Apache Edgent (Java 8): Platforms</name>
 
   <build>
     <plugins>

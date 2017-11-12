@@ -30,7 +30,7 @@
   <artifactId>edgent-runtime</artifactId>
   <packaging>pom</packaging>
 
-  <name>Apache Edgent ${edgent.projname.platform}: Runtime</name>
+  <name>Apache Edgent (Java 7): Runtime</name>
 
   <modules>
     <module>appservice</module>

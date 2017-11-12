@@ -58,12 +58,12 @@
     <!-- parent pom has Providers and SLF4J dependencies -->
 
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-connectors-iotp</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-analytics-math3</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency>

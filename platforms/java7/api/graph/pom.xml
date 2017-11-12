@@ -29,7 +29,7 @@
 
   <artifactId>edgent-api-graph</artifactId>
 
-  <name>Apache Edgent ${edgent.projname.platform}: API: Graph</name>
+  <name>Apache Edgent (Java 7): API: Graph</name>
 
   <properties>
     <remote-resources-maven-plugin.remote-resources.dir>../../../../src/main/ibm-remote-resources</remote-resources-maven-plugin.remote-resources.dir>
@@ -50,14 +50,25 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>${edgent.retrolambda.srcArtifactGroupId}</groupId>
+                  <groupId>org.apache.edgent</groupId>
                   <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
                   <excludes>META-INF/**</excludes>
                 </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-test</id>
+            <phase>test-compile</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
                 <artifactItem>
-                  <groupId>${edgent.retrolambda.srcArtifactGroupId}</groupId>
+                  <groupId>org.apache.edgent</groupId>
                   <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
                   <classifier>tests</classifier>
@@ -74,7 +85,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>${edgent.runtime.groupId}</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>edgent-api-oplet</artifactId>
       <version>1.3.0-SNAPSHOT</version>
     </dependency>
