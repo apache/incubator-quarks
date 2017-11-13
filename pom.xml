@@ -365,10 +365,10 @@
           <execution>
             <goals>
               <goal>scan</goal>
-              <goal>analyze</goal>
+              <!--goal>analyze</goal-->
             </goals>
             <configuration>
-              <failOnSeverity>MAJOR</failOnSeverity>
+              <!--failOnSeverity>MAJOR</failOnSeverity-->
             </configuration>
           </execution>
         </executions>

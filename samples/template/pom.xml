@@ -69,7 +69,7 @@
 
     <!-- declare the Edgent provider(s) being used -->
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-providers-direct</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency>

@@ -85,7 +85,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>org.apache.edgent.java7</groupId>
       <artifactId>edgent-api-topology</artifactId>
       <version>1.3.0-SNAPSHOT</version>
     </dependency>

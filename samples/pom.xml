@@ -27,7 +27,7 @@
     <version>18</version>
   </parent>
 
-  <groupId>org.apache.edgent</groupId>
+  <groupId>org.apache.edgent.samples</groupId>
   <artifactId>edgent-samples</artifactId>
   <version>1.3.0-SNAPSHOT</version>
   <packaging>pom</packaging>
@@ -116,17 +116,17 @@
 
     <!-- Other common sample dependencies -->
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-providers-direct</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-providers-development</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-providers-iot</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency>

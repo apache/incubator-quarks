@@ -22,7 +22,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.apache.edgent</groupId>
+    <groupId>org.apache.edgent.samples</groupId>
     <artifactId>edgent-samples</artifactId>
     <version>1.3.0-SNAPSHOT</version>
   </parent>
@@ -35,40 +35,40 @@
     <!-- parent pom has Platforms and SLF4J dependencies -->
 
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-analytics-sensors</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-connectors-file</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-analytics-math3</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-connectors-iot</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-connectors-iotp</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency>
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>${edgent.runtime.groupId}</groupId>
       <artifactId>edgent-connectors-mqtt</artifactId>
       <version>${edgent.runtime.version}</version>
     </dependency>
     
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>org.apache.edgent.samples</groupId>
       <artifactId>edgent-samples-utils</artifactId>
-      <version>${project.version}</version>
+      <version>1.3.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
 
