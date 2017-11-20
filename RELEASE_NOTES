@@ -71,6 +71,7 @@ EDGENT-423  Range.toStringUnsigned() not supported on Java7/Android
 
 Miscellaneous changes
 ---------------------
+EDGENT-438  Improve WebSocketClientTest skip-if-cant-connect
 EDGENT-436  Change tests that use complete() TMO for successful runs
 EDGENT-435  CME in TrackingScheduledExecutor seen with testMultiTopologyPollWithError()
 EDGENT-434  Desensitize PlumbingTest.testParallelBalanced
