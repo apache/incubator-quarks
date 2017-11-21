@@ -142,7 +142,7 @@ For a not quite two hour introduction into Maven please feel free to watch this 
 ## Building Edgent For Using Edgent
 
 __Note:__ Apache Edgent releases include convenience binaries. Use of them
-is covered in [samples/APPLICATION_DEVELOPMENT.md](samples/APPLICATION_DEVELOPMENT.md).
+is covered in [samples/APPLICATION_DEVELOPMENT.md](https://github.com/apache/incubator-edgent-samples/APPLICATION_DEVELOPMENT.md).
 
 If instead you want to build Edgent for your use there are two different use-cases:
 
@@ -171,7 +171,7 @@ $ ./mvnw clean install -Djava8.home=$JAVA_HOME -Ptoolchain,platform-java7,platfo
 ### Building Edgent for NOT using it with Maven
 
 Build Edgent as described above to populate the local maven repository.
-Then see [samples/APPLICATION_DEVELOPMENT.md](samples/APPLICATION_DEVELOPMENT.md)
+Then see [samples/APPLICATION_DEVELOPMENT.md](https://github.com/apache/incubator-edgent-samples/APPLICATION_DEVELOPMENT.md)
 for information about the `get-edgent-jars.sh` script.
 
 An alternative to using the `get-edgent-jars.sh` script is to
@@ -484,9 +484,10 @@ such as an MQTT broker, Apache Kafka, a cloud based IoT service, etc.
 * `analytics` - Analytics for use by Edgent applications.
 * `utils` - Optional utilities for Edgent applications.
 * `console` - Development console that allows visualization of the streams within an Edgent application during development.
-* `samples` - Sample applications, from Hello World to some sensor simulation applications.
 * `android` - Code specific to Android.
 * `test` - SVT
+
+Samples are located at https://github.com/apache/incubator-edgent-samples
 
 ## Coding Conventions
 
