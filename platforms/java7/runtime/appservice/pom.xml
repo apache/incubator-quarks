@@ -24,7 +24,7 @@
   <parent>
     <groupId>org.apache.edgent.java7</groupId>
     <artifactId>edgent-runtime</artifactId>
-    <version>1.3.0-SNAPSHOT</version>
+    <version>1.2.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>edgent-runtime-appservice</artifactId>
@@ -83,19 +83,19 @@
     <dependency>
       <groupId>org.apache.edgent.java7</groupId>
       <artifactId>edgent-api-execution</artifactId>
-      <version>1.3.0-SNAPSHOT</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.java7</groupId>
       <artifactId>edgent-api-topology</artifactId>
-      <version>1.3.0-SNAPSHOT</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
 
     <!-- Just needed to make sure it is scheduled before this module in the reactor -->
     <dependency>
       <groupId>org.apache.edgent.java7</groupId>
       <artifactId>edgent-test-appservice-applications</artifactId>
-      <version>1.3.0-SNAPSHOT</version>
+      <version>1.2.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

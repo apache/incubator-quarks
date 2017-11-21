@@ -24,7 +24,7 @@
   <parent>
     <groupId>org.apache.edgent.java7</groupId>
     <artifactId>edgent-test</artifactId>
-    <version>1.3.0-SNAPSHOT</version>
+    <version>1.2.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>edgent-test-svt</artifactId>
@@ -87,22 +87,22 @@
     <dependency>
       <groupId>org.apache.edgent.java7</groupId>
       <artifactId>edgent-api-topology</artifactId>
-      <version>1.3.0-SNAPSHOT</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.java7</groupId>
       <artifactId>edgent-console-server</artifactId>
-      <version>1.3.0-SNAPSHOT</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.java7</groupId>
       <artifactId>edgent-utils-metrics</artifactId>
-      <version>1.3.0-SNAPSHOT</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.java7</groupId>
       <artifactId>edgent-providers-development</artifactId>
-      <version>1.3.0-SNAPSHOT</version>
+      <version>1.2.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
 
