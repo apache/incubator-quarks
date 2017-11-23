@@ -23,8 +23,6 @@ import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 
-import java.net.InetSocketAddress;
-import java.net.Socket;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -772,21 +770,15 @@ public class WebSocketClientTest extends ConnectorTestBase {
     }
     
     private void skipTestIfCantConnect(Properties config) throws Exception {
-        String wsUri = config.getProperty("ws.uri");
-        // Skip tests if the WebSocket server can't be contacted.
-        try {
-            URI uri = new URI(wsUri);
-            int port = uri.getPort();
-            if (port == -1)
-                port = uri.getScheme().equals("ws") ? 80 : 443;
-            Socket s = new Socket();
-            s.connect(new InetSocketAddress(uri.getHost(), port), 5*1000/*cn-timeout-msec*/);
-            s.close();
-        } catch (Exception e) {
-            System.err.println("Unable to connect to WebSocket server "+wsUri+" : "+e.getMessage());
-            e.printStackTrace();
-            assumeTrue(false);
-        }
+      String wsUri = config.getProperty("ws.uri");
+      try {
+          WebSocketClientConnectTestHelper.connectToServer(config);
+      } catch (Exception e) {
+          System.err.println("Unable to connect to WebSocket server "+wsUri+" : "+e.getMessage());
+          e.printStackTrace();
+          System.err.println("skipTestIfCantConnect(): SKIPPING TEST");
+          assumeTrue(false);
+      }
     }
     
     @Test

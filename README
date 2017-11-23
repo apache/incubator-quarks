@@ -12,7 +12,8 @@ Build the Edgent SDK Java8 jars and install them in your local maven repository
 $ ./mvnw clean install  # add -DskipTests to omit running the tests
 
 You can now construct applications that use Edgent.  The Edgent samples
-are a good place to start and are available as a separate download.
+are a good place to start and are available as a separate download
+at https://github.com/apache/incubator-edgent-samples
 
 Additional Information
 ----------------------
