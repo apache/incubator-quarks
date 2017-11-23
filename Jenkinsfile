@@ -69,6 +69,7 @@ node('ubuntu') {
             }
         }
 
+/* ========================== TODO figure out what to do with samples now in a separate repo
         stage ('Build Samples') {
             echo 'Building samples'
             sh "cd samples; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} clean package"
@@ -83,6 +84,7 @@ node('ubuntu') {
             sh "cd samples/template; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-java7 clean package; ./app-run.sh"
             sh "cd samples/template; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-android clean package; ./app-run.sh"
         }
+========================== */
 
         /* There seems to be a problem with this (Here the output of the build log):
 
