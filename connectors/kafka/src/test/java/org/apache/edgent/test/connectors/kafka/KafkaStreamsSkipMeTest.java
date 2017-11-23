@@ -23,7 +23,7 @@ import static org.junit.Assume.assumeTrue;
 import org.junit.Test;
 
 /*
- * Our current gradle driven test config (test filtering with
+ * Our current maven/gradle driven test config (test filtering with
  * includeTestsMatching '*Test') results in failing a project's
  * test task if the project lacks any "*Test" classes.
  * 

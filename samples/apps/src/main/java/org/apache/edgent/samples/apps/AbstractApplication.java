@@ -19,7 +19,7 @@ under the License.
 package org.apache.edgent.samples.apps;
 
 import java.io.File;
-import java.nio.file.Files;
+import java.io.FileReader;
 import java.util.Properties;
 
 import org.apache.edgent.console.server.HttpServer;
@@ -58,7 +58,7 @@ public abstract class AbstractApplication {
     public AbstractApplication(String propsPath) throws Exception {
         this.propsPath = propsPath;
         props = new Properties();
-        props.load(Files.newBufferedReader(new File(propsPath).toPath()));
+        props.load(new FileReader(new File(propsPath)));
         applicationUtilities = new ApplicationUtilities(props);
     }
     

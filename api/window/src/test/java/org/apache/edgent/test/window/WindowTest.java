@@ -20,6 +20,7 @@ package org.apache.edgent.test.window;
 
 import static org.apache.edgent.function.Functions.unpartitioned;
 import static org.apache.edgent.window.Policies.alwaysInsert;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 
@@ -35,6 +36,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.edgent.function.BiConsumer;
 import org.apache.edgent.window.InsertionTimeList;
@@ -293,7 +295,7 @@ public class WindowTest {
         
         window.registerScheduledExecutorService(new ScheduledThreadPoolExecutor(5));
         
-        long endTime = System.currentTimeMillis() + 8000;
+        long endTime = System.currentTimeMillis() + 4000;
         List<Thread> threads = new ArrayList<>();
         int NUM_THREADS = 10;
         // Create 10 threads. Each inserts at 1,000 Hz
@@ -375,7 +377,7 @@ public class WindowTest {
             window.insert(1);
         }, 0, 10, TimeUnit.MILLISECONDS);
 
-        Thread.sleep(11000);
+        Thread.sleep(4000);
         sf.cancel(true);
         double tolerance = .08;
         for(int i = 0; i < numBatches.size(); i++){
@@ -415,7 +417,7 @@ public class WindowTest {
         		window.insert(i);
         }, 0, 1, TimeUnit.MILLISECONDS);
 
-        Thread.sleep(11000);
+        Thread.sleep(4000);
         sf.cancel(true);
         try {
           sf.get();
@@ -457,19 +459,22 @@ public class WindowTest {
         
         window.registerScheduledExecutorService(new ScheduledThreadPoolExecutor(5));
 
+        AtomicInteger count = new AtomicInteger();
+        int MAX_TUP_CNT = 300;
         ScheduledFuture<?> sf = ses.scheduleAtFixedRate(new Runnable(){
-            private int count = 0;
             @Override
             public void run() {
-                if(count < 1000){
-                    window.insert(count++);
+                if(count.get() < MAX_TUP_CNT){
+                    window.insert(count.incrementAndGet());
                 }
             }
             
         }, 0, 10, TimeUnit.MILLISECONDS);
 
-        Thread.sleep(11000);
+        long insertMsec = MAX_TUP_CNT * 10 /*10msec/tup*/;
+        Thread.sleep(insertMsec + 1000/*extra sec*/);
         sf.cancel(true);
+        assertEquals("Invalid test", MAX_TUP_CNT, count.get());
         int numTuples = 0;
         for(int i = 0; i < batches.size() - 1; i++){
             List<Integer> batch = batches.get(i);
@@ -480,7 +485,9 @@ public class WindowTest {
         }
         
         numTuples += batches.get(batches.size() -1).size();
-        assertTrue("Number of tuples submitted (1000) != number of tuples processed in batch (" + numTuples + ")", numTuples == 1000);
+        assertEquals("Number of batch tuples", count.get(), numTuples);
+        assertTrue("Number of batches exp:"+MAX_TUP_CNT/100+" got:"+batches.size(),
+                withinToleranceAmt((double)MAX_TUP_CNT/100, (double)batches.size(), 1)); // +/- 1
     }
     
     private void assertOnTimeEvictions(List<Long> diffs) {
@@ -495,6 +502,12 @@ public class WindowTest {
         double lowBound = (1.0 - tolerance) * expected;
         double highBound = (1.0 + tolerance) * expected;
         return (actual < highBound && actual > lowBound);
+    }
+
+    public static boolean withinToleranceAmt(double expected, Double actual, double toleranceAmt) {
+        double lowBound = expected - toleranceAmt;
+        double highBound = expected + toleranceAmt;
+        return (actual <= highBound && actual >= lowBound);
     }
 
 }

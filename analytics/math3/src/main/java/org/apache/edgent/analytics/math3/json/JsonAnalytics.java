@@ -249,6 +249,7 @@ public class JsonAnalytics {
      *    });
      * }</pre>
      * 
+     * @param <K> Partition type
      * @param window the window to compute aggregations over
      * @param resultPartitionKeyProperty name of the partition key property in the result
      * @param resultProperty name of the aggregation results property in the result

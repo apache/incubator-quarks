@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.apache.edgent</groupId>
+    <artifactId>edgent-console</artifactId>
+    <version>1.2.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>edgent-console-servlets</artifactId>
+  <packaging>war</packaging>
+
+  <name>Apache Edgent (Java 8): Console: Servlets</name>
+
+  <build>
+    <!-- Add the directory where all the external resources were unpacked to the build -->
+    <resources>
+      <resource>
+        <directory>${project.build.directory}/generated-resources/META-INF/resources/webjars</directory>
+        <targetPath>${project.build.directory}/${project.artifactId}-${project.version}/js/ext</targetPath>
+      </resource>
+      <!--  bundle the licenses of the artifacts we are bundling -->
+      <resource>
+        <directory>${project.basedir}/../../src/main/appended-resources/licenses</directory>
+        <targetPath>${project.build.directory}/${project.artifactId}-${project.version}/META-INF/licenses</targetPath>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.rat</groupId>
+        <artifactId>apache-rat-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>license-check</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <excludes combine.children="append">
+            <!-- TODO: Still got one unlicensed file in there ... -->
+            <exclude>src/main/webapp/js/ext/**</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-remote-resources-plugin</artifactId>
+        <configuration>
+          <outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}</outputDirectory>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack-js-deps</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <!--  Bundle these dependencies in the war.
+                    
+                  You must maintain the corresponding info if you
+                  add/remove artifacts or change their versions:
+                    - entry in src/main/webapp/META-INF/LICENSE
+                    - entry in src/main/webapp/META-INF/NOTICE when appropriate
+                    
+                  You must maintain the info in the corresponding
+                  console/server files because it bundles this war. 
+                  
+                  You must maintain the info in this project's
+                  corresponding platforms/java7 files.
+               -->
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.webjars</groupId>
+                  <artifactId>jquery</artifactId>
+                  <version>1.11.2</version>
+                  <outputDirectory>${project.build.directory}/generated-resources</outputDirectory>
+                  <includes>META-INF/resources/webjars/**/jquery.min.js</includes>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.webjars</groupId>
+                  <artifactId>jquery-ui</artifactId>
+                  <version>1.11.4</version>
+                  <outputDirectory>${project.build.directory}/generated-resources</outputDirectory>
+                  <includes>META-INF/resources/webjars/**/images/*.png,META-INF/resources/webjars/**/*.min.*</includes>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.webjars.bower</groupId>
+                  <artifactId>d3</artifactId>
+                  <version>3.3.9</version>
+                  <outputDirectory>${project.build.directory}/generated-resources</outputDirectory>
+                  <includes>META-INF/resources/webjars/**/**.min.*</includes>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.webjars.bower</groupId>
+                  <artifactId>d3-plugins-sankey</artifactId>
+                  <version>1.1.0</version>
+                  <outputDirectory>${project.build.directory}/generated-resources</outputDirectory>
+                  <includes>META-INF/resources/webjars/**/*.css,META-INF/resources/webjars/**/*.js</includes>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- Download JavaScript form GitHub -->
+      <!--plugin>
+        <groupId>com.googlecode.maven-download-plugin</groupId>
+        <artifactId>download-maven-plugin</artifactId>
+        <version>1.2.1</version>
+        <executions>
+          <execution>
+            <id>get-d3-legend-js</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>wget</goal>
+            </goals>
+            <configuration>
+              <url>https://gist.githubusercontent.com/ZJONSSON/3918369/raw/bf9bce6b68a3b70f87450f155436ca4a84af1ba4/d3.legend.js</url>
+              <outputDirectory>${project.build.directory}/generated-resources/META-INF/resources/webjars/d3.legend/</outputDirectory>
+              <outputFileName>d3.legend.js</outputFileName>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin-->
+      <plugin>
+        <!--  Included to enable "mvn tomcat:run" and have a running
+              console server without using the server jar.
+        -->
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.2</version>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.edgent</groupId>
+      <artifactId>edgent-utils-streamscope</artifactId>
+      <version>1.2.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+</project>

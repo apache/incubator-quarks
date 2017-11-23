@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ 
+ Licensed to the Apache Software Foundation (ASF) under one or more
+ contributor license agreements.  See the NOTICE file distributed with
+ this work for additional information regarding copyright ownership.
+ The ASF licenses this file to You under the Apache License, Version 2.0
+ (the "License"); you may not use this file except in compliance with
+ the License.  You may obtain a copy of the License at
+ 
+ http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ 
+ -->
+<project name="Edgent">
+
+    <skin>
+        <groupId>lt.velykis.maven.skins</groupId>
+        <artifactId>reflow-maven-skin</artifactId>
+        <version>1.1.1</version>
+    </skin>
+
+    <!--
+    Details on how to configure the reflow skin:
+    http://andriusvelykis.github.io/reflow-maven-skin/skin/
+-->
+    <custom>
+        <reflowSkin>
+            <theme>bootswatch-cerulean</theme>
+            <titleTemplate>Apache Edgent® (Incubating) - %2$s</titleTemplate>
+            <slogan position="bannerRight">Accelerating Analytics at the Edge</slogan>
+            <toc>top</toc>
+            <tocTopFlatten>true</tocTopFlatten>
+            <topNav>reports|modules|parent</topNav>
+            <bottomNav>
+                <column>reports</column>
+                <column>modules</column>
+                <column>parent</column>
+            </bottomNav>
+            <brand>
+                <name>Apache Edgent (Incubating)</name>
+                <href>https://edgent.apache.org/</href>
+            </brand>
+            <bottomDescription>
+                Apache Edgent is an effort undergoing Incubation at The Apache Software Foundation
+                (ASF), sponsored by the Incubator. Incubation is required of all newly accepted
+                projects until a further review indicates that the infrastructure, communications,
+                and decision making process have stabilized in a manner consistent with other
+                successful ASF projects. While incubation status is not necessarily a reflection
+                of the completeness or stability of the code, it does indicate that the project
+                has yet to be fully endorsed by the ASF.
+            </bottomDescription>
+            <breadcrumbs>true</breadcrumbs>
+            <highlightJs>true</highlightJs>
+            <pages>
+                <developer-info>
+                    <toc>sidebar</toc>
+                </developer-info>
+            </pages>
+        </reflowSkin>
+    </custom>
+
+    <bannerLeft>
+        <name>Apache Edgent (incubating)</name>
+        <src>https://edgent.apache.org/img/apache_logo.png</src>
+        <href>https://edgent.apache.org/</href>
+    </bannerLeft>
+
+    <bannerRight>
+        <name>Apache Incubator</name>
+        <src>https://incubator.apache.org/images/incubator_feather_egg_logo_sm.png</src>
+        <href>http://incubator.apache.org/</href>
+    </bannerRight>
+
+    <body>
+        <links>
+            <item name="Wiki" href="https://cwiki.apache.org/confluence/display/EDGENT"/>
+            <item name="Issues" href="https://issues.apache.org/jira/projects/EDGENT"/>
+            <item name="CI" href="https://builds.apache.org/view/E-G/view/Edgent/"/>
+        </links>
+        <menu ref="reports" inherit="top"/>
+        <menu ref="parent" inherit="top"/>
+        <menu ref="modules" inherit="top"/>
+    </body>
+
+</project>

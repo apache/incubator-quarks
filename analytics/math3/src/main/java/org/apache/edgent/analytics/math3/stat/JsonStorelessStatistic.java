@@ -23,6 +23,7 @@ import org.apache.edgent.analytics.math3.json.JsonUnivariateAggregator;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import org.apache.edgent.analytics.math3.utils.Java7Helper;
 
 /**
  * JSON univariate aggregator implementation wrapping a {@code StorelessUnivariateStatistic}.
@@ -51,7 +52,7 @@ public class JsonStorelessStatistic implements JsonUnivariateAggregator {
     public void result(JsonElement partition, JsonObject result) {        
         double rv = statImpl.getResult();
         
-        if (Double.isFinite(rv))
+        if (Java7Helper.doubleIsFinite(rv))
             result.addProperty(stat.name(), rv);
     }
 

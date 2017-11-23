@@ -37,7 +37,7 @@ public class ServerUtilTest {
     @Test
     public void testGetPath() throws IOException {
         ServerUtil serverUtil = new ServerUtil();
-        assertNotNull("Get AbsoluteWarFilePath is null", serverUtil.getAbsoluteWarFilePath("console.war"));
+        assertNotNull("Get AbsoluteWarFilePath is null", serverUtil.getWarFilePath());
     }
 
 }

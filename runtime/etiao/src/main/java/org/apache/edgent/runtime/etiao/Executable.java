@@ -206,6 +206,16 @@ public class Executable implements RuntimeServices {
             logger.warn("Scheduler could not finish {} tasks", unfinished.size());
         }
     }
+    
+    private static long getTimeoutValue(long timeout, TimeUnit units) {
+        // try to protect the tests from timing out prematurely
+        // in the face of overloaded/slow build/test servers.
+        if (Boolean.getBoolean("edgent.build.ci")) {
+            // could do something like base the decision of the current value of timeout and/or units
+            return timeout * 2; // try to minimize
+        }
+        return timeout;
+    }
 
     private void invokeAction(Consumer<Invocation<?, ?, ?>> action) {
         ExecutorCompletionService<Boolean> completer = new ExecutorCompletionService<>(controlScheduler);
@@ -216,13 +226,18 @@ public class Executable implements RuntimeServices {
             });
         }
 
+        long getFutureTimeout = 10;
+        TimeUnit getFutureTimeoutUnits = TimeUnit.SECONDS;
+        getFutureTimeout = getTimeoutValue(getFutureTimeout, getFutureTimeoutUnits);
+        
         int remainingTasks = invocations.size();
         while (remainingTasks > 0) {
             try {
-                Future<Boolean> completed = completer.poll(10, TimeUnit.SECONDS);
+                Future<Boolean> completed = completer.poll(getFutureTimeout, getFutureTimeoutUnits);
                 if (completed == null) {
                     // TODO during close log exception and wait on the next task to complete
-                    throw new RuntimeException(new TimeoutException());
+                    throw new RuntimeException(new TimeoutException(
+                            String.format("%d%s timeout", getFutureTimeout, getFutureTimeoutUnits.toString())));
                 }
                 else {
                     try {

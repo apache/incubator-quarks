@@ -1,0 +1,57 @@
+////
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+////
+
+# Releasing Edgent
+
+In general the `master` branch contains the repository state of the latest release of Edgent.
+No commit should be done to `master` except for merging after a successful release.
+
+Normal development is done in the `develop` branch or in feature branches that are merged to `develop` after they are finished.
+
+A version is built up of three parts: `major`.`minor`.`bugfix`. For each major and minor version a corresponding `release` branch is maintained.
+This allows shipping of bug-fix releases, if this is required. For bug-fix releases no new branch is created.
+
+Assuming develop is currently in version `1.2.0-SNAPSHOT` and we are preparing a new release, then we would first create a `release/1.2` branch. Within this branch, the Edgent version is `1.2.0-SNAPSHOT` and develop becomes `1.3.0-SNAPSHOT`.
+In the `release/1.2` branch all work prior to cutting a release or for fixing bug-fixes in an existing release can be performed. This branch is usually used to stabilize the software prior to a release.
+
+As soon as the release branch is stable enough, the release manager cuts a release.
+
+When doing this, all modules versions are set to a release version, this version is committed and tagged and then the version is usually incremented to the next higher bug-fix version.
+So if the `release/1.2` branch is currently in version `1.2.0-SNAPSHOT`, the versions are changed to `1.2.0` and after the committing and tagging the version is updated to `1.2.1-SNAPSHOT`.
+
+All of these steps are automated by the `maven-release-plugin`.
+
+## Creating the release branch
+
+A new release branch is always created from the `develop` branch. So make sure all changes have been pulled and the repo is up to date.
+
+The following command performs the branching:
+
+    mvn release:branch -P platform-android,platform-java7,distribution -DbranchName=release/1.2 -DautoVersionSubmodules=true
+
+Without the `-DautoVersionSubmodules=true` we would have to specify the version for each module separately. This way we only have to specify the version of the root module and all children will inherit this version.
+
+Also the only way all modules are processed, is if we enable the `distribution` and the two `platform-android` and `platform-java7` profiles.
+
+After this the branches and the changes are committed, but not yet pushed. So as a last step here the release-manager needs to push the changes in his git repo.
+
+
+## Preparing a release
+
+To be continued ...

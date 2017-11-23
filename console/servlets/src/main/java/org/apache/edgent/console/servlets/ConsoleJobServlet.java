@@ -50,32 +50,31 @@ public class ConsoleJobServlet extends HttpServlet {
         boolean jobsInfo = false;
         boolean jobGraph = false;
         for(Map.Entry<String,String[]> entry : parameterMap.entrySet()) {
-                if (entry.getKey().equals("jobsInfo")) {
+                if ("jobsInfo".equals(entry.getKey())) {
                         String[] vals = entry.getValue();
-                        if (vals[0].equals("true")) {
+                        if ("true".equals(vals[0])) {
                                 jobsInfo = true;
                         }
-                } else if (entry.getKey().equals("jobgraph")) {
+                } else if ("jobgraph".equals(entry.getKey())) {
                         String[] vals = entry.getValue();
-                        if (vals[0].equals("true")) {
+                        if ("true".equals(vals[0])) {
                                 jobGraph = true;
                         }
-                } else if (entry.getKey().equals("jobId")) {
+                } else if ("jobId".equals(entry.getKey())) {
                         String[] ids = entry.getValue();
                         if (ids.length == 1) {
                                 jobId = ids[0];
                         }
                 }
         }
-        
 
-        StringBuffer sbuf = new StringBuffer();
+        StringBuilder sbuf = new StringBuilder();
         sbuf.append("*:interface=");
         sbuf.append(ObjectName.quote("org.apache.edgent.execution.mbeans.JobMXBean"));
         sbuf.append(",type=");
         sbuf.append(ObjectName.quote("job"));
         
-        if (!jobId.equals("")) {
+        if (!jobId.isEmpty()) {
         	sbuf.append(",id=");
         	sbuf.append(ObjectName.quote(jobId));
         } 
@@ -90,13 +89,16 @@ public class ConsoleJobServlet extends HttpServlet {
         String jsonString = "";
         if (jobsInfo) {
         	jsonString = JobUtil.getJobsInfo(jobObjName);
-        } else if (jobGraph && !(jobId.equals("")) && !(jobId.equals("undefined"))) {
+        } else if (jobGraph && !(jobId.isEmpty()) && !("undefined".equals(jobId))) {
             jsonString = JobUtil.getJobGraph(jobObjName);
         }
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(jsonString);
-        
+        try {
+            response.getWriter().write(jsonString);
+        } catch (IOException e) {
+            throw new ServletException(e);
+        }
 	}		
 }

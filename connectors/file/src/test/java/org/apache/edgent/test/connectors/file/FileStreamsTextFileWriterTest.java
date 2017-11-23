@@ -35,6 +35,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -83,6 +86,19 @@ public class FileStreamsTextFileWriterTest extends DirectTopologyTestBase {
     public String[] getLines() {
         return stdLines;
     }
+    
+    // Cover for Java8 Files.newBufferedReader() convenience fn
+    private static BufferedReader newBufferedReader(Path path) throws IOException {
+        return newBufferedReader(path, StandardCharsets.UTF_8);
+    }
+    private static BufferedReader newBufferedReader(Path path, Charset cs)
+            throws IOException
+        {
+            CharsetDecoder decoder = cs.newDecoder();
+            Reader reader = new InputStreamReader(Files.newInputStream(path), decoder);
+            return new BufferedReader(reader);
+        }
+
 
     @Test
     public void testFlushConfig() throws Exception {
@@ -301,6 +317,8 @@ public class FileStreamsTextFileWriterTest extends DirectTopologyTestBase {
         // default writer policy
         TSink<String> sink = FileStreams.textFileWriter(s, () -> basePath.toString());
 
+        // note, with only 4 tuples, default policy won't cycle (finalize the cur file)
+        // to make the expResults present until job stops (TMO)
         completeAndValidateWriter(t, TMO_SEC, basePath, expResults);
         
         assertNotNull(sink);
@@ -427,6 +445,14 @@ public class FileStreamsTextFileWriterTest extends DirectTopologyTestBase {
 
     @Test
     public void testRetainAgeBased() throws Exception {
+        // The mechanisms of this test no longer work with the
+        // recent changes to bump the tmo 2x when edgent.build.ci=true.
+        // So disable while we continue to work on this.
+        //
+        // With the general changes for completion condition checking,
+        // I think this has the chance of working again.
+//        assumeTrue(!Boolean.getBoolean("edgent.build.ci"));
+
         Topology t = newTopology("testRetainAgeBased");
         
         // establish a base path
@@ -436,9 +462,8 @@ public class FileStreamsTextFileWriterTest extends DirectTopologyTestBase {
         
         // build expected results
         int keepCnt = 2;  // only keep the last n files with throttling, age,
-                          // and TMO_SEC
         int ageSec = 5;
-        long periodMsec = TimeUnit.SECONDS.toMillis(1);
+        long periodMsec = TimeUnit.SECONDS.toMillis(1);  // age retention checking period
         // net one tuple per file
         List<List<String>> expResults = buildExpResults(lines, tuple -> true);
         for (int i = 0; i < keepCnt; i++)
@@ -453,9 +478,11 @@ public class FileStreamsTextFileWriterTest extends DirectTopologyTestBase {
         // With 4 tuples, throttleDelay=2sec, and ageSec=5
         // t0=add-f1, t1, t2=add-f2, t3, t4=add-f3, t5-rm-f1, t6=add-f4, t7=rm-f2, t8, t9=rm-f3, ...
         //
-        // So we want to check somewhere around t8 (after t7 and definitely before t9)
-        // so all 4 files were created and the first 2 have been aged out.
-        // with complete delay = #files-1*throttle + TMO_SEC, should be 6+2 == t8.
+        // The expected results happen somewhere around t8 (after t7 and definitely before t9),
+        // all 4 files were created and the first 2 have been aged out.
+        //
+        // If the "completion condition" doesn't manage to get run during that interval
+        // the test will fail even if the code is working fine. 
         
         int throttleSec = 2;
         TStream<String> s = PlumbingStreams.blockingThrottle(
@@ -489,7 +516,7 @@ public class FileStreamsTextFileWriterTest extends DirectTopologyTestBase {
         
         IFileWriterPolicy<String> policy = new FileWriterPolicy<String>(
                 FileWriterFlushConfig.newImplicitConfig(),
-                FileWriterCycleConfig.newCountBasedConfig(1000),
+                FileWriterCycleConfig.newCountBasedConfig(expResults.get(0).size()),
                 FileWriterRetentionConfig.newFileCountBasedConfig(10)
                 );
         FileStreams.textFileWriter(s, () -> basePath.toString(), () -> policy);
@@ -514,7 +541,7 @@ public class FileStreamsTextFileWriterTest extends DirectTopologyTestBase {
         
         IFileWriterPolicy<String> policy = new FileWriterPolicy<String>(
                 FileWriterFlushConfig.newCountBasedConfig(1),  // every tuple
-                FileWriterCycleConfig.newCountBasedConfig(1000),  // all in 1 file
+                FileWriterCycleConfig.newCountBasedConfig(expResults.get(0).size()),  // all in 1 file
                 FileWriterRetentionConfig.newFileCountBasedConfig(10)
                 );
         FileStreams.textFileWriter(s, () -> basePath.toString(), () -> policy);
@@ -543,7 +570,7 @@ public class FileStreamsTextFileWriterTest extends DirectTopologyTestBase {
         
         IFileWriterPolicy<String> policy = new FileWriterPolicy<String>(
                 FileWriterFlushConfig.newTimeBasedConfig(TimeUnit.MILLISECONDS.toMillis(250)),
-                FileWriterCycleConfig.newCountBasedConfig(1000),  // all in 1 file
+                FileWriterCycleConfig.newCountBasedConfig(expResults.get(0).size()),  // all in 1 file
                 FileWriterRetentionConfig.newFileCountBasedConfig(10)
                 );
         FileStreams.textFileWriter(s, () -> basePath.toString(), () -> policy);
@@ -570,7 +597,7 @@ public class FileStreamsTextFileWriterTest extends DirectTopologyTestBase {
         IFileWriterPolicy<String> policy = new FileWriterPolicy<String>(
                 FileWriterFlushConfig.newPredicateBasedConfig(
                         tuple -> tuple.startsWith("1-") || tuple.startsWith("3-")),
-                FileWriterCycleConfig.newCountBasedConfig(1000),  // all in 1 file
+                FileWriterCycleConfig.newCountBasedConfig(expResults.get(0).size()),  // all in 1 file
                 FileWriterRetentionConfig.newFileCountBasedConfig(10)
                 );
         FileStreams.textFileWriter(s, () -> basePath.toString(), () -> policy);
@@ -676,7 +703,9 @@ public class FileStreamsTextFileWriterTest extends DirectTopologyTestBase {
 
         // build expected results
         // a tuple based config / predicate.  in this case should end up with 3 files.
-        Predicate<String> cycleIt = tuple -> tuple.startsWith("1-") || tuple.startsWith("3-");
+        // flush on the last tuple too to ensure the test completes before TMO.
+        Predicate<String> cycleIt = tuple -> tuple.startsWith("1-") || tuple.startsWith("3-")
+                                        || tuple.equals(lines[lines.length-1]);
         List<List<String>> expResults = buildExpResults(lines, cycleIt);
         assertEquals(3, expResults.size());
 
@@ -818,7 +847,7 @@ public class FileStreamsTextFileWriterTest extends DirectTopologyTestBase {
         System.out.println("<<<<< Dumping "+f);
         try {
             Path path = f.toPath();
-            try (BufferedReader br = Files.newBufferedReader(path)) {
+            try (BufferedReader br = newBufferedReader(path)) {
                 br.lines().forEach(line -> System.out.println(line));
             }
         }
@@ -847,32 +876,57 @@ public class FileStreamsTextFileWriterTest extends DirectTopologyTestBase {
             Path basePath, List<List<T>> expResults) throws Exception {
         
         try {
-            // just let it run to the tmo before we check the file contents
+            // wait until the right number of files and content or we timeout.
+            // (don't use a wait-till-tmo scheme as that's "too slow" especially
+            // when complete() adds a TMO multiplier when edgent.build.ci=true)
             Condition<Object> tc = new Condition<Object>() {
-                public boolean valid() { return false; }
-                public Object getResult() { return null; }
+                public boolean valid() {
+                    try {
+                        return checkFiles(basePath, expResults, true);
+                    } catch (Exception e) {
+                        return false;
+                    }
+                }
+                public Object getResult() { return getActFiles(basePath).size(); }
             };
-            
-            complete(t, tc, tmoSec, TimeUnit.SECONDS);
+
+            // if we time out we probably need to know which files are present to diagnose
+            try {
+                complete(t, tc, tmoSec, TimeUnit.SECONDS);
+            } catch(Exception e) {
+                System.out.println("completed with exception: "+e);
+            }
 
             System.out.println("########## "+t.getName());
-
-            // right number of files?
-            List<Path> actFiles = getActFiles(basePath);
-            System.out.println("actFiles: "+actFiles);
-            assertEquals(actFiles.toString(), expResults.size(), actFiles.size());
             
-            // do the file(s) have the right contents?
-            System.out.println("expResults: "+expResults);
-            int i = 0;
-            for (List<T> expFile : expResults) {
-                Path path = actFiles.get(i++);
-                checkContents(path, expFile.toArray(new String[0]));
-            }
+            checkFiles(basePath, expResults, false);
         }
         finally {
             deleteAll(basePath);
         }
+    }
+    
+    // silent==true => return false on fail; silent==false => asserts/throws on fail
+    private <T> boolean checkFiles(Path basePath, List<List<T>> expResults, boolean silent) {
+
+        // right number of files?
+        List<Path> actFiles = getActFiles(basePath);
+        if (!silent) System.out.println("actFiles: "+actFiles);
+        if (!silent) 
+            assertEquals(actFiles.toString(), expResults.size(), actFiles.size());
+        else if (expResults.size() != actFiles.size())
+            return false;
+        
+        // do the file(s) have the right contents?
+        if (!silent) System.out.println("expResults: "+expResults);
+        int i = 0;
+        for (List<T> expFile : expResults) {
+            Path path = actFiles.get(i++);
+            if (!checkContents(path, expFile.toArray(new String[0]), silent))
+                return false;
+        }
+        
+        return true;
     }
     
     private void deleteAll(Path basePath) {
@@ -898,28 +952,39 @@ public class FileStreamsTextFileWriterTest extends DirectTopologyTestBase {
         return paths;
     }
     
-    private void checkContents(Path path, String[] lines) {
+    // silent==true => return false on fail; silent==false => asserts/throws on fail
+    private boolean checkContents(Path path, String[] lines, boolean silent) {
         if (path.getFileName().toString().endsWith(".zip")) {
-          checkZipContents(path, lines);
-          return;
+          return checkZipContents(path, lines, silent);
         }
-        System.out.println("checking file "+path);
+        if (!silent) System.out.println("checking file "+path);
         int lineCnt = 0;
-        try (BufferedReader br = Files.newBufferedReader(path)) {
+        try (BufferedReader br = newBufferedReader(path)) {
             for (String line : lines) {
                 ++lineCnt;
                 String actLine = br.readLine();
-                assertEquals("path:"+path+" line "+lineCnt, line, actLine);
+                if (!silent)
+                    assertEquals("path:"+path+" line "+lineCnt, line, actLine);
+                else if (!line.equals(actLine))
+                    return false;
             }
-            assertNull("path:"+path+" line "+lineCnt+" expected EOF", br.readLine());
+            if (!silent)
+                assertNull("path:"+path+" line "+lineCnt+" expected EOF", br.readLine());
+            else if (null != br.readLine())
+                return false;
         }
         catch (IOException e) {
-            assertNull("path:"+path+" line "+lineCnt+" unexpected IOException "+e, e);
+            if (!silent)
+                assertNull("path:"+path+" line "+lineCnt+" unexpected IOException "+e, e);
+            else
+                return false;
         }
+        return true;
     }
     
-    private void checkZipContents(Path path, String[] lines) {
-        System.out.println("checking file "+path);
+    // silent==true => return false on fail; silent==false => asserts/throws on fail
+    private boolean checkZipContents(Path path, String[] lines, boolean silent) {
+        if (!silent) System.out.println("checking file "+path);
         String fileName = path.getFileName().toString();
         String entryName = fileName.substring(0, fileName.length() - ".zip".length());
         int lineCnt = 0;
@@ -930,18 +995,31 @@ public class FileStreamsTextFileWriterTest extends DirectTopologyTestBase {
         {
           ZipEntry entry = zin.getNextEntry();
           
-          assertEquals(entryName, entry.getName());
+          if (!silent)
+              assertEquals(entryName, entry.getName());
+          else if (!entryName.equals(entry.getName()))
+              return false;
 
           BufferedReader br = new BufferedReader(new InputStreamReader(zin, StandardCharsets.UTF_8));
           for (String line : lines) {
             ++lineCnt;
             String actLine = br.readLine();
-            assertEquals("path:"+path+" line "+lineCnt, line, actLine);
+            if (!silent)
+                assertEquals("path:"+path+" line "+lineCnt, line, actLine);
+            else if (!line.equals(actLine))
+                return false;
           }
-          assertNull("path:"+path+" line "+lineCnt+" expected EOF", br.readLine());
+          if (!silent)
+              assertNull("path:"+path+" line "+lineCnt+" expected EOF", br.readLine());
+          else if (null != br.readLine())
+              return false;
         }
         catch (IOException e) {
-          assertNull("path:"+path+" line "+lineCnt+" unexpected IOException "+e, e);
+            if (!silent)
+                assertNull("path:"+path+" line "+lineCnt+" unexpected IOException "+e, e);
+            else
+                return false;
         }
+        return true;
     }
 }

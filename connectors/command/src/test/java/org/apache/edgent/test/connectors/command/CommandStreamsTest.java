@@ -41,8 +41,6 @@ import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.tester.Condition;
 import org.junit.Test;
 
-import com.google.gson.JsonObject;
-
 public class CommandStreamsTest extends DirectTopologyTestBase {
     
     private String[] stdLines = new String[] {
@@ -176,9 +174,24 @@ public class CommandStreamsTest extends DirectTopologyTestBase {
       assertNotNull(sink);
       
       try {
-        // start the job, sleep for a bit (await the timeout) then validate sink output
-        Condition<?> never = t.getTester().tupleCount(s, Long.MAX_VALUE);
-        t.getTester().complete(getSubmitter(), new JsonObject(), never, 3, TimeUnit.SECONDS);
+        // complete when the sink has generated the expected results
+        Condition<Object> tc = new Condition<Object>() {
+            public boolean valid() { 
+                try {
+                    return FileUtil.validateFile(tempFile1, getLines(), true);
+                } catch (Exception e) {
+                    return false;
+                }
+            }
+            public Object getResult() { return "todo-files-lines"; }
+        };
+
+        // If we time out, still validate content to see what we did get
+        try {
+            complete(t, tc, 3, TimeUnit.SECONDS);
+        } catch (Exception e) {
+            System.out.println("test time out");
+        }
 
         FileUtil.validateFile(tempFile1, getLines());
       }
@@ -229,11 +242,25 @@ public class CommandStreamsTest extends DirectTopologyTestBase {
       assertNotNull(sink);
       
       try {
-        // start the job, sleep for a bit (await the timeout) then validate sink output
-        Condition<?> never = t.getTester().tupleCount(s, Long.MAX_VALUE);
-        t.getTester().complete(getSubmitter(), new JsonObject(), never,
-            6 + ((NUM_RUNS-1) * 1/*restart delay*/), TimeUnit.SECONDS);
-        
+        // complete when the sink has generated the expected results
+        Condition<Object> tc = new Condition<Object>() {
+            public boolean valid() { 
+                try {
+                    return FileUtil.validateFile(tempFile1, expLines.toArray(new String[0]), true);
+                } catch (Exception e) {
+                    return false;
+                }
+            }
+            public Object getResult() { return "todo-files-lines"; }
+        };
+
+        // If we time out, still validate content to see what we did get
+        try {
+            complete(t, tc, 6 + ((NUM_RUNS-1) * 1/*restart delay*/), TimeUnit.SECONDS);
+        } catch (Exception e) {
+            System.out.println("test time out");
+        }
+
         FileUtil.validateFile(tempFile1, expLines.toArray(new String[0]));
       }
       finally {
@@ -242,7 +269,7 @@ public class CommandStreamsTest extends DirectTopologyTestBase {
     }
     
     private String getCmdPath(String cmd) {
-      return TestRepoPath.getPath("connectors", "command", "src", "test", "scripts", cmd);
+      return TestRepoPath.getPath(cmd);
     }
 
 }
