@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.apache.edgent</groupId>
     <artifactId>edgent-apps</artifactId>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.3.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>edgent-apps-iot</artifactId>
@@ -34,23 +34,23 @@
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-api-topology</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>1.3.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-connectors-iot</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>1.3.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-connectors-pubsub</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>1.3.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-providers-direct</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>1.3.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

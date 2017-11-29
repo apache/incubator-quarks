@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.apache.edgent.java7</groupId>
     <artifactId>edgent-connectors</artifactId>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.3.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>edgent-connectors-kafka</artifactId>
@@ -100,7 +100,7 @@
     <dependency>
       <groupId>org.apache.edgent.java7</groupId>
       <artifactId>edgent-api-topology</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>1.3.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.kafka</groupId>
@@ -183,27 +183,27 @@
     <dependency>
       <groupId>org.apache.edgent.java7</groupId>
       <artifactId>edgent-providers-direct</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>1.3.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.java7</groupId>
       <artifactId>edgent-providers-direct</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>1.3.0-SNAPSHOT</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.java7</groupId>
       <artifactId>edgent-connectors-common</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>1.3.0-SNAPSHOT</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.java7</groupId>
       <artifactId>edgent-api-topology</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>1.3.0-SNAPSHOT</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>

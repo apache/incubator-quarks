@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.apache.edgent</groupId>
     <artifactId>edgent-test</artifactId>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.3.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>edgent-test-fvtiot</artifactId>
@@ -63,38 +63,38 @@
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-connectors-pubsub</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>1.3.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-runtime-jsoncontrol</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>1.3.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-providers-direct</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>1.3.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-apps-iot</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>1.3.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-apps-iot</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>1.3.0-SNAPSHOT</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-providers-iot</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>1.3.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
