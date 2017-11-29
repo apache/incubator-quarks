@@ -42,7 +42,7 @@
     <connection>scm:git:https://git-wip-us.apache.org/repos/asf/incubator-edgent.git</connection>
     <developerConnection>scm:git:https://git-wip-us.apache.org/repos/asf/incubator-edgent.git</developerConnection>
     <url>https://github.com/apache/incubator-edgent</url>
-    <tag>HEAD</tag>
+    <tag>release/1.2</tag>
   </scm>
 
   <properties>
