@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.apache.edgent.java7</groupId>
     <artifactId>edgent-utils</artifactId>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.2.0</version>
   </parent>
 
   <artifactId>edgent-utils-streamscope</artifactId>
@@ -82,14 +82,14 @@
     <dependency>
       <groupId>org.apache.edgent.java7</groupId>
       <artifactId>edgent-api-topology</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>1.2.0</version>
     </dependency>
 
     <!-- TODO: This is only required because of a dependency to TopologyAbstractTest -> Would suggest to move test-util stutt into a dedicated test-utils artifact -->
     <dependency>
       <groupId>org.apache.edgent.java7</groupId>
       <artifactId>edgent-api-topology</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>1.2.0</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>

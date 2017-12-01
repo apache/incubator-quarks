@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.apache.edgent.android</groupId>
     <artifactId>edgent-api</artifactId>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.2.0</version>
   </parent>
 
   <artifactId>edgent-api-function</artifactId>
