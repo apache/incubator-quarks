@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.apache.edgent.android</groupId>
     <artifactId>edgent-utils</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>edgent-utils-metrics</artifactId>
@@ -67,7 +67,7 @@
     <dependency>
       <groupId>org.apache.edgent.android</groupId>
       <artifactId>edgent-api-topology</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
   </dependencies>
 

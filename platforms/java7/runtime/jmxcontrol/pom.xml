@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.apache.edgent.java7</groupId>
     <artifactId>edgent-runtime</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>edgent-runtime-jmxcontrol</artifactId>
@@ -86,12 +86,12 @@
     <dependency>
       <groupId>org.apache.edgent.java7</groupId>
       <artifactId>edgent-api-execution</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent.java7</groupId>
       <artifactId>edgent-api-function</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
   </dependencies>
 

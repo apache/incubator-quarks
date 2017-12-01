@@ -24,7 +24,7 @@
   <parent>
     <groupId>org.apache.edgent</groupId>
     <artifactId>edgent-parent</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>edgent-distribution</artifactId>
@@ -79,113 +79,113 @@
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-providers-development</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-providers-direct</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-providers-iot</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
 
     <!-- Analytics -->
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-analytics-math3</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-analytics-sensors</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
 
     <!-- Utils -->
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-utils-metrics</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-utils-streamscope</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
 
     <!-- Connectors -->
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-connectors-command</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-connectors-common</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-connectors-csv</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-connectors-file</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-connectors-http</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-connectors-iot</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-connectors-iotp</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-connectors-jdbc</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-connectors-kafka</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-connectors-mqtt</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-connectors-pubsub</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-connectors-serial</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-connectors-websocket</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-connectors-websocket-jetty</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
     </dependency>
 
     <!-- Include console-servlets.war to enable a user to run
@@ -197,7 +197,7 @@
     <dependency>
       <groupId>org.apache.edgent</groupId>
       <artifactId>edgent-console-servlets</artifactId>
-      <version>1.2.0</version>
+      <version>1.2.1-SNAPSHOT</version>
       <type>war</type>
     </dependency>
   </dependencies>
