@@ -54,4 +54,63 @@ After this the branches and the changes are committed, but not yet pushed. So as
 
 ## Preparing a release
 
-To be continued ...
+In this phase on the release branch. The versions are changed to the release versions, a commit is done with this state and tagged. After that the versions are updated to the next development version and this update is committed too.
+
+    mvn release:prepare -DautoVersionSubmodules=true -P platform-android,platform-java7,distribution -Dtag=edgent-1.2.0 -DdevelopmentVersion=1.2.1-SNAPSHOT -DreleaseVersion=1.2.0
+
+The plugin doesn't push the changes to the remote repo. So please don't forget to do a git push before continuing.
+
+    git push
+
+After changing to the release version, the plugin does a full build with all tests prior to tagging and committing the release version. Same happens again after updating to the next development version.
+
+## Performing a release
+
+In this phase the previously prepared release is built, tested and deployed to the remote repo configured in the pom.
+To be 100% sure the build doesn't require any files eventually omitted from source control, the `release:perform` step checks out the previously created tag to a directory `target/checkout` and runs the build there.
+
+    mvn release:perform -DreleaseProfiles=platform-android,platform-java7,distribution
+
+After this step is successful, all artifacts are located in a so-called `staging repository` at https://repository.apache.org/
+
+Here staging repositories for Edgent have the same name: `apacheedgent-####`. It is automatically created when staging new artifacts and the last four digits are automatically counted by Nexus.
+
+## Closing the staging repository
+
+Prior to releasing and voting a staging repository has to be closed.
+Only then can a repository be released and ony then does the repo get a url assigned that can be used by others to inspect the release.
+
+In order to close a previously created staging repository.
+Please login to https://repository.apache.org/ with your Apache credentials and select `Staging Repositories` in the section `Build Promotion`.
+
+Here click on the `apacheedgent-####` containing the artifacts you are planning to release.
+
+In the menu above, click on the `Close` button.
+
+Now Nexus would create a new staging repository as soon as another artifact would be uploaded for an Edgent groupId. Beyond that a number of pre-configured tests are executed automatically:
+
+- Validate the signatures
+- Validate the checksums
+
+After this you can see the repository url on the staging repositories `Summary` tab.
+
+## Actions if the vote passed
+
+If the vote passed and the release candidate should be officially released, all that has to be done, is that the release manager logs in to Apache's Nexus, selects the staging repo and clicks on the `Release` button.
+
+After this Nexus takes care of all further steps of copying the artifacts to the official release repository, syncing that to Maven central, removing the old staging repository and even cleanup the `SNAPSHOT` versions of the release in the snapshot repo.
+
+## Actions if the vote failed
+
+If something popped up during the vote on the release and the release candidate has to be dropped, two things have to be done:
+
+1. Drop the staging repository in Apache's Nexus
+2. Drop/Rename the tag previously set by the release plugin
+
+Dropping the release is equally simple in Nexus, by logging in, selecting the staging repository and clicking on the `Drop` button instead of the `Release` button.
+
+After that in Nexus all artifacts are cleaned up and we're ready to go.
+
+In git however we have to manually remove the old release tag as re-assigning a pre-existing tag will cause the prepare phase to fail.
+
+As soon as the tag is removed, the issues can be addressed and as soon all is done, the process can be continued from `Preparing a release`.
