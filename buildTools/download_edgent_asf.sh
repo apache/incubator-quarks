@@ -36,6 +36,8 @@ set -e
 setUsage "`basename $0` [--nquery] [--validate|--nvalidate] <version> [<rc-num>]"
 handleHelp "$@"
 
+BUILDTOOLS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 NQUERY=
 if [ "$1" == "--nquery" ]; then
   NQUERY="--nquery"; shift
@@ -92,7 +94,7 @@ function getSignedBundle() {
   mywget ${1}
   mywget ${1}.asc
   mywget ${1}.md5
-  mywget ${1}.sha
+  mywget ${1}.sha1
 }
 
 mkdir -p ${DST_BASE_DIR}
@@ -113,13 +115,13 @@ cd ${DST_VER_DIR}
 mywget ${URL}/LICENSE
 mywget ${URL}/README
 mywget ${URL}/RELEASE_NOTES
-getSignedBundle ${URL}/apache-edgent-${VER}-incubating-src.tgz
+getSignedBundle ${URL}/apache-edgent-${VER}-incubating-source-release.tar.gz
 
-mkdir binaries
-cd binaries
-URL=${URL}/binaries
-mywget ${URL}/LICENSE
-getSignedBundle ${URL}/apache-edgent-${VER}-incubating-bin.tgz
+#mkdir binaries
+#cd binaries
+#URL=${URL}/binaries
+#mywget ${URL}/LICENSE
+#getSignedBundle ${URL}/apache-edgent-${VER}-incubating-bin.tar.gz
 
 echo
 echo Done Downloading to ${DST_BASE_DIR}
@@ -139,6 +141,6 @@ echo
 echo "Verifying the source bundle signatures..."
 (set -x; $BUILDTOOLS_DIR/check_sigs.sh ${DST_VER_DIR})
 
-echo
-echo "Verifying the binary bundle signatures..."
-(set -x; $BUILDTOOLS_DIR/check_sigs.sh ${DST_VER_DIR}/binaries)
+#echo
+#echo "Verifying the binary bundle signatures..."
+#(set -x; $BUILDTOOLS_DIR/check_sigs.sh ${DST_VER_DIR}/binaries)

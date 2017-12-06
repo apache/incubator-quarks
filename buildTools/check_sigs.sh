@@ -55,7 +55,7 @@ function checkFile() {
     fi
     
     HASH=`shasum -p -a 512 "${FILE}" | awk '{print$1}'`
-    CHECK=`cat "${FILE}.sha"`
+    CHECK=`cat "${FILE}.sha1"`
 
     if [ "$HASH" != "$CHECK" ]
     then
@@ -69,7 +69,7 @@ function checkFile() {
 
 }
 
-for bundle in ${BUNDLE_DIR}/*.tgz
+for bundle in ${BUNDLE_DIR}/*.tar.gz
 do
     checkFile ${bundle}
 done
