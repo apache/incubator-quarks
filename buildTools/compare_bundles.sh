@@ -21,63 +21,52 @@
 
 set -e
 
-# Checks the signatures of all bundles in the build/release-edgent directory
-# Or checks the bundles in the specified directory
+# Checks that tar.gz and zip bundles have the exact same contents
 
 . `dirname $0`/common.sh
 
-setUsage "`basename $0` [bundle-directory]"
+setUsage "`basename $0` tgz-bundle1 zip-bundle2"
 handleHelp "$@"
 
 if [ $# -ge 1 ]
 then
-    BUNDLE_DIR=$1; shift
+    TGZ_BUNDLE=$1; shift
+fi
+if [ $# -ge 1 ]
+then
+    ZIP_BUNDLE=$1; shift
 fi
 
 noExtraArgs "$@"
 
-[ -d ${BUNDLE_DIR} ] || die "Bundle directory \"${BUNDLE_DIR}\" does not exist"
-
-function checkFile() {
-    FILE="$1"
+function compareBundles() {
+    TGZFILE="$1"
+    ZIPFILE="$2"
     echo
-    echo "Checking $FILE..."
+    echo "Unpacking and comparing bundles..."
+    echo "[1] ${TGZFILE}"
+    echo "[2] ${ZIPFILE}"
     
-    HASH=`md5 -q "${FILE}"`
-    CHECK=`cat "${FILE}.md5"`
-
-    if [ "$HASH" != "$CHECK" ]
-    then
-        echo "${FILE} MD5 incorrect"
-        exit 1;
-    else
-       echo "${FILE} MD5 OK";
+    set +e
+    DIR=`mktemp -d`
+    mkdir ${DIR}/bundle1 ${DIR}/bundle2
+    (cd ${DIR}/bundle1; set -x; tar zxf ${TGZFILE})
+    (cd ${DIR}/bundle2; set -x; unzip -q ${ZIPFILE})
+    (set -x; cd ${DIR}; diff -r -q bundle1 bundle2)
+    EC=$?
+    (cd ${DIR}; rm -rf bundle1 bundle2)
+    rmdir ${DIR}
+    set -e
+    if [ "${EC}" != 0 ] ; then
+        echo "FAILED: bundles have the different contents"
     fi
-    
-    HASH=`shasum -p -a 512 "${FILE}" | awk '{print$1}'`
-    CHECK=`cat "${FILE}.sha512"`
-
-    if [ "$HASH" != "$CHECK" ]
-    then
-        echo "${FILE} SHA incorrect"
-        exit 1;
-    else
-       echo "${FILE} SHA OK";
-    fi
-
-    gpg --verify "${FILE}.asc"
-
+    return ${EC}
 }
 
-for bundle in ${BUNDLE_DIR}/*.tar.gz
-do
-    checkFile ${bundle}
-done
+ABS_TGZ_BUNDLE=$(getAbsPath "${TGZ_BUNDLE}")
+ABS_ZIP_BUNDLE=$(getAbsPath "${ZIP_BUNDLE}")
 
-for bundle in ${BUNDLE_DIR}/*.zip
-do
-    checkFile ${bundle}
-done
+compareBundles ${ABS_TGZ_BUNDLE} ${ABS_ZIP_BUNDLE} 
 
 echo
-echo "SUCCESS: all checksum and signature files OK"
+echo "SUCCESS: bundles have the same contents"

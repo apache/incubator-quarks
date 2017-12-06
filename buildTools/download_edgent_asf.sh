@@ -94,7 +94,7 @@ function getSignedBundle() {
   mywget ${1}
   mywget ${1}.asc
   mywget ${1}.md5
-  mywget ${1}.sha1
+  mywget ${1}.sha512
 }
 
 mkdir -p ${DST_BASE_DIR}
@@ -116,6 +116,7 @@ mywget ${URL}/LICENSE
 mywget ${URL}/README
 mywget ${URL}/RELEASE_NOTES
 getSignedBundle ${URL}/apache-edgent-${VER}-incubating-source-release.tar.gz
+getSignedBundle ${URL}/apache-edgent-${VER}-incubating-source-release.zip
 
 #mkdir binaries
 #cd binaries
@@ -127,15 +128,19 @@ echo
 echo Done Downloading to ${DST_BASE_DIR}
 
 [ ${VALIDATE} == 0 ] && exit
-[ ${VALIDATE} == 1 ] || [ ${NQUERY} ] || confirm "Do you want to check the bundle signatures?" || exit
+[ ${VALIDATE} == 1 ] || [ ${NQUERY} ] || confirm "Do you want to check the bundle signatures and compare source bundles?" || exit
+
+cd ${ABS_BASE_DIR}
+
+echo
+echo "Verifying the tar.gz and zip have the same contents..."
+(set -x; $BUILDTOOLS_DIR/compare_bundles.sh ${DST_VER_DIR}/apache-edgent-${VER}-incubating-source-release.tar.gz  ${DST_VER_DIR}/apache-edgent-${VER}-incubating-source-release.zip)
 
 echo
 echo "If the following bundle gpg signature checks fail, you may need to"
 echo "import the project's list of signing keys to your keyring"
 echo "    $ gpg ${DST_BASE_DIR}/KEYS            # show the included keys"
 echo "    $ gpg --import ${DST_BASE_DIR}/KEYS"
-
-cd ${ABS_BASE_DIR}
 
 echo
 echo "Verifying the source bundle signatures..."

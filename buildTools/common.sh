@@ -63,6 +63,10 @@ function noExtraArgs() { # usage: noExtraArgs "$@"
   [ $# = 0 ] || usage "extra arguments"
 }
 
+function getAbsPath() { # $1: rel-or-abs-path 
+    echo "$(cd "$(dirname "$1")"; pwd)/$(basename "$1")"
+}
+
 function confirm () {  # [$1: question]
   while true; do
     # call with a prompt string or use a default                                                                                                                                                   
