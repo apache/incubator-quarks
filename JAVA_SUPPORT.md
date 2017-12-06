@@ -44,7 +44,7 @@ The [.platform] is as follows:
 * `.android` - Android
 
 For example:
-```
+```xml
 <!-- for Java8 -->
 <dependency>
   <groupId>org.apache.edgent</groupId>
@@ -83,77 +83,77 @@ and its features are supported in that environment.
 
 | Jar                                   | Java 8 SE | Java 7 SE | Android | Notes |
 |---------------------------------------|-----------|-----------|---------|-------|
-|edgent-api-execution-<ver>.jar         | yes       | yes       | yes     |       |
-|edgent-api-function-<ver>.jar          | yes       | yes       | yes     |       |
-|edgent-api-graph-<ver>.jar             | yes       | yes       | yes     |       |
-|edgent-api-oplet-<ver>.jar             | yes       | yes       | yes     |       |
-|edgent-api-topology-<ver>.jar          | yes       | yes       | yes     |       |
-|edgent-api-window-<ver>.jar            | yes       | yes       | yes     |       |
-|edgent-providers-development-<ver>.jar | yes       | yes       | no      | Uses JMX, For development only, not deployment |
-|edgent-providers-direct-<ver>.jar      | yes       | yes       | yes     |       |
-|edgent-providers-iot-<ver>.jar         | yes       | yes       | yes     |       |
-|edgent-runtime-appservice-<ver>.jar    | yes       | yes       | yes     |       |
-|edgent-runtime-etiao-<ver>.jar         | yes       | yes       | yes     |       |
-|edgent-runtime-jmxcontrol-<ver>.jar    | yes       | yes       | no      | Uses JMX |
-|edgent-runtime-jobregistry-<ver>.jar   | yes       | yes       | yes     |       |
-|edgent-runtime-jsoncontrol-<ver>.jar   | yes       | yes       | yes     |       |
-|edgent-spi-graph-<ver>.jar             | yes       | yes       | yes     |       |
-|edgent-spi-topology-<ver>.jar          | yes       | yes       | yes     |       |
+|edgent-api-execution-&lt;ver&gt;.jar         | yes       | yes       | yes     |       |
+|edgent-api-function-&lt;ver&gt;.jar          | yes       | yes       | yes     |       |
+|edgent-api-graph-&lt;ver&gt;.jar             | yes       | yes       | yes     |       |
+|edgent-api-oplet-&lt;ver&gt;.jar             | yes       | yes       | yes     |       |
+|edgent-api-topology-&lt;ver&gt;.jar          | yes       | yes       | yes     |       |
+|edgent-api-window-&lt;ver&gt;.jar            | yes       | yes       | yes     |       |
+|edgent-providers-development-&lt;ver&gt;.jar | yes       | yes       | no      | Uses JMX, For development only, not deployment |
+|edgent-providers-direct-&lt;ver&gt;.jar      | yes       | yes       | yes     |       |
+|edgent-providers-iot-&lt;ver&gt;.jar         | yes       | yes       | yes     |       |
+|edgent-runtime-appservice-&lt;ver&gt;.jar    | yes       | yes       | yes     |       |
+|edgent-runtime-etiao-&lt;ver&gt;.jar         | yes       | yes       | yes     |       |
+|edgent-runtime-jmxcontrol-&lt;ver&gt;.jar    | yes       | yes       | no      | Uses JMX |
+|edgent-runtime-jobregistry-&lt;ver&gt;.jar   | yes       | yes       | yes     |       |
+|edgent-runtime-jsoncontrol-&lt;ver&gt;.jar   | yes       | yes       | yes     |       |
+|edgent-spi-graph-&lt;ver&gt;.jar             | yes       | yes       | yes     |       |
+|edgent-spi-topology-&lt;ver&gt;.jar          | yes       | yes       | yes     |       |
 
 ## Connectors
 
 | Jar                                                 | Java 8 SE | Java 7 SE | Android | Notes |
 |-----------------------------------------------------|-----------|-----------|---------|-------|
-|edgent-connectors-common-<ver>.jar                   | yes       | yes       | yes     |       |
-|edgent-connectors-command-<ver>.jar                  | yes       | yes       |         |       |
-|edgent-connectors-csv-<ver>.jar                      | yes       | yes       |         |       |
-|edgent-connectors-file-<ver>.jar                     | yes       | yes       |         |       |
-|edgent-connectors-http-<ver>.jar                     | yes       | yes       | yes     |       |
-|edgent-connectors-iotf-<ver>.jar                     | yes       | yes       | yes     |       |
-|edgent-connectors-iot-<ver>.jar                      | yes       | yes       | yes     |       |
-|edgent-connectors-jdbc-<ver>.jar                     | yes       | yes       |         |       |
-|edgent-connectors-kafka-<ver>.jar                    | yes       | yes       |         |       |
-|edgent-connectors-mqtt-<ver>.jar                     | yes       | yes       |         |       |
-|edgent-connectors-pubsub-<ver>.jar                   | yes       | yes       | yes     |       |
-|edgent-connectors-serial-<ver>.jar                   | yes       | yes       |         |       |
-|edgent-connectors-websocket-<ver>.jar                | yes       | yes       |         |       |
-|edgent-connectors-websocket-base-<ver>.jar           | yes       | yes       |         |       |
-|edgent-connectors-websocket-jetty-<ver>.jar          | yes       | yes       |         |       |
-|edgent-connectors-websocket-misc-<ver>.jar           | yes       | yes       |         |       |
+|edgent-connectors-common-&lt;ver&gt;.jar                   | yes       | yes       | yes     |       |
+|edgent-connectors-command-&lt;ver&gt;.jar                  | yes       | yes       |         |       |
+|edgent-connectors-csv-&lt;ver&gt;.jar                      | yes       | yes       |         |       |
+|edgent-connectors-file-&lt;ver&gt;.jar                     | yes       | yes       |         |       |
+|edgent-connectors-http-&lt;ver&gt;.jar                     | yes       | yes       | yes     |       |
+|edgent-connectors-iotf-&lt;ver&gt;.jar                     | yes       | yes       | yes     |       |
+|edgent-connectors-iot-&lt;ver&gt;.jar                      | yes       | yes       | yes     |       |
+|edgent-connectors-jdbc-&lt;ver&gt;.jar                     | yes       | yes       |         |       |
+|edgent-connectors-kafka-&lt;ver&gt;.jar                    | yes       | yes       |         |       |
+|edgent-connectors-mqtt-&lt;ver&gt;.jar                     | yes       | yes       |         |       |
+|edgent-connectors-pubsub-&lt;ver&gt;.jar                   | yes       | yes       | yes     |       |
+|edgent-connectors-serial-&lt;ver&gt;.jar                   | yes       | yes       |         |       |
+|edgent-connectors-websocket-&lt;ver&gt;.jar                | yes       | yes       |         |       |
+|edgent-connectors-websocket-base-&lt;ver&gt;.jar           | yes       | yes       |         |       |
+|edgent-connectors-websocket-jetty-&lt;ver&gt;.jar          | yes       | yes       |         |       |
+|edgent-connectors-websocket-misc-&lt;ver&gt;.jar           | yes       | yes       |         |       |
 
 ## Applications
 | Jar                          | Java 8 SE | Java 7 SE | Android | Notes |
 |------------------------------|-----------|-----------|---------|-------|
-|edgent-apps-iot-<ver>.jar     | yes       | yes       | yes     |       | 
-|edgent-apps-runtime-<ver>.jar | yes       | yes       | yes     |       | 
+|edgent-apps-iot-&lt;ver&gt;.jar     | yes       | yes       | yes     |       | 
+|edgent-apps-runtime-&lt;ver&gt;.jar | yes       | yes       | yes     |       | 
 
 ### Analytics
 
 | Jar                               | Java 8 SE | Java 7 SE | Android | Notes |
 |-----------------------------------|-----------|-----------|---------|-------|
-|edgent-analytics-math3-<ver>.jar   | yes       | yes       |         |       |
-|edgent-analytics-sensors-<ver>.jar | yes       | yes       | yes     |       |
+|edgent-analytics-math3-&lt;ver&gt;.jar   | yes       | yes       |         |       |
+|edgent-analytics-sensors-&lt;ver&gt;.jar | yes       | yes       | yes     |       |
 
 ### Utilities
 
 | Jar                               | Java 8 SE | Java 7 SE | Android | Notes |
 |-----------------------------------|-----------|-----------|---------|-------|
-|edgent-utils-metrics-<ver>.jar     | yes       | yes       |         |       |
-|edgent-utils-streamscope-<ver>.jar | yes       | yes       |         |       |
+|edgent-utils-metrics-&lt;ver&gt;.jar     | yes       | yes       |         |       |
+|edgent-utils-streamscope-&lt;ver&gt;.jar | yes       | yes       |         |       |
 
 ### Development Console
 
 | Jar                               | Java 8 SE | Java 7 SE | Android | Notes |
 |-----------------------------------|-----------|-----------|---------|-------|
-|edgent-console-server-<ver>.jar    | yes       | yes       | no      | Uses JMX, Servlet |
-|edgent-console-servlets-<ver>.war  | yes       | yes       | no      | Uses JMX, Servlet |
+|edgent-console-server-&lt;ver&gt;.jar    | yes       | yes       | no      | Uses JMX, Servlet |
+|edgent-console-servlets-&lt;ver&gt;.war  | yes       | yes       | no      | Uses JMX, Servlet |
 
 ### Android
 
 | Jar                               | Java 8 SE | Java 7 SE | Android | Notes |
 |-----------------------------------|-----------|-----------|---------|-------|
-|edgent-android-topology-<ver>.jar  | no        | no        | yes     |       |
-|edgent-android-hardware-<ver>.jar  | no        | no        | yes     |       |
+|edgent-android-topology-&lt;ver&gt;.jar  | no        | no        | yes     |       |
+|edgent-android-hardware-&lt;ver&gt;.jar  | no        | no        | yes     |       |
 
 
 ## Java API Usage
