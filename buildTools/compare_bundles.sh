@@ -58,7 +58,7 @@ function compareBundles() {
     rmdir ${DIR}
     set -e
     if [ "${EC}" != 0 ] ; then
-        echo "FAILED: bundles have the different contents"
+        echo "FAILED: bundles have different contents"
     fi
     return ${EC}
 }

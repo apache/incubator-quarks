@@ -55,7 +55,7 @@ function checkFile() {
     fi
     
     HASH=`shasum -p -a 512 "${FILE}" | awk '{print$1}'`
-    CHECK=`cat "${FILE}.sha512"`
+    CHECK=`cat "${FILE}.sha"`
 
     if [ "$HASH" != "$CHECK" ]
     then
