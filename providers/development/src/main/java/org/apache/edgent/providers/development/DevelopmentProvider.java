@@ -44,7 +44,11 @@ import com.google.gson.JsonObject;
  * <UL>
  * <LI>
  * starting an embedded web-server providing the Edgent development console
- * that shows live graphs for running applications.
+ * that shows live graphs for running applications.  
+ * The console {@link HttpServer} is registered as a service with
+ * the provider and is accessible via {@link #getServices()}.
+ * The console's HTTP server starts with a random available port unless
+ * a port is specified via the {@code edgent.console.port} system property.
  * </LI>
  * <LI>
  * Creating a metrics registry with metrics registered

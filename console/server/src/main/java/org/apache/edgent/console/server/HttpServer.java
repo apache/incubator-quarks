@@ -19,6 +19,8 @@ under the License.
 
 package org.apache.edgent.console.server;
 
+import java.io.File;
+
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
@@ -27,8 +29,12 @@ import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.webapp.WebAppContext;
 
-import java.io.File;
-
+/**
+ * The "Edgent Console".
+ * <p>
+ * The Console's HTTP server starts with a random available port unless
+ * a port is specified via the {@code edgent.console.port} system property. 
+ */
 public class HttpServer {
 
 	/**
@@ -41,8 +47,8 @@ public class HttpServer {
 	 * The static class that creates the singleton HttpServer object.
 	 */
     private static class HttpServerHolder {
-        // use port 0 so we know the server will always start
-        private static final Server JETTYSERVER = new Server(0);
+        // use port 0 if system prop not set, so we know the server will always start
+        private static final Server JETTYSERVER = new Server(Integer.getInteger("edgent.console.port", 0));
         private static final WebAppContext WEBAPP = new WebAppContext();
         private static final HttpServer INSTANCE = new HttpServer();
         private static boolean INITIALIZED = false;
