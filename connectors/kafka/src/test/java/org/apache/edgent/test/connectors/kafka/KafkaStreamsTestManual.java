@@ -80,8 +80,8 @@ import org.junit.Test;
  * }</pre>
  */
 public class KafkaStreamsTestManual extends ConnectorTestBase {
-    private static final int PUB_DELAY_MSEC = 4*1000;
-    private static final int SEC_TIMEOUT = 10;
+    private static final int PUB_DELAY_MSEC = 15*1000; // have seen 12sec 1st test's consumer startup delay
+    private static final int SEC_TIMEOUT = 20;
     private final String BASE_GROUP_ID = "kafkaStreamsTestGroupId";
     private final String uniq = simpleTS();
     private final String msg1 = "Hello";

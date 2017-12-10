@@ -157,6 +157,7 @@ public class KafkaConsumerConnector extends KafkaConnector {
     }
     
     synchronized void start(KafkaSubscriber<?> subscriber) {
+        trace.info("{} starting consumer", id());
         Map<String,Integer> topicCountMap = new HashMap<>();
         int threadsPerTopic = 1;
         int totThreadCnt = 0;
@@ -176,9 +177,10 @@ public class KafkaConsumerConnector extends KafkaConnector {
             String topic = entry.getKey();
             int threadNum = 0;
             for (KafkaStream<byte[],byte[]> stream : entry.getValue()) {
+                final int fThreadNum = threadNum++; 
                 executor.submit(() -> {
                     try {
-                        trace.info("{} started consumer thread {} for topic:{}", id(), threadNum, topic);
+                        trace.info("{} started consumer thread {} for topic:{}", id(), fThreadNum, topic);
                         ConsumerIterator<byte[],byte[]> it = stream.iterator();
                         while (it.hasNext()) {
                             subscriber.accept(it.next());
@@ -193,7 +195,7 @@ public class KafkaConsumerConnector extends KafkaConnector {
                             trace.error("{} consumer for topic:{}. got exception", id(), topic, t);
                     }
                     finally {
-                        trace.info("{} consumer thread {} for topic:{} exiting.", id(), threadNum, topic);
+                        trace.info("{} consumer thread {} for topic:{} exiting.", id(), fThreadNum, topic);
                     }
                 });
             }
