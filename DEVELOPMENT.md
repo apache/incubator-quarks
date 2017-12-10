@@ -451,9 +451,11 @@ Once kafka/zookeeper are running you can run the tests and samples:
 #### run the kafka tests
 ./mvnw -pl connectors/kafka test '-Dtest=**/*Manual'
 
+# hint: to run just a single test case: '-Dtest=**/KafkaStreamsTestManual#testSimple'
+
 #### run the sample
 (cd samples; ./mvnw package -DskipTests)  # build if not already done
-cd samples/scripts/connectors/kafka
+cd samples/connectors/scripts/kafka
 cat README
 ./runkafkasample.sh sub
 ./runkafkasample.sh pub
