@@ -84,6 +84,14 @@
           </execution>
         </executions>
       </plugin>
+	 <plugin>
+	    <groupId>org.apache.maven.plugins</groupId>
+	    <artifactId>maven-surefire-plugin</artifactId>
+	    <configuration>
+	        <!-- needed because of HttpServer impl and HttpServerPortTest -->
+	        <reuseForks>false</reuseForks>
+	    </configuration>
+	  </plugin>
    </plugins>
   </build>
 
