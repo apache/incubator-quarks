@@ -112,7 +112,6 @@ fi
 
 mkdir -p ${DST_VER_DIR}
 cd ${DST_VER_DIR}
-mywget ${URL}/LICENSE
 mywget ${URL}/README
 mywget ${URL}/RELEASE_NOTES
 getSignedBundle ${URL}/apache-edgent-${VER}-incubating-source-release.tar.gz
@@ -121,7 +120,6 @@ getSignedBundle ${URL}/apache-edgent-${VER}-incubating-source-release.zip
 #mkdir binaries
 #cd binaries
 #URL=${URL}/binaries
-#mywget ${URL}/LICENSE
 #getSignedBundle ${URL}/apache-edgent-${VER}-incubating-bin.tar.gz
 
 echo
