@@ -94,7 +94,7 @@ function getSignedBundle() {
   mywget ${1}
   mywget ${1}.asc
   mywget ${1}.md5
-  mywget ${1}.sha
+  mywget ${1}.sha512
 }
 
 mkdir -p ${DST_BASE_DIR}
