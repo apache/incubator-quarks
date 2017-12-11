@@ -69,7 +69,7 @@ After changing to the release version, the plugin does a full build with all tes
 In this phase the previously prepared release is built, tested and deployed to the remote repo configured in the pom.
 To be 100% sure the build doesn't require any files eventually omitted from source control, the `release:perform` step checks out the previously created tag to a directory `target/checkout` and runs the build there.
 
-    mvn release:perform -DreleaseProfiles=platform-android,platform-java7,distribution
+    mvn release:perform -DreleaseProfiles=platform-android,platform-java7
 
 After this step is successful, all artifacts are located in a so-called `staging repository` at https://repository.apache.org/
 

@@ -37,7 +37,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
-          <descriptor>src/assembly/distribution.xml</descriptor>
         </configuration>
         <executions>
           <execution>
@@ -46,6 +45,11 @@
             <goals>
               <goal>single</goal>
             </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>src/assembly/distribution.xml</descriptor>
+              </descriptors>
+            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -63,6 +67,14 @@
             <phase>none</phase>
           </execution>
         </executions>
+      </plugin>
+      <!-- We don't want to deploy the distributions to Maven -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
       </plugin>
     </plugins>
   </build>
