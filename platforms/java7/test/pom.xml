@@ -36,5 +36,18 @@
     <module>fvtiot</module>
     <module>svt</module>
   </modules>
+  
+  <build>
+    <plugins>
+      <!-- We don't want to deploy this project to Maven -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
