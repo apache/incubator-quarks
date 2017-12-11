@@ -31,7 +31,7 @@ import org.junit.Test;
  * This is a separate test because the HttpServer implementation
  * precludes changing the console port within a jvm instance.
  */
-public class HttpServerTestPort {
+public class HttpServerPortTest {
 	
 	  int getAvailablePort() throws IOException {
 	    try (Socket s = new Socket()) {
@@ -41,7 +41,7 @@ public class HttpServerTestPort {
 	  }
 
     @Test
-    public void overridePortNumber() throws Exception {
+    public void testOverridePortNumber() throws Exception {
       // count on the OS not immediately reusing an available local port.
     	int port = getAvailablePort();
       int port2 = getAvailablePort();
