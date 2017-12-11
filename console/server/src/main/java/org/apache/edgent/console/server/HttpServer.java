@@ -28,6 +28,8 @@ import org.eclipse.jetty.server.handler.AllowSymLinkAliasChecker;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The "Edgent Console".
@@ -36,6 +38,8 @@ import org.eclipse.jetty.webapp.WebAppContext;
  * a port is specified via the {@code edgent.console.port} system property. 
  */
 public class HttpServer {
+
+  private static final Logger logger = LoggerFactory.getLogger(HttpServer.class);
 
 	/**
 	 * The only constructor.  A private no-argument constructor.  Called only once from the static HttpServerHolder class.
@@ -69,6 +73,7 @@ public class HttpServer {
      */
     public static HttpServer getInstance() throws Exception {
         if (!HttpServerHolder.INITIALIZED) {
+            logger.info("initializing");
             HttpServerHolder.WEBAPP.setContextPath("/console");
             ServletContextHandler contextJobs = new ServletContextHandler(ServletContextHandler.SESSIONS);
             contextJobs.setContextPath("/jobs");
