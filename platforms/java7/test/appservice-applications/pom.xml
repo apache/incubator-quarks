@@ -49,7 +49,14 @@
                   <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
-                  <excludes>META-INF/*,META-INF/maven/**</excludes>
+                  <!--
+                      We can't use the typical <excludes>META-INF/**</excludes>,
+                      that avoids getting other inappropriate metadata like
+                      the pom info and DEPENDENCIES,
+                      because we need to get the "service" metadata and impl
+                      from the j8 jar.
+                  -->
+                  <includes>META-INF/services/**,**/*.class</includes>
                 </artifactItem>
               </artifactItems>
             </configuration>
@@ -74,16 +81,6 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
-          <classesDirectory>${project.build.directory}/classes</classesDirectory>
-          <includes>
-            <include>META-INF/services/**</include>
-            <include>org/apache/edgent/test/topology/services/*.class</include>
-          </includes>
-        </configuration>
       </plugin>
       <!-- We don't want to deploy this project to Maven -->
       <plugin>
