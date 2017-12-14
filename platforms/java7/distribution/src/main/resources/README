@@ -1,0 +1,12 @@
+This bundle includes a number of artifacts with separate
+copyright notices and license terms.  Your use of an artifact
+is subject to that artifact’s licensing terms and conditions.
+
+The Apache Edgent artifacts (everything in lib) all have the
+license “Apache License Version 2.0”.
+
+Edgent’s dependent artifacts in “ext” have all been evaluated
+to be compatible with Edgent’s license.
+
+A bundled artifact's advertised license information may be
+found in the DEPENDENCIES file in this bundle.

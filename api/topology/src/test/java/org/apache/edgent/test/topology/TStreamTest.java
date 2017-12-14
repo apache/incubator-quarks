@@ -37,6 +37,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.edgent.topology.TSink;
@@ -135,7 +136,7 @@ public abstract class TStreamTest extends TopologyAbstractTest {
     /**
      * Test Peek. This will only work with an embedded setup.
      * 
-     * @throws Exception
+     * @throws Exception on failure
      */
     @Test
     public void testPeek() throws Exception {
@@ -600,7 +601,7 @@ public abstract class TStreamTest extends TopologyAbstractTest {
     /**
      * Test Union with itself.
      * 
-     * @throws Exception
+     * @throws Exception on failure
      */
     @Test
     public void testUnionWithSelf() throws Exception {
@@ -745,14 +746,26 @@ public abstract class TStreamTest extends TopologyAbstractTest {
                 Topology t = newTopology();
                 TStream<String> s = t.strings("a", "b", "c", "d", "e", "f", "g", "h");
                 // Throw on the 8th tuple
-                s.sink((tuple) -> { if ("h".equals(tuple)) throw new RuntimeException("Expected Test Exception");});
+                s.sink((tuple) -> { if ("h".equals(tuple)) throw new RuntimeException("MTWE Expected Test Exception");});
                 // Expect 7 tuples out of 8
                 Condition<Long> tc = t.getTester().tupleCount(s, 7);
-                complete(t, tc);
+//                complete(t, tc);
+                try {
+                    complete(t, tc);
+                } catch (Exception e) {
+                    System.err.println("MTWE complete() threw e:"+e);
+                    throw e;
+                }
                 return true;
             });
         }
-        waitForCompletion(completer, executions);
+//        waitForCompletion(completer, executions);
+        try {
+            waitForCompletion(completer, executions);
+        } catch (Exception e) {
+            System.err.println("MTWE waitForCompletion() threw e:"+e);
+            throw e;
+        }
     }
     
     /**
@@ -762,24 +775,58 @@ public abstract class TStreamTest extends TopologyAbstractTest {
     @Test
     public void testMultiTopologyPollWithError() throws Exception {
 
+        /*
+         * It's unclear exactly what this test is supposed to achieve
+         * (hence unclear how to ensure its achieving it).
+         * Is it just trying to verify that a failure in one topology/job
+         * doesn't affect the execution of another?
+         * 
+         * The way the test is written I'm not sure there's any guarantee
+         * that the "Expected Exception" will be generated the appropriate
+         * number of times.
+         * Is it possible the completion condition could get evaluated
+         * true (having seen the 7th tuple) before the 8th tuple is generated
+         * and processed by the sink fn raising the exception, resulting in
+         * the job being closed... before the 8th is generated and processed?
+         * I'm also seeing more "Expected Test Exception" traces than I expected.
+         * 
+         * Annotate this and the MPWE test a bit to help understand what we're seeing
+         * in the output.
+         */
         int executions = 4;
         ExecutorCompletionService<Boolean> completer = new ExecutorCompletionService<>(
                 Executors.newFixedThreadPool(executions));
+        final AtomicInteger excCnt = new AtomicInteger();
         for (int i = 0; i < executions; i++) {
             completer.submit(() -> {
                 Topology t = newTopology();
                 AtomicLong n = new AtomicLong(0);
                 TStream<Long> s = t.poll(() -> n.incrementAndGet(), 10, TimeUnit.MILLISECONDS);
                 // Throw on the 8th tuple
-                s.sink((tuple) -> { if (8 == n.get()) throw new RuntimeException("Expected Test Exception");});
+                s.sink((tuple) -> { if (8 == n.get()) throw new RuntimeException("MTPWE Expected Test Exception # "+excCnt.incrementAndGet());});
                 // Expect 7 tuples out of 8
                 Condition<Long> tc = t.getTester().tupleCount(s, 7);
-                complete(t, tc);
+//              complete(t, tc);
+                try {
+                    complete(t, tc);
+                } catch (Exception e) {
+                    // we're receiving the CancellationException here (and it percolates through waitForCompletion
+                    System.err.println("MTPWE complete() threw e:"+e);
+                    e.printStackTrace();
+                    throw e;
+                }
                 return true;
             });
         }
-        waitForCompletion(completer, executions);
-    }
+//      waitForCompletion(completer, executions);
+        try {
+            waitForCompletion(completer, executions);
+        } catch (Exception e) {
+            System.err.println("MTPWE waitForCompletion() threw e:"+e);
+            e.printStackTrace();
+            throw e;
+        }
+   }
     
     @Test
     public void testJoinWithWindow() throws Exception{
@@ -853,15 +900,29 @@ public abstract class TStreamTest extends TopologyAbstractTest {
         Condition<Long> tc = t.getTester().tupleCount(joinsHappened, 100);
         complete(t, tc);      
     }
+    
+    private static long getTimeoutValue(long timeout, TimeUnit units) {
+        // try to protect the tests from timing out prematurely
+        // in the face of overloaded/slow build/test servers.
+        if (Boolean.getBoolean("edgent.build.ci")) {
+            // could do something like base the decision of the current value of timeout and/or units
+            return timeout * 2;  // try to minimize
+        }
+        return timeout;
+    }
 
     private void waitForCompletion(ExecutorCompletionService<Boolean> completer, int numtasks) throws ExecutionException {
         int remainingTasks = numtasks;
+        long getFutureTimeout = 4;
+        TimeUnit getFutureTimeoutUnits = TimeUnit.SECONDS;
+        getFutureTimeout = getTimeoutValue(getFutureTimeout, getFutureTimeoutUnits);
         while (remainingTasks > 0) {
             try {
-                Future<Boolean> completed = completer.poll(4, TimeUnit.SECONDS);
+                Future<Boolean> completed = completer.poll(getFutureTimeout, getFutureTimeoutUnits);
                 if (completed == null) {
-                    System.err.println("Completer timed out");
-                    throw new RuntimeException(new TimeoutException());
+                    String msg = String.format("Completer timed out: %d%s timeout", getFutureTimeout, getFutureTimeoutUnits.toString());
+                    System.err.println(msg);
+                    throw new RuntimeException(new TimeoutException(msg));
                 }
                 else {
                     completed.get();

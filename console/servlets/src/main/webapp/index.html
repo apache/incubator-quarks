@@ -1,0 +1,134 @@
+<!--
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xml:lang="en-us">
+<head>
+    <title>Apache Edgent Console</title>
+
+    <link rel="stylesheet" type="text/css" href="js/ext/jquery-ui/1.11.4/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="js/ext/jquery-ui/1.11.4/jquery-ui.theme.min.css">
+    <link rel="stylesheet" type="text/css" href="js/ext/jquery-ui/1.11.4/jquery-ui.structure.min.css">
+    <link rel="stylesheet" type="text/css" href="resources/css/main.css">
+    <link rel="stylesheet" type="text/css" href="resources/css/metrics.css">
+    <link rel="shortcut icon" href="resources/images/favicon.png"/>
+</head>
+
+<body>
+<div role="main">
+    <div style='margin-left:15px; float:left;'>
+        <img height='81' width='178' tabindex=0 alt="Apache Edgent logo" title="Apache Edgent logo"
+             src="resources/images/apache_edgent.png"/>
+    </div>
+    <div style='float:left;margin-top: 30px; font-size: 1.2em; margin-left: 320px;'>
+        <label tabindex=0>Topology Graph</label>
+    </div>
+    <div class="topControls" style='margin-left: 30px;clear:both;'>
+        <label for="jobs" class="jobsLabel">Job:</label>
+        <select id="jobs"></select>
+    </div>
+    <div id='stateImg' tabindex=0
+         style="float:left; display:none; margin-top: 10px; margin-left: 5px; margin-right: 10px;">
+        <div class="hidden">Job state, press the Enter key to display the job state information in a table</div>
+        <img width="28" height="28" alt="job state" src="resources/images/state.png"/>
+    </div>
+    <div class="topControls">
+        <label for="layers" class="layersLabel">View by:</label>
+        <select title="view by" id="layers">
+            <option value="static">Static flow</option>
+            <option value="flow">Tuple count</option>
+            <option value="opletColor">Oplet kind</option>
+        </select>
+
+        <div id="tagsDiv" style="visibility:hidden;margin-top: 5px;">
+            <input type='checkbox' id='showTags' checked/>
+            <label for='showTags'>Show tags:</label>
+            <div>
+
+                <input type='checkbox' id='showAllTags' checked/>
+                <label for='showAllTags'>Show all tags:</label>
+                <button id="tagDialogBtn" type='button' disabled>Select individual tags ...</button>
+            </div>
+            <div id="dialog" title="Select one or more tags">
+                <label for="tags" class="tagsLabel">Tag:</label>
+                <select id="tags" multiple></select>
+            </div>
+        </div>
+    </div>
+    <div class="topControls">
+        <label class="refreshLabel" tabindex=0>Refresh interval:</label>
+        <input aria-label='Refresh interval' name='refreshInterval' id="refreshInterval" style='width: 40px;'
+               type="number" min="3" max="20" step="1" value="5"/>
+        <label title="seconds" tabindex=0 style='margin-left: 5px; margin-right: 10px;'>seconds</label>
+        <button id="toggleTimer" title='Pause graph' type="button">Pause graph</button>
+    </div>
+
+    <div style='width: 370px; margin-left: 30px; clear:both;'>
+        <div id="showAll" tabindex=0>
+            <div>View all oplet properties</div>
+            <div style='font-size: 0.95em'>(opens a new window)</div>
+        </div>
+        <div id="graphLegend" style='height: 600px; width: 340px;'></div>
+    </div>
+    <div id="chart" style="float:right; margin-right: 100px; margin-top: -600px;">
+        <div id="loading">Loading graph ...</div>
+    </div>
+
+
+    <div id="metricsDiv" style="clear:both;display:none;margin-left: 30px;">
+        <div>
+            <label class="metricsTitle">Metrics</label>
+        </div>
+        <div class="metricsControls">
+            <label for='metrics' class="metricsLabel">Metrics:</label>
+            <select id="metrics"></select>
+            <span id="rateUnit"></span>
+        </div>
+
+        <div class="metricsControls">
+            <label for='mChartType' class="chartTypeLabel">Chart type:</label>
+            <select id="mChartType">
+                <option value='barChart' selected>Bar chart</option>
+                <option value='lineChart' selected>Line chart</option>
+            </select>
+        </div>
+
+        <div class="metricsControls">
+            <span id="noLineChartWarning" style="visibility:hidden;" class="warningLabel">*Line charts are not available when you select a metric containing multiple oplets</span>
+        </div>
+        <div id="showMetricsTable" tabindex=0 style='clear:left; padding-top: 10px; width: 150px;'>
+            <div class='hidden'>Show metrics in table. Press the Enter key to display available metrics in a table. To
+                close the dialog once it is open, press the Escape key.
+            </div>
+            <img width="150" height="38" alt='show table metrics' src="resources/images/show_metrics_in_table.png"/>
+        </div>
+
+        <div id="metricsChart" style="clear:left;"></div>
+    </div>
+</div>
+<script src="js/ext/d3/3.3.9/d3.min.js" charset="utf-8" type="application/javascript"></script>
+<script src="js/ext/jquery/1.11.2/jquery.min.js" type="application/javascript"></script>
+<script src="js/ext/jquery-ui/1.11.4/jquery-ui.min.js" type="application/javascript"></script>
+<script src="js/ext/d3-plugins-sankey/1.1.0/sankey.js" type="application/javascript"></script>
+<script src="js/ext/d3.legend/d3.legend.js" type="application/javascript"></script>
+<script src="js/streamtags.js" type="application/javascript"></script>
+<script src="js/graph.js" type="application/javascript"></script>
+<script src="js/metrics.js" type="application/javascript"></script>
+
+<script src="js/index.js" type="application/javascript"></script>
+</body>
+</html>

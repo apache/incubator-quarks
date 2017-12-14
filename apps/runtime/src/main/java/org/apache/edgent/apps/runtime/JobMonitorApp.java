@@ -160,7 +160,7 @@ public class JobMonitorApp {
             // Wait for the job to complete
             long startWaiting = System.currentTimeMillis();
             for (long waitForMillis = Controls.JOB_HOLD_AFTER_CLOSE_SECS * 1000;
-                    waitForMillis < 0;
+                    waitForMillis >= 0;
                     waitForMillis -= 100) {
                 if (jobMbean.getCurrentState() == Job.State.CLOSED)
                     break;

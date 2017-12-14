@@ -1,0 +1,128 @@
+#!/bin/sh
+
+#
+#  Licensed to the Apache Software Foundation (ASF) under one or more
+#  contributor license agreements.  See the NOTICE file distributed with
+#  this work for additional information regarding copyright ownership.
+#  The ASF licenses this file to You under the Apache License, Version 2.0
+#  (the "License"); you may not use this file except in compliance with
+#  the License.  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+
+# The test's key and trust stores are created as follows.
+# They have the password "passw0rd".
+
+# general useful info on keytool & OpenSSL
+# https://www.eclipse.org/jetty/documentation/9.3.0.v20150612/configuring-ssl.html
+
+set -x
+
+# ############################################
+echo ==============  server key and cert setup
+
+# create server key&certificate and serverKeyStore.jks
+keytool -genkey -validity 7300 -alias default -keyalg RSA \
+     -keypass passw0rd -storepass passw0rd -keystore serverKeyStore.jks <<xxEOFxx
+Test Server default
+IBM
+IBM
+Littleton
+MA
+US
+yes
+xxEOFxx
+
+# export server cert to server.cer
+keytool -export -alias default -file server.cer -storepass passw0rd -keystore serverKeyStore.jks
+
+# create clientTrustStore.jks and import server cert
+keytool -import -v -trustcacerts -alias default -file server.cer \
+     -keystore clientTrustStore.jks -storepass passw0rd <<xxEOFxx
+yes
+xxEOFxx
+
+# ############################################
+echo ==============  client "default" key and cert setup
+
+# create client certificate and clientKeyStore.jks
+keytool -genkey -validity 7300 -alias default -keyalg RSA \
+     -keypass passw0rd -storepass passw0rd -keystore clientKeyStore.jks <<xxEOFxx
+Test Client default
+IBM
+IBM
+Littleton
+MA
+US
+yes
+xxEOFxx
+
+
+# export client cert to client.cer
+keytool -export -alias default -storepass passw0rd -file client.cer -keystore clientKeyStore.jks
+
+# create serverTrustStore.jks and import client cert
+keytool -import -v -trustcacerts -alias default -file client.cer \
+     -keystore serverTrustStore.jks -storepass passw0rd <<xxEOFxx
+yes
+xxEOFxx
+
+# --------------------------------------------
+# create 2nd client certificate with different alias (for cert selection testing)
+# don't add to server's trust store
+echo ==============  client "my2ndcert" key and cert setup
+keytool -genkey -validity 7300 -alias my2ndcert -keyalg RSA \
+     -keypass passw0rd -storepass passw0rd -keystore clientKeyStore.jks <<xxEOFxx
+Test Client my2ndcert
+IBM
+IBM
+Littleton
+MA
+US
+yes
+xxEOFxx
+
+
+# --------------------------------------------
+# create 3rd client certificate with different alias (for cert selection testing)
+echo ==============  client "my3rdcert" key and cert setup
+keytool -genkey -validity 7300 -alias my3rdcert -keyalg RSA \
+     -keypass passw0rd -storepass passw0rd -keystore clientKeyStore.jks <<xxEOFxx
+Test Client my3rdcert
+IBM
+IBM
+Littleton
+MA
+US
+yes
+xxEOFxx
+
+
+# export client cert to client.cer
+keytool -export -alias my3rdcert -storepass passw0rd -file client.cer -keystore clientKeyStore.jks
+
+# import client cert to server truststore
+keytool -import -v -trustcacerts -alias my3rdcert -file client.cer \
+     -keystore serverTrustStore.jks -storepass passw0rd <<xxEOFxx
+yes
+xxEOFxx
+
+# show store contents
+echo ==============  serverKeyStore
+keytool -list -storepass passw0rd -keystore serverKeyStore.jks
+echo ==============  clientTrustStore
+keytool -list -storepass passw0rd -keystore clientTrustStore.jks
+echo ==============  clientKeyStore
+keytool -list -storepass passw0rd -keystore clientKeyStore.jks
+echo ==============  serverTrustStore
+keytool -list -storepass passw0rd -keystore serverTrustStore.jks
+
+rm -f server.cer client.cer
+

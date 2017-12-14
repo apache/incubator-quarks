@@ -20,6 +20,7 @@ package org.apache.edgent.test.connectors.jdbc;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 
 import java.lang.reflect.Method;
@@ -32,43 +33,46 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 import javax.sql.DataSource;
 
 import org.apache.edgent.connectors.jdbc.JdbcStreams;
+import org.apache.edgent.function.Predicate;
 import org.apache.edgent.test.connectors.common.ConnectorTestBase;
 import org.apache.edgent.topology.TSink;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.plumbing.PlumbingStreams;
+import org.apache.edgent.topology.tester.Condition;
 import org.junit.Test;
 
 /**
  * JdbcStreams connector tests.
  * <p>
  * The tests use Apache Embedded Derby as the backing dbms.
- * The Oracle JDK includes Derby in $JAVA_HOME/db.
- * Manually install Derby for other JDKs if required.
- * Arrange for the classpath to be configured by one of:
- * <ul>
- * <li>manually add derby.jar to the classpath</li>
- * <li>set the DERBY_HOME environment variable.  connectors/jdbc/build.gradle adds 
- *     $DERBY_HOME/lib/derby.jar to the classpath when running the tests.
- *     e.g., try
- *     <ul>
- *       <li> export DERBY_HOME=$JAVA_HOME/db</li>
- *       <li> OSX: export DERBY_HOME=`/usr/libexec/java_home`/db
- *     </ul>
- *     </li>
- * </ul>
+ * The connectors/jdbc/pom.xml includes a "test" dependency on derby 
+ * so execution of the test via maven automatially retrieves and adds
+ * the derby jar to the classpath.  
+ * The pom also defines jdbcStreamsTest.tmpdir and redirects the derby.log location.
+ * <p>
+ * If running the test from Eclipse you may have to manually add derby.jar
+ * to the test's classpath.
+ * The Oracle JDK includes Derby in $JAVA_HOME/db/lib/derby.jar.
+ * <p>
  * The tests are "skipped" if the dbms's jdbc driver can't be found.
  */
 public class JdbcStreamsTest  extends ConnectorTestBase {
     
     private static final int SEC_TIMEOUT = 10;
-    private final static String DB_NAME = "JdbcStreamsTestDb";
-    private final static String USERNAME = System.getProperty("user.name");
+    private final static String TMPDIR_PROPERTY_NAME = "jdbcStreamsTest.tmpdir";
+    private final static String TMPDIR = System.getProperty(TMPDIR_PROPERTY_NAME, "");
+    static {
+        if (TMPDIR.equals("")) {
+            throw new RuntimeException("System property \""+TMPDIR_PROPERTY_NAME+"\" is not set.");
+        }
+    }
+    private final static String DB_NAME = TMPDIR + "/JdbcStreamsTestDb";
+    private final static String USERNAME = "test"; // can't contain "."
     private final static String PW = "none";
     private static final List<Person> personList = new ArrayList<>();
     static {
@@ -124,7 +128,7 @@ public class JdbcStreamsTest  extends ConnectorTestBase {
     {
         // Avoid a compile-time dependency to the jdbc driver.
         // At runtime, require that the classpath can find it.
-        // e.g., build.xml adds $DERBY_HOME/lib/derby.jar to the test classpath
+        // e.g., pom.xml adds derby.jar to the test classpath
 
         String DERBY_DATA_SOURCE = "org.apache.derby.jdbc.EmbeddedDataSource";
     
@@ -134,9 +138,6 @@ public class JdbcStreamsTest  extends ConnectorTestBase {
         }
         catch (ClassNotFoundException e) {
             String msg = "Fix the test classpath. ";
-            if (System.getenv("DERBY_HOME") == null) {
-                msg += "DERBY_HOME not set. ";
-            }
             msg += "Class not found: "+e.getLocalizedMessage();
             System.err.println(msg);
             assumeTrue(false);
@@ -236,15 +237,18 @@ public class JdbcStreamsTest  extends ConnectorTestBase {
         return rcvdPerson;
     }
     
-    private static java.util.function.Predicate<Person> newOddIdPredicate() {
+    private static Predicate<Person> newOddIdPredicate() {
         return (person) -> person.id % 2 != 0;
     }
     
-    private List<String> expectedPersons(java.util.function.Predicate<Person> predicate, List<Person> persons) {
-        return persons.stream()
-                .filter(predicate)
-                .map(person -> person.toString())
-                .collect(Collectors.toList());
+    private List<String> expectedPersons(Predicate<Person> predicate, List<Person> persons) {
+        List<String> expPersons = new ArrayList<>();
+        for (Person p : persons) {
+            if (predicate.test(p)) {
+                expPersons.add(p.toString());
+            }
+        }
+        return expPersons;
     }
 
     @Test
@@ -462,6 +466,7 @@ public class JdbcStreamsTest  extends ConnectorTestBase {
                         executionExcCnt.incrementAndGet();
                         return;
                     }
+                    // don't ever expect to get here in this case
                     resultSet.next();
                     int id = resultSet.getInt("id");
                     String firstName = resultSet.getString("firstname");
@@ -473,10 +478,21 @@ public class JdbcStreamsTest  extends ConnectorTestBase {
                 );
         TStream<String> rcvd = rcvdPerson.map(person -> person.toString());
         
+        // Await completion on having received the correct number of exception.
+        // Then also verify that no non-exceptional results were received.
+        Condition<Object> tc = new Condition<Object>() {
+            public boolean valid() {
+                return executionExcCnt.get() == expectedExcCnt;
+            }
+            public Object getResult() { return executionExcCnt.get(); }
+        };
+        Condition<List<String>> rcvdContents = t.getTester().streamContents(rcvd, expected.toArray(new String[0]));
+        
         rcvd.sink(tuple -> System.out.println(
                 String.format("%s rcvd: %s", t.getName(), tuple)));
-        completeAndValidate("", t, rcvd, SEC_TIMEOUT, expected.toArray(new String[0]));
+        complete(t, tc, SEC_TIMEOUT, TimeUnit.SECONDS);
         assertEquals("executionExcCnt", expectedExcCnt, executionExcCnt.get());
+        assertTrue("rcvd: "+rcvdContents.getResult(), rcvdContents.valid());
     }
     
     @Test

@@ -46,7 +46,7 @@ public class PubSubTest {
     /**
      * Test without a pub-sub service so no
      * cross job connections will be made.
-     * @throws Exception
+     * @throws Exception on failure
      */
     @Test
     public void testNoService() throws Exception {

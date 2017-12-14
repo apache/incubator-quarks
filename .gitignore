@@ -1,13 +1,14 @@
 *.class
 
+# Local developers toolchain
+/toolchains-local.xml
+
+# Exclude the maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.jar
+
 # More generated artifacts
-/target
-/test/svt/lib
-/release-edgent
+target/
 /reports
-/.gradle/
-build/
-/externalJars
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -22,3 +23,11 @@ hs_err_pid*
 # IntelliJ Idea
 .idea/
 *.iml
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Emacs
+*~

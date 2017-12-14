@@ -28,7 +28,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.math3.util.Pair;
 import org.apache.edgent.analytics.math3.Aggregations;
 import org.apache.edgent.analytics.math3.MvResultMap;
 import org.apache.edgent.analytics.math3.ResultMap;

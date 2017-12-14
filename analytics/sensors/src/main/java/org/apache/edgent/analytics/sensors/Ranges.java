@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import org.apache.edgent.analytics.sensors.Range.BoundType;
+import org.apache.edgent.function.Predicate;
 
 /**
  * Convenience functions and utility operations on {@link Range}.
@@ -133,6 +134,23 @@ public final class Ranges {
      */
     public static  <T extends Comparable<?>> Range<T> singleton(T endpoint) {
         return Range.range(endpoint, BoundType.CLOSED, endpoint, BoundType.CLOSED);
+    }
+    
+    /**
+     * Create a Predicate whose {@code test(v)} behaves like {@code ! range.test(v)}
+     * <p>
+     * This can be useful in a situation such as filtering to include only values
+     * that are outside of a range.
+     * <pre>{@code
+     *     TStream<?> outsideRange = readings.filter(Ranges.outsideOf(Ranges.open(10,20)));
+     * }</pre>
+     * 
+     * @param <T> Endpoint type
+     * @param range the Range
+     * @return the Predicate
+     */
+    public static <T extends Comparable<?>> Predicate<T> outsideOf(Range<T> range) {
+        return t -> ! range.test(t);
     }
     
     /**

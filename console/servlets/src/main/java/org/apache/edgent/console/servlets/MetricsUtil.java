@@ -19,7 +19,6 @@ under the License.
 package org.apache.edgent.console.servlets;
 
 import java.lang.management.ManagementFactory;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -42,13 +41,13 @@ import org.slf4j.LoggerFactory;
 
 final class MetricsUtil {
 	
-	static MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
+	private static MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
 	private static final Logger logger = LoggerFactory.getLogger(MetricsUtil.class);
 
 	static Iterator<ObjectInstance> getCounterObjectIterator(String jobId) {
 		ObjectName counterObjName = null;
-		StringBuffer sbuf = new StringBuffer();
-		sbuf.append("*:jobId=" + jobId);
+		StringBuilder sbuf = new StringBuilder();
+		sbuf.append("*:jobId=").append(jobId);
 		sbuf.append(",type=metric.counters,*");
 
         // i.e, edgent.providers.development:jobId=JOB-0,opId=OP_4,name=TupleRateMeter.edgent.oplet.JOB_0.OP_4,type=metric.meters
@@ -64,8 +63,8 @@ final class MetricsUtil {
 	static Iterator<ObjectInstance> getMeterObjectIterator(String jobId) {
 		ObjectName meterObjName = null;
 			
-			StringBuffer sbuf1 = new StringBuffer();
-			sbuf1.append("*:jobId=" + jobId);
+			StringBuilder sbuf1 = new StringBuilder();
+			sbuf1.append("*:jobId=").append(jobId);
 			sbuf1.append(",type=metric.meters,*");
 
 			try {
@@ -82,21 +81,19 @@ final class MetricsUtil {
 	
 	static MetricsGson getAvailableMetricsForJob(String jobId, Iterator<ObjectInstance> meterIterator, Iterator<ObjectInstance> counterIterator) {
 		MetricsGson gsonJob = new MetricsGson();
-		ArrayList<Operator> counterOps = new ArrayList<Operator>();
 		gsonJob.setJobId(jobId);
 		while (meterIterator.hasNext()) {
-			ArrayList<OpMetric> metrics = null;
-			ObjectInstance meterInstance = (ObjectInstance)meterIterator.next();
+			ObjectInstance meterInstance = meterIterator.next();
 			ObjectName mObjName = meterInstance.getObjectName(); 
 			String opName = mObjName.getKeyProperty("opId");
 
-			Operator anOp = null;
 				if (!opName.equals("")) {
-					MBeanInfo mBeanInfo = null;
+					MBeanInfo mBeanInfo;
 					try {
 						mBeanInfo = mBeanServer.getMBeanInfo(mObjName);
 					} catch (IntrospectionException | InstanceNotFoundException | ReflectionException e) {
 					    logger.error("Exception caught while getting MBeanInfo", e);
+					    throw new RuntimeException("Exception caught while getting MBeanInfo", e);
 					}
 
 			    	for (MBeanAttributeInfo attributeInfo : mBeanInfo.getAttributes()) {
@@ -112,32 +109,27 @@ final class MetricsUtil {
 	    				}
 		    			
 		    			// if the op associated with this metric is not in the job add it
-		    			if (!gsonJob.isOpInJob(opName)) {
-						    anOp = gsonJob.new Operator();
-						    gsonJob.addOp(anOp);
-						    anOp.opId = opName;
-						    counterOps.add(anOp);
-						    metrics = new ArrayList<OpMetric>();
-		    			} 
-		    			metrics.add(aMetric);
+		    			Operator theOp = gsonJob.getOp(opName);
+		    			if (theOp == null) {
+						    theOp = gsonJob.new Operator(opName);
+		    			}
+		    			theOp.metrics.add(aMetric);
 			    	}
-			    	gsonJob.setOpMetrics(anOp, metrics);
 				}
 		}
 
 		while (counterIterator.hasNext()) {
-			ArrayList<OpMetric> metrics = null;
-			ObjectInstance counterInstance = (ObjectInstance)counterIterator.next();
+			ObjectInstance counterInstance = counterIterator.next();
 			ObjectName cObjName = counterInstance.getObjectName();
 			String opName1 = cObjName.getKeyProperty("opId");
 
-			Operator anOp = null;
 			if (!opName1.equals("")) {
-			MBeanInfo mBeanInfo = null;
+			MBeanInfo mBeanInfo;
 			try {
 				mBeanInfo = mBeanServer.getMBeanInfo(cObjName);
 			} catch (IntrospectionException | InstanceNotFoundException | ReflectionException e) {
 			    logger.error("Exception caught while getting MBeanInfo", e);
+			    throw new RuntimeException("Exception caught while getting MBeanInfo", e);
 			}
 
 	    	for (MBeanAttributeInfo attributeInfo : mBeanInfo.getAttributes()) {
@@ -152,16 +144,9 @@ final class MetricsUtil {
 				}
     			Operator theOp = gsonJob.getOp(opName1);
 				if (theOp == null) {
-					anOp = gsonJob.new Operator();
-					gsonJob.addOp(anOp);
-					anOp.opId = opName1;
-					metrics = new ArrayList<OpMetric>();
-					gsonJob.setOpMetrics(anOp, metrics);
-				} else {
-					// get the op
-					metrics = theOp.metrics;
+                    theOp = gsonJob.new Operator(opName1);
 				}
-    			metrics.add(aMetric);
+    			theOp.metrics.add(aMetric);
 	    	}
 			}
 		}
@@ -172,7 +157,7 @@ final class MetricsUtil {
 	
 	/**
 	 * Get all the rate metrics, i.e, one minute rate, fifteen minute rate, mean rate, etc  for a job
-	 * @param job id (e.g, "JOB_0")
+	 * @param jobId id (e.g, "JOB_0")
 	 * 
 	 * @return  all metrics for this job if there are any
 	 */
@@ -182,21 +167,20 @@ final class MetricsUtil {
 		
 		Iterator<ObjectInstance> meterIterator = MetricsUtil.getMeterObjectIterator(jobId);
 		while (meterIterator.hasNext()) {
-			ArrayList<OpMetric> metrics = null;
-			ObjectInstance meterInstance = (ObjectInstance)meterIterator.next();
+			ObjectInstance meterInstance = meterIterator.next();
 			ObjectName mObjName = meterInstance.getObjectName();
 			//i.e, edgent.providers.development:jobId=JOB-0,opId=OP_4,name=TupleRateMeter.edgent.oplet.JOB_0.OP_4,type=metric.meters
 			String jobName = mObjName.getKeyProperty("jobId");
 			String opName = mObjName.getKeyProperty("opId");
-			Operator anOp = null;
 
 			if (jobId.equals(jobName)) {
-				MBeanInfo mBeanInfo = null;
+				MBeanInfo mBeanInfo;
 			
 				try {
 					mBeanInfo = mBeanServer.getMBeanInfo(mObjName);
 				} catch (IntrospectionException | InstanceNotFoundException | ReflectionException e) {
 				    logger.error("Exception caught while getting MBeanInfo", e);
+				    throw new RuntimeException("Exception caught while getting MBeanInfo", e);
 				}
 				
 		    	for (MBeanAttributeInfo attributeInfo : mBeanInfo.getAttributes()) {
@@ -210,35 +194,28 @@ final class MetricsUtil {
 							| ReflectionException e) {
 					    logger.error("Exception caught while accessing MBean", e);
     				}
-					 if (!gsonJob.isOpInJob(opName)) {
-					    anOp = gsonJob.new Operator();
-					    gsonJob.addOp(anOp);
-					    anOp.opId = opName;
-					    metrics = new ArrayList<OpMetric>();
-					    gsonJob.setOpMetrics(anOp, metrics);
-					 } else {
-						anOp = gsonJob.getOp(opName);
-						metrics = anOp.metrics;
+					 Operator theOp = gsonJob.getOp(opName);
+					 if (theOp == null) {
+					    theOp = gsonJob.new Operator(opName);
 					 }
-					 metrics.add(aMetric);
+					 theOp.metrics.add(aMetric);
 		    	}
 			}
 		}
 		
 		Iterator<ObjectInstance> counterIterator = MetricsUtil.getCounterObjectIterator(jobId);
 		while (counterIterator.hasNext()) {
-			ArrayList<OpMetric> metrics = null;
-			ObjectInstance counterInstance = (ObjectInstance)counterIterator.next();
+			ObjectInstance counterInstance = counterIterator.next();
 			ObjectName cObjName = counterInstance.getObjectName();
 			String opName1 = cObjName.getKeyProperty("opId");
 
-			Operator anOp = null;
 			if (!opName1.equals("")) {
-			MBeanInfo mBeanInfo = null;
+			MBeanInfo mBeanInfo;
 			try {
 				mBeanInfo = mBeanServer.getMBeanInfo(cObjName);
 			} catch (IntrospectionException | InstanceNotFoundException | ReflectionException e) {
 			    logger.error("Exception caught while getting MBeanInfo", e);
+			    throw new RuntimeException("Exception caught while getting MBeanInfo", e);
 			}
 
 	    	for (MBeanAttributeInfo attributeInfo : mBeanInfo.getAttributes()) {
@@ -253,16 +230,9 @@ final class MetricsUtil {
 				}
     			Operator theOp = gsonJob.getOp(opName1);
 				if (theOp == null) {
-					anOp = gsonJob.new Operator();
-					gsonJob.addOp(anOp);
-					anOp.opId = opName1;
-					metrics = new ArrayList<OpMetric>();
-					gsonJob.setOpMetrics(anOp, metrics);
-				} else {
-					// get the op
-					metrics = theOp.metrics;
+					theOp = gsonJob.new Operator(opName1);
 				}
-    			metrics.add(aMetric);
+    			theOp.metrics.add(aMetric);
 	    	}
 			}
 		}
@@ -274,29 +244,27 @@ final class MetricsUtil {
 		MetricsGson gsonJob = new MetricsGson();
 		gsonJob.setJobId(jobId);
 		String[] desiredParts = metricName.split(",");
-		String[] nameA = new String[2];
 		String desName = "";
 		if (!desiredParts[0].equals("")) {
-			nameA = desiredParts[0].split(":");
+			String[] nameA = desiredParts[0].split(":");
 			desName = nameA[1];
 		}
 		
 		while (metricIterator.hasNext()) {
-			ArrayList<OpMetric> metrics = null;
-			ObjectInstance meterInstance = (ObjectInstance)metricIterator.next();
+			ObjectInstance meterInstance = metricIterator.next();
 			ObjectName mObjName = meterInstance.getObjectName();
 			//i.e, edgent.providers.development:jobId=JOB-0,opId=OP_4,name=TupleRateMeter.edgent.oplet.JOB_0.OP_4,type=metric.meters
 			String jobName = mObjName.getKeyProperty("jobId");
 			String opName = mObjName.getKeyProperty("opId");
-			Operator anOp = null;
 
 			if (jobId.equals(jobName)) {
-				MBeanInfo mBeanInfo = null;
+				MBeanInfo mBeanInfo;
 			
 				try {
 					mBeanInfo = mBeanServer.getMBeanInfo(mObjName);
 				} catch (IntrospectionException | InstanceNotFoundException | ReflectionException e) {
 				    logger.error("Exception caught while getting MBeanInfo", e);
+				    throw new RuntimeException("Exception caught while getting MBeanInfo", e);
 				}
 				
 		    	for (MBeanAttributeInfo attributeInfo : mBeanInfo.getAttributes()) {
@@ -311,38 +279,31 @@ final class MetricsUtil {
 								| ReflectionException e) {
 						    logger.error("Exception caught while accessing MBean", e);
 						}
-    					if (!gsonJob.isOpInJob(opName)) {
-    					    anOp = gsonJob.new Operator();
-    					    gsonJob.addOp(anOp);
-    					    anOp.opId = opName;
-    					    metrics = new ArrayList<OpMetric>();
-    					    gsonJob.setOpMetrics(anOp, metrics);
-    					} else {
-    						anOp = gsonJob.getOp(opName);
-    						metrics = anOp.metrics;
+    					Operator theOp = gsonJob.getOp(opName);
+    					if (theOp == null) {
+    					    theOp = gsonJob.new Operator(opName);
     					}
-	    				 metrics.add(aMetric);
+	    				 theOp.metrics.add(aMetric);
 	    			 }
 		    	}
 			}
 		}
 		
 		while (counterIterator.hasNext()) {
-			ArrayList<OpMetric> metrics = null;
-			ObjectInstance counterInstance = (ObjectInstance)counterIterator.next();
+			ObjectInstance counterInstance = counterIterator.next();
 			ObjectName cObjName = counterInstance.getObjectName();
 			String jobName1 = cObjName.getKeyProperty("jobId");
 			String opName1 = cObjName.getKeyProperty("opId");
 			
 
-			Operator anOp = null;
 			if (jobId.equals(jobName1)) {
-				MBeanInfo mBeanInfo = null;
+				MBeanInfo mBeanInfo;
 			
 				try {
 					mBeanInfo = mBeanServer.getMBeanInfo(cObjName);
 				} catch (IntrospectionException | InstanceNotFoundException | ReflectionException e) {
 				    logger.error("Exception caught while getting MBeanInfo", e);
+				    throw new RuntimeException("Exception caught while getting MBeanInfo", e);
 				}
 				
 		    	for (MBeanAttributeInfo attributeInfo : mBeanInfo.getAttributes()) {
@@ -358,17 +319,11 @@ final class MetricsUtil {
 								| ReflectionException e) {
 						    logger.error("Exception caught while accessing MBean", e);
 						}
-    					if (!gsonJob.isOpInJob(opName1)) {
-    					    anOp = gsonJob.new Operator();
-    					    gsonJob.addOp(anOp);
-    					    anOp.opId = opName1;
-    					    metrics = new ArrayList<OpMetric>();
-    					    gsonJob.setOpMetrics(anOp, metrics);
-    					} else {
-    						anOp = gsonJob.getOp(opName1);
-    						metrics = anOp.metrics;
+    					Operator theOp = gsonJob.getOp(opName1);
+    					if (theOp == null) {
+    					    theOp = gsonJob.new Operator(opName1);
     					}
-	    				 metrics.add(aMetric);
+	    				 theOp.metrics.add(aMetric);
 	    			 }
 		    	}
 			}

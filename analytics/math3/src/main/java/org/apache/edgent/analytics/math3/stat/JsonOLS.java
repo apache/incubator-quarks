@@ -23,6 +23,7 @@ import org.apache.edgent.analytics.math3.json.JsonUnivariateAggregator;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import org.apache.edgent.analytics.math3.utils.Java7Helper;
 
 class JsonOLS implements JsonUnivariateAggregator {
     
@@ -66,7 +67,7 @@ class JsonOLS implements JsonUnivariateAggregator {
             // [0] is the constant (zero'th order)
             // [1] is the first order , which we use as the slope.
             final double slope = regressionParams[1];
-            if (Double.isFinite(slope))
+            if (Java7Helper.doubleIsFinite(slope))
                 result.addProperty(type.name(), slope);
         }
         values = null;

@@ -81,7 +81,7 @@ public class CommandReader extends CommandConnector implements Supplier<Iterable
                     closeProcess();
                   }
                 }
-                else if (currentSupplierIterator == null && canStart()) {
+                else if (canStart()) {
                   start(); // and loop/retry
                 }
                 else {

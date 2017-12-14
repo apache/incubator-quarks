@@ -32,7 +32,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Stream;
 
 import org.apache.edgent.connectors.file.FileStreams;
 import org.apache.edgent.function.BiFunction;
@@ -185,17 +184,28 @@ public class FileStreamsTest extends DirectTopologyTestBase {
             throw new RuntimeException(e);
         }
     }
+    
+    private String[] toUpperCase(String[] strs) {
+        List<String> ucstrs = new ArrayList<>();
+        for (String s : strs) {
+            ucstrs.add(s.toUpperCase());
+        }
+        return ucstrs.toArray(new String[0]);
+    }
+    private String[] concat(String[] a1, String[] a2) {
+        List<String> res = new ArrayList<>();
+        for (String s : a1) res.add(s);
+        for (String s : a2) res.add(s);
+        return res.toArray(new String[0]);
+    }
 
     @Test
     public void testTextFileReader() throws Exception {
         Topology t = newTopology("testTextFileReader");
         
         String[] lines = getLines();
-        String[] ucLines = Stream.of(lines)
-                .map(line -> line.toUpperCase())
-                .toArray(String[]::new);
-        String[] allLines = Stream.concat(Stream.of(lines), Stream.of(ucLines))
-                .toArray(String[]::new);
+        String[] ucLines = toUpperCase(lines);
+        String[] allLines = concat(lines, ucLines);
         
         Path tempFile1 = FileUtil.createTempFile("test1", "txt", lines);
         Path tempFile2 = FileUtil.createTempFile("test2", "txt", ucLines);
@@ -218,11 +228,8 @@ public class FileStreamsTest extends DirectTopologyTestBase {
         Topology t = newTopology("testTextFileReaderProblemPaths");
         
         String[] lines = getLines();
-        String[] ucLines = Stream.of(lines)
-                .map(line -> line.toUpperCase())
-                .toArray(String[]::new);
-        String[] allLines = Stream.concat(Stream.of(lines), Stream.of(ucLines))
-                .toArray(String[]::new);
+        String[] ucLines = toUpperCase(lines);
+        String[] allLines = concat(lines, ucLines);
         
         Path tempFile1 = FileUtil.createTempFile("test1", "txt", lines);
         Path tempFile2 = FileUtil.createTempFile("test2", "txt", ucLines);
@@ -250,9 +257,7 @@ public class FileStreamsTest extends DirectTopologyTestBase {
         Topology t = newTopology("testTextFileReaderPrePost");
         
         String[] lines = getLines();
-        String[] ucLines = Stream.of(lines)
-                .map(line -> line.toUpperCase())
-                .toArray(String[]::new);
+        String[] ucLines = toUpperCase(lines);
         
         Path tempFile1 = FileUtil.createTempFile("test1", "txt", lines);
         Path tempFile2 = FileUtil.createTempFile("test2", "txt", ucLines);

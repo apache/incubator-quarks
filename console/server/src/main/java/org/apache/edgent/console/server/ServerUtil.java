@@ -19,17 +19,7 @@ under the License.
 
 package org.apache.edgent.console.server;
 
-import java.io.IOException;
-import java.io.File;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.security.ProtectionDomain;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
 
 public class ServerUtil {
 
@@ -37,90 +27,58 @@ public class ServerUtil {
 	 *  The public constructor of this utility class for use by the HttpServer class.
 	 */
     public ServerUtil() {
-
-    }
-    /**
-     * Returns the path to the jar file for this package
-     * @return a String representing the path to the jar file of this package
-     */
-    private String getPath() {
-        return getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-    }
-
-    /**
-     * Returns a file object representing the parent's parent directory of the jar file.
-     * @return a File object
-     */
-    private File getTopDirFilePath() {
-        String topDirProp = System.getProperty("edgent.test.top.dir.file.path");
-        if (topDirProp != null) {
-          return new File(topDirProp);
-        }
-        File jarFile = new File(getPath());
-        return jarFile.getParentFile().getParentFile().getParentFile();
     }
 
     /**
      * Returns the File object representing the "webapps" directory
      * @return a File object or null if the "webapps" directory is not found
      */
-    private File getWarFilePath() {
-        List<File> foundFiles = new ArrayList<>();
-        try {
-            Files.walkFileTree(getTopDirFilePath().toPath(), new SimpleFileVisitor<Path>() {
-                @Override
-                public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-                    if (dir.endsWith("webapps")) {
-                      foundFiles.add(dir.toFile());
-                    }
-                    return FileVisitResult.CONTINUE;
+    public File getWarFilePath() {
+        File war = new File("target/war-resources/servlets.war");
+        if(!war.exists()) {
+            // Eventually create the directory for serving the war.
+            if(!war.getParentFile().exists()) {
+                if(!war.getParentFile().mkdirs()) {
+                    throw new RuntimeException("Could not create output directory at " + war.getAbsolutePath());
                 }
-            });
-        } catch (IOException e) {
-          // end of file searching
+            }
+
+            // Dump the servlet.war into the output directory.
+            InputStream stream = null;
+            FileOutputStream fileOutputStream = null;
+            try {
+                stream = ServerUtil.class.getResourceAsStream("/resources/servlets.war");
+                if(stream == null) {
+                    throw new RuntimeException("Could not get resource '/resources/servlets.war' from classpath.");
+                }
+
+                int readBytes;
+                byte[] buffer = new byte[4096];
+                fileOutputStream = new FileOutputStream(war);
+                while ((readBytes = stream.read(buffer)) > 0) {
+                    fileOutputStream.write(buffer, 0, readBytes);
+                }
+            } catch (IOException e) {
+                throw new RuntimeException("Could not dump resource 'resources/servlets.war' from classpath.", e);
+            } finally {
+                if(stream != null) {
+                    try {
+                        stream.close();
+                    } catch (IOException e) {
+                        // Ignore.
+                    }
+                }
+                if(fileOutputStream != null) {
+                    try {
+                        fileOutputStream.close();
+                    } catch (IOException e) {
+                        // Ignore.
+                    }
+                }
+            }
         }
-        if (foundFiles.size() != 0) {
-            return foundFiles.get(0);
-        }
-        return null;
-    }
-    
-    /**
-     * Looks for the absolute file path of the name of the warFileName argument
-     * @param warFileName the name of the war file to find the absolute path to
-     * @return the absolute path to the warFileName argument as a String
-     */
-    public String getAbsoluteWarFilePath(String warFileName) {
-        File warFilePath = getWarFilePath();
-        if (warFilePath != null) {
-        	File warFile = new File(warFilePath.getAbsolutePath() + "/" + warFileName);
-        	if (warFile.exists()) {        	
-        		return warFile.getAbsolutePath();
-        	} else {
-        		return "";
-        	}
-        }
-        else {
-            return "";
-        }
-    }
-    
-    /**
-     * Looks for the absolute file path of the name of the warFileName argument when running from Eclipse
-     * @param pDomain the ProtectionDomain to use to get the source's location
-     * @param warFileName the name of the war file to find the absolute path to
-     * @return the absolute path to the warFileName argument as a String
-     */
-    public String getEclipseWarFilePath(ProtectionDomain pDomain, String warFileName) {
-        URL location = pDomain.getCodeSource().getLocation();
-        File topEdgent = new File(location.getPath()).getParentFile().getParentFile();
-        File warFile = new File(topEdgent, "./target/java8/console/webapps/" +warFileName);
-        if (warFile.exists()) {
-        	return warFile.getAbsolutePath();
-        } else {
-        	return "";
-        }
-	
+
+        return war;
     }
 
 }

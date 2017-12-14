@@ -1,3 +1,89 @@
+Apache Edgent (incubating) 1.2.0
+==================
+
+The release includes a number of minor SDK bugfixes and enhancements listed below.
+
+A release now includes two source bundles:
+  - Edgent SDK bundle
+  - Edgent Samples bundle
+
+A release now publishes the Edgent SDK jars in Apache Nexus Release
+repository which are automatically mirrored to the Maven Central repository.
+
+A binary bundle (tgz) is no longer released.  The new `get-edgent-jars.sh`
+tool included in the Samples source bundle can be used to create such
+a bundle.
+
+A user now builds the samples from the released Samples source bundle
+much as a real application developer might.
+Pre-built samples jars are no longer released.  
+The Samples bundle includes an Edgent Application project template
+and some tools.
+
+There have been many updates to the Edgent website (https://edgent.apache.org/)
+related to the above:
+  - updated Getting Started Guide
+  - updated Downloads page
+  - a new The Power of Edgent page
+  - updated FAQ page
+  - a new Quickstart with Edgent Samples page
+  - a new Edgent Application Development page
+
+There are some additional changes affecting the
+use of Edgent in developing Edgent applications:
+
+The names of the Edgent jars now conform to standard
+practices: "." has been replaced with "-" and the Edgent SDK
+versionId is now included.  
+
+Almost all of the Edgent SDK jars are now available for the Java7 and Android platforms.
+
+The websocket connector jar names have been changed:
+* `edgent-connectors-websocket-<ver>.jar` was `edgent.connectors.websocket.wsclient-javax.websocket.jar`
+* `edgent-connectors-websocket-base-<ver>.jar` was  `edgent.connectors.wsclient.jar`
+* `edgent-connectors-websocket-misc-<ver>.jar` was  `edgent.javax.websocket.jar`
+* `edgent-connectors-websocket-jetty-<ver>.jar` was  `javax.websocket-client.jar`
+
+See the `JAVA_SUPPORT` documentation on the Downloads page details.
+
+From the perspective of building, development, and releasing
+Edgent, Maven is now used for the build tooling.
+The DEVELOPMENT.md file has been updated accordingly.
+
+
+New Features
+--------------------
+EDGENT-393  Add Ranges.outsideOf()
+EDGENT-273  Add scripts, etc to enable building samples
+
+Incompatible API changes
+------------------------
+NONE
+    
+Known Issues
+--------
+Open JIRAs may be found at https://issues.apache.org/jira/browse/EDGENT
+
+Bug Fixes
+---------
+EDGENT-429  JobMonitorApp.closeJob() doesn't wait for close
+EDGENT-423  Range.toStringUnsigned() not supported on Java7/Android
+
+Miscellaneous changes
+---------------------
+EDGENT-438  Improve WebSocketClientTest skip-if-cant-connect
+EDGENT-436  Change tests that use complete() TMO for successful runs
+EDGENT-435  CME in TrackingScheduledExecutor seen with testMultiTopologyPollWithError()
+EDGENT-434  Desensitize PlumbingTest.testParallelBalanced
+EDGENT-433  Automatically bump some TMO values when running CI test context
+EDGENT-432  Reduce runtime of some WindowsTest tests
+EDGENT-431  Cleanup some console code hygiene warnings
+EDGENT-418  LICENSE/NOTICE in .war are wrong
+EDGENT-413  Simplify download experience
+EDGENT-219  WindowsTest.keyedTimeBatchWIndowTest isn't robust
+EDGENT-31   FileStreamsTextFileWriterTest.testRetainAgeBased test fails
+
+
 Apache Edgent (incubating) 1.1.0
 ==================
 
