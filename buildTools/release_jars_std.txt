@@ -1,0 +1,64 @@
+################################################################################
+##
+##  Licensed to the Apache Software Foundation (ASF) under one or more
+##  contributor license agreements.  See the NOTICE file distributed with
+##  this work for additional information regarding copyright ownership.
+##  The ASF licenses this file to You under the Apache License, Version 2.0
+##  (the "License"); you may not use this file except in compliance with
+##  the License.  You may obtain a copy of the License at
+##
+##      http://www.apache.org/licenses/LICENSE-2.0
+##
+##  Unless required by applicable law or agreed to in writing, software
+##  distributed under the License is distributed on an "AS IS" BASIS,
+##  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+##  See the License for the specific language governing permissions and
+##  limitations under the License.
+##
+################################################################################
+
+# List of jars/wars that are to be included in a "standard" (Java8, Java7)
+# release.  
+# Comments, blank lines, and whitespace are allowed in all the usual places.
+# This is used by some release validation tools (e.g., check_jars.sh)
+#
+edgent-analytics-math3-{VER}.jar
+edgent-analytics-sensors-{VER}.jar
+edgent-api-execution-{VER}.jar
+edgent-api-function-{VER}.jar  
+edgent-api-graph-{VER}.jar
+edgent-api-oplet-{VER}.jar
+edgent-api-topology-{VER}.jar
+edgent-api-window-{VER}.jar
+edgent-apps-iot-{VER}.jar
+edgent-apps-runtime-{VER}.jar
+edgent-connectors-command-{VER}.jar
+edgent-connectors-common-{VER}.jar
+edgent-connectors-csv-{VER}.jar
+edgent-connectors-file-{VER}.jar
+edgent-connectors-http-{VER}.jar
+edgent-connectors-iot-{VER}.jar
+edgent-connectors-iotp-{VER}.jar
+edgent-connectors-jdbc-{VER}.jar
+edgent-connectors-kafka-{VER}.jar
+edgent-connectors-mqtt-{VER}.jar
+edgent-connectors-pubsub-{VER}.jar
+edgent-connectors-serial-{VER}.jar
+edgent-connectors-websocket-{VER}.jar
+edgent-connectors-websocket-base-{VER}.jar
+edgent-connectors-websocket-jetty-{VER}.jar
+edgent-connectors-websocket-misc-{VER}.jar
+edgent-console-server-{VER}.jar
+edgent-console-servlets-{VER}.war
+edgent-providers-development-{VER}.jar
+edgent-providers-direct-{VER}.jar
+edgent-providers-iot-{VER}.jar
+edgent-runtime-appservice-{VER}.jar
+edgent-runtime-etiao-{VER}.jar
+edgent-runtime-jmxcontrol-{VER}.jar
+edgent-runtime-jobregistry-{VER}.jar
+edgent-runtime-jsoncontrol-{VER}.jar
+edgent-spi-graph-{VER}.jar
+edgent-spi-topology-{VER}.jar
+edgent-utils-metrics-{VER}.jar
+edgent-utils-streamscope-{VER}.jar
