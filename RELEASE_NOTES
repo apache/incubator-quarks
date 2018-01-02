@@ -5,6 +5,7 @@ TODO - summary
 New Features
 --------------------
 TODO
+EDGENT-439  Optionally specify TCP port for Edgent console
 
 Incompatible API changes
 ------------------------
@@ -21,6 +22,7 @@ TODO
 Miscellaneous changes
 ---------------------
 TODO
+EDGENT-440  Eliminate undesired artifacts in Nexus/MavenCentral
 
 
 Apache Edgent (incubating) 1.2.0
@@ -80,6 +82,9 @@ The DEVELOPMENT.md file has been updated accordingly.
 
 New Features
 --------------------
+EDGENT-428  Add suppoort for csv in MetricsSetup
+EDGENT-409  Add analytics.math3.Aggregations
+EDGENT-407  JsonFunctions: more convenience functions
 EDGENT-393  Add Ranges.outsideOf()
 EDGENT-273  Add scripts, etc to enable building samples
 
@@ -95,9 +100,11 @@ Bug Fixes
 ---------
 EDGENT-429  JobMonitorApp.closeJob() doesn't wait for close
 EDGENT-423  Range.toStringUnsigned() not supported on Java7/Android
+EDGENT-396  JobMonitorApp restarts job 3 times more than it should
 
 Miscellaneous changes
 ---------------------
+EDGENT-441  Adjust Kafka tests for slow consumer startup
 EDGENT-438  Improve WebSocketClientTest skip-if-cant-connect
 EDGENT-436  Change tests that use complete() TMO for successful runs
 EDGENT-435  CME in TrackingScheduledExecutor seen with testMultiTopologyPollWithError()
@@ -105,8 +112,16 @@ EDGENT-434  Desensitize PlumbingTest.testParallelBalanced
 EDGENT-433  Automatically bump some TMO values when running CI test context
 EDGENT-432  Reduce runtime of some WindowsTest tests
 EDGENT-431  Cleanup some console code hygiene warnings
+EDGENT-422  Desentize FileStreamsTextFileWriterTest
+EDGENT-419  Remove use of java8 default interface methods by tests
 EDGENT-418  LICENSE/NOTICE in .war are wrong
+EDGENT-417  Remove old ant-build cruft
 EDGENT-413  Simplify download experience
+EDGENT-408  MqttOpenTest failing due to unhealthy test.mosquitto.org
+EDGENT-406  Improve doc for APplicationServiceMXBean.registerJar()
+EDGENT-405  Improve IotProvider doc wrt ApplicationService.registerJar
+EDGENT-401  Clarify jsonConfig arg in ApplicationServiceMXBean
+EDGENT-399  Fix publish_release.sh
 EDGENT-219  WindowsTest.keyedTimeBatchWIndowTest isn't robust
 EDGENT-31   FileStreamsTextFileWriterTest.testRetainAgeBased test fails
 
