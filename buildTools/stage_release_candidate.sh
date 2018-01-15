@@ -29,11 +29,12 @@ set -e
 # Prompts before taking actions.
 #
 # Run from the root of the release management git clone.
+# Defaults bundle-dir to target/checkout/target (mvn release:perform generated)
 
 
 . `dirname $0`/common.sh
 
-setUsage "`basename $0` <rc-num>"
+setUsage "`basename $0` <rc-num> [bundle-dir]"
 handleHelp "$@"
 
 requireArg "$@"
@@ -41,13 +42,18 @@ RC_NUM=$1; shift
 checkRcNum ${RC_NUM} || usage "Not a release candidate number \"${RC_NUM}\""
 RC_DIRNAME="rc${RC_NUM}"
 
+BUNDLE_DIR=target/checkout/target
+if [ $# -gt 0 ]; then
+  BUNDLE_DIR=$1; shift
+fi
+
 noExtraArgs "$@"
 
 SVN_DEV_EDGENT=~/svn/dist.apache.org/repos/dist/dev/incubator/edgent
 
 checkBundleDir || die "Bundle directory '${BUNDLE_DIR}' does not exist" 
 
-checkUsingMgmtCloneWarn || confirm "Proceed using this clone?" || exit
+# checkUsingMgmtCloneWarn || confirm "Proceed using this clone?" || exit
 
 # Get the X.Y.Z version from the bundle name
 VER=`getEdgentVer bundle`
@@ -57,6 +63,16 @@ RC_TAG=`getReleaseTag ${VER} ${RC_NUM}`
 
 echo "Base svn Edgent dev directory to stage to: ${SVN_DEV_EDGENT}"
 confirm "Proceed with staging for ${RC_TAG}?" || exit
+
+# at least until checksum file generation is automated verify that
+# make_checksums.sh has been run
+echo "Checking that bundle signature files are present ..."
+for b in ${BUNDLE_DIR}/apache-edgent-*-source-release.*; do
+  for sfx in .asc .md5 .sha512; do
+    f=${b}${sfx}
+    [ -f ${f} ] || die "Bundle signature ${f} does not exist"
+  done
+done
 
 # Offer to do svn checkout if needed
 if [ ! -d ${SVN_DEV_EDGENT}/.svn ]; then
@@ -85,11 +101,7 @@ confirm "Is the svn status ok to continue (blank / nothing reported) ?" || exit
 #   rc<n>
 #     README
 #     RELEASE_NOTES
-#     LICENSE
 #     source bundles and signatures
-#     binaries
-#       LICENSE
-#       source bundles and signatures
 
 echo ""
 echo "Copying artifacts to ${SVN_DEV_EDGENT}..." 
@@ -103,14 +115,9 @@ if [ ! -d ${SVN_VER_DIR} ]; then
 fi
 
 mkdir -p ${SVN_RC_DIR}
-cp LICENSE ${SVN_RC_DIR}
 cp README ${SVN_RC_DIR}
 cp RELEASE_NOTES ${SVN_RC_DIR}
-cp ${BUNDLE_DIR}/*-src.* ${SVN_RC_DIR}
-
-mkdir -p ${SVN_RC_DIR}/binaries
-cp binary-release/LICENSE ${SVN_RC_DIR}/binaries
-cp ${BUNDLE_DIR}/*-bin.* ${SVN_RC_DIR}/binaries
+cp ${BUNDLE_DIR}/apache-edgent-*-source-release.* ${SVN_RC_DIR}
 
 if [ ! `svn info --show-item url ${SVN_VER_DIR} 2>/dev/null` ]; then
   (set -x; svn add ${SVN_VER_DIR})

@@ -105,7 +105,7 @@ function getEdgentVer() {  # $1 == "gradle" | "bundle"
     MSG="Unable to identify the version id from ${PROPS}"
   elif [ $1 == "bundle" ]; then
     # Get the X.Y.Z version from a build generated bundle's name
-    BUNDLE=`echo ${BUNDLE_DIR}/*-src.tgz`
+    BUNDLE=`echo ${BUNDLE_DIR}/apache-edgent-*-source-release.tar.gz`
     VER=`echo ${BUNDLE} | grep -o -E '\d+\.\d+\.\d+'`
     MSG="Unable to identify the version id from bundle ${BUNDLE}"
   fi
