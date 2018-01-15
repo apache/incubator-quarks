@@ -349,6 +349,38 @@ to do this, is to append a simple `site:site` at the end of the maven command.
 Each modules `<module>/target/site` directory will then contain the generated 
 Module documentation.
 
+### Aggregated Javadoc
+
+Javadoc generation is a bit of a mess / problem.  
+
+Our customized "aggregated javadoc" (as seen on the website) is formed
+by configurations of the `maven-javadoc-plugin`.  As noted in the pom, 
+that configuration has no effect for `mvn javadoc:aggregate`, only `mvn site`.
+
+Then, as also noted in the pom, a problem was encountered in the release
+processing so the `aggregate reportSet` was commented out.  Hence only
+non-aggregated javadoc is created.
+
+Until someone figures out how to address this in a reasonable manner, the
+following can be used:
+
+``` sh
+ # edit pom.xml to uncomment the javadoc plugin config's aggregate reportSet
+./mvnw install -DskipTests  # "package" isn't enough
+./mvnw site  # target/site/apidocs will have the aggregated javadoc
+``` 
+
+To generate this javadoc for a release, in the clone you're doing
+the release in, and after the `release:perform`, 
+cd to the release's `target/checkout` directory and to the above cmds
+
+Or, create a new clone from the release's tag
+(`git clone --branch edgent-<ver> the-https-repo-url tmp-javadoc-clone`)
+and do the cmds there.
+
+Note, trying to do the above using a source-release tar/zip bundle fails
+because `mvn site` must be run in a git repo.
+
 ## More Build Tooling Miscellenea
 
 There is a lot of surface area to the maven build tooling.  The following
