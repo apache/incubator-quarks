@@ -6,6 +6,10 @@
 # Exclude the maven-wrapper.jar
 .mvn/wrapper/maven-wrapper.jar
 
+# Exclude maven-release-plugin generated tmp artifacts
+pom.xml.releaseBackup
+release.properties
+
 # More generated artifacts
 target/
 /reports
