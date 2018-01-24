@@ -32,6 +32,8 @@ set -e
 
 . `dirname $0`/common.sh
 
+dieSuperceeded  # NOTICE THIS
+
 setUsage "`basename $0` [--nquery] [--as-rcnum <rc-num>] [--from-rctag <rc-num>]"
 handleHelp "$@"
 

@@ -39,7 +39,7 @@ noExtraArgs "$@"
 checkEdgentSourceRootGitDie
 checkUsingMgmtCloneWarn || [ ${NQUERY} ] || confirm "Proceed using this clone?" || exit
 
-VER=`getEdgentVer gradle`
+VER=`getEdgentVer`
 RELEASE_BRANCH=`getReleaseBranch ${VER}`
 
 (set -x; git checkout -q ${RELEASE_BRANCH})

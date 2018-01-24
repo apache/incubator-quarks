@@ -42,7 +42,7 @@ RC_NUM=$1; shift
 checkRcNum ${RC_NUM} || usage "Not a release candidate number \"${RC_NUM}\""
 RC_DIRNAME="rc${RC_NUM}"
 
-BUNDLE_DIR=target/checkout/target
+# default BUNDLE_DIR is in common.sh
 if [ $# -gt 0 ]; then
   BUNDLE_DIR=$1; shift
 fi
@@ -64,15 +64,10 @@ RC_TAG=`getReleaseTag ${VER} ${RC_NUM}`
 echo "Base svn Edgent dev directory to stage to: ${SVN_DEV_EDGENT}"
 confirm "Proceed with staging for ${RC_TAG}?" || exit
 
-# at least until checksum file generation is automated verify that
-# make_checksums.sh has been run
-echo "Checking that bundle signature files are present ..."
-for b in ${BUNDLE_DIR}/apache-edgent-*-source-release.*; do
-  for sfx in .asc .md5 .sha512; do
-    f=${b}${sfx}
-    [ -f ${f} ] || die "Bundle signature ${f} does not exist"
-  done
-done
+# with the switch to the maven release plugin, only the .asc file
+# is generated, not the checksum files.
+# generate/update them now.
+${BUILDTOOLS_DIR}/make_checksums.sh target
 
 # Offer to do svn checkout if needed
 if [ ! -d ${SVN_DEV_EDGENT}/.svn ]; then

@@ -37,7 +37,7 @@ noExtraArgs "$@"
 checkEdgentSourceRootGitDie
 checkUsingMgmtCloneWarn || confirm "Proceed using this clone?" || exit
 
-VER=`getEdgentVer gradle`
+VER=`getEdgentVer`
 RELEASE_BRANCH=`getReleaseBranch $VER`
 
 (set -x; git checkout -q master)
@@ -67,3 +67,6 @@ echo "    git push origin master"
 confirm "Proceed to commit the merge and push?" || exit
 (set -x; git commit -m "merged ${RELEASE_BRANCH}")
 (set -x; git push origin master)
+
+echo
+echo "REMINDER: see the Release Manager's Guide for merges to the develop branch!"

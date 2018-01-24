@@ -22,7 +22,8 @@
 BUILDTOOLS_DIR=`dirname $0`
 
 EDGENT_ROOT_DIR=.
-BUNDLE_DIR=${EDGENT_ROOT_DIR}/build/release-edgent
+# BUNDLE_DIR is results of maven release:perform's creation of release candidate
+BUNDLE_DIR=${EDGENT_ROOT_DIR}/target/checkout/target
 
 EDGENT_ASF_GIT_URL=https://git-wip-us.apache.org/repos/asf/incubator-edgent.git
 EDGENT_ASF_DIST_URL=https://www.apache.org/dist/incubator/edgent
@@ -31,6 +32,8 @@ EDGENT_ASF_SVN_RELEASE_URL=https://dist.apache.org/repos/dist/release/incubator/
 EDGENT_ASF_SVN_RC_URL=https://dist.apache.org/repos/dist/dev/incubator/edgent
 
 USAGE=
+
+RELEASE_PROP_FILE=${EDGENT_ROOT_DIR}/edgent.release.properties
 
 function die() {  # [$* msgs]
   [ $# -gt 0 ] && echo "Error: $*"
@@ -80,6 +83,10 @@ function confirm () {  # [$1: question]
   done
 }
 
+function dieSuperceeded { # no args
+  die "This tool is superceeded with the new maven build tooling.  See src/site/asciidoc/releasing.adoc."
+}
+
 function checkEdgentSourceRootGitDie { # no args; dies if !ok
   [ -d "${EDGENT_ROOT_DIR}/.git" ] || die "Not an Edgent source root git directory \"${EDGENT_ROOT_DIR}\""
 }
@@ -93,24 +100,6 @@ function checkUsingMgmtCloneWarn() { # no args; warns if edgent root isn't a mgm
   else
     return 0
   fi 
-} 
-
-function getEdgentVer() {  # $1 == "gradle" | "bundle"
-  MSG="getEdgentVer(): unknown mode \"$1\""
-  VER=""
-  if [ $1 == "gradle" ]; then
-    # Get the X.Y.Z version from gradle build info
-    PROPS=${EDGENT_ROOT_DIR}/gradle.properties
-    VER=`grep build_version ${PROPS} | grep -o -E '\d+\.\d+\.\d+'`
-    MSG="Unable to identify the version id from ${PROPS}"
-  elif [ $1 == "bundle" ]; then
-    # Get the X.Y.Z version from a build generated bundle's name
-    BUNDLE=`echo ${BUNDLE_DIR}/apache-edgent-*-source-release.tar.gz`
-    VER=`echo ${BUNDLE} | grep -o -E '\d+\.\d+\.\d+'`
-    MSG="Unable to identify the version id from bundle ${BUNDLE}"
-  fi
-  [ "${VER}" ] || die "${MSG}"
-  echo $VER
 }
 
 function checkBundleDir() { # no args  returns true/false (0/1)
@@ -145,9 +134,51 @@ function checkRcNumDie() {  # $1: rc-num dies if not ok
   checkRcNum $1 || die "Not a release candidate number \"$1\""
 }
 
+function createReleaseProperties { # X.Y.Z
+  VER="$1"
+  checkVerNumDie ${VER}
+  echo "releaseNum=${VER}" > ${RELEASE_PROP_FILE}
+}
+
+function getReleaseProperty {  # <property-name>
+  PN=$1
+  PNVAL=`grep ${PN} ${RELEASE_PROP_FILE}`
+  VAL=`echo ${PNVAL} | sed -e "s/^${PN}=//"`
+  echo ${VAL}
+}
+
+function getEdgentVer() {  # [$1 == "bundle"]
+  MSG="getEdgentVer(): unknown mode \"$1\""
+  VER=""
+  if [ "$1" == "" ]; then
+    VER=`getReleaseProperty releaseNum`
+    MSG="Unable to identify the release version id from ${RELEASE_PROP_FILE}"
+  elif [ $1 == "gradle" ]; then
+    die "'getEdgentVer() gradle' is no longer supported"
+    # Get the X.Y.Z version from gradle build info
+    PROPS=${EDGENT_ROOT_DIR}/gradle.properties
+    VER=`grep build_version ${PROPS} | grep -o -E '\d+\.\d+\.\d+'`
+    MSG="Unable to identify the version id from ${PROPS}"
+  elif [ $1 == "bundle" ]; then
+    # Get the X.Y.Z version from a build generated bundle's name
+    BUNDLE=`echo ${BUNDLE_DIR}/apache-edgent-*-source-release.tar.gz`
+    VER=`echo ${BUNDLE} | grep -o -E '\d+\.\d+\.\d+'`
+    MSG="Unable to identify the version id from bundle ${BUNDLE}"
+  fi
+  [ "${VER}" ] || die "${MSG}"
+  echo $VER
+}
+
+function getMajMinVerNum() {  #  $1: X.Y.Z  returns X.Y
+  VER=$1; shift
+  checkVerNumDie ${VER}
+  MAJ_MIN_VER=`echo ${VER} | sed -e 's/\.[0-9][0-9]*$//'`
+  echo ${MAJ_MIN_VER}
+}
+
 function getReleaseBranch() { # $1: X.Y.Z version
-  checkVerNumDie $1
-  echo "release-$1"
+  MAJ_MIN_NUM=`getMajMinVerNum $1`
+  echo "release/${MAJ_MIN_NUM}"
 }
 
 function getReleaseTag() {  # $1: X.Y.Z  [$2: rc-num]
@@ -165,7 +196,6 @@ function getReleaseTagComment() {  # $1: X.Y.Z  [$2: rc-num]
   checkVerNumDie ${VER}
   RC_SFX=""
   if [ $# -gt 0 ] && [ "$1" != "" ]; then
-    checkRcNumDie $1
     RC_SFX=" RC$1"
   fi
   echo "Apache Edgent ${VER}-incubating${RC_SFX}" 

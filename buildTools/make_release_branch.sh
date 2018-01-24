@@ -36,6 +36,8 @@ set -e
 
 . `dirname $0`/common.sh
 
+dieSuperceeded  # NOTICE THIS
+
 setUsage "`basename $0` [--nquery]"
 handleHelp "$@"
 

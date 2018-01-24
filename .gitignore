@@ -10,6 +10,9 @@
 pom.xml.releaseBackup
 release.properties
 
+# Exclude buildTooling tmp artifacts
+edgent.release.properties 
+
 # More generated artifacts
 target/
 /reports

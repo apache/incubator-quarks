@@ -24,6 +24,7 @@ set -e
 # Move/Copy the (approved) release candidate artifacts and KEYS from the 
 # ASF subversion Edgent Release Candidate repository to the
 # ASF subversion Edgent Release repository.
+# Publishing of Nexus staged artifacts is separate! See the Release Manager's Guide
 # Prompts before taking actions.
 #
 # Run from the root of the release management git clone.
@@ -45,8 +46,7 @@ SVN_REL_EDGENT=~/svn/dist.apache.org/repos/dist/release/incubator/edgent
 
 checkUsingMgmtCloneWarn || confirm "Proceed using this clone?" || exit
 
-# Get the X.Y.Z version from gradle
-VER=`getEdgentVer gradle`
+VER=`getEdgentVer`
 VER_DIRNAME=${VER}-incubating
 
 RC_TAG=`getReleaseTag ${VER} ${RC_NUM}`
