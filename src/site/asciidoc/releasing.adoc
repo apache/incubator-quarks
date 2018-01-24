@@ -17,100 +17,247 @@
 
 ////
 
-# Releasing Edgent
+= Releasing Edgent
 
-In general the `master` branch contains the repository state of the latest release of Edgent.
-No commit should be done to `master` except for merging after a successful release.
+This document covers a portion of the workflow that a Release Manager must execute to create release candidates and to ultimately publish a release. Start with the link:https://cwiki.apache.org/confluence/display/EDGENT/Release+Manager%27s+Guide[Release Manager's Guide].
 
-Normal development is done in the `develop` branch or in feature branches that are merged to `develop` after they are finished.
+TODO: better integrate these two documents.
 
-A version is built up of three parts: `major`.`minor`.`bugfix`. For each major and minor version a corresponding `release` branch is maintained.
-This allows shipping of bug-fix releases, if this is required. For bug-fix releases no new branch is created.
+The portion of the workflow described here:
 
-Assuming develop is currently in version `1.2.0-SNAPSHOT` and we are preparing a new release, then we would first create a `release/1.2` branch. Within this branch, the Edgent version is `1.2.0-SNAPSHOT` and develop becomes `1.3.0-SNAPSHOT`.
-In the `release/1.2` branch all work prior to cutting a release or for fixing bug-fixes in an existing release can be performed. This branch is usually used to stabilize the software prior to a release.
+. Create a release branch
+. Prepare the release branch branch for building, etc
+. Create the release candidate: create and stage the release candidate binary artifacts
+. Close the Nexus staging repository for the vote
+. Post-vote actions: release or drop the Nexus staging repository
 
-As soon as the release branch is stable enough, the release manager cuts a release.
+The Maven `maven-release-plugin` automates much of the release workflow via its goals:
 
-When doing this, all modules versions are set to a release version, this version is committed and tagged and then the version is usually incremented to the next higher bug-fix version.
-So if the `release/1.2` branch is currently in version `1.2.0-SNAPSHOT`, the versions are changed to `1.2.0` and after the committing and tagging the version is updated to `1.2.1-SNAPSHOT`.
+* `release:branch` - create a release branch, update develop branch poms to next major.minor.0-SNAPSHOT version
+* `release:prepare` - set the release branch poms to the non-SNAPSHOT version, tag the version, and then set the poms to the first/next bugfix SNAPSHOT version
+* `release:perform` - build, test and stage the tagged version's binary artifacts in Nexus
 
-All of these steps are automated by the `maven-release-plugin`.
+The plugin doesn't know about the ASF source release candidate staging repository or the source release repository and the plugin doesn't perform any merging of a release to any branches.  See the Release Manager's Guide.
 
-## Creating the release branch
+== Overview
 
-A new release branch is always created from the `develop` branch. So make sure all changes have been pulled and the repo is up to date.
+A release version is built up of three parts: `major`.`minor`.`bugfix`.  A normal release has a bugfix value of 0. e.g., `1.2.0`.  A bugfix release has a non-0 bugfix value.
 
-The following command performs the branching:
+Three types of branches support the workflow:
 
-    mvn release:branch -P platform-android,platform-java7,distribution -DbranchName=release/1.2 -DautoVersionSubmodules=true
+* `master`
+* `develop`
+* `release/<major>.<minor>`
 
-Without the `-DautoVersionSubmodules=true` we would have to specify the version for each module separately. This way we only have to specify the version of the root module and all children will inherit this version.
+The described workflow and branches mostly support a serial release development model. E.g., development for `1.2.0`, then `1.3.0`, ..., then `2.0.0`, ...  Once release `2.0.0` exists another `1.n.0` release can't be created without tweaking the workflow.  Bugfix releases can be performed on any supported release.
 
-Also the only way all modules are processed, is if we enable the `distribution` and the two `platform-android` and `platform-java7` profiles.
+In general the `master` branch contains the repository state of the latest release of Edgent. No commit should be done to `master` except for merging after a successful release. The project poms on this branch all have a non-snapshot version (e.g., `1.2.0`).
 
-After this the branches and the changes are committed, but not yet pushed. So as a last step here the release-manager needs to push the changes in his git repo.
+The `develop` branch is used for normal, non-bugfix release, development.  Development is done on the `develop` branch or in feature branches that are merged to `develop` after they are finished. The poms on this branch specify a `maj.min.0-SNAPSHOT` version and progress to the next non-bugfix release under development (e.g., `1.2.0-SNAPSHOT`, `1.3.0-SNAPSHOT`, ..., `2.0.0-SNAPSHOT`).
 
+A `release/major.minor` branch is created from the `develop` branch (e.g. `release/1.2`).  Work to prepare and stabilize the release is performed on this branch.  
 
-## Preparing a release
+When the release branch is believed to be ready, the branch is "prepared" for released: the poms Edgent version are changed to a non-snapshot version (e.g., `1.2.0-SNAPSHOT` => `1.2.0`), the branch is tagged (e.g., `edgent-1.2.0`), and then the poms are set to the next bugfix release version (e.g., `1.2.1-SNAPSHOT`).
 
-In this phase on the release branch. The versions are changed to the release versions, a commit is done with this state and tagged. After that the versions are updated to the next development version and this update is committed too.
+The release candidate is built, tested and staged to Nexus and the ASF source release staging repository.  After a successful vote, the staged release candidate artifacts are published.
 
-    mvn release:prepare -DautoVersionSubmodules=true -P platform-android,platform-java7,distribution -Dtag=edgent-1.2.0 -DdevelopmentVersion=1.2.1-SNAPSHOT -DreleaseVersion=1.2.0
+Ultimately, the release tag's (e.g., `edgent-1.2.0`) commit must be merged to `master`. Should changes be added to the release branch to stabilize/fix it, the commits need to be propagated to `develop` using a cherry-pick-merge. The release branch / release tag is NOT merged to `develop`.
 
-The plugin doesn't push the changes to the remote repo. So please don't forget to do a git push before continuing.
+The release branch is maintained after the release.  Should a bug-fix release be required, work for the bug-fix release can be done on the release branch or in feature branches that are merged to the release branch after they are finished.  A separate bug-fix branch is NOT created.  Bug fix commits need to be propagated to `develop` using a cherry-pick-merge.
 
-    git push
+The release branch poms progress as bug-fix versions are prepared: `maj.min.1-SNAPSHOT`, `maj.min.1`, `maj.min.2-SNAPSHOT`, ... Individual fixes for the bug-fix release will typically need to be propagated to `develop` using cherry-pick-merge.  If a bug-fix is needed for anything earlier than the most recent `major.minor` release, the fix will need to be cascaded all the way up to the most recent release branch and then propagated to `develop`. The release branch is NOT merged to `develop`. A bug-fix release MAY ONLY be merged to `master` if the bug-fix release's predecessor is the latest release on `master`.
 
-After changing to the release version, the plugin does a full build with all tests prior to tagging and committing the release version. Same happens again after updating to the next development version.
+NOTE: In the following steps, adjust the versions and tags as appropriate for the release.
 
-## Performing a release
+== Create a new clone of the ASF repository
 
-In this phase the previously prepared release is built, tested and deployed to the remote repo configured in the pom.
-To be 100% sure the build doesn't require any files eventually omitted from source control, the `release:perform` step checks out the previously created tag to a directory `target/checkout` and runs the build there.
+Skip this if you already created the clone as directed in the Release Manager's Guide.
 
+Create the clone:
+
+    git clone https://git-wip-us.apache.org/repos/asf/incubator-edgent.git mgmt-edgent
+    cd mgmt-edgent
+
+== Create the Release Branch
+
+Skip this step for a bug-fix release!
+
+In this phase on the `develop` branch, the release branch is created and the Edgent versions in the poms on the `develop` branch are then set to the next `major.minor-SNAPSHOT` version.
+
+The plugin creates two pom modification commits (one before creating the branch and another afterwards) and auto-pushes them but additional commits must be manually pushed.
+
+Create the release branch:
+
+    git checkout develop  # create the release branch off of develop
+    git pull              # ensure the branch is up to date
+        
+    # The following will query you for the "new working copy version" for this
+    # branch (develop).  In this example/workflow, the appropriate
+    # response would be 1.3.0-SNAPSHOT - not the suggested value.
+    
+    mvn release:branch -DbranchName=release/1.2 -DautoVersionSubmodules=true -P platform-android,platform-java7,distribution
+    
+    git push  # the above auto-pushes two commits but there are more to push
+
+Notes:
+
+* -DbranchName : the name of the release branch
+* -DautoVersionSubmodules : all children modules inherit the the top level pom's version
+* -P platform-android,... : these profiles are required so that all modules are processed
+
+== Prepare the Release Branch
+
+In this phase on the release branch, the poms Edgent versions are changed to the specified release version, a full build with all tests is run, and a commit is done with this state and tagged. After that the release branch poms Edgent versions are set to the first/next specified `major.minor.bugfix-SNAPSHOT` bugfix development version and this update is committed.  The commits are automatically pushed.
+
+Prepare the release branch:
+
+    git checkout release/1.2  # the branch from "Creating the Release Branch"
+    mvn release:prepare -DreleaseVersion=1.2.0 -Dtag=edgent-1.2.0 -DdevelopmentVersion=1.2.1-SNAPSHOT -DautoVersionSubmodules=true -P platform-android,platform-java7,distribution 
+    
+    git status  # should report nothing ahead/behind. Do 'git push' if needed.
+
+If you need to restart because of error or the process is cancelled, then run the
+`release:prepare` again to pick up where it left off.
+
+Or to restart the `prepare` from the beginning:
+
+    mvn release:prepare -Dresume=false ...
+
+See http://maven.apache.org/maven-release/maven-release-plugin/examples/prepare-release.html
+
+== Create and Stage the Release Candidate
+
+In this phase on the previously prepared release branch, the release candidate is built, tested and staged to the remote Maven (Nexus) repository configured in the pom.
+
+To be 100% sure the build doesn't require any files eventually omitted from source control, `release:perform` checks out the previously created tag to a directory `target/checkout` and runs the build there.
+
+See the following section regarding setting up your maven settings.xml file with information needed to log into the Nexus server.
+
+Create the release candidate:
+
+    git checkout release/1.2  # the branch from "Creating the release branch"
     mvn release:perform -DreleaseProfiles=platform-android,platform-java7
 
-After this step is successful, all artifacts are located in a so-called `staging repository` at https://repository.apache.org/
+After this step is successful, a Nexus staging repository named `apacheedgent-####` will have been created at at https://repository.apache.org and populated with all of the release candidate's artifacts. The last four digits are generated by Nexus.
 
-Here staging repositories for Edgent have the same name: `apacheedgent-####`. It is automatically created when staging new artifacts and the last four digits are automatically counted by Nexus.
+=== Unwanted Staged Artifacts
 
-## Closing the staging repository
+The `release:perform` stages numerous undesired artifacts.  See EDGENT-440.
 
-Prior to releasing and voting a staging repository has to be closed.
-Only then can a repository be released and ony then does the repo get a url assigned that can be used by others to inspect the release.
+TODO: what's needed to manually delete these? "Delete" each via the UI?
+What about the state of the metadata artifacts, do they reference those deleted items?
 
-In order to close a previously created staging repository.
-Please login to https://repository.apache.org/ with your Apache credentials and select `Staging Repositories` in the section `Build Promotion`.
+=== Nexus Authentication Setup
 
-Here click on the `apacheedgent-####` containing the artifacts you are planning to release.
+To stage artifacts in Nexus, you must setup your maven settings.xml file with information needed to log into the Nexus server - the server's IDs and your Apache ID/pw.  Try using your password in the clear before attempting to use the encrypted password scheme.  See http://maven.apache.org/plugins/maven-deploy-plugin/usage.html.
 
-In the menu above, click on the `Close` button.
+Add these server entries to your `~/.m2/settings.xml`:
 
-Now Nexus would create a new staging repository as soon as another artifact would be uploaded for an Edgent groupId. Beyond that a number of pre-configured tests are executed automatically:
+    <settings>
+      <servers>
+        ...
+        <server>
+          <id>apache.releases.https</id>
+          <username>YOUR-APACHE-ID</username>
+          <password>YOUR-PASSWORD</password>
+        </server>
+        <server>
+          <id>apache.snapshots.https</id>
+          <username>YOUR-APACHE-ID</username>
+          <password>YOUR-PASSWORD</password>
+        </server>
+      </servers>
+    </settings>
 
-- Validate the signatures
-- Validate the checksums
+== Close the Nexus staging repository
 
-After this you can see the repository url on the staging repositories `Summary` tab.
+The Nexus staging repository must be closed prior to voting. After closing, the staging repository is visible on `Summary` tab and may be used by others to inspect the release candidate.
 
-## Actions if the vote passed
+Close the Nexus staging repository:
 
-If the vote passed and the release candidate should be officially released, all that has to be done, is that the release manager logs in to Apache's Nexus, selects the staging repo and clicks on the `Release` button.
+    login to https://repository.apache.org/  with your Apache credentials
+    select "Staging Repositories" in the section "Build Promotion"
+    click on the apacheedgent-#### staging repository
+    click on the Close button
+
+A number of pre-configured tests are executed automatically:
+
+* Validate the signatures
+* Validate the checksums
+
+If another artifact is subsequently uploaded for an Edgent groupId, Nexus will create a new staging repository.
+
+== Stage the Source Release Artifacts
+
+See the Release Manager's Guide for staging the release candidate's source release
+artifacts to the ASF release staging repository https://dist.apache.org/repos/dist/dev/incubator/edgent.
+
+== Actions if the vote passed
+
+If the vote passed and the staged release candidate should be officially released.
+
+Officially release the Nexus staging repository:
+
+    login to https://repository.apache.org/  with your Apache credentials
+    select the apacheedgent-#### staging repository
+    click on the Release button
 
 After this Nexus takes care of all further steps of copying the artifacts to the official release repository, syncing that to Maven central, removing the old staging repository and even cleanup the `SNAPSHOT` versions of the release in the snapshot repo.
 
-## Actions if the vote failed
+See the Release Manager's Guide for information on publishing the staged source release bundles and merging an approved release to the `master`, and possibly `develop`, branches.
+
+== Actions if the vote failed
 
 If something popped up during the vote on the release and the release candidate has to be dropped, two things have to be done:
 
-1. Drop the staging repository in Apache's Nexus
-2. Drop/Rename the tag previously set by the release plugin
+. Drop the Nexus staging repository (remove all the staged artifacts)
+. Remove/Rename the tag previously set by the `release:prepare` (prevent subsequent `release:prepare` failure)
 
-Dropping the release is equally simple in Nexus, by logging in, selecting the staging repository and clicking on the `Drop` button instead of the `Release` button.
+See the Release Manager's Guide for information about removing a source release candidate from the ASF 'dev' staging repository.
 
-After that in Nexus all artifacts are cleaned up and we're ready to go.
+Drop the Nexus staging repository:
 
-In git however we have to manually remove the old release tag as re-assigning a pre-existing tag will cause the prepare phase to fail.
+    login to https://repository.apache.org/  with your Apache credentials
+    select the apacheedgent-#### staging repository
+    click on the Drop button
 
-As soon as the tag is removed, the issues can be addressed and as soon all is done, the process can be continued from `Preparing a release`.
+Remove the release tag:
+
+    git push --delete origin <tag>   # delete the remote tag
+    git tag --delete <tag>           # delete the local tag
+
+Issues can now be addressed, typically on the release branch, and as soon all is ready, the process can be continued from `Preparing the Release Branch`.
+
+== Cleanup Hints
+
+If you wish to completely reset your repository back to the way it was before doing any of these release process steps it can be done with a little work.
+
+Due to the way that the plugin works, even creating the release branch results in changes committed and (auto) pushed to the `develop` branch (advancing the poms Edgent versions to the next development version).  Sigh.
+
+Here's what you'll need to delete/undo:
+
+* remove the release tag locally and remotely (see `Actions if the vote failed`)
+* remove the release branch locally and remotely
+* backup the head of the develop branch to undo the `release:branch` commits
+
+Remove the release branch locally and remotely (be sure :-)
+
+    git push --delete origin <branch-name>  # remote
+    git branch -D <branch-name>             # local
+    
+NOTE: See INFRA-15777 for an ASF / GitHub sync bug that doesn't push branch deletions to the mirrored repo.
+    
+WARNING: before backing up the head of the develop branch be sure to verify that undesired commits are the latest commits there and verify the number of them!
+E.g., review https://github.com/apache/incubator-edgent/commits/develop
+The two `release:branch` created commits have the comments:
+* `[maven-release-plugin] prepare for the next development iteration`
+* `[maven-release-plugin] prepare branch release/<major>.<minor>`
+
+Backup the head of the develop branch two commits
+
+    git checkout develop
+    git pull                # ensure up to date
+    git reset --hard HEAD^  # the "prepare for the next..." one
+    git reset --hard HEAD^  # the "prepare branch ..." one
+    git push   #  think you'll need to add --force
+

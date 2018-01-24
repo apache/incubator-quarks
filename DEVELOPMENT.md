@@ -48,6 +48,8 @@ The `develop` branch is used for development.  Jenkins is setup to build this br
 
 The `master` branch contains released code. Releases are published to the ASF Nexus Releases Repository (https://repository.apache.org/content/repositories/releases). The Releases repository is automatically mirrored to the Maven Central Repository.
 
+See `src/site/asciidoc/releasing.adoc` for a more complete overview of the branches and their content.  The Release Manager's Guide may also add some clarity (https://cwiki.apache.org/confluence/display/EDGENT/Release+Manager%27s+Guide)
+
 ## Setup
 
 Once you have forked the repository and created your local clone you need to download
@@ -372,7 +374,7 @@ following can be used:
 
 To generate this javadoc for a release, in the clone you're doing
 the release in, and after the `release:perform`, 
-cd to the release's `target/checkout` directory and to the above cmds
+cd to the release's `target/checkout` directory and perform the above cmds
 
 Or, create a new clone from the release's tag
 (`git clone --branch edgent-<ver> the-https-repo-url tmp-javadoc-clone`)
