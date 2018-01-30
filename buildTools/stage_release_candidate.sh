@@ -67,7 +67,7 @@ confirm "Proceed with staging for ${RC_TAG}?" || exit
 # with the switch to the maven release plugin, only the .asc file
 # is generated, not the checksum files.
 # generate/update them now.
-${BUILDTOOLS_DIR}/make_checksums.sh target
+${BUILDTOOLS_DIR}/make_checksums.sh ${BUNDLE_DIR}
 
 # Offer to do svn checkout if needed
 if [ ! -d ${SVN_DEV_EDGENT}/.svn ]; then
@@ -88,6 +88,10 @@ echo "Checking the svn status of ${SVN_DEV_EDGENT}:"
 (cd ${SVN_DEV_EDGENT}; svn status)
 echo
 confirm "Is the svn status ok to continue (blank / nothing reported) ?" || exit
+
+echo ""
+echo "Updating KEYS..."
+(set -x; svn update ${SVN_DEV_EDGENT}/KEYS)
 
 # Create this structure in the Edgent dev svn tree
 #
