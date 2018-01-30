@@ -37,7 +37,7 @@ handleHelp "$@"
 
 MK_CLONE=
 if [ "$1" == "--createClone" ]; then
-  MK_CLONE=1
+  MK_CLONE=1; shift
 fi
 
 requireArg "$@"
