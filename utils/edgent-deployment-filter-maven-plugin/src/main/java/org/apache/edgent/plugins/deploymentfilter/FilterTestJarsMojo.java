@@ -36,7 +36,7 @@ import java.util.List;
  * but before the deploy, which is the phase we don't want the artifact to be handled.
  */
 @Mojo( name = "filter-test-jars", defaultPhase = LifecyclePhase.INSTALL )
-public class DeploymentFilterMojo
+public class FilterTestJarsMojo
     extends AbstractMojo
 {
 
@@ -46,16 +46,23 @@ public class DeploymentFilterMojo
     public void execute()
         throws MojoExecutionException
     {
+        // Find all 'test-jar' artifacts.
+        // (This has to be done in separate loops in order to prevent
+        // concurrent modification exceptions.
         List<Artifact> toBeRemovedArtifacts = new LinkedList<Artifact>();
         for(Artifact artifact : project.getAttachedArtifacts()) {
             if("test-jar".equals(artifact.getType())) {
                 toBeRemovedArtifacts.add(artifact);
             }
         }
-        for(Artifact toBeRemovedArtifact : toBeRemovedArtifacts) {
-            getLog().info(" - Excluding test-jar artifact " + toBeRemovedArtifact.getArtifactId() +
-                " from deployment.");
-            project.getAttachedArtifacts().remove(toBeRemovedArtifact);
+
+        // Remove all of them from the list of attached artifacts.
+        if(!toBeRemovedArtifacts.isEmpty()) {
+            for (Artifact toBeRemovedArtifact : toBeRemovedArtifacts) {
+                getLog().info(" - Excluding test-jar artifact " + toBeRemovedArtifact.getArtifactId() +
+                    " from deployment.");
+                project.getAttachedArtifacts().remove(toBeRemovedArtifact);
+            }
         }
     }
 }

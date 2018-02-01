@@ -505,7 +505,7 @@
         <version>1.0.0-SNAPSHOT</version>
         <executions>
           <execution>
-            <id>strip-test-jars</id>
+            <id>filter-test-jars</id>
             <phase>install</phase>
             <goals>
               <goal>filter-test-jars</goal>
