@@ -40,17 +40,29 @@
 
 . `dirname $0`/common.sh
 
-setUsage "`basename $0` [--findmode {build|nfilters}] [--check {j8|j7|android},...] edgent-ver base-release-dir"
+setUsage "`basename $0` [--findmode {build|build-release|nfilters}] [--check {j8|j7|android},...] edgent-ver base-release-dir"
 handleHelp "$@"
 
+IS_RELEASE=
 FIND_MODE=build
 if [ "$1" == "--findmode" -a $# -gt 1 ] ; then
     FIND_MODE=$2; shift; shift
+    if [ "${FIND_MODE}" = "build-release" ]; then
+        FIND_MODE=build
+        IS_RELEASE=1
+    fi
 fi
 
 CHECK_CFG=j8,j7,android
 if [ "$1" == "--check" -a $# -gt 1 ] ; then
     CHECK_CFG=$2; shift; shift
+fi
+
+INCL_SRCS_JAR=
+INCL_JAVADOC_JAR=
+if [ "${IS_RELEASE}" != "" ]; then
+    INCL_SRCS_JAR=1
+    INCL_JAVADOC_JAR=1
 fi
 
 requireArg "$@"
@@ -80,15 +92,39 @@ function getExpJarsPath() { # $1 = platform-id {"",std,j8,j7,android}
     echo ${FILE} 
 }
 
+function getPackage() {  # $1 X-Y-Z... return X-Y-Z
+    ID="$1"
+    PKG=`echo ${ID} | sed -e 's/^\([^-]*-[^-]*-[^-]*\)-.*/$1/'`
+    echo "${PKG}"
+} 
+
+function getPackagePrefix() {  # $1 X-Y-Z... return X-Y
+    ID="$1"
+    PREFIX=`echo ${ID} | sed -e 's/^\([^-]*-[^-]*\)-.*/\1/'`
+    echo "${PREFIX}"
+} 
+
 # get list of platform's expected jars leafnames
 function getExpJarsList() {  # $1 platform-id {j8,j7,android} $2 VER
     ID="$1"
     VER="$2"
     FILE=`getExpJarsPath ${ID}`
     # handle leading whitespace, ws-only lines, comment lines, trailing comments
-    # EXP_JARS=`cat ${FILE} | sed -e '/^[ \t]*$/d' -e '/^[ \t]*#/d' `
     EXP_JARS=`cat ${FILE} | sed -e 's/^[ \t]*//' -e '/^#/d' -e 's/[ \t]*#.*$//' -e 's/[ \t]*$//' `
-    EXP_JARS=`for i in ${EXP_JARS} ; do echo ${i} | sed -e "s/{VER}/${VER}/g" ; done`
+    EXP_JARS=`for i in ${EXP_JARS} ; do 
+        echo ${i} | sed -e "s/{VER}/${VER}/g"
+
+        # expect ...-sources.jar and ...-javadoc.jar if so directed 
+        if [ "${INCL_SRCS_JAR}" != "" ]; then
+            echo ${i} | sed -e "s/{VER}/${VER}-sources/g" -e 's/.war$/.jar/'
+        fi
+        if [ "${INCL_JAVADOC_JAR}" != "" ]; then
+            PREFIX=$(getPackagePrefix ${i})
+            if [ ${ID} = "j8" -o "${PREFIX}" = "edgent-android" ]; then
+                echo ${i} | sed -e "s/{VER}/${VER}-javadoc/g" -e 's/.war$/.jar/'
+            fi
+        fi
+    done`
     echo "${EXP_JARS}"
 }
 
@@ -99,11 +135,13 @@ function findBuildJars() { # $1 BASE-DIR
     # ACTUAL - when scanning built source tree's "target" dirs,
     # need to exclude those
     #    embedded in war (under WEB-INF)
-    #    test classes jars
+    #    test classes jars (shouldn't be released)
     #    under component's target test-resources or classes (e.g., a war)
-    #    test components
-    #    connectors-websocket-server (test) component
-    #    for J8, those under platforms
+    #    test components (not released)
+    #    connectors-websocket-server (test) component (not released)
+    #    for J8, those under platforms (each platform handled separately)
+    #    those under target/checkout  - release:perform created
+    #    edgent-distribution-*-sources.jar (not released; our release:prepare use creates it)
     #
     ACTUAL="`find ${BASE_DIR} -name \*${EDGENT_VER}*.[jw]ar \
          | grep /target/ \
@@ -113,7 +151,9 @@ function findBuildJars() { # $1 BASE-DIR
          | grep -v /classes/ \
          | grep -v /retrolambda/ \
          | grep -v '/test/.*/target/' \
+         | grep -v '/target/checkout/' \
          | grep -v '/edgent-connectors-websocket-server-' \
+         | grep -v 'edgent-distribution-.*-sources.jar' \
          `"
     if [ "`echo ${BASE_DIR} | grep platforms`" = "" ] ; then
         ACTUAL="`for i in ${ACTUAL} ; do echo ${i} | grep -v /platforms/ ; done`" 
@@ -159,16 +199,16 @@ function checkJars() { # $1 EXP-JARS $2 ACTUAL-JAR-PATHS
     echo "##### Checking correct Jars are present ..."
     ACTUAL="`for i in ${ACTUAL} ; do echo $(basename ${i}) ; done | sort`" # get basename
     EXPECT="`for i in ${EXPECT} ; do echo "${i}" ; done | sort`"
-    
-    ACT_FILE=/tmp/$$-ACTUAL
-    for i in ${ACTUAL} ; do echo $i >> ${ACT_FILE} ; done 
-    EXP_FILE=/tmp/$$-EXPECT
-    for i in ${EXPECT} ; do echo $i >> ${EXP_FILE} ; done
-    
-    [ "${ACTUAL}" = "${EXPECT}" ] || FEC=1
-    (set -x; comm -3 ${ACT_FILE} ${EXP_FILE} )
-    
-    rm  ${ACT_FILE} ${EXP_FILE}
+    if [ "${ACTUAL}" != "${EXPECT}" ]; then
+        FEC=1
+        ACT_FILE=/tmp/$$-ACTUAL
+        for i in ${ACTUAL} ; do echo $i >> ${ACT_FILE} ; done 
+        EXP_FILE=/tmp/$$-EXPECT
+        for i in ${EXPECT} ; do echo $i >> ${EXP_FILE} ; done
+        echo "##### Any unexpected Actuals will be in the left column and missing Expecteds in the right"
+        (set -x; comm -3 ${ACT_FILE} ${EXP_FILE} )
+        rm  ${ACT_FILE} ${EXP_FILE}
+    fi
     echo "##### done"
     
     if [ ${FEC} = 0 ] ; then 
@@ -210,6 +250,6 @@ echo
 if [ ${EC} = 0 ] ; then 
     echo "##### Checking all platform Jars OK"
 else
-    echo "##### Checking all platform Jars FAILED"
+    echo "##### Checking all platform Jars FAILED (review output)"
     exit 1
 fi
