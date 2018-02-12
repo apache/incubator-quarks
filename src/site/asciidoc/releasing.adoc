@@ -101,7 +101,7 @@ Create the release branch:
 
 Notes:
 
-* -DbranchName : the name of the release branch
+* -DbranchName : the name of the release branch - release/<major>.<minor>
 * -DautoVersionSubmodules : all children modules inherit the the top level pom's version
 * -P platform-android,... : these profiles are required so that all modules are processed
 
@@ -128,6 +128,21 @@ Or to restart the `prepare` from the beginning:
     mvn release:prepare -Dresume=false ...
 
 See http://maven.apache.org/maven-release/maven-release-plugin/examples/prepare-release.html
+
+=== Pre-check created Jars
+
+It's best to run check_jars.sh prior to creating (and staging) the 
+Release Candidate. 
+
+    buildTools/check_jars.sh --findmode build-release 1.2.0 .
+    
+If there are any problems raise the issues on the "[DISCUSS]" thread.  If the decision is to make changes now, address them, remove the release tag and redo the Prepare.
+    
+    Remove the release tag:
+
+    git push --delete origin <tag>   # delete the remote tag
+    git tag --delete <tag>           # delete the local tag
+    
 
 == Create and Stage the Release Candidate
 
@@ -201,16 +216,11 @@ If another artifact is subsequently uploaded for an Edgent groupId, Nexus will c
 
 == Stage the Source Release Artifacts
 
-See the Release Manager's Guide for staging the release candidate's source release
-artifacts to the ASF release staging repository https://dist.apache.org/repos/dist/dev/incubator/edgent.
+See the Release Manager's Guide to continue the workflow at "Staging the Source Release Candidate".  You will be redirected back here after the RC vote is complete.
 
-== Do the Release Candidate Voting
+== Actions if the RC vote passed
 
-See the Release Manager's Guide for the vote process and info.  Once the vote is complete the Guide will direct you back here to continue.
-
-== Actions if the vote passed
-
-If the vote passed and the staged release candidate should be officially released.
+If the RC vote passed the staged release candidate should be officially released.
 
 Officially release the Nexus staging repository:
 
@@ -222,7 +232,7 @@ After this Nexus takes care of all further steps of copying the artifacts to the
 
 See the Release Manager's Guide for information on publishing the staged source release bundles and merging an approved release to the `master`, and possibly `develop`, branches.
 
-== Actions if the vote failed
+== Actions if the RC vote failed
 
 If something popped up during the vote on the release and the release candidate has to be dropped, two things have to be done:
 
@@ -246,7 +256,7 @@ Issues can now be addressed, typically on the release branch, and as soon all is
 
 == Cleanup Hints
 
-If you wish to completely reset your repository back to the way it was before doing any of these release process steps it can be done with a little work.
+If you wish to completely reset the source repository back to the way it was before doing any of these release process steps it can be done with a little work.
 
 Due to the way that the plugin works, even creating the release branch results in changes committed and (auto) pushed to the `develop` branch (advancing the poms Edgent versions to the next development version).  Sigh.
 
@@ -258,6 +268,7 @@ Here's what you'll need to delete/undo:
 
 Remove the release branch locally and remotely (be sure :-)
 
+	# CAUTION: make sure you're deleting an unwanted release branch!
     git checkout develop
     git push --delete origin <branch-name>  # remote
     git branch -D <branch-name>             # local
