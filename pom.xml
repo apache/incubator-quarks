@@ -499,6 +499,21 @@
         </executions>
       </plugin>
 
+      <plugin>
+        <groupId>org.apache.edgent.plugins</groupId>
+        <artifactId>edgent-deployment-filter-maven-plugin</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <executions>
+          <execution>
+            <id>filter-test-jars</id>
+            <phase>install</phase>
+            <goals>
+              <goal>filter-test-jars</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
       <!-- Configure the Site generation -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
