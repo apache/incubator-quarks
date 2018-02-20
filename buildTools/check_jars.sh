@@ -222,6 +222,10 @@ function checkJars() { # $1 EXP-JARS $2 ACTUAL-JAR-PATHS
 
 EC=0
 
+echo "##### Checking jar meta-data (LICENSE,NOTICE,DISCLAIMER,DEPENDENCIES)"
+echo "##### and correct jars are present (extra jars: ~TODO)"
+echo
+
 if [ "" != "$(echo $CHECK_CFG | grep j8)" ] ; then
     echo
     echo "##### Checking J8 jars ..."
