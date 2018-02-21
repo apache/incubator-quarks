@@ -59,13 +59,15 @@ A `release/major.minor` branch is created from the `develop` branch (e.g. `relea
 
 When the release branch is believed to be ready, the branch is "prepared" for released: the poms Edgent version are changed to a non-snapshot version (e.g., `1.2.0-SNAPSHOT` => `1.2.0`), the branch is tagged (e.g., `edgent-1.2.0`), and then the poms are set to the next bugfix release version (e.g., `1.2.1-SNAPSHOT`).
 
-The release candidate is built, tested and staged to Nexus and the ASF source release staging repository.  After a successful vote, the staged release candidate artifacts are published.
+The release candidate is built from the tag, tested and staged to Nexus and the ASF source release staging repository.  After a successful vote, the staged release candidate artifacts are published.
 
 Ultimately, the release tag's (e.g., `edgent-1.2.0`) commit must be merged to `master`. Should changes be added to the release branch to stabilize/fix it, the commits need to be propagated to `develop` using a cherry-pick-merge. The release branch / release tag is NOT merged to `develop`.
 
 The release branch is maintained after the release.  Should a bug-fix release be required, work for the bug-fix release can be done on the release branch or in feature branches that are merged to the release branch after they are finished.  A separate bug-fix branch is NOT created.  Bug fix commits need to be propagated to `develop` using a cherry-pick-merge.
 
-The release branch poms progress as bug-fix versions are prepared: `maj.min.1-SNAPSHOT`, `maj.min.1`, `maj.min.2-SNAPSHOT`, ... Individual fixes for the bug-fix release will typically need to be propagated to `develop` using cherry-pick-merge.  If a bug-fix is needed for anything earlier than the most recent `major.minor` release, the fix will need to be cascaded all the way up to the most recent release branch and then propagated to `develop`. The release branch is NOT merged to `develop`. A bug-fix release MAY ONLY be merged to `master` if the bug-fix release's predecessor is the latest release on `master`.
+The release branch poms progress as bug-fix versions are prepared: `maj.min.1-SNAPSHOT`, `maj.min.1`, `maj.min.2-SNAPSHOT`, ... Individual fixes for the bug-fix release will typically need to be propagated to `develop` using cherry-pick-merge.  If a bug-fix is needed for anything earlier than the most recent `major.minor` release, the fix will need to be cascaded all the way up to the most recent release branch and then propagated to `develop`. The release branch is NOT merged to `develop`. 
+
+Merging a bug-fix release to `master` is a bad idea except for a project with a very constrained and sequential release progression, i.e., only ever supporting and bug-fixing the most recent release.  Otherwise the `master` branch can/will contain only *some* bugfix releases. That will cause confusion - more than the confusion of master not containing bugfix releases? ugh.  A bug-fix release MAY ONLY be merged to `master` if the bug-fix release's predecessor is the latest release on `master`.
 
 NOTE: In the following steps, adjust the versions and tags as appropriate for the release.
 
@@ -109,19 +111,19 @@ Notes:
 
 In this phase on the release branch, the poms Edgent versions are changed to the specified release version, a full build with all tests is run, and a commit is done with this state and tagged. After that the release branch poms Edgent versions are set to the first/next specified `major.minor.bugfix-SNAPSHOT` bugfix development version and this update is committed.  The commits are automatically pushed.
 
+WARNING: at this moment the new edgent-deployment-filter-maven-plugin (EDGENT-440) is not yet released and the release:prepare below will fail with `There are still some remaining snapshot dependencies.`  To work around that for the moment, add `-DignoreSnapshots` to the `mvn release:prepare` below.  I'm not sure but prior to doing the prepare you may need to build the plugin and install it in your maven cache (`cd utils/edgent-deployment-filter-maven-plugin; mvn install`).
+
 Prepare the release branch:
 
     git checkout release/1.2  # the branch from "Creating the Release Branch"
-    
-    # Hmm... does -DskipTests work with the following?  Tests take a long
-    # time and normally one will go through it again in the Perform step.
     
     mvn release:prepare -DreleaseVersion=1.2.0 -Dtag=edgent-1.2.0 -DdevelopmentVersion=1.2.1-SNAPSHOT -DautoVersionSubmodules=true -P platform-android,platform-java7,distribution 
     
     git status  # should report nothing ahead/behind. Do 'git push' if needed.
 
-If you need to restart because of error or the process is cancelled, then run the
-`release:prepare` again to pick up where it left off.
+Now would be a good time to update the "[DISCUSS]" thread with the branch and tag info if you so choose.
+
+If you need to restart because of error or the process is cancelled, then run the `release:prepare` again to pick up where it left off.
 
 Or to restart the `prepare` from the beginning:
 
@@ -135,16 +137,15 @@ It's best to run check_jars.sh prior to creating (and staging) the
 Release Candidate. 
 
     buildTools/check_jars.sh --findmode build-release 1.2.0 .
-    
+
 If there are any problems raise the issues on the "[DISCUSS]" thread.  If the decision is to make changes now, address them, remove the release tag and redo the Prepare.
     
-    Remove the release tag:
-
+    # To Remove the release tag for a redo
     git push --delete origin <tag>   # delete the remote tag
     git tag --delete <tag>           # delete the local tag
     
 
-== Create and Stage the Release Candidate
+== Create and Stage the Maven Release Candidate
 
 In this phase on the previously prepared release branch, the release candidate is built, tested and staged to the remote Maven (Nexus) repository configured in the pom.
 
@@ -165,7 +166,7 @@ After this step is successful, a Nexus staging repository named `orgapacheedgent
 
 === Unwanted Staged Artifacts
 
-The `release:perform` stages numerous undesired artifacts.  See EDGENT-440.
+The `release:perform` stages some undesired artifacts.  See EDGENT-440.
 
 TODO: what's needed to manually delete these? "Delete" each via the UI?
 What about the state of the metadata artifacts, do they reference those deleted items?
@@ -266,7 +267,7 @@ Here's what you'll need to delete/undo:
 * remove the release branch locally and remotely
 * backup the head of the develop branch to undo the `release:branch` commits
 
-Remove the release branch locally and remotely (be sure :-)
+To Remove the release branch locally and remotely (be sure :-)
 
 	# CAUTION: make sure you're deleting an unwanted release branch!
     git checkout develop
@@ -281,7 +282,7 @@ The two `release:branch` created commits have the comments:
 * `[maven-release-plugin] prepare for the next development iteration`
 * `[maven-release-plugin] prepare branch release/<major>.<minor>`
 
-Backup the head of the develop branch two commits
+To Backup the head of the develop branch two commits
 
     git checkout develop
     git pull                # ensure up to date

@@ -467,6 +467,9 @@ information may help to better understand it.
     configuration file noted above.
   * src/assembly/distribution.xml - additional configuration info
   * src/main/resources/README - source of the file in the bundle
+* `utils/edgent-deployment-filter-maven-plugin` - a plugin for eliminating
+  the publishing of test related jars during a release.  See EDGENT-440.
+  The plugin is built and released separately.  
     
 
 ## Testing the Kafka Connector
