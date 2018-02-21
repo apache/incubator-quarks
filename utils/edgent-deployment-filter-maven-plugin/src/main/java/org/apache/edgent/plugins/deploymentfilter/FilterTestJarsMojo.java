@@ -51,7 +51,8 @@ public class FilterTestJarsMojo
         // concurrent modification exceptions.
         List<Artifact> toBeRemovedArtifacts = new LinkedList<Artifact>();
         for(Artifact artifact : project.getAttachedArtifacts()) {
-            if("test-jar".equals(artifact.getType())) {
+            if("test-jar".equals(artifact.getType()) ||
+                ("jar.asc".equals(artifact.getType()) && "tests".equals(artifact.getClassifier()))) {
                 toBeRemovedArtifacts.add(artifact);
             }
         }
