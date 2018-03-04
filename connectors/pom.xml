@@ -49,6 +49,7 @@
     <module>websocket-jetty</module>
     <module>websocket-misc</module>
     <module>websocket-server</module>
+    <module>rabbitmq</module>
   </modules>
 
 </project>
