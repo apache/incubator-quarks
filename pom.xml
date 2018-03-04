@@ -505,11 +505,28 @@
         <version>1.0.0-SNAPSHOT</version>
         <executions>
           <execution>
-            <id>filter-test-jars</id>
+            <id>filter-deploy-artifacts</id>
             <phase>install</phase>
             <goals>
-              <goal>filter-test-jars</goal>
+              <goal>filter-deploy-artifacts</goal>
             </goals>
+            <configuration>
+              <filterRules>
+                <!-- Filter out all test-jars -->
+                <filterRule>
+                  <type>test-jar</type>
+                </filterRule>
+                <!-- Filter out the signatures of all test-jars -->
+                <filterRule>
+                  <type>jar.asc</type>
+                  <classifier>tests</classifier>
+                </filterRule>
+                <!-- Filter out any source release archives -->
+                <filterRule>
+                  <classifier>source-release</classifier>
+                </filterRule>
+              </filterRules>
+            </configuration>
           </execution>
         </executions>
       </plugin>
