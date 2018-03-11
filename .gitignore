@@ -38,3 +38,6 @@ hs_err_pid*
 
 # Emacs
 *~
+
+# Mac os x
+*.DS_Store
