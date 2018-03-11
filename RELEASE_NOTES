@@ -5,7 +5,8 @@ TODO - summary
 New Features
 --------------------
 TODO
-EDGENT-439  Optionally specify TCP port for Edgent console
+EDGENT-439 Optionally specify TCP port for Edgent console
+EDGENT-447 Add RabbitMQ connector
 
 Incompatible API changes
 ------------------------

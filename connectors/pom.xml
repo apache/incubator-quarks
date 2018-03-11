@@ -43,13 +43,13 @@
     <module>kafka</module>
     <module>mqtt</module>
     <module>pubsub</module>
+    <module>rabbitmq</module>
     <module>serial</module>
     <module>websocket</module>
     <module>websocket-base</module>
     <module>websocket-jetty</module>
     <module>websocket-misc</module>
     <module>websocket-server</module>
-    <module>rabbitmq</module>
   </modules>
 
 </project>
