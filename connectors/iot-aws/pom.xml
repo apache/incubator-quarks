@@ -22,35 +22,34 @@
 
   <parent>
     <groupId>org.apache.edgent</groupId>
-    <artifactId>edgent-parent</artifactId>
+    <artifactId>edgent-connectors</artifactId>
     <version>1.3.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>edgent-connectors</artifactId>
-  <packaging>pom</packaging>
+  <artifactId>edgent-connectors-iot-aws</artifactId>
 
-  <name>Apache Edgent (Java 8): Connectors</name>
+  <name>Apache Edgent (Java 8): Connectors: Amazon IoT Platform</name>
 
-  <modules>
-    <module>command</module>
-    <module>common</module>
-    <module>csv</module>
-    <module>file</module>
-    <module>http</module>
-    <module>iot</module>
-    <module>iot-aws</module>
-    <module>iotp</module>
-    <module>jdbc</module>
-    <module>kafka</module>
-    <module>mqtt</module>
-    <module>pubsub</module>
-    <module>rabbitmq</module>
-    <module>serial</module>
-    <module>websocket</module>
-    <module>websocket-base</module>
-    <module>websocket-jetty</module>
-    <module>websocket-misc</module>
-    <module>websocket-server</module>
-  </modules>
-
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.edgent</groupId>
+      <artifactId>edgent-api-function</artifactId>
+      <version>1.3.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.edgent</groupId>
+      <artifactId>edgent-api-topology</artifactId>
+      <version>1.3.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.edgent</groupId>
+      <artifactId>edgent-connectors-iot</artifactId>
+      <version>1.3.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-iot-device-sdk-java</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+  </dependencies>
 </project>
