@@ -53,4 +53,15 @@
     </dependency>
   </dependencies>
 
+  <dependencyManagement>
+    <dependencies>
+      <!-- The default version pulled in by the android dependency has vulnerabilities -->
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>4.5.5</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
 </project>

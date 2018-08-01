@@ -26,9 +26,9 @@
     <version>1.3.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>edgent-console-server</artifactId>
+  <artifactId>edgent-console-server-jetty</artifactId>
 
-  <name>Apache Edgent (Java 8): Console: Server</name>
+  <name>Apache Edgent (Java 8): Console: Server (Jetty)</name>
 
   <build>
     <resources>

@@ -145,7 +145,7 @@ and its features are supported in that environment.
 
 | Jar                               | Java 8 SE | Java 7 SE | Android | Notes |
 |-----------------------------------|-----------|-----------|---------|-------|
-|edgent-console-server-&lt;ver&gt;.jar    | yes       | yes       | no      | Uses JMX, Servlet |
+|edgent-console-server-jetty-&lt;ver&gt;.jar    | yes       | yes       | no      | Uses JMX, Servlet |
 |edgent-console-servlets-&lt;ver&gt;.war  | yes       | yes       | no      | Uses JMX, Servlet |
 
 ### Android

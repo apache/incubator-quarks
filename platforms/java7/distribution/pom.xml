@@ -205,8 +205,8 @@
 
     <!-- Include console-servlets.war to enable a user to run
          it in their own Servlets engine.
-         It's bundled in the edgent-console-server.jar.
-         Note, edgent-console-server is pulled in as a dependency
+         It's bundled in the edgent-console-server-jetty.jar.
+         Note, edgent-console-server-jetty is pulled in as a dependency
          of the development provider.
     -->
     <dependency>

@@ -129,6 +129,14 @@
           </execution>
         </executions>
       </plugin>
+      <!-- Additionally create a jar version containing only the classes -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <attachClasses>true</attachClasses>
+        </configuration>
+      </plugin>
       <!-- Download JavaScript form GitHub -->
       <!--plugin>
         <groupId>com.googlecode.maven-download-plugin</groupId>

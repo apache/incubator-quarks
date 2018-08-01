@@ -1,0 +1,42 @@
+
+===============================================================================
+APACHE EDGENT SUBCOMPONENTS:
+
+This binary includes a number of subcomponents with separate
+copyright notices and license terms.  Your use of this binary
+is subject to the terms and conditions of the following licenses.
+
+===============================================================================
+License: Apache License Version 2.0
+For details, see META-INF/licenses/apache-license-version-2.0.txt
+
+gson (com.google.code.gson:gson:2.2.4)
+metrics-core (io.dropwizard.metrics:metrics-core:3.1.2)
+
+===============================================================================
+License: MIT
+
+jquery (org.webjars:jquery:1.11.2)
+    For details, see META-INF/licenses/jquery-1_11_2-MIT.txt.
+
+jquery-ui (org.webjars:jquery-ui:1.11.4)
+    For details, see META-INF/licenses/jquery-ui-1_11_4-MIT.txt.
+
+d3.legend.js (included inside the resources/servlets.war!/js/ext/d3.legend/d3.legend.js)
+    https://gist.githubusercontent.com/ZJONSSON/3918369/raw/bf9bce6b68a3b70f87450f155436ca4a84af1ba4/d3.legend.js
+    With Edgent specific modifications.
+    For details, see META-INF/licenses/d3.legend-MIT.txt.
+
+===============================================================================
+License: BSD 3-Clause
+
+d3 (org.webjars.bower:d3:3.3.9)
+    For details, see META-INF/licenses/d3-3_3_9-BSD.txt.
+
+===============================================================================
+License: BSD 2-Clause
+
+d3-plugins-sankey (org.webjars.bower:d3-plugins-sankey:1.1.0)
+    For details, see META-INF/licenses/d3-plugins-sankey-1_1_0-BSD.txt.
+
+===============================================================================

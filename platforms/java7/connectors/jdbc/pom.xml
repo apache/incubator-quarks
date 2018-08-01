@@ -100,6 +100,27 @@
           </execution>
         </executions>
       </plugin>
+      <!--
+        We are using derby for some tests. Unfortunately the latest version
+        runnable with Java 7 contains a vulnerability, making it problematic
+        to use in an application.
+
+        As we are simply using derby inside a test and not using it in production
+        code, we have to tell the audit tool not to complain about this.
+      -->
+      <plugin>
+        <groupId>org.sonatype.ossindex.maven</groupId>
+        <artifactId>ossindex-maven-plugin</artifactId>
+        <configuration>
+          <excludeCoordinates>
+            <exclude>
+              <groupId>org.apache.derby</groupId>
+              <artifactId>derby</artifactId>
+              <version>10.12.1.1</version>
+            </exclude>
+          </excludeCoordinates>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
@@ -146,7 +167,7 @@
     <dependency>
       <groupId>org.apache.derby</groupId>
       <artifactId>derby</artifactId>
-      <!--  requires java8: <version>10.13.1.1</version-->
+      <!--  requires java8: <version>10.14.2.0</version-->
       <version>10.12.1.1</version> <!-- latest Java 6 and Higher -->
       <scope>test</scope>
     </dependency>

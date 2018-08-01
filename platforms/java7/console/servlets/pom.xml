@@ -115,6 +115,8 @@
         <version>2.6</version>
         <configuration>
           <failOnMissingWebXml>false</failOnMissingWebXml>
+          <!-- Additionally create a jar version containing only the classes -->
+          <attachClasses>true</attachClasses>
         </configuration>
       </plugin>
     </plugins>

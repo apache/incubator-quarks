@@ -446,7 +446,7 @@ information may help to better understand it.
       license text as described above.  Its own LICENSE and NOTICE is
       copied from the respective files in its `src/main/remote-resources/META-INF`.
       <b>There are copies of those in under the java7 platform as well.</b>
-    * `edgent-console-server:jar` bundles the console-servlets war and as such
+    * `edgent-console-server-jetty:jar` bundles the console-servlets war and as such
       requires the same LICENSE/NOTICE/licenses treatment as the servlets war.
       <b>There are copies of its LICENSE/NOTICE in its  `src/main/remote-resources/META-INF`.
       There are copies of those in under the java7 platform as well.</b>

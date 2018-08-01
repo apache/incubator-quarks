@@ -26,9 +26,13 @@
     <version>1.3.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>edgent-console-server</artifactId>
+  <artifactId>edgent-console-server-tomcat</artifactId>
 
-  <name>Apache Edgent (Java 7): Console: Server</name>
+  <name>Apache Edgent (Java 7): Console: Server (Tomcat)</name>
+
+  <properties>
+    <tomcat.version>7.0.90</tomcat.version>
+  </properties>
 
   <build>
     <resources>
@@ -46,29 +50,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
-          <!--
-           Copy the servlets.war into the build output so it is embedded as
-           resource into the jar.
-          -->
-          <execution>
-            <id>copy-war</id>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>copy</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>org.apache.edgent.java7</groupId>
-                  <artifactId>edgent-console-servlets</artifactId>
-                  <version>${project.version}</version>
-                  <type>war</type>
-                  <outputDirectory>${project.build.outputDirectory}/resources</outputDirectory>
-                  <destFileName>servlets.war</destFileName>
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
           <execution>
             <id>copy</id>
             <phase>compile</phase>
@@ -112,8 +93,11 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
-            <!-- needed because of HttpServer impl and HttpServerPortTest -->
-            <reuseForks>false</reuseForks>
+          <!-- needed because of HttpServer impl and HttpServerPortTest -->
+          <reuseForks>false</reuseForks>
+          <!-- Make tomcat start within the target directory -->
+          <workingDirectory>${project.build.directory}</workingDirectory>
+          <basedir>${project.build.directory}</basedir>
         </configuration>
       </plugin>
     </plugins>
@@ -135,63 +119,26 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-http</artifactId>
-      <version>${jetty.version}</version>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
     </dependency>
     <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-io</artifactId>
-      <version>${jetty.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-security</artifactId>
-      <version>${jetty.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-server</artifactId>
-      <version>${jetty.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-servlet</artifactId>
-      <version>${jetty.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-util</artifactId>
-      <version>${jetty.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-webapp</artifactId>
-      <version>${jetty.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-xml</artifactId>
-      <version>${jetty.version}</version>
+      <groupId>org.apache.tomcat.embed</groupId>
+      <artifactId>tomcat-embed-core</artifactId>
+      <version>${tomcat.version}</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.7.12</version>
+      <version>1.7.25</version>
     </dependency>
 
-    <!--
-        This artifact is needed by the maven-dependency-plugin
-        by marking this dependency optional, it is not included
-        in the resulting artifact, but Maven ensures it is built
-        prior to this module.
-    -->
     <dependency>
       <groupId>org.apache.edgent.java7</groupId>
       <artifactId>edgent-console-servlets</artifactId>
       <version>1.3.0-SNAPSHOT</version>
-      <type>war</type>
-      <optional>true</optional>
+      <classifier>classes</classifier>
     </dependency>
   </dependencies>
 

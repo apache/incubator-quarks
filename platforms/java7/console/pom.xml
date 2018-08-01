@@ -32,7 +32,9 @@
   <name>Apache Edgent (Java 7): Console</name>
 
   <modules>
-    <module>server</module>
+    <!--module>server-jetty</module>
+    <module>server-tomcat</module-->
+    <module>server-undertow</module>
     <module>servlets</module>
   </modules>
 
