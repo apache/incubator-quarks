@@ -39,8 +39,8 @@
   <inceptionYear>2016</inceptionYear>
 
   <scm>
-    <connection>scm:git:https://git-wip-us.apache.org/repos/asf/incubator-edgent.git</connection>
-    <developerConnection>scm:git:https://git-wip-us.apache.org/repos/asf/incubator-edgent.git</developerConnection>
+    <connection>scm:git:https://gitbox.apache.org/repos/asf/incubator-edgent.git</connection>
+    <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/incubator-edgent.git</developerConnection>
     <url>https://github.com/apache/incubator-edgent</url>
     <tag>HEAD</tag>
   </scm>
@@ -70,7 +70,8 @@
   <distributionManagement>
     <site>
       <id>apache.website</id>
-      <url>scm:git:https://git-wip-us.apache.org/repos/asf/incubator-edgent.git</url>
+      <!--TODO 8.1.19 jf: is this correct or is the -website missing?-->
+      <url>scm:git:https://gitbox.apache.org/repos/asf/incubator-edgent.git</url>
     </site>
   </distributionManagement>
 

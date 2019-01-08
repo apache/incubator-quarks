@@ -573,7 +573,7 @@ Search the code for org.slf4j.LoggerFactory to see a sample of its use.
 
 The Edgent code is in ASF resident git repositories:
 
-    https://git-wip-us.apache.org/repos/asf/incubator-edgent.git
+    https://gitbox.apache.org/repos/asf/incubator-edgent.git
 
 The repositories are mirrored on GitHub:
 
@@ -610,7 +610,7 @@ into the repo at the ASF. One way is described here:
 Notes with the above PR merge directions:
 
   * Use an HTTPS URL unless you have a SSH key setup at GitHub:
-    - `$ git remote add mirror https://github.com/apache/incubator-edgent.git`
+    - `$ git remote add mirror https://gitbox.apache.org/repos/asf/incubator-edgent.git`
 
 ## Using Eclipse
 

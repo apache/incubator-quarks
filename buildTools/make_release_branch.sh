@@ -32,7 +32,7 @@ set -e
 # start with "mgmt-edgent" as the builtTools scripts check for that
 # to help keep one on the right path, e.g.,
 #
-#   git clone https://git-wip-us.apache.org/repos/asf/incubator-edgent.git mgmt-edgent<version>
+#   git clone https://gitbox.apache.org/repos/asf/incubator-edgent.git mgmt-edgent<version>
 
 . `dirname $0`/common.sh
 

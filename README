@@ -20,7 +20,7 @@ Additional Information
 
 Apache Edgent is supported on several Java target platforms.
 For more information see JAVA_SUPPORT.md in the source tree
-or in the ASF git repository https://git-wip-us.apache.org/repos/asf/incubator-edgent.git
+or in the ASF git repository https://gitbox.apache.org/repos/asf/incubator-edgent.git
 or in the repository mirror at github https://github.com/apache/incubator-edgent.
 
 See DEVELOPMENT.md in this folder or 

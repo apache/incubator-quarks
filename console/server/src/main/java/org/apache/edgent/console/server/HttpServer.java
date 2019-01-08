@@ -41,7 +41,7 @@ public class HttpServer {
 
   private static final Logger logger = LoggerFactory.getLogger(HttpServer.class);
 
-	/**
+	/**J
 	 * The only constructor.  A private no-argument constructor.  Called only once from the static HttpServerHolder class.
 	 */
     private HttpServer() {

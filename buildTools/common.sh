@@ -25,7 +25,7 @@ EDGENT_ROOT_DIR=.
 # BUNDLE_DIR is results of maven release:perform's creation of release candidate
 BUNDLE_DIR=${EDGENT_ROOT_DIR}/target/checkout/target
 
-EDGENT_ASF_GIT_URL=https://git-wip-us.apache.org/repos/asf/incubator-edgent.git
+EDGENT_ASF_GIT_URL=https://gitbox.apache.org/repos/asf/incubator-edgent.git
 EDGENT_ASF_DIST_URL=https://www.apache.org/dist/incubator/edgent
 EDGENT_ASF_DIST_DYN_URL=https://www.apache.org/dyn/closer.cgi/incubator/edgent
 EDGENT_ASF_SVN_RELEASE_URL=https://dist.apache.org/repos/dist/release/incubator/edgent

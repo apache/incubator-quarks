@@ -77,7 +77,7 @@ Skip this if you already created the clone as directed in the Release Manager's 
 
 Create the clone:
 
-    git clone https://git-wip-us.apache.org/repos/asf/incubator-edgent.git mgmt-edgent-1.2.0
+    git clone https://gitbox.apache.org/repos/asf/incubator-edgent.git mgmt-edgent-1.2.0
     cd mgmt-edgent-1.2.0
 
 == Create the Release Branch
