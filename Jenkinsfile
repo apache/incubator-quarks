@@ -57,7 +57,9 @@ node('ubuntu') {
 
         stage ('Build Edgent') {
             echo 'Building Edgent'
-            sh "${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-android,platform-java7,distribution,toolchain -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true ${mavenGoal}"
+            withSonarQubeEnv('ASF Sonar Analysis') {
+                sh "${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-android,platform-java7,distribution,toolchain -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true ${mavenGoal}"
+            }
         }
 
         stage ('Build Site') {
