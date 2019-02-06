@@ -18,107 +18,253 @@
  *  limitations under the License.
  *
  */
-node('ubuntu') {
+pipeline {
 
-    currentBuild.result = "SUCCESS"
-
-    echo 'Building Branch: ' + env.BRANCH_NAME
-
-    // Setup the required environment variables.
-    def mvnHome = "${tool 'Maven 3 (latest)'}"
-    env.JAVA_HOME="${tool 'JDK 1.8 (latest)'}"
-    env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
-
-    // Make sure the feature branches don't change the SNAPSHOTS in Nexus.
-    def mavenGoal = "install"
-    def mavenLocalRepo = ""
-    if(env.BRANCH_NAME == 'develop') {
-        mavenGoal = "sonar:sonar deploy"
-    } else {
-        mavenLocalRepo = "-Dmaven.repo.local=${env.WORKSPACE}/.repository"
+    agent {
+        node {
+            label 'ubuntu'
+        }
     }
-    def mavenFailureMode = "" // consider "--fail-at-end"? Odd ordering side effects?
 
-    try {
-        /*stage ('Cleanup') {
-            echo 'Cleaning up the workspace'
-            deleteDir()
-        }*/
+    environment {
+        // It seems the login the jenkins slave uses, doesn't pick up the environment changes,
+        // so we have to try to manually add theme here.
+        MAVEN_HOME = '/opt/maven'
+        PATH = "${MAVEN_HOME}/bin:${env.PATH}"
 
-        stage ('Checkout') {
-            echo 'Checking out branch ' + env.BRANCH_NAME
-            checkout scm
+        PLC4X_BUILD_ON_JENKINS = true
+        JENKINS_PROFILE = 'jenkins-build'
+        // On non develop build we don't want to pollute the global m2 repo
+        MVN_LOCAL_REPO_OPT = '-Dmaven.repo.local=.repository'
+        // Test failures will be handled by the jenkins junit steps and mark the build as unstable.
+        MVN_TEST_FAIL_IGNORE = '-Dmaven.test.failure.ignore=true'
+
+        JAVA_HOME="${tool 'JDK 1.8 (latest)'}"
+    }
+
+    tools {
+        maven 'Maven 3 (latest)'
+        jdk 'JDK 1.8 (latest)'
+    }
+
+    options {
+        // Kill this job after one hour.
+        timeout(time: 1, unit: 'HOURS')
+        // When we have test-fails e.g. we don't need to run the remaining steps
+        skipStagesAfterUnstable()
+        buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '3'))
+    }
+
+    stages {
+        stage('Initialization') {
+            steps {
+                echo 'Building Branch: ' + env.BRANCH_NAME
+                echo 'Using PATH = ' + env.PATH
+            }
         }
 
-        stage ('Clean') {
-            echo 'Cleaning Edgent'
-            sh "${mvnHome}/bin/mvn ${mavenLocalRepo} -Pplatform-android,platform-java7,distribution clean"
+        stage('Cleanup') {
+            steps {
+                echo 'Cleaning up the workspace'
+                deleteDir()
+            }
         }
 
-        stage ('Build Edgent') {
-            echo 'Building Edgent'
-            withSonarQubeEnv('ASF Sonar Analysis') {
-                sh "${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-android,platform-java7,distribution,toolchain -Djava8.home=${env.JAVA_HOME} -Dedgent.build.ci=true ${mavenGoal}"
+        stage('Checkout') {
+            steps {
+                echo 'Checking out branch ' + env.BRANCH_NAME
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            when {
+                expression {
+                    env.BRANCH_NAME != 'develop'
+                }
+            }
+            steps {
+                echo 'Building'
+                sh 'mvn -P${JENKINS_PROFILE} ${MVN_TEST_FAIL_IGNORE} ${MVN_LOCAL_REPO_OPT} clean install'
+            }
+            post {
+                always {
+                    junit(testResults: '**/surefire-reports/*.xml', allowEmptyResults: true)
+                    junit(testResults: '**/failsafe-reports/*.xml', allowEmptyResults: true)
+                }
+            }
+        }
+
+        stage('Build develop') {
+            when {
+                branch 'develop'
+            }
+            steps {
+                echo 'Building'
+                // We'll deploy to a relative directory so we can save
+                // that and deploy in a later step on a different node
+                sh 'mvn ${MVN_TEST_FAIL_IGNORE} -Pplatform-android,platform-java7,distribution,toolchain -Djava8.home=${JAVA_HOME} -Dedgent.build.ci=true -DaltDeploymentRepository=snapshot-repo::default::file:./local-snapshots-dir clean deploy'
+            }
+            post {
+                always {
+                    junit(testResults: '**/surefire-reports/*.xml', allowEmptyResults: true)
+                    junit(testResults: '**/failsafe-reports/*.xml', allowEmptyResults: true)
+                }
+            }
+        }
+
+        stage('Code Quality') {
+            when {
+                branch 'develop'
+            }
+            steps {
+                echo 'Checking Code Quality'
+                withSonarQubeEnv('ASF Sonar Analysis') {
+                    sh 'mvn -P${JENKINS_PROFILE} sonar:sonar'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            when {
+                branch 'develop'
+            }
+            steps {
+                echo 'Deploying'
+                // Deploy the artifacts using the wagon-maven-plugin.
+                sh 'mvn -f jenkins.pom -X -P deploy-snapshots wagon:upload'
             }
         }
 
         stage ('Build Site') {
-            if(env.BRANCH_NAME == 'develop') {
+            when {
+                branch 'develop'
+            }
+            steps {
                 echo 'Building Site'
                 sh "${mvnHome}/bin/mvn ${mavenLocalRepo} site site:stage"
-            } else {
-                echo 'Building Site (skipped for non develop branch)'
             }
         }
 
-/* ========================== TODO figure out what to do with samples now in a separate repo
-        stage ('Build Samples') {
-            echo 'Building samples'
-            sh "cd samples; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} clean package"
-            sh "cd samples/topology; ./run-sample.sh HelloEdgent"
-            sh "cd samples; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-java7 clean package"
-            sh "cd samples/topology; ./run-sample.sh HelloEdgent"
-        }
 
-        stage ('Build Templates') {
-            echo 'Building templates'
-            sh "cd samples/template; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} clean package; ./app-run.sh"
-            sh "cd samples/template; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-java7 clean package; ./app-run.sh"
-            sh "cd samples/template; ${mvnHome}/bin/mvn ${mavenFailureMode} ${mavenLocalRepo} -Pplatform-android clean package; ./app-run.sh"
-        }
-========================== */
-
-        /* There seems to be a problem with this (Here the output of the build log):
-
-        Verifying get-edgent-jars
-        [Pipeline] sh
-        [edgent-pipeline_develop-JN4DHO6BQV4SCTGBDJEOL4ZIC6T36DGONHH3VGS4DCDBO6UXH4MA] Running shell script
-        + cd samples/get-edgent-jars-project
-        + ./get-edgent-jars.sh
-        ./get-edgent-jars.sh: 111: [: java8: unexpected operator
-        ./get-edgent-jars.sh: 118: ./get-edgent-jars.sh: Syntax error: "(" unexpected
-
-        */
-        /*stage ('Verify get-engent-jars') {
-            if(env.BRANCH_NAME == 'develop') {
-                echo 'Verifying get-edgent-jars'
-                sh "cd samples/get-edgent-jars-project; ./get-edgent-jars.sh"
-            } else {
-                echo 'Verifying get-edgent-jars (skipped for non develop branch)'
+        stage('Stage site') {
+            when {
+                branch 'develop'
             }
-        }*/
+            steps {
+                echo 'Staging Site'
+                sh 'mvn -P${JENKINS_PROFILE} site:stage'
+                // Stash the generated site so we can publish it on the 'git-website' node.
+                stash includes: 'target/staging/**/*', name: 'edgent-site'
+            }
+        }
+
+        stage('Deploy site') {
+            when {
+                branch 'develop'
+            }
+            // Only the nodes labeled 'git-websites' have the credentials to commit to the.
+            agent {
+                node {
+                    label 'git-websites'
+                }
+            }
+            steps {
+                echo 'Deploying Site'
+                // Clean up the site directory.
+                dir("target/staging") {
+                    deleteDir()
+                }
+
+                // Unstash the previously stashed site.
+                unstash 'edgent-site'
+                // Publish the site with the scm-publish plugin.
+                sh 'mvn -f jenkins.pom -X -P deploy-site scm-publish:publish-scm'
+
+                // Clean up the snapshots directory (freeing up more space after deploying).
+                dir("target/staging") {
+                    deleteDir()
+                }
+            }
+        }
     }
 
+    // Send out notifications on unsuccessful builds.
+    post {
+        // If this build failed, send an email to the list.
+        failure {
+            script {
+                if(env.BRANCH_NAME == "develop") {
+                    emailext(
+                        subject: "[BUILD-FAILURE]: Job '${env.JOB_NAME} [${env.BRANCH_NAME}] [${env.BUILD_NUMBER}]'",
+                        body: """
+BUILD-FAILURE: Job '${env.JOB_NAME} [${env.BRANCH_NAME}] [${env.BUILD_NUMBER}]':
 
-    catch (err) {
-        currentBuild.result = "FAILURE"
-/*            mail body: "project build error is here: ${env.BUILD_URL}" ,
-            from: 'xxxx@yyyy.com',
-            replyTo: 'dev@edgent.apache.org',
-            subject: 'Autobuild for Branch ' env.BRANCH_NAME
-            to: 'commits@edgent.apache.org'
-*/
-        throw err
+Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BRANCH_NAME}] [${env.BUILD_NUMBER}]</a>"
+""",
+                        to: "dev@edgent.apache.org",
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                    )
+                }
+            }
+        }
+
+        // If this build didn't fail, but there were failing tests, send an email to the list.
+        unstable {
+            script {
+                if(env.BRANCH_NAME == "develop") {
+                    emailext(
+                        subject: "[BUILD-UNSTABLE]: Job '${env.JOB_NAME} [${env.BRANCH_NAME}] [${env.BUILD_NUMBER}]'",
+                        body: """
+BUILD-UNSTABLE: Job '${env.JOB_NAME} [${env.BRANCH_NAME}] [${env.BUILD_NUMBER}]':
+
+Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BRANCH_NAME}] [${env.BUILD_NUMBER}]</a>"
+""",
+                        to: "dev@edgent.apache.org",
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                    )
+                }
+            }
+        }
+
+        // Send an email, if the last build was not successful and this one is.
+        success {
+            // Cleanup the build directory if the build was successful
+            // (in this cae we probably don't have to do any post-build analysis)
+            deleteDir()
+            script {
+                if ((env.BRANCH_NAME == "develop") && (currentBuild.previousBuild != null) && (currentBuild.previousBuild.result != 'SUCCESS')) {
+                    emailext (
+                        subject: "[BUILD-STABLE]: Job '${env.JOB_NAME} [${env.BRANCH_NAME}] [${env.BUILD_NUMBER}]'",
+                        body: """
+BUILD-STABLE: Job '${env.JOB_NAME} [${env.BRANCH_NAME}] [${env.BUILD_NUMBER}]':
+
+Is back to normal.
+""",
+                        to: "dev@edgent.apache.org",
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                    )
+                }
+            }
+        }
+
+        always {
+            script {
+                if(env.BRANCH_NAME == "master") {
+                    emailext(
+                        subject: "[COMMIT-TO-MASTER]: A commit to the master branch was made'",
+                        body: """
+COMMIT-TO-MASTER: A commit to the master branch was made:
+
+Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BRANCH_NAME}] [${env.BUILD_NUMBER}]</a>"
+""",
+                        to: "dev@edgent.apache.org",
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                    )
+                }
+            }
+        }
     }
+
 
 }
