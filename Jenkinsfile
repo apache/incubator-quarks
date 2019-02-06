@@ -103,7 +103,7 @@ pipeline {
                 echo 'Building'
                 // We'll deploy to a relative directory so we can save
                 // that and deploy in a later step on a different node
-                sh 'mvn ${MVN_TEST_FAIL_IGNORE} -Pplatform-android,platform-java7,distribution,toolchain -Djava8.home=${JAVA_HOME} -Dedgent.build.ci=true -DaltDeploymentRepository=snapshot-repo::default::file:./local-snapshots-dir clean deploy'
+                sh 'mvn ${MVN_TEST_FAIL_IGNORE} -P${JENKINS_PROFILE},platform-android,platform-java7,distribution,toolchain -Djava8.home=${JAVA_HOME} -Dedgent.build.ci=true -DaltDeploymentRepository=snapshot-repo::default::file:./local-snapshots-dir clean deploy'
             }
             post {
                 always {
@@ -142,7 +142,7 @@ pipeline {
             }
             steps {
                 echo 'Building Site'
-                sh "${mvnHome}/bin/mvn ${mavenLocalRepo} site site:stage"
+                sh 'mvn -P${JENKINS_PROFILE} site'
             }
         }
 

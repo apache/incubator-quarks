@@ -58,10 +58,7 @@
     <!-- URL of the ASF SonarQube server -->
     <sonar.host.url>https://builds.apache.org/analysis</sonar.host.url>
     <!-- Exclude all generated code -->
-    <sonar.exclusions>file:**/generated-sources/**</sonar.exclusions>
-    <!-- Tell sonar where the coverage reports are located -->
-    <sonar.jacoco.reportPath>${project.build.directory}/coverage-reports/jacoco-ut.exec</sonar.jacoco.reportPath>
-    <sonar.jacoco.itReportPath>${project.build.directory}/coverage-reports/jacoco-it.exec</sonar.jacoco.itReportPath>
+    <sonar.exclusions>**/generated-sources</sonar.exclusions>
 
     <remote-resources-maven-plugin.remote-resources.dir>src/main/remote-resources</remote-resources-maven-plugin.remote-resources.dir>
   </properties>
@@ -200,7 +197,7 @@
         <plugin>
           <groupId>org.sonarsource.scanner.maven</groupId>
           <artifactId>sonar-maven-plugin</artifactId>
-          <version>3.3.0.603</version>
+          <version>3.6.0.1398</version>
         </plugin>
 
         <!--
@@ -715,11 +712,11 @@
       </plugin>
 
       <!-- Generates a report with the SonarQube analysis reports -->
-      <plugin>
+      <!--plugin>
         <groupId>org.codehaus.sonar-plugins</groupId>
         <artifactId>maven-report</artifactId>
         <version>0.1</version>
-      </plugin>
+      </plugin-->
 
       <!-- Generate the JavaDoc API documentation -->
       <plugin>
