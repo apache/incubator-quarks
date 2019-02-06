@@ -155,11 +155,12 @@ pipeline {
                 echo 'Staging Site'
                 sh 'mvn -P${JENKINS_PROFILE} site:stage'
                 // Stash the generated site so we can publish it on the 'git-website' node.
-                stash includes: 'target/staging/**/*', name: 'edgent-site'
+//                stash includes: 'target/staging/**/*', name: 'edgent-site'
             }
         }
 
-        stage('Deploy site') {
+        // Commented out for now as currently the site is generated differently / manually
+/*        stage('Deploy site') {
             when {
                 branch 'develop'
             }
@@ -187,7 +188,7 @@ pipeline {
                 }
             }
         }
-    }
+    }*/
 
     // Send out notifications on unsuccessful builds.
     post {
