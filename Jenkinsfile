@@ -187,8 +187,8 @@ pipeline {
                     deleteDir()
                 }
             }
-        }
-    }*/
+        }*/
+    }
 
     // Send out notifications on unsuccessful builds.
     post {
