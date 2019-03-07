@@ -70,14 +70,14 @@ import com.google.gson.JsonObject;
  *   }
  *   private void buildApp1(IotDevice iotDevice, JsonConfig cfg) {
  *      Topology top = iotDevice.getTopology();
- *      ... build the topology
+ *      ... build the org.apache.edgent.org.apache.edgent.topology
  *   }
  * }
  * </code></pre>
  * 
  * <p>The registered builders are subsequently invoked from
  * {@link ApplicationServiceMXBean#submit(String, String) ApplicationServiceMXBean.submit()}.  
- * Each builder invocation is given a virtual {@code IotDevice} for the topology's use.
+ * Each builder invocation is given a virtual {@code IotDevice} for the org.apache.edgent.org.apache.edgent.topology's use.
  * Jobs can be stopped using their {@link JobMXBean} control.
  * 
  * <p>Applications may also be registered via 
@@ -118,7 +118,7 @@ import com.google.gson.JsonObject;
  * <LI>Access to the control service through device commands from the message hub.</LI>
  * </UL>
  * 
- * <p>If topology builders are registered with the ApplicationService using
+ * <p>If org.apache.edgent.org.apache.edgent.topology builders are registered with the ApplicationService using
  * something other than this provider's {@code registerTopology()},
  * that code is responsible for creating the virtual IotDevice as described
  * above on each builder invocation.
@@ -135,7 +135,7 @@ import com.google.gson.JsonObject;
  *   }
  *   private void buildTopology(IotDevice iotDevice, JsonConfig c) {
  *     Topology t = iotDevice.getTopology();
- *     ... build your topology
+ *     ... build your org.apache.edgent.org.apache.edgent.topology
  *   }
  * }
  * </code></pre>
@@ -191,7 +191,7 @@ public class IotProvider implements TopologyProvider,
      * Create an {@code IotProvider} that uses the passed in {@code DirectProvider}.
      * 
      * @param name Name of the provider, if the value is not {@code null} then a preferences service is created.
-     * @param provider {@code DirectProvider} to use for topology creation and submission.
+     * @param provider {@code DirectProvider} to use for org.apache.edgent.org.apache.edgent.topology creation and submission.
      * @param iotDeviceCreator How the {@code IotDevice} is created.
      * 
      * @see DirectProvider
@@ -426,7 +426,7 @@ public class IotProvider implements TopologyProvider,
      * Same as {@link #registerTopology(String, BiConsumer, boolean, JsonObject) registerTopology(appName, builder, false, null)}.
      * 
      * @param applicationName Application name
-     * @param builder Function that builds the topology.
+     * @param builder Function that builds the org.apache.edgent.org.apache.edgent.topology.
      */
     public void registerTopology(String applicationName, BiConsumer<IotDevice, JsonObject> builder) {
       registerTopology(applicationName, builder, false, null);
@@ -440,12 +440,12 @@ public class IotProvider implements TopologyProvider,
      * function {@code builder} that builds the application. The passed
      * in {@code IotDevice} is created using {@link IotDevicePubSub#addIotDevice(org.apache.edgent.topology.TopologyElement)}.
      * <BR>
-     * Note that {@code builder} obtains a reference to its topology using
+     * Note that {@code builder} obtains a reference to its org.apache.edgent.org.apache.edgent.topology using
      * {@link IotDevice#topology()}.
      * <P>
      * When the application is
      * {@link org.apache.edgent.topology.mbeans.ApplicationServiceMXBean#submit(String, String) submitted} {@code builder.accept(iotDevice, config)}
-     * is called to build the application's graph.
+     * is called to build the application's org.apache.edgent.graph.
      * </P>
      * <P>
      * Specify {@code autoSubmit==true}, to have the provider submit the application
@@ -453,7 +453,7 @@ public class IotProvider implements TopologyProvider,
      * </P>
      * 
      * @param applicationName Application name
-     * @param builder Function that builds the topology.
+     * @param builder Function that builds the org.apache.edgent.org.apache.edgent.topology.
      * @param autoSubmit auto submit the application when {@link #start()} is called.
      * @param config config for auto-submitted application.
      *        See {@link #submit(Topology, JsonObject) submit}. May be null.

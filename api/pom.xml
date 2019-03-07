@@ -27,17 +27,15 @@
   </parent>
 
   <artifactId>edgent-api</artifactId>
-  <packaging>pom</packaging>
+  <packaging>jar</packaging>
 
   <name>Apache Edgent (Java 8): API</name>
 
-  <modules>
-    <module>execution</module>
-    <module>function</module>
-    <module>graph</module>
-    <module>oplet</module>
-    <module>topology</module>
-    <module>window</module>
-  </modules>
+  <dependencies>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+    </dependency>
+  </dependencies>
 
 </project>

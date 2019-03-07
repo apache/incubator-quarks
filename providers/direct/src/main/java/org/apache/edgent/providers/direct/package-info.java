@@ -18,7 +18,7 @@ under the License.
 */
 
 /**
- * Direct execution of a streaming topology.
+ * Direct execution of a streaming org.apache.edgent.org.apache.edgent.topology.
  */
 package org.apache.edgent.providers.direct;
 

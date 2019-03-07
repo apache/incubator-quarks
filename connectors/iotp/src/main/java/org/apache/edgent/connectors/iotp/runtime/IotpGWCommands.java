@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 import com.ibm.iotf.client.gateway.Command;
 
 /**
- * An event setup adapter for {@link Topology#events(Consumer) topology.events()}
+ * An event setup adapter for {@link Topology#events(Consumer) org.apache.edgent.org.apache.edgent.topology.events()}
  * that submits received WIoTP device commands as stream tuples.
  */
 public class IotpGWCommands implements Consumer<Consumer<Command>> {

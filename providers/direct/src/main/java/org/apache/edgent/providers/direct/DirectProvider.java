@@ -33,12 +33,12 @@ import com.google.gson.JsonObject;
 
 /**
  * {@code DirectProvider} is a {@link TopologyProvider} that
- * runs a submitted topology as a {@link Job} in threads
+ * runs a submitted org.apache.edgent.org.apache.edgent.topology as a {@link Job} in threads
  * in the current virtual machine.
  * <P> 
- * A job (execution of a topology) continues to execute
+ * A job (execution of a org.apache.edgent.org.apache.edgent.topology) continues to execute
  * while any of its elements have remaining work,
- * such as any of the topology's source streams are capable
+ * such as any of the org.apache.edgent.org.apache.edgent.topology's source streams are capable
  * of generating tuples.
  * <BR>
  * "Endless" source streams never terminate - e.g., a stream

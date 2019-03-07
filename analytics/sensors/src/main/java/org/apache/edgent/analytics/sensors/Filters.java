@@ -126,7 +126,7 @@ public class Filters {
      * a new deadtime period is begun.
      * </p><p>
      * Use {@link Deadtime} directly if you need to change the deadtime period
-     * while the topology is running.
+     * while the org.apache.edgent.org.apache.edgent.topology is running.
      * </p>
      * @param <T> tuple type
      * @param stream TStream to add deadtime filter to

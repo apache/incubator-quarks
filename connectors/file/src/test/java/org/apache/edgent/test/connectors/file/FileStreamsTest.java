@@ -108,7 +108,7 @@ public class FileStreamsTest extends DirectTopologyTestBase {
             createFiles(filesWithHidden, repeat);
         }
         else {
-            // Create the files from within the topology.
+            // Create the files from within the org.apache.edgent.org.apache.edgent.topology.
             //
             // Due to vagaries / delays that can occur in operator startup, 
             // delay the initial file creation to give the watcher a chance to startup.

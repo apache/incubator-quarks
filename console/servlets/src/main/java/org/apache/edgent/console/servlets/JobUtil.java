@@ -114,7 +114,7 @@ final class JobUtil {
 			}
 
 	    	/*
-	    	 * Now get the graph for the job
+	    	 * Now get the org.apache.edgent.graph for the job
 	    	 */
 	    	for (MBeanOperationInfo operationInfo: mBeanInfo.getOperations()) {
 	    		if (operationInfo.getName().equals("graphSnapshot")) {

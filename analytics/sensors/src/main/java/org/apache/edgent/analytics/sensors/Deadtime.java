@@ -32,7 +32,7 @@ import org.apache.edgent.function.Predicate;
  * After the end of a deadtime period, the next call to {@code test()} 
  * returns true and a new deadtime period is begun.
  * </p><p>
- * The deadtime period may be changed while the topology is running
+ * The deadtime period may be changed while the org.apache.edgent.org.apache.edgent.topology is running
  * via {@link #setPeriod(long, TimeUnit)}.
  * </p>
  *

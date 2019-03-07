@@ -69,7 +69,7 @@ public abstract class MetricsEverywhereTest extends TopologyAbstractTest {
      */
     @Test
     public void automaticMetricCleanup1() throws Exception {
-        // Declare topology with custom metric oplet
+        // Declare org.apache.edgent.org.apache.edgent.topology with custom metric oplet
         Topology t = newTopology();
         AtomicInteger n = new AtomicInteger(0);
         TStream<Integer> ints = t.poll(() -> n.incrementAndGet(), 10, TimeUnit.MILLISECONDS);
@@ -95,11 +95,11 @@ public abstract class MetricsEverywhereTest extends TopologyAbstractTest {
 
     /*
      * Test that Metrics are automatically unregistered after the job is closed
-     * in a topology with two oplets registering metrics.
+     * in a org.apache.edgent.org.apache.edgent.topology with two oplets registering metrics.
      */
     @Test
     public void automaticMetricCleanup2() throws Exception {
-        // Declare topology with custom metric oplet
+        // Declare org.apache.edgent.org.apache.edgent.topology with custom metric oplet
         Topology t = newTopology();
         AtomicInteger n = new AtomicInteger(0);
         TStream<Integer> ints = t.poll(() -> n.incrementAndGet(), 10, TimeUnit.MILLISECONDS);
@@ -120,7 +120,7 @@ public abstract class MetricsEverywhereTest extends TopologyAbstractTest {
         assertEquals(0, all.size());
     }
 
-    // Apply Metrics on all streams, simple graph
+    // Apply Metrics on all streams, simple org.apache.edgent.graph
     @Test
     public void metricsEverywhereSimple() throws Exception {
         
@@ -131,7 +131,7 @@ public abstract class MetricsEverywhereTest extends TopologyAbstractTest {
         TStream<Integer> d = integers(t, 1, 2, 3);
         d.sink(tuple -> System.out.print("."));
         
-        // Insert counter metrics into all the topology streams 
+        // Insert counter metrics into all the org.apache.edgent.org.apache.edgent.topology streams
         Metrics.counter(t);
 
         printGraph(g);
@@ -143,7 +143,7 @@ public abstract class MetricsEverywhereTest extends TopologyAbstractTest {
         assertEquals(2, edges.size());
     }
 
-    // Apply Metrics on all streams, graph with split oplet and Metric oplet
+    // Apply Metrics on all streams, org.apache.edgent.graph with split oplet and Metric oplet
     // Counter oplets are inserted everywhere except after OP_2 (Counter).
     @Test
     public void metricsEverywhereSplit() throws Exception {
@@ -178,7 +178,7 @@ public abstract class MetricsEverywhereTest extends TopologyAbstractTest {
         splits.get(1).sink(tuple -> System.out.print("#"));
         splits.get(2).sink(tuple -> System.out.print("@"));
 
-        // Insert counter metrics into all the topology streams 
+        // Insert counter metrics into all the org.apache.edgent.org.apache.edgent.topology streams
         Metrics.counter(t);
 
         printGraph(g);
@@ -204,7 +204,7 @@ public abstract class MetricsEverywhereTest extends TopologyAbstractTest {
         d.sink(tuple -> System.out.print("."));
         d.sink(tuple -> System.out.print("@"));
         
-        // Insert counter metrics into all the topology streams 
+        // Insert counter metrics into all the org.apache.edgent.org.apache.edgent.topology streams
         Metrics.counter(t);
 
         printGraph(g);

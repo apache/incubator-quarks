@@ -53,7 +53,7 @@ import com.google.gson.JsonObject;
  * <BR>
  * Applications {@link #registerTopology(String, BiConsumer) registered}
  * can be submitted through the control {@link ApplicationServiceMXBean}
- * registered with the {@link ControlService} for the topology provider.
+ * registered with the {@link ControlService} for the org.apache.edgent.org.apache.edgent.topology provider.
  * <BR>
  * If a control service is not available then no control MBean is registered
  * and the application service is effectively inactive.
@@ -65,7 +65,7 @@ public class AppService implements ApplicationService {
     
 	/**
 	 * Create an register an application service using the default alias {@link ApplicationService#ALIAS}.
-	 * @param provider Provider to create topology instances for registered applications.
+	 * @param provider Provider to create org.apache.edgent.org.apache.edgent.topology instances for registered applications.
 	 * @param submitter Submitter for registered applications.
 	 * @return Application service instance.
 	 */
@@ -87,7 +87,7 @@ public class AppService implements ApplicationService {
         
     /**
      * Create an {@code ApplicationService} instance.
-     * @param provider Provider to create topology instances for registered applications.
+     * @param provider Provider to create org.apache.edgent.org.apache.edgent.topology instances for registered applications.
      * @param submitter Submitter for registered applications.
      * @param alias Alias used to register the control MBean.
      */
@@ -116,7 +116,7 @@ public class AppService implements ApplicationService {
     
     /**
      * Create a new class loader for the jar and register any
-     * topology application that is registered as a service provider.
+     * org.apache.edgent.org.apache.edgent.topology application that is registered as a service provider.
      */
     @Override
     public void registerJar(String jarURL, String jsonConfig) throws Exception {

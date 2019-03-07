@@ -785,7 +785,7 @@
             <group>
               <title>Edgent API</title>
               <packages>
-                org.apache.edgent.execution:org.apache.edgent.function:org.apache.edgent.topology:org.apache.edgent.topology.json:org.apache.edgent.topology.mbeans:org.apache.edgent.topology.plumbing:org.apache.edgent.topology.services:org.apache.edgent.execution.*
+                org.apache.edgent.execution:org.apache.edgent.function:org.apache.edgent.topology:org.apache.edgent.org.apache.edgent.org.apache.edgent.topology.json:org.apache.edgent.org.apache.edgent.org.apache.edgent.topology.mbeans:org.apache.edgent.org.apache.edgent.org.apache.edgent.topology.plumbing:org.apache.edgent.org.apache.edgent.org.apache.edgent.topology.services:org.apache.edgent.execution.*
               </packages>
             </group>
             <group>
@@ -804,17 +804,17 @@
             </group>
             <group>
               <title>Edgent Tester</title>
-              <packages>org.apache.edgent.topology.tester:org.apache.edgent.topology.tester.*</packages>
+              <packages>org.apache.edgent.org.apache.edgent.org.apache.edgent.topology.tester:org.apache.edgent.org.apache.edgent.org.apache.edgent.topology.tester.*</packages>
             </group>
             <group>
               <title>Edgent Low-Level API</title>
               <packages>
-                org.apache.edgent.graph:org.apache.edgent.graph.*:org.apache.edgent.oplet:org.apache.edgent.oplet.*:org.apache.edgent.window
+                org.apache.edgent.graph:org.apache.edgent.org.apache.edgent.graph.*:org.apache.edgent.oplet:org.apache.edgent.oplet.*:org.apache.edgent.window
               </packages>
             </group>
             <group>
               <title>Edgent SPI</title>
-              <packages>org.apache.edgent.topology.spi:org.apache.edgent.topology.spi.*</packages>
+              <packages>org.apache.edgent.org.apache.edgent.org.apache.edgent.topology.spi:org.apache.edgent.org.apache.edgent.org.apache.edgent.topology.spi.*</packages>
             </group>
             <!-- everything else is automatically added to a "Other Packages" group -->
           </groups>

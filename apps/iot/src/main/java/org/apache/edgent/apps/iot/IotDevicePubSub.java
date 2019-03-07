@@ -35,21 +35,21 @@ import com.google.gson.JsonObject;
  * This application shares an {@link IotDevice} across multiple running
  * jobs. This allows a single connection to a back-end message hub to be shared
  * across multiple independent applications, without having to build a single
- * topology.
+ * org.apache.edgent.org.apache.edgent.topology.
  * <P>
- * Applications coded to {@link IotDevice} obtain a topology specific
+ * Applications coded to {@link IotDevice} obtain a org.apache.edgent.org.apache.edgent.topology specific
  * {@code IotDevice} using {@link #addIotDevice(TopologyElement)}. This returned
  * device will route events and commands to/from the actual message hub
  * {@code IotDevice} through publish-subscribe.
  * <P>
- * An instance of this application is created by first creating a new topology and
+ * An instance of this application is created by first creating a new org.apache.edgent.org.apache.edgent.topology and
  * then creating a {@link IotDevice} specific to the desired message hub. Then
  * the application is created by calling {@link #createApplication(IotDevice)}
  * passing the {@code IotDevice}. <BR>
  * Then additional independent applications (topologies) can be created and they
- * create a proxy {@code IotDevice} for their topology using
+ * create a proxy {@code IotDevice} for their org.apache.edgent.org.apache.edgent.topology using
  * {@link #addIotDevice(TopologyElement)}. This proxy {@code IotDevice} is then
- * used to send device events and receive device commands in that topology. <BR>
+ * used to send device events and receive device commands in that org.apache.edgent.org.apache.edgent.topology. <BR>
  * Once all the topologies have been declared they can be submitted.
  * </P>
  * <P>
@@ -110,7 +110,7 @@ public class IotDevicePubSub {
     }
 
     /**
-     * Add a proxy {@code IotDevice} for the topology containing {@code te}.
+     * Add a proxy {@code IotDevice} for the org.apache.edgent.org.apache.edgent.topology containing {@code te}.
      * <P>
      * Any events sent through the returned device are sent onto the message hub
      * device through publish-subscribe. <BR>

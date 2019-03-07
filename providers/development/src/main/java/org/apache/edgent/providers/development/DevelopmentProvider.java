@@ -59,13 +59,13 @@ import com.google.gson.JsonObject;
  * beans in the platform MBean server.
  * </LI>
  * <LI>
- * Add tuple count metrics on all the streams before submitting a topology.
+ * Add tuple count metrics on all the streams before submitting a org.apache.edgent.org.apache.edgent.topology.
  * The implementation calls {@link Metrics#counter(Topology)} to insert 
  * {@link CounterOp} oplets into each stream.
  * </LI>
  * <LI>
- * Instrument the topology adding {@link org.apache.edgent.streamscope.oplets.StreamScope StreamScope}
- * oplets on all the streams before submitting a topology.  
+ * Instrument the org.apache.edgent.org.apache.edgent.topology adding {@link org.apache.edgent.streamscope.oplets.StreamScope StreamScope}
+ * oplets on all the streams before submitting a org.apache.edgent.org.apache.edgent.topology.
  * See {@link StreamScopeSetup#addStreamScopes(Topology) StreamScopeSetup.addStreamscopes}.
  * </LI>
  * <LI>

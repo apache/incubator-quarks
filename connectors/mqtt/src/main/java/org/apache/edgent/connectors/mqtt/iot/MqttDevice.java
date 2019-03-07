@@ -124,7 +124,7 @@ public class MqttDevice implements IotDevice {
      * <p>
      * All configuration information comes from {@code properties}.
      *  
-     * @param topology topology to add the connector to.
+     * @param topology org.apache.edgent.org.apache.edgent.topology to add the connector to.
      * @param properties connector properties.
      */
     public MqttDevice(Topology topology, Properties properties) {
@@ -137,7 +137,7 @@ public class MqttDevice implements IotDevice {
      * Uses {@code mattConfig} for the base MQTT connector configuration
      * and uses {@code properties} only for MQTT Device properties.
      * 
-     * @param topology topology to add the connector to.
+     * @param topology org.apache.edgent.org.apache.edgent.topology to add the connector to.
      * @param properties connector properties.  Properties beyond those
      *        noted in the Device properties section above are ignored.
      * @param mqttConfig base MQTT configuration. may be null.

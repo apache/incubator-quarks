@@ -104,7 +104,7 @@ public class MqttStreams {
      * <p>
      * A convenience function.
      * Connecting to the server occurs after the
-     * topology is submitted for execution.
+     * org.apache.edgent.org.apache.edgent.topology is submitted for execution.
      * 
      * @param topology the connector's associated {@code Topology}.
      * @param url URL of MQTT server.
@@ -122,7 +122,7 @@ public class MqttStreams {
      * Create a connector with the specified configuration.
      * <p>
      * Connecting to the server occurs after the
-     * topology is submitted for execution.
+     * org.apache.edgent.org.apache.edgent.topology is submitted for execution.
      * 
      * @param topology the Topology to add to
      * @param config {@link MqttConfig} supplier.

@@ -111,7 +111,7 @@ public class Jsr356WebSocketClient implements WebSocketClient{
      * <li>ws.keyCertificateAlias - alias for certificate in key store. defaults to "default"</li>
      * </ul>
      * Additional keys in {@code config} are ignored.
-     * @param t the topology to add the connector to
+     * @param t the org.apache.edgent.org.apache.edgent.topology to add the connector to
      * @param config the connector's configuration
      */
     public Jsr356WebSocketClient(Topology t, Properties config) {
@@ -125,12 +125,12 @@ public class Jsr356WebSocketClient implements WebSocketClient{
      * by {@link Jsr356WebSocketClient#Jsr356WebSocketClient(Topology, Properties)}
      * lacks the configuration needed for a particular use case.
      * <p>
-     * At topology runtime {@code containerFn.get()} will be called to
+     * At org.apache.edgent.org.apache.edgent.topology runtime {@code containerFn.get()} will be called to
      * get a {@code javax.websocket.WebSocketContainer} that will be used to
      * connect to the WebSocket server.
      * <p>
      * Only the "ws.uri" {@code config} parameter is used.
-     * @param t the topology to add the connector to
+     * @param t the org.apache.edgent.org.apache.edgent.topology to add the connector to
      * @param config the connector's configuration
      * @param containerFn supplier for a {@code WebSocketContainer}.  May be null.
      */

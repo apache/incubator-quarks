@@ -18,14 +18,14 @@ under the License.
 */
 
 /**
- * A runtime for executing an Edgent streaming topology, designed as an embeddable library 
+ * A runtime for executing an Edgent streaming org.apache.edgent.org.apache.edgent.topology, designed as an embeddable library
  * so that it can be executed in a simple Java application.
  * 
  * <h2>"EveryThing Is An Oplet" (ETIAO)</h2>
  *
  * The runtime's focus is on executing oplets and their connected streams, where each 
  * oplet is just a black box. Specifically this means that functionality is added by the introduction 
- * of oplets into the graph that were not explicitly declared by the application developer. 
+ * of oplets into the org.apache.edgent.graph that were not explicitly declared by the application developer.
  * For example, metrics are implemented by oplets, not the runtime. A metric collector is an 
  * oplet that calculates metrics on tuples accepted on its input port, and them makes them 
  * available, for example through JMX.

@@ -23,7 +23,7 @@ import org.apache.edgent.function.Supplier;
 /**
  * Univariate aggregate for a tuple.
  * This is the declaration of the aggregate that
- * application use when declaring a topology.
+ * application use when declaring a org.apache.edgent.org.apache.edgent.topology.
  * <P>
  * Implementations are typically enums such
  * as {@link org.apache.edgent.analytics.math3.stat.Statistic2 Statistic2}.

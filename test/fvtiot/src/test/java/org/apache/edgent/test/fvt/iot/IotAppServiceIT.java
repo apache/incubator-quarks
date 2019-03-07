@@ -57,7 +57,7 @@ public class IotAppServiceIT {
     
     @Test(expected=ClassNotFoundException.class)
     public void testAppsNotInClasspath() throws ClassNotFoundException {
-        Class.forName("org.apache.edgent.test.topology.services.TestApplications");
+        Class.forName("org.apache.edgent.test.org.apache.edgent.org.apache.edgent.topology.services.TestApplications");
     }
     
     @Test

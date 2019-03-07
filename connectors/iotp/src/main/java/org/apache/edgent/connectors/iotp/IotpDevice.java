@@ -123,7 +123,7 @@ public class IotpDevice implements IotDevice {
      * </code>
      * </pre>
      * <p>
-     * Connecting to the server occurs when the topology is submitted for
+     * Connecting to the server occurs when the org.apache.edgent.org.apache.edgent.topology is submitted for
      * execution.
      * </p>
      * <p>
@@ -165,7 +165,7 @@ public class IotpDevice implements IotDevice {
      * </code>
      * </pre>
      * <p>
-     * Connecting to the server occurs when the topology is submitted for
+     * Connecting to the server occurs when the org.apache.edgent.org.apache.edgent.topology is submitted for
      * execution.
      * </p>
      * <p>

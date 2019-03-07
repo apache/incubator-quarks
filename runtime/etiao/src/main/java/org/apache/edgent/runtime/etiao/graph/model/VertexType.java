@@ -23,7 +23,7 @@ import org.apache.edgent.oplet.Oplet;
 import org.apache.edgent.runtime.etiao.graph.ExecutableVertex;
 
 /**
- * A {@code VertexType} in a graph.
+ * A {@code VertexType} in a org.apache.edgent.graph.
  * <p>
  * A {@code VertexType} has an {@link InvocationType} instance.
  * 

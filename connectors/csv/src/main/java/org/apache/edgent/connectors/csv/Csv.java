@@ -45,8 +45,8 @@ import com.google.gson.JsonObject;
  * // Create a stream of "car" JsonObjects from a "cars.csv" file.
  * String fieldNames = new String[]{"year", "make", "model"});
  *
- * TStream<String> pathnames = topology.strings("cars.csv");
- * TStream<JsonObject> cars = FileStreams.textFileReader(topology, pathnames)
+ * TStream<String> pathnames = org.apache.edgent.org.apache.edgent.topology.strings("cars.csv");
+ * TStream<JsonObject> cars = FileStreams.textFileReader(org.apache.edgent.org.apache.edgent.topology, pathnames)
  *    .map(csv -> toJson(parseCsv(csv), fieldNames);
  * cars.print(); 
  * }</pre>

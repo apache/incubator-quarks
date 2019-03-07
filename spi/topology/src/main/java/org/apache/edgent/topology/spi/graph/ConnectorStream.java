@@ -63,9 +63,9 @@ import org.apache.edgent.window.Window;
 import org.apache.edgent.window.Windows;
 
 /**
- * A stream that directly adds oplets to the graph.
+ * A stream that directly adds oplets to the org.apache.edgent.graph.
  *
- * @param <G> topology type
+ * @param <G> org.apache.edgent.org.apache.edgent.topology type
  * @param <T> tuple type
  */
 public class ConnectorStream<G extends Topology, T> extends AbstractTStream<G, T> {
@@ -229,7 +229,7 @@ public class ConnectorStream<G extends Topology, T> extends AbstractTStream<G, T
         // To perform a join, the runtime needs to maintain a windowImpl based on
         // the tuples from the twindow.feeder TStream. To do this, it's 
         // necessary to create an Aggregate oplet and insert it into the
-        // graph with lastStream.pipe.
+        // org.apache.edgent.graph with lastStream.pipe.
         Aggregate<U,Object,K> op = new Aggregate<U,Object,K>(window, processor);
         lastStream.pipe(op);
         

@@ -21,7 +21,7 @@ package org.apache.edgent.test.svt;
 import java.io.PrintWriter;
 
 /*
- * Basic topology test to exercise TStream methods.
+ * Basic org.apache.edgent.org.apache.edgent.topology test to exercise TStream methods.
  * 
  * Run from the edgent top-level directory: 
  * java -cp "test/svt/classes;target/java8/lib/*;target/java8/ext/slf4j-1.7.12/*" 

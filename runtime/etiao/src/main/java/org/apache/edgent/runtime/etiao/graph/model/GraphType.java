@@ -28,9 +28,9 @@ import org.apache.edgent.graph.Vertex;
 import org.apache.edgent.oplet.Oplet;
 
 /**
- * A generic directed graph of vertices, connectors and edges.
+ * A generic directed org.apache.edgent.graph of vertices, connectors and edges.
  * <p>
- * The graph consists of {@link VertexType} objects, each having
+ * The org.apache.edgent.graph consists of {@link VertexType} objects, each having
  * 0 or more input and/or output {@link EdgeType} objects.
  * {@link EdgeType} objects connect an output connector to
  * an input connector.
@@ -39,12 +39,12 @@ import org.apache.edgent.oplet.Oplet;
  */
 public class GraphType {
     /**
-     * List of all vertices in this graph.
+     * List of all vertices in this org.apache.edgent.graph.
      */
     private final List<VertexType<?,?>> vertices;
 
     /**
-     * List of all edges in this graph.
+     * List of all edges in this org.apache.edgent.graph.
      */
     private final List<EdgeType> edges;
 

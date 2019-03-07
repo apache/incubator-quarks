@@ -52,7 +52,7 @@ public class CommandStreams {
    * Sample use:
    * <pre>{@code
    * ProcessBuilder cmd = new ProcessBuilder(tokenize("sh someShellCmd.sh and args"));
-   * TStream<String> stream = CommandStreams.generate(topology, cmd);
+   * TStream<String> stream = CommandStreams.generate(org.apache.edgent.org.apache.edgent.topology, cmd);
    * }</pre>
    * 
    * @param cmdString a command string
@@ -79,18 +79,18 @@ public class CommandStreams {
    * </P>
    * <P>
    * This is a convenience function equivalent to
-   * {@code topology.generate(endlessCommandReader(cmd))}.
+   * {@code org.apache.edgent.org.apache.edgent.topology.generate(endlessCommandReader(cmd))}.
    * </P>
    * <P>
    * Sample use: create a stream of tuples for the output from a 
    * continuously running and restartable command:
    * <pre>{@code
    * ProcessBuilder cmd = new ProcessBuilder("myCommand");
-   * TStream<String> cmdOutput = CommandStreams.generate(topology, cmd);
+   * TStream<String> cmdOutput = CommandStreams.generate(org.apache.edgent.org.apache.edgent.topology, cmd);
    * cmdOutput.print();
    * }</pre>
    * 
-   * @param topology the topology to add the source stream to
+   * @param topology the org.apache.edgent.org.apache.edgent.topology to add the source stream to
    * @param cmd the {@link ProcessBuilder} to start the command
    * @return the source {@code TStream<String>}
    * 
@@ -113,7 +113,7 @@ public class CommandStreams {
    * </P>
    * <P>
    * This is a convenience function equivalent to
-   * {@code topology.poll(commandReaderList(cmd), period, units)}.
+   * {@code org.apache.edgent.org.apache.edgent.topology.poll(commandReaderList(cmd), period, units)}.
    * </P>
    * <P>
    * Sample use: create a stream of tuples containing the output 
@@ -121,11 +121,11 @@ public class CommandStreams {
    * <pre>{@code
    * ProcessBuilder cmd = new ProcessBuilder("date");
    * TStream<List<String>> cmdOutput = 
-   *      CommandStreams.periodicSource(topology, cmd, 2, TimeUnit.SECONDS);
+   *      CommandStreams.periodicSource(org.apache.edgent.org.apache.edgent.topology, cmd, 2, TimeUnit.SECONDS);
    * cmdOutput.print();
    * }</pre>
    * 
-   * @param topology the topology to add the source stream to
+   * @param topology the org.apache.edgent.org.apache.edgent.topology to add the source stream to
    * @param cmd the {@link ProcessBuilder} to start the command
    * @param period the period to run the command and collect its output
    * @param units TimeUnit for {@code period}
@@ -159,7 +159,7 @@ public class CommandStreams {
    * <P>
    * Sample use: write a stream of tuples to the input of a command:
    * <pre>{@code
-   * TStream<String> stream = topology.strings("one", "two", "three");
+   * TStream<String> stream = org.apache.edgent.org.apache.edgent.topology.strings("one", "two", "three");
    * ProcessBuilder cmd = new ProcessBuilder("cat").redirectOutput(new File("/dev/stdout"));
    * CommandStreams.sink(stream, cmd);
    * }</pre>
@@ -185,7 +185,7 @@ public class CommandStreams {
    * For example:
    * <pre><code>
    * // ingest the sensor data
-   * TStream&lt;MySensorData&gt; stream = topology.generate(new MySensor());
+   * TStream&lt;MySensorData&gt; stream = org.apache.edgent.org.apache.edgent.topology.generate(new MySensor());
    *
    * // MySensor class
    * class MySensor implements Supplier&lt;MySensorData&gt; {
@@ -247,7 +247,7 @@ public class CommandStreams {
    * For example:
    * <pre><code>
    * // ingest the sensor data
-   * TStream&lt;MySensorData&gt; stream = topology.periodicSource(new MySensor());
+   * TStream&lt;MySensorData&gt; stream = org.apache.edgent.org.apache.edgent.topology.periodicSource(new MySensor());
    *
    * // MySensor class
    * class MySensor implements Supplier&lt;MySensorData&gt; {

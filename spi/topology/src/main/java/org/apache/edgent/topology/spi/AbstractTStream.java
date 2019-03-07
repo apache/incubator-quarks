@@ -40,7 +40,7 @@ import org.apache.edgent.topology.Topology;
  * <LI>{@link TStream#sink(org.apache.edgent.function.Consumer)}
  * </UL>
  * These methods are unimplemented, thus left to the specific implementation
- * used to build the topology.
+ * used to build the org.apache.edgent.org.apache.edgent.topology.
  *
  * @param <G>
  *            Type of the {@link Topology} implementation.

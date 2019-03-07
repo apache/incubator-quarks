@@ -55,7 +55,7 @@ public class AppServiceControl implements ApplicationServiceMXBean {
         
         Topology topology = service.getProvider().newTopology(applicationName);
         
-        // Fill in the topology
+        // Fill in the org.apache.edgent.org.apache.edgent.topology
         builder.accept(topology, config);
         
         if (!config.has(Configs.JOB_NAME))

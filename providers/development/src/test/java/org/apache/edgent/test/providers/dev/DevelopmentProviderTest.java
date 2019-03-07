@@ -54,7 +54,7 @@ public class DevelopmentProviderTest extends TopologyAbstractTest {
         return (DevelopmentProvider) getTopologyProvider();
     }
 
-    // DevelopmentProvider inserts CounterOp metric oplets into the graph
+    // DevelopmentProvider inserts CounterOp metric oplets into the org.apache.edgent.graph
     @Test
     public void testMetricsEverywhere() throws Exception {
 
@@ -88,7 +88,7 @@ public class DevelopmentProviderTest extends TopologyAbstractTest {
         assertEquals(1, numOplets);
     }
 
-    // DevelopmentProvider inserts StreamScope oplets into the graph
+    // DevelopmentProvider inserts StreamScope oplets into the org.apache.edgent.graph
     @Test
     public void testStreamScopesEverywhere() throws Exception {
 
