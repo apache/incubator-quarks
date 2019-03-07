@@ -431,6 +431,9 @@
                 Notice the @ instead of the $ as prefix? That's late evaluation.
           -->
           <argLine>@{surefireArgLine}</argLine>
+          <includes>
+            <include>**/*Test.java</include>
+          </includes>
         </configuration>
       </plugin>
 
@@ -453,6 +456,9 @@
                 Notice the @ instead of the $ as prefix? That's late evaluation.
           -->
           <argLine>@{failsafeArgLine}</argLine>
+          <includes>
+            <include>**/*IT.java</include>
+          </includes>
         </configuration>
       </plugin>
 
