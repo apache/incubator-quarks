@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.edgent.streamscope.StreamScope;
 import org.apache.edgent.streamscope.StreamScopeRegistry;
 import org.apache.edgent.streamscope.StreamScope.Sample;
-import org.apache.edgent.test.topology.TopologyAbstractTest;
+import org.apache.edgent.topology.TopologyAbstractTest;
 import org.junit.Ignore;
 import org.junit.Test;
 

@@ -31,7 +31,7 @@ import org.apache.edgent.metrics.oplets.CounterOp;
 import org.apache.edgent.oplet.Oplet;
 import org.apache.edgent.providers.development.DevelopmentProvider;
 import org.apache.edgent.streamscope.oplets.StreamScope;
-import org.apache.edgent.test.topology.TopologyAbstractTest;
+import org.apache.edgent.topology.TopologyAbstractTest;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.tester.Condition;
