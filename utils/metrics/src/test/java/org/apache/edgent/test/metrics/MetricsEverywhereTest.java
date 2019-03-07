@@ -40,7 +40,7 @@ import org.apache.edgent.metrics.MetricsSetup;
 import org.apache.edgent.oplet.Oplet;
 import org.apache.edgent.oplet.OpletContext;
 import org.apache.edgent.oplet.core.Peek;
-import org.apache.edgent.test.topology.TopologyAbstractTest;
+import org.apache.edgent.topology.TopologyAbstractTest;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.Topology;
 import org.junit.Before;
