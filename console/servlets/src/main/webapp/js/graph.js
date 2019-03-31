@@ -52,7 +52,7 @@ addValuesToEdges = function(graph, counterMetrics) {
 	var quartile1 = parseInt(max * 0.25, 10);
 	
 	if (!graph.edgeMap) {
-	    // fwiw, at this time, graph is new object on every call so these
+	    // fwiw, at this time, org.apache.edgent.graph is new object on every call so these
 	    // are rebuilt every time.  ugh.
         graph.edgeMap = makeEdgeMap(edges);  // edgeKey(edge) -> edge; {incoming,outgoing}EdgesKey(opId) -> edges[]
 	    graph.vertexMap = makeVertexMap(vertices);  // id -> vertex
@@ -174,7 +174,7 @@ function makeEquivMetricEdgeMap(graph, counterMetrics) {
 // Traverses through non-counter-metric peek ops.
 // Also includes a FanOut oplet's outputs when traversing downstream
 // because the runtime doesn't add CounterOps to them.
-// requires graph.edgeMap, graph.vertexMap
+// requires org.apache.edgent.graph.edgeMap, org.apache.edgent.graph.vertexMap
 function collectEquivMetricEdges(graph, edge, isDownstream) {
     var equivEdges = [];
     var vertex = graph.vertexMap[isDownstream ? edge.targetId : edge.sourceId];
@@ -194,7 +194,7 @@ function collectEquivMetricEdges(graph, edge, isDownstream) {
 }
 
 // set the metricEdge's value in all edges equivalent to it.
-// requires graph.equivMetricEdgeMap
+// requires org.apache.edgent.graph.equivMetricEdgeMap
 function setEquivalentMetricEdges(graph, metricEdge) {
     var edges = graph.equivMetricEdgeMap[edgeKey(metricEdge)];
     edges.forEach(function(edge){

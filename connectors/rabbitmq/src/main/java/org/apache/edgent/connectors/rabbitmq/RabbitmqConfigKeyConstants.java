@@ -75,7 +75,7 @@ public class RabbitmqConfigKeyConstants {
     public static final String RABBITMQ_CONFIG_KEY_REQUESTED_HEARTBEAT = "rabbitmq.connection.requestedHeartbeat";
 
     /**
-     * config key for specifying whether enable topology recovery or not.
+     * config key for specifying whether enable org.apache.edgent.org.apache.edgent.topology recovery or not.
      */
     public static final String RABBITMQ_CONFIG_KEY_TOPOLOGY_RECOVERY_ENABLED = "rabbitmq.connection.topologyRecoveryEnabled";
 

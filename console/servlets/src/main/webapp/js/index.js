@@ -138,16 +138,16 @@ d3.select("#toggleTimer")
 .on("click", function() {
 	if (stopTimer === false){
 		stopTimer = true;
-		d3.select(this).text("Resume graph");
+		d3.select(this).text("Resume org.apache.edgent.graph");
 		d3.select(this)
 		.attr("class", "start")
-		.attr("title", "Resume graph")
+		.attr("title", "Resume org.apache.edgent.graph")
 	} else {
 		stopTimer = false;
-		d3.select(this).text("Pause graph");
+		d3.select(this).text("Pause org.apache.edgent.graph");
 		d3.select(this)
 		.attr("class", "stop")
-		.attr("title", "Pause graph");
+		.attr("title", "Pause org.apache.edgent.graph");
 	}
 });
 
@@ -1043,7 +1043,7 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
 			graph = addValuesToEdges(graph, counterMetrics);
 		} 
 		
-		// these are used if the topology has no metrics, and to display the static graph
+		// these are used if the org.apache.edgent.org.apache.edgent.topology has no metrics, and to display the static org.apache.edgent.graph
 		var generatedFlowValues = makeStaticFlowValues(graph.edges.length);
 		
 		d3.select("#chart").selectAll("*").remove();
@@ -1088,7 +1088,7 @@ var renderGraph = function(jobId, counterMetrics, bIsNewJob) {
 		showTagDiv(bIsNewJob);
 		selectedTags = [];
 		if (d3.select("#showTags").property("checked") === true) {
-			// fetch the selected tags, and modify the graph
+			// fetch the selected tags, and modify the org.apache.edgent.graph
 			selectedTags = getSelectedTags();
 		}
 
@@ -1568,7 +1568,7 @@ var fetchJobsInfo = function() {
 	                        
 	                        if (jobObjs.length === 0) {
 	                                //no jobs were found, put an entry in the select
-	                                // To Do: if the graph is real, remove it ...
+	                                // To Do: if the org.apache.edgent.graph is real, remove it ...
 	                                jobSelect
 	                                .append("option")
 	                                .text("No jobs were found")

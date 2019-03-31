@@ -92,10 +92,10 @@ For example, you could analyze the last 90 seconds of data from a sensor to iden
 <P>
 <H3>Topology functional API</H3>
 <H4>Overview</H4>
-The primary api is {@link org.apache.edgent.topology.Topology} which uses a functional
-model to build a topology of {@link org.apache.edgent.topology.TStream streams} for an application.
+The primary api is {@link Topology} which uses a functional
+model to build a topology of {@link TStream streams} for an application.
 <BR>
-{@link org.apache.edgent.topology.TStream TStream} is a declaration of a stream of tuples, an application will create streams that source data (e.g. sensor readings) and then apply functions that transform those streams into derived streams, for example simply filtering a stream containg engine temperator readings to a derived stream that only contains readings thar are greater than 100&deg;C.
+{@link TStream TStream} is a declaration of a stream of tuples, an application will create streams that source data (e.g. sensor readings) and then apply functions that transform those streams into derived streams, for example simply filtering a stream containg engine temperator readings to a derived stream that only contains readings thar are greater than 100&deg;C.
 <BR>
 An application terminates processing for a stream by <em>sinking</em> it. Sinking effectively terminates a stream by applying processing to each tuple on the stream (as it occurs) that does not produce a result. Typically this sinking is transmitting the tuple to an external system, for example the messgae hub to send the data to a back-end system, or locally sending the data to a user interface.
 </P>
@@ -119,7 +119,7 @@ However Edgent allows arbitrary topologies including:
 </UL>
 <H3>Graph API</H3>
 <H4>Overview</H4>
-The {@link org.apache.edgent.graph.Graph graph} API is a lower-level API that the
+The {@link Graph graph} API is a lower-level API that the
 topology api is built on top of. A graph consists of
 {@link org.apache.edgent.oplet.Oplet oplet} invocations connected by streams.
 The oplet invocations contain the processing applied to each tuple

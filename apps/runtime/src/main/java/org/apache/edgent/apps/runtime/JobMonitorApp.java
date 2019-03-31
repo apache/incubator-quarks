@@ -82,7 +82,7 @@ public class JobMonitorApp {
      * Constructs a {@code JobMonitorApp} with the specified name in the 
      * context of the specified provider.
      * 
-     * @param provider the topology provider
+     * @param provider the org.apache.edgent.org.apache.edgent.topology provider
      * @param submitter a {@code DirectSubmitter} which provides required 
      *      services and submits the application
      * @param name the application name
@@ -100,7 +100,7 @@ public class JobMonitorApp {
     }
     
     /**
-     * Submits the application topology.
+     * Submits the application org.apache.edgent.org.apache.edgent.topology.
      * 
      * @return the job.
      * @throws InterruptedException if the operation was interrupted
@@ -181,13 +181,13 @@ public class JobMonitorApp {
     }
 
     /**
-     * Declares the following topology:
+     * Declares the following org.apache.edgent.org.apache.edgent.topology:
      * <pre>
      * JobEvents source --&gt; Filter (health == unhealthy) --&gt; Restart application
      * </pre>
      * 
-     * @param name the topology name
-     * @return the application topology
+     * @param name the org.apache.edgent.org.apache.edgent.topology name
+     * @return the application org.apache.edgent.org.apache.edgent.topology
      */
     protected Topology declareTopology(String name) {
         Topology t = provider.newTopology(name);
@@ -198,7 +198,7 @@ public class JobMonitorApp {
     }
     
     /**
-     * Populates the following topology:
+     * Populates the following org.apache.edgent.org.apache.edgent.topology:
      * <pre>
      * JobEvents source --&gt; Filter (health == unhealthy) --&gt; Restart application
      * </pre>

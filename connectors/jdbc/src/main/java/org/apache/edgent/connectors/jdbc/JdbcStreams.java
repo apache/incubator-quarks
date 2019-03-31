@@ -122,7 +122,7 @@ import org.apache.edgent.topology.Topology;
  *  //
  *  // Delete all the rows from a table
  *  //
- *  TStream<String> beacon = topology.strings("once");
+ *  TStream<String> beacon = org.apache.edgent.org.apache.edgent.topology.strings("once");
  *  mydb.executeStatement(beacon,
  *               () -> "DELETE FROM persons",
  *               (tuple,stmt) -> { }  // no params to set
@@ -164,7 +164,7 @@ public class JdbcStreams {
      * {@code executeStatement()} can result in a JDBC connection getting
      * closed and {@code connFn} is subsequently called to reconnect.
      * 
-     * @param topology topology that this connector is for
+     * @param topology org.apache.edgent.org.apache.edgent.topology that this connector is for
      * @param dataSourceFn function that yields the {@link DataSource}
      *              for the database.
      * @param connFn function that yields a {@link Connection} from a {@code DataSource}.

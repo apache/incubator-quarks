@@ -58,14 +58,14 @@ public class HttpStreams {
      * <pre>
      * {@code
      *     DirectProvider ep = new DirectProvider();
-     *     Topology topology = ep.newTopology();
+     *     Topology org.apache.edgent.org.apache.edgent.topology = ep.newTopology();
      *     final String url = "http://httpbin.org/get?";
      * 
      *     JsonObject request1 = new JsonObject();
      *     request1.addProperty("a", "abc");
      *     request1.addProperty("b", "42");
      * 
-     *     TStream<JsonObject> stream = topology.collection(Arrays.asList(request1));
+     *     TStream<JsonObject> stream = org.apache.edgent.org.apache.edgent.topology.collection(Arrays.asList(request1));
      *     TStream<JsonObject> rc = HttpStreams.getJson(stream,
      *             HttpClients::noAuthentication,
      *             t -> url + "a=" + t.get("a").getAsString() + "&b="
@@ -103,14 +103,14 @@ public class HttpStreams {
      * <pre>
      * {@code
      *     DirectProvider ep = new DirectProvider();
-     *     Topology topology = ep.newTopology();
+     *     Topology org.apache.edgent.org.apache.edgent.topology = ep.newTopology();
      *     final String url = "http://httpbin.org/delete?";
      * 
      *     JsonObject request = new JsonObject();
      *     request.addProperty("a", "abc");
      *     request.addProperty("b", "42");
      * 
-     *     TStream<JsonObject> stream = topology.collection(Arrays.asList(request));
+     *     TStream<JsonObject> stream = org.apache.edgent.org.apache.edgent.topology.collection(Arrays.asList(request));
      *     TStream<JsonObject> rc = HttpStreams.deleteJson(stream,
      *             HttpClients::noAuthentication,
      *             t -> url + "a=" + t.get("a").getAsString() + "&b="
@@ -149,14 +149,14 @@ public class HttpStreams {
      * <pre>
      * {@code
      *     DirectProvider ep = new DirectProvider();
-     *     Topology topology = ep.newTopology();
+     *     Topology org.apache.edgent.org.apache.edgent.topology = ep.newTopology();
      *     final String url = "http://httpbin.org/post";
      * 
      *     JsonObject body = new JsonObject();
      *     body.addProperty("foo", "abc");
      *     body.addProperty("bar", 42);
      * 
-     *     TStream<JsonObject> stream = topology.collection(Arrays.asList(body));
+     *     TStream<JsonObject> stream = org.apache.edgent.org.apache.edgent.topology.collection(Arrays.asList(body));
      *     TStream<JsonObject> rc = HttpStreams.postJson(stream,
      *             HttpClients::noAuthentication, t -> url, t -> t);
      * }
@@ -197,14 +197,14 @@ public class HttpStreams {
      * <pre>
      * {@code
      *     DirectProvider ep = new DirectProvider();
-     *     Topology topology = ep.newTopology();
+     *     Topology org.apache.edgent.org.apache.edgent.topology = ep.newTopology();
      *     final String url = "http://httpbin.org/put";
      * 
      *     JsonObject body = new JsonObject();
      *     body.addProperty("foo", "abc");
      *     body.addProperty("bar", 42);
      * 
-     *     TStream<JsonObject> stream = topology.collection(Arrays.asList(body));
+     *     TStream<JsonObject> stream = org.apache.edgent.org.apache.edgent.topology.collection(Arrays.asList(body));
      *     TStream<JsonObject> rc = HttpStreams.putJson(stream,
      *             HttpClients::noAuthentication, t -> url, t -> t);
      * }

@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.edgent.execution.DirectSubmitter;
 import org.apache.edgent.metrics.Metrics;
 import org.apache.edgent.metrics.MetricsSetup;
-import org.apache.edgent.test.topology.TopologyAbstractTest;
+import org.apache.edgent.topology.TopologyAbstractTest;
 import org.apache.edgent.topology.TStream;
 import org.apache.edgent.topology.Topology;
 import org.apache.edgent.topology.tester.Condition;

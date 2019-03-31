@@ -29,7 +29,7 @@ under the License.
  * </P><P>
  * {@link org.apache.edgent.streamscope.StreamScopeSetup StreamScopeSetup} performs the necessary setup for a
  * {@link org.apache.edgent.topology.TopologyProvider TopologyProvider} to use the package,
- * including registration of services and instrumenting a topology with
+ * including registration of services and instrumenting a org.apache.edgent.org.apache.edgent.topology with
  * StreamScope instances.
  */
 package org.apache.edgent.streamscope;

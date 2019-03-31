@@ -39,7 +39,7 @@ import com.google.gson.JsonObject;
  * {@code DirectTopology} is a {@link GraphTopology} that
  * is executed in threads in the current virtual machine.
  * <P> 
- * The topology is backed by a {@code DirectGraph} and its
+ * The org.apache.edgent.org.apache.edgent.topology is backed by a {@code DirectGraph} and its
  * execution is controlled and monitored by a {@code EtiaoJob}.
  * </P>
  */
@@ -52,7 +52,7 @@ public class DirectTopology extends GraphTopology<DirectTester> {
     /**
      * Creates a {@code DirectTopology} instance.
      * 
-     * @param name topology name
+     * @param name org.apache.edgent.org.apache.edgent.topology name
      * @param container container which provides runtime services
      */
     DirectTopology(String name, ServiceContainer container) {

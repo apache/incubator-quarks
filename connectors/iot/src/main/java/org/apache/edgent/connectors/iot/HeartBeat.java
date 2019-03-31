@@ -37,7 +37,7 @@ public class HeartBeat {
   private HeartBeat() { };
   
   /**
-   * Add IoT device heart beat processing to a topology.
+   * Add IoT device heart beat processing to a org.apache.edgent.org.apache.edgent.topology.
    * <P>
    * An IoTDevice event containing heart beat information 
    * is periodically published to the specified {@code eventId}.

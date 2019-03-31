@@ -43,9 +43,9 @@ public class DirectGraph extends AbstractGraph<Executable> {
 
     /**
      * Creates a new {@code DirectGraph} instance underlying the specified 
-     * topology.
+     * org.apache.edgent.org.apache.edgent.topology.
      * 
-     * @param topologyName name of the topology
+     * @param topologyName name of the org.apache.edgent.org.apache.edgent.topology
      * @param container service container
      */
     public DirectGraph(String topologyName, ServiceContainer container) {
@@ -53,7 +53,7 @@ public class DirectGraph extends AbstractGraph<Executable> {
     }
 
     /**
-     * Returns the {@code Executable} running this graph.
+     * Returns the {@code Executable} running this org.apache.edgent.graph.
      * @return the executable
      */
     public Executable executable() {

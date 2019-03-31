@@ -44,7 +44,7 @@ public class ConsoleJobServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         // jobsInfo to return just the job id, etc
-        // jobgraph to return the graph of the job + jobId
+        // jobgraph to return the org.apache.edgent.graph of the job + jobId
         Map<String,String[]> parameterMap = request.getParameterMap();
         String jobId = "";
         boolean jobsInfo = false;

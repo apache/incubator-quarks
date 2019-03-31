@@ -42,12 +42,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Executes and provides runtime services to the executable graph 
+ * Executes and provides runtime services to the executable org.apache.edgent.graph
  * elements (oplets and functions).
  */
 public class Executable implements RuntimeServices {
 
-    private EtiaoJob job; // instantiated when topology is submitted
+    private EtiaoJob job; // instantiated when org.apache.edgent.org.apache.edgent.topology is submitted
     private final ServiceContainer containerServices;
     private final ThreadFactory controlThreads;
     private final BiConsumer<Object, Throwable> completionHandler;
@@ -74,7 +74,7 @@ public class Executable implements RuntimeServices {
     }
 
     /**
-     * Creates a new {@code Executable} for the specified topology name, which uses the 
+     * Creates a new {@code Executable} for the specified org.apache.edgent.org.apache.edgent.topology name, which uses the
      * given thread factory to create new threads for oplet execution.
      * 
      * @param name the name of the executable
@@ -124,7 +124,7 @@ public class Executable implements RuntimeServices {
 
     /**
      * Returns the {@code ScheduledExecutorService} used for running 
-     * executable graph elements.
+     * executable org.apache.edgent.graph elements.
      * 
      * @return the scheduler
      */
@@ -133,7 +133,7 @@ public class Executable implements RuntimeServices {
     }
     
     /**
-     * Acts as a service provider for executable elements in the graph, first
+     * Acts as a service provider for executable elements in the org.apache.edgent.graph, first
      * looking for a service specific to this job, and then one from the 
      * container.
      */

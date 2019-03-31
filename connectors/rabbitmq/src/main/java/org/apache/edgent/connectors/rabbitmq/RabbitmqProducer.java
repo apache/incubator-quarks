@@ -65,7 +65,7 @@ public class RabbitmqProducer {
      * The full config option please see RabbitMQ java client API Reference :
      * < a href="https://rabbitmq.github.io/rabbitmq-java-client/api/current/com/rabbitmq/client/ConnectionFactory.html">ConnectionFactory</>
      * </p>
-     * @param topology topology to add to
+     * @param topology org.apache.edgent.org.apache.edgent.topology to add to
      * @param config RabbitmqProducer configuration information.
      */
     public RabbitmqProducer(Topology topology, Supplier<Map<String, Object>> config) {

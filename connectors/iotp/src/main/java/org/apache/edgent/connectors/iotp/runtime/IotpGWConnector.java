@@ -217,7 +217,7 @@ public class IotpGWConnector implements Serializable, AutoCloseable {
 //        } catch (Exception e) {
 //            // throw new RuntimeException(e);
 //            // If the publish throws, a RuntimeException will cause
-//            // everything to unwind and the app/topology can terminate.
+//            // everything to unwind and the app/org.apache.edgent.org.apache.edgent.topology can terminate.
 //            // See the commentary/impl of MqttPublisher.accept().
 //            // See EDGENT-382
 //            logger.error("Unable to publish event for eventId {}", eventId, e);

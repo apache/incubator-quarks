@@ -53,9 +53,9 @@ public class Metrics {
     }
 
     /**
-     * Add counter metrics to all the topology's streams.
+     * Add counter metrics to all the org.apache.edgent.org.apache.edgent.topology's streams.
      * <p>
-     * {@link CounterOp} oplets are inserted between every two graph
+     * {@link CounterOp} oplets are inserted between every two org.apache.edgent.graph
      * vertices with the following exceptions:
      * <ul>
      * <li>Oplets are only inserted upstream from a FanOut oplet.</li>
@@ -67,9 +67,9 @@ public class Metrics {
      * {@code CounterOp} oplet (but they are inserted upstream from one.)</li>
      * </ul>
      * The implementation is not idempotent: Calling the method twice 
-     * will insert a new set of metric oplets into the graph.
+     * will insert a new set of metric oplets into the org.apache.edgent.graph.
      * @param t
-     *            The topology
+     *            The org.apache.edgent.org.apache.edgent.topology
      * @see org.apache.edgent.graph.Graph#peekAll(org.apache.edgent.function.Supplier, org.apache.edgent.function.Predicate) Graph.peekAll()
      */
     public static void counter(Topology t) {

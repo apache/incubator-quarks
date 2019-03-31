@@ -21,7 +21,7 @@ package org.apache.edgent.test.providers.dev.topology;
 import org.apache.edgent.execution.Job;
 import org.apache.edgent.execution.Submitter;
 import org.apache.edgent.providers.development.DevelopmentProvider;
-import org.apache.edgent.test.topology.TopologyTest;
+import org.apache.edgent.topology.TopologyTest;
 import org.apache.edgent.topology.Topology;
 
 public class DevelopmentTopologyTest extends TopologyTest {

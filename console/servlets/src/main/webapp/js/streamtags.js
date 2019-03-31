@@ -70,7 +70,7 @@ d3.select("#showTags")
 showAllTags.on("change", function() {
 	if (this.checked === true) {
 		selectTagButton.property("disabled", true);
-		// render the graph with all the tags shown
+		// render the org.apache.edgent.graph with all the tags shown
 	} else {
 		// enable it
 		selectTagButton.property("disabled", false);

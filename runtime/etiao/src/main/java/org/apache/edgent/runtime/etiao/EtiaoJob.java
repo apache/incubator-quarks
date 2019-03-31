@@ -51,10 +51,10 @@ public class EtiaoJob extends AbstractGraphJob implements JobContext {
 
     /**
      * Creates a new {@code EtiaoJob} instance which controls the lifecycle 
-     * of the specified graph.
+     * of the specified org.apache.edgent.graph.
      * 
-     * @param graph graph representation of the topology
-     * @param topologyName name of the topology
+     * @param graph org.apache.edgent.graph representation of the org.apache.edgent.org.apache.edgent.topology
+     * @param topologyName name of the org.apache.edgent.org.apache.edgent.topology
      * @param jobName name of the Job. If null, a name of {@code topologyName_jobId} is assigned.
      * @param container service container
      */

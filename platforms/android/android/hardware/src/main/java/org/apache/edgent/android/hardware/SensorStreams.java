@@ -38,7 +38,7 @@ public class SensorStreams {
      * Each sensor event will result in a tuple on
      * the returned stream.
      *
-     * @param te Topology element for stream's topology
+     * @param te Topology element for stream's org.apache.edgent.org.apache.edgent.topology
      * @param sensorManager Sensor manager
      * @param sensorTypes Which sensors to listen for. 
      * @return Stream that will contain events from the sensors.
@@ -59,7 +59,7 @@ public class SensorStreams {
      * Each sensor event will result in a tuple on
      * the returned stream.
      *
-     * @param te Topology element for stream's topology
+     * @param te Topology element for stream's org.apache.edgent.org.apache.edgent.topology
      * @param sensorManager Sensor manager
      * @param sensors Which sensors to listen for. 
      * @return Stream that will contain events from the sensors.

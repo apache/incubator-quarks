@@ -35,7 +35,7 @@ import org.apache.edgent.oplet.core.Split;
 import org.apache.edgent.oplet.functional.SupplierPeriodicSource;
 import org.apache.edgent.runtime.etiao.graph.DirectGraph;
 import org.apache.edgent.runtime.etiao.graph.model.GraphType;
-import org.apache.edgent.test.graph.GraphTest;
+import org.apache.edgent.graph.GraphTest;
 import org.junit.Test;
 
 import com.google.gson.Gson;

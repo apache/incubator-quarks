@@ -174,15 +174,15 @@ public class StreamScopeSetup {
 //    }
 
     /**
-     * Add StreamScope instances to the topology
+     * Add StreamScope instances to the org.apache.edgent.org.apache.edgent.topology
      * <P>
-     * Instrument the topology by adding StreamScope peekers to the
-     * topology's streams.  At topology submission time, StreamScopes
-     * register themselves with the topology's
+     * Instrument the org.apache.edgent.org.apache.edgent.topology by adding StreamScope peekers to the
+     * org.apache.edgent.org.apache.edgent.topology's streams.  At org.apache.edgent.org.apache.edgent.topology submission time, StreamScopes
+     * register themselves with the org.apache.edgent.org.apache.edgent.topology's
      * {@link StreamScopeRegistry} runtime service.
      * </P>
      * 
-     * @param t the Topology.  The operation is a no-op if the topology
+     * @param t the Topology.  The operation is a no-op if the org.apache.edgent.org.apache.edgent.topology
      *     does not have a StreamScopeRegistry service.
      * @see #register(ServiceContainer) register
      * @see org.apache.edgent.graph.Graph#peekAll(org.apache.edgent.function.Supplier, org.apache.edgent.function.Predicate) Graph.peekAll()

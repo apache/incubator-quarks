@@ -18,7 +18,7 @@ under the License.
 */
 
 /**
- * Execution of a streaming topology in a development environment .
+ * Execution of a streaming org.apache.edgent.org.apache.edgent.topology in a development environment .
  */
 package org.apache.edgent.providers.development;
 
