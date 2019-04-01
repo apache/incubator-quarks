@@ -27,17 +27,77 @@
   </parent>
 
   <artifactId>edgent-api</artifactId>
-  <packaging>pom</packaging>
+  <packaging>jar</packaging>
 
   <name>Apache Edgent (Java 7): API</name>
 
-  <modules>
-    <module>execution</module>
-    <module>function</module>
-    <module>graph</module>
-    <module>oplet</module>
-    <module>topology</module>
-    <module>window</module>
-  </modules>
+  <!--<modules>-->
+  <!--<module>execution</module>-->
+  <!--<module>function</module>-->
+  <!--<module>graph</module>-->
+  <!--<module>oplet</module>-->
+  <!--<module>topology</module>-->
+  <!--<module>window</module>-->
+  <!--</modules>-->
+
+  <properties>
+    <remote-resources-maven-plugin.remote-resources.dir>../../../../src/main/ibm-remote-resources
+    </remote-resources-maven-plugin.remote-resources.dir>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.apache.edgent</groupId>
+                  <artifactId>${project.artifactId}</artifactId>
+                  <version>${project.version}</version>
+                  <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                  <excludes>META-INF/**</excludes>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-test</id>
+            <phase>test-compile</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.apache.edgent</groupId>
+                  <artifactId>${project.artifactId}</artifactId>
+                  <version>${project.version}</version>
+                  <classifier>tests</classifier>
+                  <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
+                  <excludes>META-INF/**</excludes>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+    </dependency>
+  </dependencies>
 
 </project>
