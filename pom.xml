@@ -100,6 +100,7 @@
     <module>test</module>
     <module>utils</module>
     <module>platforms</module>
+    <module>next</module>
   </modules>
 
   <build>
