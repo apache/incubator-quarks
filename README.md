@@ -103,5 +103,5 @@ Edgent runtime development see [DEVELOPMENT.md](DEVELOPMENT.md)
 # Renamed from Apache Quarks
 Apache Quarks was renamed to Apache Edgent.
 
-See the [RELEASE_NOTES](RELEASE_NOTES] for change information if
+See the [RELEASE_NOTES](RELEASE_NOTES) for change information if
 you are converting from "Apache Quarks".
